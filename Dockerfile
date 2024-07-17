@@ -1,37 +1,67 @@
-# 1단계: Node.js로 React 애플리케이션 빌드
-FROM node:18 AS build
+FROM node:18-alpine AS base
 
-# 앱 디렉토리 생성
+# Install dependencies only when needed
+FROM base AS deps
+# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
+RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# 패키지 설치 및 의존성 복사
-COPY package.json package-lock.json ./
-RUN npm install
+# Install dependencies based on the preferred package manager
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+RUN \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
+  elif [ -f package-lock.json ]; then npm ci; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm i --frozen-lockfile; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-# 소스 코드 복사 및 빌드
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# .env.real 파일을 복사하여 .env 파일로 설정
-COPY .env.real .env
+# Next.js collects completely anonymous telemetry data about general usage.
+# Learn more here: https://nextjs.org/telemetry
+# Uncomment the following line in case you want to disable telemetry during the build.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# .env 파일이 복사되었는지 확인하기 위한 출력
-RUN cat .env
+RUN \
+  if [ -f yarn.lock ]; then yarn run build; \
+  elif [ -f package-lock.json ]; then npm run build; \
+  elif [ -f pnpm-lock.yaml ]; then corepack enable pnpm && pnpm run build; \
+  else echo "Lockfile not found." && exit 1; \
+  fi
 
-# 빌드
-RUN npm run build
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
 
-# 빌드 아티팩트 확인을 위한 출력
-RUN ls -la /app/build
+ENV NODE_ENV production
+# Uncomment the following line in case you want to disable telemetry during runtime.
+# ENV NEXT_TELEMETRY_DISABLED 1
 
-# 2단계: Nginx로 빌드된 React 애플리케이션 서빙
-FROM nginx:alpine
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-# Nginx 설정 복사
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=builder /app/public ./public
 
-# Nginx 설정 파일을 컨테이너 내부에 복사 (선택 사항)
-# COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+# Set the correct permission for prerender cache
+RUN mkdir .next
+RUN chown nextjs:nodejs .next
 
-# 포트 노출 및 Nginx 실행
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+
+# server.js is created by next build from the standalone output
+# https://nextjs.org/docs/pages/api-reference/next-config-js/output
+CMD HOSTNAME="0.0.0.0" node server.js

@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8885:80"
+      - "8885:3000"
     environment:
       - NODE_ENV=production
       - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8886:80"
+      - "8886:3000"
     environment:
       - NODE_ENV=production
       - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
