@@ -1,5 +1,5 @@
 # 1단계: Node.js로 React 애플리케이션 빌드
-FROM node:16 AS build
+FROM node:18 AS build
 
 # 앱 디렉토리 생성
 WORKDIR /app
