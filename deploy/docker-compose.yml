@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  # Blue 배포
+  blue:
+    container_name: fabtable-next-blue
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8885:80"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
+    networks:
+      - blue-green-net
+
+  # Green 배포
+  green:
+    container_name: fabtable-next-green
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8886:80"
+    environment:
+      - NODE_ENV=production
+      - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
+    networks:
+      - blue-green-net
+
+networks:
+  blue-green-net:
+    driver: bridge
