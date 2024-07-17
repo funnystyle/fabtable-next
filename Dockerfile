@@ -17,7 +17,11 @@ COPY .env.real .env
 # .env 파일이 복사되었는지 확인하기 위한 출력
 RUN cat .env
 
+# 빌드
 RUN npm run build
+
+# 빌드 아티팩트 확인을 위한 출력
+RUN ls -la /app/build
 
 # 2단계: Nginx로 빌드된 React 애플리케이션 서빙
 FROM nginx:alpine
