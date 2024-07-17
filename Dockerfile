@@ -5,8 +5,8 @@ FROM node:18 AS build
 WORKDIR /app
 
 # 패키지 설치 및 의존성 복사
-COPY package.json yarn.lock ./
-RUN yarn install
+COPY package.json package-lock.json ./
+RUN npm install
 
 # 소스 코드 복사 및 빌드
 COPY . .
@@ -17,7 +17,7 @@ COPY .env.real .env
 # .env 파일이 복사되었는지 확인하기 위한 출력
 RUN cat .env
 
-RUN yarn build
+RUN npm run build
 
 # 2단계: Nginx로 빌드된 React 애플리케이션 서빙
 FROM nginx:alpine
