@@ -4,9 +4,7 @@ services:
   # Blue 배포
   fabtable-next-blue:
     container_name: fabtable-next-blue
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: fabtable-next-docker:latest
     ports:
       - "8885:3000"
     environment:
@@ -18,9 +16,7 @@ services:
   # Green 배포
   fabtable-next-green:
     container_name: fabtable-next-green
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: fabtable-next-docker:latest
     ports:
       - "8886:3000"
     environment:
