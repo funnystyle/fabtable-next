@@ -10,6 +10,22 @@ RUN apk add --no-cache libc6-compat
 COPY package.json package-lock.json ./
 RUN npm ci --only=production
 
+# Increase the timeout for npm
+
+RUN npm config set fetch-retry-maxtimeout 60000
+
+# Use a different npm registry (optional)
+
+RUN npm config set registry https://registry.npmjs.org/
+
+# Update npm to the latest version
+
+RUN npm install -g npm@latest
+
+# Install dependencies
+
+RUN npm install
+
 # Rebuild the source code only when needed
 FROM base AS builder
 COPY --from=deps /usr/src/app/node_modules ./node_modules
