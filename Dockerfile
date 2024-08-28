@@ -28,6 +28,8 @@ RUN adduser --system --uid 1001 nextjs
 
 COPY --from=builder /usr/src/app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /usr/src/app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/package.json ./
+COPY --from=builder --chown=nextjs:nodejs /usr/src/app/package-lock.json ./
 
 USER nextjs
 
@@ -35,4 +37,4 @@ EXPOSE 3000
 
 ENV PORT 3000
 
-CMD ["node", "server.js"]
+CMD ["npm", "start"]
