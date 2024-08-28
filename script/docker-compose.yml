@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   # Blue 배포
-  blue:
+  fabtable-next-blue:
     container_name: fabtable-next-blue
     build:
       context: .
@@ -16,7 +16,7 @@ services:
       - blue-green-net
 
   # Green 배포
-  green:
+  fabtable-next-green:
     container_name: fabtable-next-green
     build:
       context: .
