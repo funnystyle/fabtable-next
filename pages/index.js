@@ -5,14 +5,18 @@ import Link from "next/link";
 const HomePage = () => {
   return (
     <div>
-      <h1>Welcome to Home Page</h1>
+      <h1>MKP 샘플페이지</h1>
       <p>
-        Go to <Link href="/samples/board">Board Sample Page</Link>
+        <Link href="/samples/board">게시판 샘플 - React Query & Zustand</Link>
       </p>
       <p>
-        Go to{" "}
         <Link href="/samples/datatables/client">
-          DataTables Sample (Client Data) Page
+          DataTables 샘플 - client side 데이터
+        </Link>
+      </p>
+      <p>
+        <Link href="/samples/datatables/server">
+          DataTables 샘플 - server side 데이터
         </Link>
       </p>
     </div>

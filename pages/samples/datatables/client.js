@@ -1,7 +1,3 @@
-// pages/user.js
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
-import apiClient from "@api/apiClient";
 import DataTables from "@components/DataTables";
 import data from "@data/datatables-data";
 
@@ -17,8 +13,8 @@ const columns = [
 const DataTablePage = () => {
   return (
     <div>
-      <h1>DataTables Sample (Client)</h1>
-      <DataTables data={data} columns={columns} />
+      <h1>DataTables Sample (Client Side Data)</h1>
+      <DataTables columns={columns} data={data} />
     </div>
   );
 };

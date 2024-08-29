@@ -9,7 +9,8 @@
       "@data/*": ["./data/*"],
       "@api/*": ["./api/*"],
       "@hooks/*": ["./hooks/*"],
-      "@store/*": ["./store/*"]
+      "@store/*": ["./store/*"],
+      "@lib/*": ["./lib/*"]
     }
   }
 }
