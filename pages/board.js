@@ -16,7 +16,7 @@ const BoardPage = () => {
   const [queryKey, setQueryKey] = useState(["boards", Math.random()]); // 변경된 부분
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey,
-    queryFn: fetchBoards,
+    queryFn: fetchBoards
   });
 
   useEffect(() => {

@@ -9,6 +9,9 @@ const HomePage = () => {
       <p>
         Go to <Link href="/board">Board Page</Link>
       </p>
+      <p>
+        Go to <Link href="/datatables/client">DataTables Sample Page</Link>
+      </p>
     </div>
   );
 };
