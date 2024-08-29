@@ -44,8 +44,8 @@ if [ -z "$IS_GREEN"  ];then # blue라면
 
   echo "4. reload nginx"
   #sudo cp /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-green.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-green.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
+  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-green.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
+  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
   sudo nginx -s reload
 
   echo "5. blue container down"
@@ -87,8 +87,8 @@ else
 
   echo "4. reload nginx"
 #  sudo cp /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
+  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
+  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
   #sudo cp /etc/nginx/conf.d/app/service-url-blue.inc /etc/nginx/conf.d/app/service-url.inc
   sudo nginx -s reload
 
