@@ -88,7 +88,7 @@ else
   echo "4. reload nginx"
 #  sudo cp /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
   sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable.web.conf /etc/nginx/conf.d/http.fabtable.web.conf
+  sudo ln -s /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
   #sudo cp /etc/nginx/conf.d/app/service-url-blue.inc /etc/nginx/conf.d/app/service-url.inc
   sudo nginx -s reload
 
