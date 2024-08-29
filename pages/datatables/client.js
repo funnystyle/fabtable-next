@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import apiClient from "../../api/apiClient";
 import DataTables from "../../components/DataTables";
-import data from "../../data/datatables/client/data";
+import data from "../../data/datatables-data";
 
 const columns = [
   { title: "Name" },

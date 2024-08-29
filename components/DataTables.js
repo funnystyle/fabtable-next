@@ -5,13 +5,13 @@ import "datatables.net-responsive-dt";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-responsive-dt/css/responsive.dataTables.min.css";
 
-export default ({ data, columns }) => {
+const DataTables = ({ data, columns }) => {
   const tableRef = useRef();
 
   useEffect(() => {
     const table = $(tableRef.current).DataTable({
-      data,
-      columns,
+      data: data,
+      columns: columns,
       responsive: true, // 반응형 켜기
       // options
     });
@@ -24,3 +24,5 @@ export default ({ data, columns }) => {
 
   return <table ref={tableRef} style={{ width: "100%" }}></table>;
 };
+
+export default DataTables;

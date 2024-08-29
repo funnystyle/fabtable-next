@@ -1,4 +1,4 @@
-export default [
+const data = [
   ["Suki Burks", "Developer", "London", "6832", "2020/10/22", "$114,500"],
   ["Airi Satou", "Accountant", "Tokyo", "5407", "2019/12/10", "$162,700"],
   [
@@ -374,3 +374,5 @@ export default [
   ],
   // ...
 ];
+
+export default data;
