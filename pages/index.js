@@ -7,10 +7,13 @@ const HomePage = () => {
     <div>
       <h1>Welcome to Home Page</h1>
       <p>
-        Go to <Link href="/board">Board Page</Link>
+        Go to <Link href="/samples/board">Board Sample Page</Link>
       </p>
       <p>
-        Go to <Link href="/datatables/client">DataTables Sample Page</Link>
+        Go to{" "}
+        <Link href="/samples/datatables/client">
+          DataTables Sample (Client Data) Page
+        </Link>
       </p>
     </div>
   );

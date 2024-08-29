@@ -1,8 +1,8 @@
 // pages/user.js
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import apiClient from "../api/apiClient";
-import useBoardStore from "../store/useBoardStore"; // 변경된 이름으로 import
+import apiClient from "@api/apiClient";
+import useBoardStore from "@store/useBoardStore"; // 변경된 이름으로 import
 
 const fetchBoards = async () => {
   const response = await apiClient.get("/user/board");
@@ -16,7 +16,7 @@ const BoardPage = () => {
   const [queryKey, setQueryKey] = useState(["boards", Math.random()]); // 변경된 부분
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey,
-    queryFn: fetchBoards
+    queryFn: fetchBoards,
   });
 
   useEffect(() => {
