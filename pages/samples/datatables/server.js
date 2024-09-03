@@ -22,7 +22,7 @@ const DataTablePage = () => {
   }, []);
 
   if (!page) {
-    return <div>Invalid page number</div>
+    return <div>Loading...</div>
   }
 
   return (
