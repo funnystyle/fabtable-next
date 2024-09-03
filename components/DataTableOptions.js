@@ -1,5 +1,4 @@
 export const createDataTablesOptions = (columns, data, url, page) => {
-
   // columns의 모든 data 속성을 name 속성으로 복사
   columns.forEach((column) => {
     column.name = column.data;
@@ -11,18 +10,21 @@ export const createDataTablesOptions = (columns, data, url, page) => {
     colReorder: true,
     buttons: [
       {
-        extend: 'colvis',
-        text: 'Select Columns', // 버튼에 표시될 텍스트
-      }
+        extend: "colvis",
+        text: "Select Columns", // 버튼에 표시될 텍스트
+      },
+      {
+        extend: "pageLength",
+        text: "Page Size",
+      },
     ],
     // options
     layout: {
       topStart: {
-        buttons: [
-          'colvis'
-        ]
-      }
-    }
+        // features: ["pageLength"],
+        buttons: ["colvis", "pageLength"],
+      },
+    },
   };
 
   // data가 있으면 clientSide
