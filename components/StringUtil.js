@@ -6,7 +6,7 @@ export const getPage = (url) => {
   }
 
   const queryParams = queryString.split('&');
-  let p = null;
+  let p = 1;
   for (const param of queryParams) {
     const [key, value] = param.split('='); // 'page=2' -> ['page', '2']
     if (key === 'page') {
