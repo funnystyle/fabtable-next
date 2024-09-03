@@ -8,7 +8,7 @@ import "datatables.net-responsive-dt";
 import "datatables.net-buttons/js/buttons.colVis";  // colVis 기능 임포트
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-responsive-dt/css/responsive.dataTables.min.css";
-// import "datatables.net-colreorder/css/colReorder.dataTables.min.css";
+import "datatables.net-colreorder-dt/css/colReorder.dataTables.min.css";
 import "datatables.net-buttons-dt/css/buttons.dataTables.min.css";
 import { createDataTablesOptions } from "@components/DataTableOptions";
 
