@@ -5,25 +5,35 @@ import "datatables.net-colreorder";
 import "datatables.net-buttons";
 import "datatables.net-buttons-dt";
 import "datatables.net-responsive-dt";
-import "datatables.net-buttons/js/buttons.colVis"; // colVis 기능 임포트
+import "datatables.net-buttons/js/buttons.colVis";
 import "datatables.net-dt/css/dataTables.dataTables.min.css";
 import "datatables.net-responsive-dt/css/responsive.dataTables.min.css";
 import "datatables.net-colreorder-dt/css/colReorder.dataTables.min.css";
 import "datatables.net-buttons-dt/css/buttons.dataTables.min.css";
+import "datatables.net-select";
+import "datatables.net-select-dt/css/select.dataTables.min.css";
 import { createDataTablesOptions } from "@components/DataTableOptions";
 import { useRouter } from "next/router";
-import DataTable from "datatables.net-dt";
 
 const DataTables = ({ columns, data, url, page }) => {
-  const dataTableOptions = createDataTablesOptions(columns, data, url, page);
-
   const tableRef = useRef(null);
+  const containerRef = useRef(null); // 테이블 컨테이너를 참조하기 위한 변수
   const router = useRouter();
 
-  let currentPage = null;
+  // Ctrl 키 상태와 드래그 상태를 추적하기 위한 변수들
+  const isCtrlPressed = useRef(false);
+  const isShiftPressed = useRef(false);
+  const isDragging = useRef(false);
+  const dragStartRow = useRef(null);
+  const prevSelectedRow = useRef(null);
 
+
+  // table 구현 및 페이지 별 뒤로가기 적용
   useEffect(() => {
+    const dataTableOptions = createDataTablesOptions(columns, data, url, page);
     const table = $(tableRef.current).DataTable(dataTableOptions);
+
+    let currentPage = null;
 
     // 페이지 변경 시 URL 업데이트
     table.on("draw", () => {
@@ -53,15 +63,114 @@ const DataTables = ({ columns, data, url, page }) => {
 
     window.addEventListener("popstate", handlePopState);
 
+    // ########################################################
+    // Ctrl 키 눌림 상태를 추적하기 위한 이벤트 리스너
+    const handleKeyDown = (e) => {
+      if (e.ctrlKey || e.metaKey) isCtrlPressed.current = true;
+      if (e.shiftKey) isShiftPressed.current = true;
+    };
+    const handleKeyUp = (e) => {
+      if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
+      if (!e.shiftKey) {
+        isShiftPressed.current = false;
+        prevSelectedRow.current = null;
+      }
+    };
+    const handleMouseDown = (e) => {
+      // 클릭한 영역이 테이블 바깥인지 확인
+      if (!containerRef.current.contains(e.target)) {
+        table.rows({ selected: true }).deselect(); // 선택 해제
+      }
+    };
+    const handleContextMenu = (e) => {
+      e.preventDefault(); // 기본 동작 방지
+
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("keyup", handleKeyUp);
+    document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("contextmenu", handleContextMenu);
+    // ########################################################
+
+    // ########################################################
+    // 테이블의 행 클릭 및 드래그 이벤트 핸들러
+    $(tableRef.current).on("mousedown", "tr", function (e) {
+      e.preventDefault(); // 기본 동작 방지
+      if (e.button !== 0) {
+        const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
+        const clickedRowIndex = table.row($(e.target).closest('tr')).index();
+        // 선택된게 없다면 현재 행을 선택
+        if (!selectedRowsIndexes.includes(clickedRowIndex)) {
+          table.rows().deselect();
+          table.row(this).select();
+        }
+
+        // 선택된 행들 중 우클릭한 행과 동일한 인덱스가 있는지 확인
+        const alertString = table.rows({ selected: true }).data().toArray().map((row) => row.name).join(", ");
+        console.log(alertString);
+
+        return;
+      }
+
+      isDragging.current = true; // 드래그 시작
+      dragStartRow.current = table.row(this).index(); // 드래그 시작 행의 인덱스를 저장
+
+      if (!isCtrlPressed.current) {
+        table.rows().deselect(); // Ctrl 키가 눌리지 않았으면 기존 선택 해제
+      }
+
+      if (isShiftPressed.current && prevSelectedRow.current) {
+        const start = Math.min(dragStartRow.current, table.row(prevSelectedRow.current).index());
+        const end = Math.max(dragStartRow.current, table.row(prevSelectedRow.current).index());
+
+        for (let i = start; i <= end; i++) {
+          table.row(i).select(); // 시작 행부터 끝 행까지 선택
+        }
+      }
+
+      table.row(this).select(); // 현재 행 선택
+
+      if (prevSelectedRow.current == null) {
+        prevSelectedRow.current = this; // 이전 선택 행 저장
+      }
+    });
+
+    // 마우스가 다른 행으로 이동할 때 선택 범위를 확장
+    $(tableRef.current).on("mouseover", "tr", function () {
+      if (isDragging.current) {
+        const endRow = table.row(this).index(); // 현재 마우스가 위치한 행의 인덱스
+        const start = Math.min(dragStartRow.current, endRow);
+        const end = Math.max(dragStartRow.current, endRow);
+
+        // table.rows({ selected: true }).deselect(); // 모든 선택 해제
+
+        for (let i = start; i <= end; i++) {
+          table.row(i).select(); // 시작 행부터 끝 행까지 선택
+        }
+      }
+    });
+
+    // 드래그 종료 시점에 호출
+    $(document).on("mouseup", function () {
+      isDragging.current = false; // 드래그 종료
+    });
+    // ########################################################
+
     // 언마운트 시 destroy 및 이벤트 핸들러 제거
     return () => {
+      // 이벤트 리스너 제거
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("keyup", handleKeyUp);
+      $(document).off("mouseup");
+      $(tableRef.current).off("mousedown mouseover");
+
       window.removeEventListener("popstate", handlePopState);
       table.destroy();
     };
   }, []);
 
   return (
-    <div>
+    <div ref={containerRef}>
       <table ref={tableRef} style={{ width: "100%" }}></table>
     </div>
   );
