@@ -27,7 +27,6 @@ const DataTables = ({ columns, data, url, page }) => {
   const dragStartRow = useRef(null);
   const prevSelectedRow = useRef(null);
 
-
   // table 구현 및 페이지 별 뒤로가기 적용
   useEffect(() => {
     const dataTableOptions = createDataTablesOptions(columns, data, url, page);
@@ -73,7 +72,7 @@ const DataTables = ({ columns, data, url, page }) => {
       if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
       if (!e.shiftKey) {
         isShiftPressed.current = false;
-        prevSelectedRow.current = null;
+        // prevSelectedRow.current = null;
       }
     };
     const handleMouseDown = (e) => {
@@ -84,8 +83,7 @@ const DataTables = ({ columns, data, url, page }) => {
     };
     const handleContextMenu = (e) => {
       e.preventDefault(); // 기본 동작 방지
-
-    }
+    };
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     document.addEventListener("mousedown", handleMouseDown);
@@ -97,8 +95,11 @@ const DataTables = ({ columns, data, url, page }) => {
     $(tableRef.current).on("mousedown", "tr", function (e) {
       e.preventDefault(); // 기본 동작 방지
       if (e.button !== 0) {
-        const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
-        const clickedRowIndex = table.row($(e.target).closest('tr')).index();
+        const selectedRowsIndexes = table
+          .rows({ selected: true })
+          .indexes()
+          .toArray();
+        const clickedRowIndex = table.row($(e.target).closest("tr")).index();
         // 선택된게 없다면 현재 행을 선택
         if (!selectedRowsIndexes.includes(clickedRowIndex)) {
           table.rows().deselect();
@@ -106,7 +107,12 @@ const DataTables = ({ columns, data, url, page }) => {
         }
 
         // 선택된 행들 중 우클릭한 행과 동일한 인덱스가 있는지 확인
-        const alertString = table.rows({ selected: true }).data().toArray().map((row) => row.name).join(", ");
+        const alertString = table
+          .rows({ selected: true })
+          .data()
+          .toArray()
+          .map((row) => row.name)
+          .join(", ");
         console.log(alertString);
 
         return;
@@ -120,18 +126,29 @@ const DataTables = ({ columns, data, url, page }) => {
       }
 
       if (isShiftPressed.current && prevSelectedRow.current) {
-        const start = Math.min(dragStartRow.current, table.row(prevSelectedRow.current).index());
-        const end = Math.max(dragStartRow.current, table.row(prevSelectedRow.current).index());
+        const start = Math.min(
+          dragStartRow.current,
+          table.row(prevSelectedRow.current).index()
+        );
+        const end = Math.max(
+          dragStartRow.current,
+          table.row(prevSelectedRow.current).index()
+        );
 
         for (let i = start; i <= end; i++) {
           table.row(i).select(); // 시작 행부터 끝 행까지 선택
         }
       }
 
-      table.row(this).select(); // 현재 행 선택
-
-      if (prevSelectedRow.current == null) {
+      if (isCtrlPressed.current || prevSelectedRow.current == null) {
         prevSelectedRow.current = this; // 이전 선택 행 저장
+      }
+
+      if (isCtrlPressed.current && table.row(this).selected()) {
+        table.row(this).deselect(); // Ctrl 키가 눌렸고 이미 선택된 행을 다시 클릭하면 선택 해제
+        prevSelectedRow.current = null;
+      } else {
+        table.row(this).select(); // 현재 행 선택
       }
     });
 
