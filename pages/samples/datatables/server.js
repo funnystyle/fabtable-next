@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { getPage } from "@components/StringUtil";
 
 const columns = [
-  { title: "Name", data: "name", name: "name" },
-  { title: "Position", data: "position", name: "position" },
-  { title: "Office", data: "office", name: "office" },
-  { title: "Extn.", data: "extn", name: "extn" },
-  { title: "Start data", data: "startDate", name: "startDate" },
-  { title: "Salary", data: "salary", name: "salary" },
+  { title: "Name", data: "name" },
+  { title: "Position", data: "position" },
+  { title: "Office", data: "office" },
+  { title: "Extn.", data: "extn" },
+  { title: "Start data", data: "startDate" },
+  { title: "Salary", data: "salary" },
 ];
 
 const url = "/api/v1/user/customer/list";
