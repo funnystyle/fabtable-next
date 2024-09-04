@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import $ from "jquery";
 import "datatables.net-dt";
 import "datatables.net-colreorder";
@@ -27,7 +27,6 @@ const DataTables = ({ columns, data, url, page }) => {
   const dragStartRow = useRef(null);
   const prevSelectedRow = useRef(null);
   const dragIsSelecting = useRef(true);
-
 
   // table 구현 및 페이지 별 뒤로가기 적용
   useEffect(() => {
@@ -65,7 +64,6 @@ const DataTables = ({ columns, data, url, page }) => {
     window.addEventListener("popstate", handlePopState);
 
     // ########################################################
-    // Ctrl 키 눌림 상태를 추적하기 위한 이벤트 리스너
     const handleKeyDown = (e) => {
       if (e.ctrlKey || e.metaKey) isCtrlPressed.current = true;
       if (e.shiftKey) isShiftPressed.current = true;
@@ -73,14 +71,63 @@ const DataTables = ({ columns, data, url, page }) => {
         e.preventDefault();
         table.rows().select(); // 모든 행 선택
         // 이전 선택행은 제일 첫번째
-        prevSelectedRow.current = table.row(0);
+        // 아래코드로 맞추기 위해 dom으로 설정
+        prevSelectedRow.current = table.row(0).node();
       }
       // ESC 키가 눌렸을 때
       if (e.key === 'Escape' || e.key === 'Esc') {
         table.rows().deselect(); // 모든 행 선택 해제
         prevSelectedRow.current = null;
       }
+
+      const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
+
+
+      const isArrowUp = e.key === "ArrowUp";
+      const isArrowDown = e.key === "ArrowDown";
+
+      // 위/아래 방향키 처리
+      if (isArrowUp || isArrowDown) {
+        e.preventDefault();
+
+        const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
+
+        // 선택된 행이 없을 경우 첫 번째 행 선택
+        if (selectedRowsIndexes.length === 0) {
+          const firstIndex = 0;
+          table.row(firstIndex).select();
+          prevSelectedRow.current = table.row(firstIndex).node();
+          return;
+        }
+
+        // 현재 선택된 행의 인덱스 가져오기
+        const currentIndex = $(prevSelectedRow.current).index();
+        const nextIndex = isArrowUp ? currentIndex - 1 : currentIndex + 1;
+
+        // 인덱스 범위 검사
+        if (nextIndex < 0 || nextIndex >= table.rows().count()) return;
+
+        // Shift가 눌리지 않은 경우: 기존 선택 해제 후 새로운 행 선택
+        if (!e.shiftKey) {
+          table.rows().deselect();
+          table.row(nextIndex).select();
+          prevSelectedRow.current = table.row(nextIndex).node();
+          return;
+        }
+
+        // Shift가 눌린 경우: 연속적인 선택/해제 처리
+        if (prevSelectedRow.current) {
+          const isSelected = table.row(nextIndex).node().classList.contains("selected");
+          if (!isSelected) {
+            table.row(nextIndex).select();
+          } else {
+            table.row(currentIndex).deselect();
+          }
+          prevSelectedRow.current = table.row(nextIndex).node();
+        }
+      }
     };
+
     const handleKeyUp = (e) => {
       if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
       if (!e.shiftKey) isShiftPressed.current = false;
