@@ -14,6 +14,9 @@ import "datatables.net-select";
 import "datatables.net-select-dt/css/select.dataTables.min.css";
 import { createDataTablesOptions } from "@components/DataTableOptions";
 import { useRouter } from "next/router";
+import ContextMenu from "@components/ContextMenu";
+import { contextMenuOptions } from "@components/ContextMenuOption";
+import { handleDraw, handleKeyDown, handleKeyUp, handleMouseDown, handleMouseDownOutside } from "@components/DataTablesMouseEvent";
 
 const DataTables = ({ columns, data, url, page }) => {
   const tableRef = useRef(null);
@@ -27,6 +30,23 @@ const DataTables = ({ columns, data, url, page }) => {
   const dragStartRow = useRef(null);
   const prevSelectedRow = useRef(null);
   const dragIsSelecting = useRef(true);
+
+  //
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [menuPosition, setMenuPosition] = useState({ x: 0, y: 0 });
+
+  const handleCloseMenu = () => {
+    setMenuVisible(false);
+  };
+
+  const handleContextMenu = (event) => {
+    event.preventDefault();
+    const { clientX: x, clientY: y } = event;
+
+    setMenuPosition({ x, y });
+    setMenuVisible(true);
+  };
+
 
   // table 구현 및 페이지 별 뒤로가기 적용
   useEffect(() => {
@@ -135,9 +155,6 @@ const DataTables = ({ columns, data, url, page }) => {
         table.rows({ selected: true }).deselect(); // 선택 해제
         prevSelectedRow.current = null;
       }
-    };
-    const handleContextMenu = (e) => {
-      e.preventDefault(); // 기본 동작 방지
     };
     // 선택 후 alert 표시
     const handleDraw = () => {
@@ -248,6 +265,13 @@ const DataTables = ({ columns, data, url, page }) => {
   return (
     <div ref={containerRef}>
       <table ref={tableRef} style={{ width: "100%" }}></table>
+      {isMenuVisible && (
+        <ContextMenu
+          options={contextMenuOptions}
+          position={menuPosition}
+          onClose={handleCloseMenu}
+        />
+      )}
     </div>
   );
 };
