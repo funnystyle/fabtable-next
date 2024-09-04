@@ -133,7 +133,7 @@ const DataTables = ({ columns, data, url, page }) => {
       }
 
 
-      if ((isCtrlPressed.current && !isShiftPressed.current) || prevSelectedRow.current == null) {
+      if (!isShiftPressed.current || prevSelectedRow.current == null) {
         prevSelectedRow.current = this; // 이전 선택 행 저장
         console.log("prevSelectedRow save!!!!");
       }
