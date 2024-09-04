@@ -26,6 +26,8 @@ const DataTables = ({ columns, data, url, page }) => {
   const isDragging = useRef(false);
   const dragStartRow = useRef(null);
   const prevSelectedRow = useRef(null);
+  const dragIsSelecting = useRef(true);
+
 
   // table 구현 및 페이지 별 뒤로가기 적용
   useEffect(() => {
@@ -67,39 +69,52 @@ const DataTables = ({ columns, data, url, page }) => {
     const handleKeyDown = (e) => {
       if (e.ctrlKey || e.metaKey) isCtrlPressed.current = true;
       if (e.shiftKey) isShiftPressed.current = true;
+      if ((e.ctrlKey || e.metaKey) && e.key === "a") {
+        e.preventDefault();
+        table.rows().select(); // 모든 행 선택
+        // 이전 선택행은 제일 첫번째
+        prevSelectedRow.current = table.row(0);
+      }
+      // ESC 키가 눌렸을 때
+      if (e.key === 'Escape' || e.key === 'Esc') {
+        table.rows().deselect(); // 모든 행 선택 해제
+        prevSelectedRow.current = null;
+      }
     };
     const handleKeyUp = (e) => {
       if (!e.ctrlKey && !e.metaKey) isCtrlPressed.current = false;
-      if (!e.shiftKey) {
-        isShiftPressed.current = false;
-        // prevSelectedRow.current = null;
-      }
+      if (!e.shiftKey) isShiftPressed.current = false;
     };
     const handleMouseDown = (e) => {
       // 클릭한 영역이 테이블 바깥인지 확인
       if (!containerRef.current.contains(e.target)) {
         table.rows({ selected: true }).deselect(); // 선택 해제
+        prevSelectedRow.current = null;
       }
     };
     const handleContextMenu = (e) => {
       e.preventDefault(); // 기본 동작 방지
     };
+    // 선택 후 alert 표시
+    const handleDraw = () => {
+      prevSelectedRow.current = null;
+    };
     document.addEventListener("keydown", handleKeyDown);
     document.addEventListener("keyup", handleKeyUp);
     document.addEventListener("mousedown", handleMouseDown);
     document.addEventListener("contextmenu", handleContextMenu);
+    table.on('draw', handleDraw); // draw 이벤트 핸들러 등록
     // ########################################################
 
     // ########################################################
     // 테이블의 행 클릭 및 드래그 이벤트 핸들러
     $(tableRef.current).on("mousedown", "tr", function (e) {
+      console.log("shift current", isShiftPressed.current);
+      console.log("prevSelectedRow", prevSelectedRow.current);
       e.preventDefault(); // 기본 동작 방지
       if (e.button !== 0) {
-        const selectedRowsIndexes = table
-          .rows({ selected: true })
-          .indexes()
-          .toArray();
-        const clickedRowIndex = table.row($(e.target).closest("tr")).index();
+        const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
+        const clickedRowIndex = table.row($(e.target).closest('tr')).index();
         // 선택된게 없다면 현재 행을 선택
         if (!selectedRowsIndexes.includes(clickedRowIndex)) {
           table.rows().deselect();
@@ -107,49 +122,44 @@ const DataTables = ({ columns, data, url, page }) => {
         }
 
         // 선택된 행들 중 우클릭한 행과 동일한 인덱스가 있는지 확인
-        const alertString = table
-          .rows({ selected: true })
-          .data()
-          .toArray()
-          .map((row) => row.name)
-          .join(", ");
+        const alertString = table.rows({ selected: true }).data().toArray().map((row) => row.name).join(", ");
         console.log(alertString);
 
         return;
       }
 
-      isDragging.current = true; // 드래그 시작
-      dragStartRow.current = table.row(this).index(); // 드래그 시작 행의 인덱스를 저장
-
       if (!isCtrlPressed.current) {
         table.rows().deselect(); // Ctrl 키가 눌리지 않았으면 기존 선택 해제
       }
 
+
+      if ((isCtrlPressed.current && !isShiftPressed.current) || prevSelectedRow.current == null) {
+        prevSelectedRow.current = this; // 이전 선택 행 저장
+        console.log("prevSelectedRow save!!!!");
+      }
+
+      isDragging.current = true; // 드래그 시작
+      dragStartRow.current = table.row(this).index(); // 드래그 시작 행의 인덱스를 저장
+
+      // Ctrl 키가 눌렸고, 현재행이 선택된 상태라면 선택 해제
+      if (isCtrlPressed.current && table.row(this).selected()) {
+        table.row(this).deselect(); // Ctrl 키가 눌렸고 이미 선택된 행을 다시 클릭하면 선택 해제
+        prevSelectedRow.current = null;
+        dragIsSelecting.current = false;
+      } else {
+        table.row(this).select(); // 현재 행 선택
+        dragIsSelecting.current = true;
+      }
+
       if (isShiftPressed.current && prevSelectedRow.current) {
-        const start = Math.min(
-          dragStartRow.current,
-          table.row(prevSelectedRow.current).index()
-        );
-        const end = Math.max(
-          dragStartRow.current,
-          table.row(prevSelectedRow.current).index()
-        );
+        const start = Math.min(dragStartRow.current, table.row(prevSelectedRow.current).index());
+        const end = Math.max(dragStartRow.current, table.row(prevSelectedRow.current).index());
 
         for (let i = start; i <= end; i++) {
           table.row(i).select(); // 시작 행부터 끝 행까지 선택
         }
       }
 
-      if (isCtrlPressed.current || prevSelectedRow.current == null) {
-        prevSelectedRow.current = this; // 이전 선택 행 저장
-      }
-
-      if (isCtrlPressed.current && table.row(this).selected()) {
-        table.row(this).deselect(); // Ctrl 키가 눌렸고 이미 선택된 행을 다시 클릭하면 선택 해제
-        prevSelectedRow.current = null;
-      } else {
-        table.row(this).select(); // 현재 행 선택
-      }
     });
 
     // 마우스가 다른 행으로 이동할 때 선택 범위를 확장
@@ -162,7 +172,11 @@ const DataTables = ({ columns, data, url, page }) => {
         // table.rows({ selected: true }).deselect(); // 모든 선택 해제
 
         for (let i = start; i <= end; i++) {
-          table.row(i).select(); // 시작 행부터 끝 행까지 선택
+          if (dragIsSelecting.current) {
+            table.row(i).select(); // 시작 행부터 끝 행까지 선택
+          } else {
+            table.row(i).deselect(); // 시작 행부터 끝 행까지 선택 해제
+          }
         }
       }
     });
@@ -180,6 +194,7 @@ const DataTables = ({ columns, data, url, page }) => {
       document.removeEventListener("keyup", handleKeyUp);
       $(document).off("mouseup");
       $(tableRef.current).off("mousedown mouseover");
+      table.off('draw', handleDraw); // draw 이벤트 핸들러 제거
 
       window.removeEventListener("popstate", handlePopState);
       table.destroy();
