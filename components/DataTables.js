@@ -83,7 +83,6 @@ const DataTables = ({ columns, data, url, page }) => {
       document.removeEventListener("keyup", handleKeyUpWrapper);
       document.removeEventListener("mousedown", handleMouseDownOutsideWrapper);
       document.removeEventListener("contextmenu", handleContextMenu);
-      document.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("popstate", handlePopStateWrapper);
       $(tableRef.current).off("mousedown", "tr", handleMouseDownWrapper);
       $(tableRef.current).off("mouseover", "tr", handleMouseOverWrapper);
@@ -103,6 +102,7 @@ const DataTables = ({ columns, data, url, page }) => {
           options={contextMenuOptions}
           position={menuPosition}
           onClose={handleCloseMenu}
+          isSubmenu={false}
         />
       )}
     </div>
