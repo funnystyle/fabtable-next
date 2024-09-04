@@ -80,9 +80,6 @@ const DataTables = ({ columns, data, url, page }) => {
         prevSelectedRow.current = null;
       }
 
-      const selectedRowsIndexes = table.rows({ selected: true }).indexes().toArray();
-
-
       const isArrowUp = e.key === "ArrowUp";
       const isArrowDown = e.key === "ArrowDown";
 
