@@ -98,7 +98,9 @@ const DataTables = ({ header, columns, data, url, page }) => {
   return (
     <div ref={containerRef}>
       <table ref={tableRef} style={{ width: "100%" }}>
-        <DataTablesHeader header={header} columns={columns} />
+        {header && (
+          <DataTablesHeader header={header} columns={columns} />
+        )}
       </table>
       {isMenuVisible && (
         <ContextMenu

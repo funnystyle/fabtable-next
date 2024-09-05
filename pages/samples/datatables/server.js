@@ -24,7 +24,7 @@ const header = [
     { title: "bbb", colspan: 3 },
   ],
   [
-    { title: "111", rowspan: 2 },
+    { title: "Name", rowspan: 2 },
     { title: "222", colspan: 2 },
     { title: "333", colspan: 3 },
   ],
