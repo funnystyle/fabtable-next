@@ -21,6 +21,7 @@ import { handlePopState, popStatePush } from "@components/PopState";
 import DataTablesHeader from "@components/DataTablesHeader";
 
 const DataTables = ({ header, columns, data, url, page }) => {
+
   const tableRef = useRef(null);
   const containerRef = useRef(null); // 테이블 컨테이너를 참조하기 위한 변수
   const router = useRouter();
@@ -55,7 +56,7 @@ const DataTables = ({ header, columns, data, url, page }) => {
 
   useEffect(() => {
     // 테이블 생성
-    const dataTableOptions = createDataTablesOptions(columns, data, url, page);
+    const dataTableOptions = createDataTablesOptions(header, columns, data, url, page);
     const table = $(tableRef.current).DataTable(dataTableOptions);
 
     // 페이지 변경 시 뒤로 가기 하도록
@@ -76,6 +77,49 @@ const DataTables = ({ header, columns, data, url, page }) => {
     $(tableRef.current).on("mouseover", "tr", handleMouseOverWrapper);
     table.on("draw", handleDrawWrapper); // draw 이벤트 핸들러 등록
     $(document).on("mouseup", handleMouseUpWrapper);
+
+    // ColReorder 완료 후 현재 열 순서를 가져오는 방법
+    table.on('columns-reordered', function (e, details) {
+      const trList = $(this).find("thead tr");
+      const newHeader = [];
+      const newColumns = [];
+      trList.each((i, tr) => {
+        const newTr = [];
+
+        let count = 0;
+        $(tr).find("th").each((j, th) => {
+          count += th.colSpan;
+          const newTh = {title: th.innerText, colspan: th.colSpan, rowspan: th.rowSpan};
+          newTr.push(newTh);
+          if ($(th).data("dt-order") !== 'disable') {
+            newColumns.forEach((column, k) => {
+              if (column.count == count) {
+                count++;
+              }
+            });
+            newColumns.push({title:th.innerText, count});
+          }
+        });
+        newHeader.push(newTr);
+      });
+
+      newColumns.forEach((newColumn, i) => {
+        columns.forEach((column, j) => {
+          if (newColumn.title === column.title) {
+            newColumn.data = column.data;
+          }
+        });
+      });
+
+      //newColumns을 count 기준으로 정렬
+      newColumns.sort((a, b) => a.count - b.count);
+
+      localStorage.setItem('tableHeader', JSON.stringify(newHeader));
+      localStorage.setItem('tableColumns', JSON.stringify(newColumns));
+
+      // table.draw();
+      window.location.reload();
+    });
 
     // 언마운트 시 destroy 및 이벤트 핸들러 제거
     return () => {

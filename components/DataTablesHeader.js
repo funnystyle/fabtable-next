@@ -1,4 +1,4 @@
-const DataTablesHeader = ({ header, columns }) => {
+const DataTablesHeader = ({ header }) => {
 
   return (
     <thead>

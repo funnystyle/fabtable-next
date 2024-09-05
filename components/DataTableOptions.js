@@ -1,11 +1,18 @@
 import { ExcelDownload } from "@components/ExcelDownload";
 import $ from "jquery";
 
-export const createDataTablesOptions = (columns, data, url, page) => {
+export const createDataTablesOptions = (header, columns, data, url, page) => {
+
+  // header가 null이면 columns와 동일
+  if (!header) {
+    header = columns;
+  }
+
+  console.log(columns);
+
   // columns의 모든 data 속성을 name 속성으로 복사
   columns.forEach((column) => {
     column.name = column.data;
-    column.orderable = true;
   });
 
 
@@ -34,14 +41,21 @@ export const createDataTablesOptions = (columns, data, url, page) => {
       },
       bottom2: {
         buttons: [
-          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false }),
-          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false }),
-          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true }),
-          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true })
-
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true })
           ]
       }
     },
+    initComplete: function (dt) {
+      const tr = this.find('thead tr');
+      const th = $(tr[tr.length - 1]).find('th');
+      th.each(function (i, data) {
+        console.log(data);
+        $(data).attr('colspan',1);
+      });
+    }
   };
 
   // data가 있으면 clientSide

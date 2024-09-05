@@ -1,5 +1,5 @@
 
-export const ExcelDownload = ({ columns, data, downloadUrl, allRows, allColumns }) => {
+export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumns }) => {
 
   const text = allRows && allColumns ? 'Download All' : (allRows ? 'Download All Rows Selected Columns' : (allColumns ? 'Download Selected Rows All Columns' : 'Download Selected Rows Selected Columns'));
 
@@ -12,6 +12,7 @@ export const ExcelDownload = ({ columns, data, downloadUrl, allRows, allColumns 
 
       // 서버에 보낼 데이터 구성
       const requestData = {
+        header,
         allColumnNames: columns.map(column => column.name), // 전체 열 이름
         columns: selectedColumns.map(index => dt.settings().init().columns[index].data), // 선택된 열의 data 속성
         search: {value:dt.search()},
