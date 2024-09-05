@@ -18,8 +18,9 @@ import ContextMenu from "@components/ContextMenu";
 import { contextMenuOptions } from "@components/ContextMenuOption";
 import { getEventWrapper, handleDraw, handleKeyDown, handleKeyUp, handleMouseDown, handleMouseDownOutside, handleMouseOver, handleMouseUp } from "@components/DataTablesMouseEvent";
 import { handlePopState, popStatePush } from "@components/PopState";
+import DataTablesHeader from "@components/DataTablesHeader";
 
-const DataTables = ({ columns, data, url, page }) => {
+const DataTables = ({ header, columns, data, url, page }) => {
   const tableRef = useRef(null);
   const containerRef = useRef(null); // 테이블 컨테이너를 참조하기 위한 변수
   const router = useRouter();
@@ -96,7 +97,9 @@ const DataTables = ({ columns, data, url, page }) => {
 
   return (
     <div ref={containerRef}>
-      <table ref={tableRef} style={{ width: "100%" }}></table>
+      <table ref={tableRef} style={{ width: "100%" }}>
+        <DataTablesHeader header={header} columns={columns} />
+      </table>
       {isMenuVisible && (
         <ContextMenu
           options={contextMenuOptions}

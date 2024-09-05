@@ -1,8 +1,13 @@
+import { ExcelDownload } from "@components/ExcelDownload";
+import $ from "jquery";
+
 export const createDataTablesOptions = (columns, data, url, page) => {
   // columns의 모든 data 속성을 name 속성으로 복사
   columns.forEach((column) => {
     column.name = column.data;
+    column.orderable = true;
   });
+
 
   let dataTableOptions = {
     columns: columns,
@@ -22,8 +27,20 @@ export const createDataTablesOptions = (columns, data, url, page) => {
     layout: {
       topStart: {
         // features: ["pageLength"],
-        buttons: ["colvis", "pageLength"],
+        buttons: [
+          "colvis",
+          "pageLength",
+        ],
       },
+      bottom2: {
+        buttons: [
+          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false }),
+          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false }),
+          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true }),
+          ExcelDownload({ columns, data, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true })
+
+          ]
+      }
     },
   };
 
@@ -45,11 +62,6 @@ export const createDataTablesOptions = (columns, data, url, page) => {
       url: serverUrl,
       type: "POST",
       data: function (d) {
-        // d.order.forEach(function (o, i) {
-        //   o.columnName = d.columns[o.column].data;
-        // }); // sort data
-        // d.length = 10;
-        // d.start = (page -1) * 10;
         console.log(d);
         return JSON.stringify(d);
       },

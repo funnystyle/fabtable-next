@@ -74,8 +74,8 @@ export const handleKeyUp = (e, data) => {
 };
 
 export const handleMouseDownOutside = (e, data) => {
-  e.preventDefault(); // 기본 동작 방지
   if (!data.containerRef.current.contains(e.target)) {
+    e.preventDefault(); // 기본 동작 방지
     data.table.rows({ selected: true }).deselect(); // 선택 해제
     data.prevSelectedRow.current = null;
   }
