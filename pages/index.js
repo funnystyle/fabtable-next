@@ -19,6 +19,9 @@ const HomePage = () => {
           DataTables 샘플 - server side 데이터
         </Link>
       </p>
+      <p>
+        <Link href="/samples/sortable">Sortable 샘플 - 컬럼 항목편집</Link>
+      </p>
     </div>
   );
 };
