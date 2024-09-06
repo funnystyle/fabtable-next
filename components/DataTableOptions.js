@@ -1,8 +1,20 @@
-export const createDataTablesOptions = (columns, data, url, page) => {
+import { ExcelDownload } from "@components/ExcelDownload";
+import $ from "jquery";
+
+export const createDataTablesOptions = (header, columns, data, url, page) => {
+
+  // header가 null이면 columns와 동일
+  if (!header) {
+    header = columns;
+  }
+
+  console.log(columns);
+
   // columns의 모든 data 속성을 name 속성으로 복사
   columns.forEach((column) => {
     column.name = column.data;
   });
+
 
   let dataTableOptions = {
     columns: columns,
@@ -22,9 +34,28 @@ export const createDataTablesOptions = (columns, data, url, page) => {
     layout: {
       topStart: {
         // features: ["pageLength"],
-        buttons: ["colvis", "pageLength"],
+        buttons: [
+          "colvis",
+          "pageLength",
+        ],
       },
+      bottom2: {
+        buttons: [
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true }),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true })
+          ]
+      }
     },
+    initComplete: function (dt) {
+      const tr = this.find('thead tr');
+      const th = $(tr[tr.length - 1]).find('th');
+      th.each(function (i, data) {
+        console.log(data);
+        $(data).attr('colspan',1);
+      });
+    }
   };
 
   // data가 있으면 clientSide
@@ -45,11 +76,6 @@ export const createDataTablesOptions = (columns, data, url, page) => {
       url: serverUrl,
       type: "POST",
       data: function (d) {
-        // d.order.forEach(function (o, i) {
-        //   o.columnName = d.columns[o.column].data;
-        // }); // sort data
-        // d.length = 10;
-        // d.start = (page -1) * 10;
         console.log(d);
         return JSON.stringify(d);
       },
