@@ -55,6 +55,9 @@ const DataTables = ({ header, columns, data, url, page }) => {
 
 
   useEffect(() => {
+
+    console.log("DataTables useEffect");
+
     // 테이블 생성
     const dataTableOptions = createDataTablesOptions(header, columns, data, url, page);
     const table = $(tableRef.current).DataTable(dataTableOptions);
@@ -78,49 +81,53 @@ const DataTables = ({ header, columns, data, url, page }) => {
     table.on("draw", handleDrawWrapper); // draw 이벤트 핸들러 등록
     $(document).on("mouseup", handleMouseUpWrapper);
 
-    // ColReorder 완료 후 현재 열 순서를 가져오는 방법
-    table.on('columns-reordered', function (e, details) {
-      const trList = $(this).find("thead tr");
+    // 테이블 헤더와 컬럼 순서를 로컬 스토리지에 저장하는 함수
+    const saveTableState = () => {
+      console.log("saveTableState");
+      const trList = $(tableRef.current).find("thead tr");
       const newHeader = [];
       const newColumns = [];
+
       trList.each((i, tr) => {
         const newTr = [];
-
         let count = 0;
+
         $(tr).find("th").each((j, th) => {
           count += th.colSpan;
-          const newTh = {title: th.innerText, colspan: th.colSpan, rowspan: th.rowSpan};
+          const newTh = { title: th.innerText, colspan: th.colSpan, rowspan: th.rowSpan };
           newTr.push(newTh);
+
           if ($(th).data("dt-order") !== 'disable') {
             newColumns.forEach((column, k) => {
-              if (column.count == count) {
+              if (column.count === count) {
                 count++;
               }
             });
-            newColumns.push({title:th.innerText, count});
+            newColumns.push({ title: th.innerText, count });
           }
         });
+
         newHeader.push(newTr);
       });
 
-      newColumns.forEach((newColumn, i) => {
-        columns.forEach((column, j) => {
+      newColumns.forEach((newColumn) => {
+        columns.forEach((column) => {
           if (newColumn.title === column.title) {
             newColumn.data = column.data;
           }
         });
       });
 
-      //newColumns을 count 기준으로 정렬
+      // newColumns을 count 기준으로 정렬
       newColumns.sort((a, b) => a.count - b.count);
 
+      // 로컬 스토리지에 저장
       localStorage.setItem('tableHeader', JSON.stringify(newHeader));
       localStorage.setItem('tableColumns', JSON.stringify(newColumns));
+    };
 
-      // table.draw();
-      window.location.reload();
-    });
-
+    // ColReorder 완료 후 열 순서 저장
+    table.on('columns-reordered', saveTableState);
     // 언마운트 시 destroy 및 이벤트 핸들러 제거
     return () => {
       // 이벤트 리스너 제거
@@ -133,6 +140,7 @@ const DataTables = ({ header, columns, data, url, page }) => {
       $(tableRef.current).off("mouseover", "tr", handleMouseOverWrapper);
       table.off("draw", handleDrawWrapper);
       table.off("draw", handlePopStatePushWrapper);
+      table.off('columns-reordered', saveTableState);
       $(document).off("mouseup", handleMouseUpWrapper);
 
       table.destroy();
