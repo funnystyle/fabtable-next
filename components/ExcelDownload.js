@@ -1,10 +1,11 @@
 
-export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumns }) => {
+export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumns, type }) => {
 
   const text = allRows && allColumns ? 'Download All' : (allRows ? 'Download All Rows Selected Columns' : (allColumns ? 'Download Selected Rows All Columns' : 'Download Selected Rows Selected Columns'));
+  const ext = type === 'EXCEL' ? 'xlsx' : 'pdf';
 
   return {
-      text: text,
+      text: text + ' ' + type,
       action: function (e, dt, button, config) {
       // 선택된 열 정보 가져오기
       const selectedColumns = dt.columns(':visible').indexes().toArray();
@@ -44,7 +45,7 @@ export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumn
             const link = document.createElement('a');
             const url = window.URL.createObjectURL(blob);
             link.href = url;
-            link.download = 'data.xlsx'; // 다운로드 파일 이름
+            link.download = 'data.' + ext; // 다운로드 파일 이름
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

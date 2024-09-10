@@ -41,11 +41,19 @@ export const createDataTablesOptions = (header, columns, data, url, page) => {
       },
       bottom2: {
         buttons: [
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false }),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false }),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true }),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true })
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false, type: 'EXCEL'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false, type: 'EXCEL'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true, type: 'EXCEL'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true, type: 'EXCEL'})
           ]
+      },
+      bottom3: {
+        buttons: [
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:false, type: 'PDF'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:false, type: 'PDF'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:true, type: 'PDF'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:true, type: 'PDF'})
+        ]
       }
     },
     initComplete: function (dt) {
