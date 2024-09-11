@@ -54,6 +54,14 @@ export const createDataTablesOptions = (header, columns, data, url, page) => {
           ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:true, type: 'PDF'}),
           ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:true, type: 'PDF'})
         ]
+      },
+      bottom4: {
+        buttons: [
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:false, type: 'WORD'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:false, type: 'WORD'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:true, type: 'WORD'}),
+          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:true, type: 'WORD'})
+        ]
       }
     },
     initComplete: function (dt) {

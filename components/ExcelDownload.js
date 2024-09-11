@@ -2,7 +2,7 @@
 export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumns, type }) => {
 
   const text = allRows && allColumns ? 'Download All' : (allRows ? 'Download All Rows Selected Columns' : (allColumns ? 'Download Selected Rows All Columns' : 'Download Selected Rows Selected Columns'));
-  const ext = type === 'EXCEL' ? 'xlsx' : 'pdf';
+  const ext = type === 'EXCEL' ? 'xlsx' : (type === 'PDF' ? 'pdf' : 'docx');
 
   return {
       text: text + ' ' + type,
