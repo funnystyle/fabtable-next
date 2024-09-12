@@ -19,6 +19,7 @@ import { contextMenuOptions } from "@components/ContextMenuOption";
 import { getEventWrapper, handleDraw, handleKeyDown, handleKeyUp, handleMouseDown, handleMouseDownOutside, handleMouseOver, handleMouseUp } from "@components/DataTablesMouseEvent";
 import { handlePopState, popStatePush } from "@components/PopState";
 import DataTablesHeader from "@components/DataTablesHeader";
+import {saveTableHeaderState} from "@components/DataTablesHeaderInfo";
 
 const DataTables = ({ header, columns, data, url, page }) => {
 
@@ -82,52 +83,15 @@ const DataTables = ({ header, columns, data, url, page }) => {
     $(document).on("mouseup", handleMouseUpWrapper);
 
     // 테이블 헤더와 컬럼 순서를 로컬 스토리지에 저장하는 함수
-    const saveTableState = () => {
-      console.log("saveTableState");
-      const trList = $(tableRef.current).find("thead tr");
-      const newHeader = [];
-      const newColumns = [];
+    const saveTableHeaderStateWrapper = (e) => saveTableHeaderState(tableRef, columns);
 
-      trList.each((i, tr) => {
-        const newTr = [];
-        let count = 0;
-
-        $(tr).find("th").each((j, th) => {
-          count += th.colSpan;
-          const newTh = { title: th.innerText, colspan: th.colSpan, rowspan: th.rowSpan };
-          newTr.push(newTh);
-
-          if ($(th).data("dt-order") !== 'disable') {
-            newColumns.forEach((column, k) => {
-              if (column.count === count) {
-                count++;
-              }
-            });
-            newColumns.push({ title: th.innerText, count });
-          }
-        });
-
-        newHeader.push(newTr);
-      });
-
-      newColumns.forEach((newColumn) => {
-        columns.forEach((column) => {
-          if (newColumn.title === column.title) {
-            newColumn.data = column.data;
-          }
-        });
-      });
-
-      // newColumns을 count 기준으로 정렬
-      newColumns.sort((a, b) => a.count - b.count);
-
-      // 로컬 스토리지에 저장
-      localStorage.setItem('tableHeader', JSON.stringify(newHeader));
-      localStorage.setItem('tableColumns', JSON.stringify(newColumns));
-    };
+    const handleReload = () => {
+        router.reload();
+    }
 
     // ColReorder 완료 후 열 순서 저장
-    table.on('columns-reordered', saveTableState);
+    table.on('columns-reordered', saveTableHeaderStateWrapper);
+    table.on('columns-reordered', handleReload);
     // 언마운트 시 destroy 및 이벤트 핸들러 제거
     return () => {
       // 이벤트 리스너 제거
@@ -140,7 +104,8 @@ const DataTables = ({ header, columns, data, url, page }) => {
       $(tableRef.current).off("mouseover", "tr", handleMouseOverWrapper);
       table.off("draw", handleDrawWrapper);
       table.off("draw", handlePopStatePushWrapper);
-      table.off('columns-reordered', saveTableState);
+      table.off('columns-reordered', saveTableHeaderStateWrapper);
+        table.off('columns-reordered', handleReload);
       $(document).off("mouseup", handleMouseUpWrapper);
 
       table.destroy();
