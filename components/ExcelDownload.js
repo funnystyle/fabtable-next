@@ -1,5 +1,6 @@
+import {saveTableHeaderState} from "@components/DataTablesHeaderInfo";
 
-export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumns, type }) => {
+export const ExcelDownload = ({ tableRef, header, columns, downloadUrl, allRows, allColumns, type }) => {
 
   const text = allRows && allColumns ? 'Download All' : (allRows ? 'Download All Rows Selected Columns' : (allColumns ? 'Download Selected Rows All Columns' : 'Download Selected Rows Selected Columns'));
   const ext = type === 'EXCEL' ? 'xlsx' : (type === 'PDF' ? 'pdf' : 'docx');
@@ -8,14 +9,18 @@ export const ExcelDownload = ({ header, columns, downloadUrl, allRows, allColumn
       text: text + ' ' + type,
       action: function (e, dt, button, config) {
       // 선택된 열 정보 가져오기
+      const headerInfo = saveTableHeaderState(tableRef, columns);
       const selectedColumns = dt.columns(':visible').indexes().toArray();
       const selectedRows = dt.rows({ selected: true }).indexes().toArray();
 
+      const selectedColumnsAllData = selectedColumns.map(index => dt.settings().init().columns[index]);
+      const selectedColumnsData = selectedColumns.map(index => dt.settings().init().columns[index].data);
+
       // 서버에 보낼 데이터 구성
       const requestData = {
-        header:allColumns? [columns]:header,
+        header:allColumns? [columns]:headerInfo.header,
         allColumnNames: columns.map(column => column.name), // 전체 열 이름
-        columns: selectedColumns.map(index => dt.settings().init().columns[index].data), // 선택된 열의 data 속성
+        columns: selectedColumnsData, // 선택된 열의 data 속성
         search: {value:dt.search()},
         order: dt.order().map(([index, dir]) => ({
           columns: index,

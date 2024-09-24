@@ -60,7 +60,7 @@ const DataTables = ({ header, columns, data, url, page }) => {
     console.log("DataTables useEffect");
 
     // 테이블 생성
-    const dataTableOptions = createDataTablesOptions(header, columns, data, url, page);
+    const dataTableOptions = createDataTablesOptions(tableRef, header, columns, data, url, page);
     const table = $(tableRef.current).DataTable(dataTableOptions);
 
     // 페이지 변경 시 뒤로 가기 하도록

@@ -1,7 +1,7 @@
 import { ExcelDownload } from "@components/ExcelDownload";
 import $ from "jquery";
 
-export const createDataTablesOptions = (header, columns, data, url, page) => {
+export const createDataTablesOptions = (tableRef, header, columns, data, url, page) => {
 
   // header가 null이면 columns와 동일
   if (!header) {
@@ -41,26 +41,26 @@ export const createDataTablesOptions = (header, columns, data, url, page) => {
       },
       bottom2: {
         buttons: [
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false, type: 'EXCEL'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false, type: 'EXCEL'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true, type: 'EXCEL'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true, type: 'EXCEL'})
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:false, type: 'EXCEL'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:false, type: 'EXCEL'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:false, allColumns:true, type: 'EXCEL'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/excel`, allRows:true, allColumns:true, type: 'EXCEL'})
           ]
       },
       bottom3: {
         buttons: [
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:false, type: 'PDF'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:false, type: 'PDF'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:true, type: 'PDF'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:true, type: 'PDF'})
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:false, type: 'PDF'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:false, type: 'PDF'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:false, allColumns:true, type: 'PDF'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/pdf`, allRows:true, allColumns:true, type: 'PDF'})
         ]
       },
       bottom4: {
         buttons: [
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:false, type: 'WORD'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:false, type: 'WORD'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:true, type: 'WORD'}),
-          ExcelDownload({ header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:true, type: 'WORD'})
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:false, type: 'WORD'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:false, type: 'WORD'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:true, type: 'WORD'}),
+          ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:true, type: 'WORD'})
         ]
       }
     },

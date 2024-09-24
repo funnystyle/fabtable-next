@@ -39,8 +39,10 @@ export const saveTableHeaderState = (tableRef, columns) => {
   newColumns.sort((a, b) => a.count - b.count);
 
   // 로컬 스토리지에 저장
-  localStorage.setItem('tableHeader', JSON.stringify(newHeader));
-  localStorage.setItem('tableColumns', JSON.stringify(newColumns));
+  if (columns.length === newColumns.length) {
+    localStorage.setItem('tableHeader', JSON.stringify(newHeader));
+    localStorage.setItem('tableColumns', JSON.stringify(newColumns));
+  }
 
   return {
     header: newHeader,
