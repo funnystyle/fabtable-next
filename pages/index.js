@@ -25,6 +25,9 @@ const HomePage = () => {
     <p>
         <Link href="/samples/layerpopup">레이어팝업 시간 재기</Link>
     </p>
+    <p>
+        <Link href="/samples/layout/golden-layout">골든 레이아웃</Link>
+    </p>
     </div>
   );
 };
