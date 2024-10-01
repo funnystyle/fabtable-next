@@ -26,6 +26,7 @@ export const ExcelUpload = ({ uploadUrl }) => {
 
           if (response.ok) {
             alert('파일 업로드 성공!');
+            console.log('파일 업로드 성공:', response)
           } else {
             alert('파일 업로드 실패.');
           }
