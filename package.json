@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@chakra-ui/next-js": "^2.2.0",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@tanstack/react-query": "^5.50.1",
     "axios": "^1.7.2",
     "datatables.net-buttons": "^3.1.2",
@@ -20,6 +25,7 @@
     "datatables.net-select": "^2.0.5",
     "datatables.net-select-dt": "^2.0.5",
     "dotenv": "^16.4.5",
+    "framer-motion": "^11.9.0",
     "golden-layout": "1.5.9",
     "jquery": "^3.7.1",
     "next": "14.2.4",
@@ -33,6 +39,7 @@
   "devDependencies": {
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
+    "patch-package": "^8.0.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1"
   }

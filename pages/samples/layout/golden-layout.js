@@ -1,12 +1,10 @@
-import React, { useLayoutEffect, useMemo, useRef } from "react";
-// import GoldenLayout from "golden-layout";
-import dynamic from 'next/dynamic';
+// 'use client'
+import React, { useEffect, useMemo, useRef } from "react";
+// import dynamic from "next/dynamic";
+import GoldenLayout from "golden-layout";
 import 'golden-layout/src/css/goldenlayout-base.css';
 import 'golden-layout/src/css/goldenlayout-light-theme.css';
 
-const GoldenLayout = dynamic(() => import('golden-layout'), { ssr: false });
-
-// import "./styles.css";
 
 export default function App() {
   return (
@@ -64,7 +62,12 @@ function GoldenLayoutStuff() {
     []
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // const GoldenLayout = dynamic(() => import("golden-layout"), { ssr: false });
+
+    if (typeof window !== "undefined") {
+
+    console.log("GoldenLayout", GoldenLayout);
     const myLayout = new GoldenLayout(config, myRef.current);
 
     myLayout.registerComponent("example", function (container, state) {
@@ -83,6 +86,7 @@ function GoldenLayoutStuff() {
     });
 
     myLayout.init();
+  }
   }, [config]);
 
   return <div ref={myRef} style={{ height: "100%", width: "100%" }}></div>;

@@ -1,38 +1,38 @@
 // pages/index.js
 import React from "react";
-import Link from "next/link";
+import { Link } from '@chakra-ui/next-js'
 
 const HomePage = () => {
   return (
     <div>
       <h1>MKP 샘플페이지</h1>
       <p>
-        <Link href="/samples/board">게시판 샘플 - React Query & Zustand</Link>
+        <Link href="/samples/board" color='blue.400' _hover={{ color: 'blue.500' }}>게시판 샘플 - React Query & Zustand</Link>
       </p>
       <p>
-        <Link href="/samples/datatables/client">
+        <Link href="/samples/datatables/client" color='blue.400' _hover={{ color: 'blue.500' }}>
           DataTables 샘플 - client side 데이터
         </Link>
       </p>
       <p>
-        <Link href="/samples/datatables/server">
+        <Link href="/samples/datatables/server" color='blue.400' _hover={{ color: 'blue.500' }}>
           DataTables 샘플 - server side 데이터
         </Link>
       </p>
       <p>
-        <Link href="/samples/datatables/cs">
+        <Link href="/samples/datatables/cs" color='blue.400' _hover={{ color: 'blue.500' }}>
           DataTables 샘플 CS - server side 데이터
         </Link>
       </p>
       <p>
-        <Link href="/samples/sortable">Sortable 샘플 - 컬럼 항목편집</Link>
+        <Link href="/samples/sortable" color='blue.400' _hover={{ color: 'blue.500' }}>Sortable 샘플 - 컬럼 항목편집</Link>
       </p>
-    <p>
-        <Link href="/samples/layerpopup">레이어팝업 시간 재기</Link>
-    </p>
-    <p>
-        <Link href="/samples/layout/golden-layout">골든 레이아웃</Link>
-    </p>
+      <p>
+          <Link href="/samples/layerpopup" color='blue.400' _hover={{ color: 'blue.500' }}>레이어팝업 시간 재기</Link>
+      </p>
+      <p>
+          <Link href="/samples/layout/golden-layout" color='blue.400' _hover={{ color: 'blue.500' }}>골든 레이아웃</Link>
+      </p>
     </div>
   );
 };
