@@ -1,5 +1,6 @@
 import { ExcelDownload } from "@components/ExcelDownload";
 import $ from "jquery";
+import { ExcelUpload } from "@components/ExcelUpload";
 
 export const createDataTablesOptions = (tableRef, header, columns, data, url, page) => {
 
@@ -18,7 +19,8 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
 
   let dataTableOptions = {
     columns: columns,
-    responsive: true, // 반응형 켜기
+    scrollX:true,
+    // responsive: true, // 반응형 켜기
     colReorder: true,
     buttons: [
       {
@@ -61,6 +63,11 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
           ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:false, type: 'WORD'}),
           ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:false, allColumns:true, type: 'WORD'}),
           ExcelDownload({ tableRef, header, columns, downloadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/download/word`, allRows:true, allColumns:true, type: 'WORD'})
+        ]
+      },
+      bottom5: {
+        buttons: [
+          ExcelUpload({ uploadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/upload/excel`})
         ]
       }
     },
