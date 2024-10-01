@@ -18,7 +18,7 @@ const ContextMenu = ({ options, position, onClose, isSubmenu }) => {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [onClose]);
+  }, [onClose, isSubmenu]);
 
   const handleMouseEnter = (event, submenu) => {
     if (submenu) {

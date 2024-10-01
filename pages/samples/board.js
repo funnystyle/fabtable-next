@@ -23,7 +23,7 @@ const BoardPage = () => {
     if (isSuccess) {
       setBoardList(data.data.list);
     }
-  }, [isSuccess]);
+  }, [isSuccess, setBoardList, data]);
 
   if (isLoading || !isSuccess) return <div>Loading...</div>;
   if (isError) return <div>Error: {isError.message}</div>;
