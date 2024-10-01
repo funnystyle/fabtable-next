@@ -20,6 +20,11 @@ const HomePage = () => {
         </Link>
       </p>
       <p>
+        <Link href="/samples/datatables/cs">
+          DataTables 샘플 CS - server side 데이터
+        </Link>
+      </p>
+      <p>
         <Link href="/samples/sortable">Sortable 샘플 - 컬럼 항목편집</Link>
       </p>
     <p>
