@@ -1,7 +1,10 @@
 import React, { useLayoutEffect, useMemo, useRef } from "react";
-import GoldenLayout from "golden-layout";
+// import GoldenLayout from "golden-layout";
+import dynamic from 'next/dynamic';
 import 'golden-layout/src/css/goldenlayout-base.css';
 import 'golden-layout/src/css/goldenlayout-light-theme.css';
+
+const GoldenLayout = dynamic(() => import('golden-layout'), { ssr: false });
 
 // import "./styles.css";
 
