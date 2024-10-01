@@ -67,7 +67,7 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
       },
       bottom5: {
         buttons: [
-          ExcelUpload({ uploadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/upload/excel`})
+          ExcelUpload({ uploadUrl: `${process.env.REACT_APP_API_BASE_URL}${url}/excel/upload`})
         ]
       }
     },
