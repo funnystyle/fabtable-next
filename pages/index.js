@@ -33,6 +33,9 @@ const HomePage = () => {
       <p>
           <Link href="/samples/layout/golden-layout" color='blue.400' _hover={{ color: 'blue.500' }}>골든 레이아웃</Link>
       </p>
+      <p>
+          <Link href="/samples/modal/maximize" color='blue.400' _hover={{ color: 'blue.500' }}>최대화 모달창 샘플</Link>
+      </p>
     </div>
   );
 };

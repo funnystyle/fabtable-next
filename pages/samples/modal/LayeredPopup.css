@@ -1,0 +1,11 @@
+.popup {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  background-color: white;
+  border: 1px solid #ccc; /* 필요에 따라 테두리 추가 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: move; /* 드래그 가능함을 나타내는 커서 */
+  padding: 10px;
+  box-sizing: border-box;
+}
