@@ -36,6 +36,9 @@ const HomePage = () => {
       <p>
           <Link href="/samples/modal/maximize" color='blue.400' _hover={{ color: 'blue.500' }}>최대화 모달창 샘플</Link>
       </p>
+      <p>
+          <Link href="/samples/antd/monthpicker" color='blue.400' _hover={{ color: 'blue.500' }}>ant design monthpicker</Link>
+      </p>
     </div>
   );
 };
