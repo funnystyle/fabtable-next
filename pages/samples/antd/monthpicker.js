@@ -1,57 +1,94 @@
-import { DatePicker, ConfigProvider, Input } from 'antd';
-import koKR from 'antd/lib/locale/ko_KR';
-import { useState } from 'react';
+import { ConfigProvider, DatePicker, Input } from 'antd';
+import koKR from 'antd/es/locale/ko_KR';
+import dayjs from 'dayjs';
+import { useEffect, useState } from 'react';
 
-const MonthPicker = () => {
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
-
-  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
+const App = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
+  const [selectedDate, setSelectedDate] = useState(null);
 
-  const handleDateSelect = (date) => {
-    if (date) {
-      setYear(date.year().toString());
-      setMonth((date.month() + 1).toString()); // 0-indexed, so add 1
-    }
-    setDatePickerOpen(false); // Close DatePicker after selection
-  };
+  const [isDatePickerOpen, setDatePickerOpen] = useState(false);
 
   const openDatePicker = () => {
     setDatePickerOpen(true);
   };
 
+  const onDateChange = (date) => {
+    setSelectedDate(date);
+    setYear(date.year().toString());
+    setMonth((date.month() + 1).toString());
+    setDatePickerOpen(false);
+  };
+
+  const onManualInput = (e) => {
+    setDatePickerOpen(false);
+    if (e.key === 'Enter') {
+      e.target.blur();
+    }
+  }
+
+  const onYearChange = (e) => {
+    setYear(e.target.value);
+  }
+
+  const onMonthChange = (e) => {
+    setMonth(e.target.value);
+  }
+
+  useEffect(() => {
+    if (year && month) {
+      const date = dayjs(`${year}-${month.padStart(2, '0')}-01`);
+      setSelectedDate(date);
+    }
+  }, [year, month]);
+
   return (
     <ConfigProvider locale={koKR}>
-      {/* <DatePicker onChange={onChange} picker="month" 
-      // format={(value) => `${value.month() + 1}월`}
-      monthCellRender={(date) => `${date.month() + 1}월`}/> */}
-      <div style={{ display: 'flex', gap: '8px' }}>
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
         <Input 
-          placeholder="년도" 
           value={year} 
-          onClick={openDatePicker} 
-          readOnly 
-        />년 
+          placeholder="년(예: 2024)" 
+          onClick={openDatePicker}
+          onChange={onYearChange} 
+          onKeyUp={onManualInput}
+          style={{ width: '80px' }} 
+        />
+        <span>년</span>
         <Input 
-          placeholder="월" 
-          value={`${month}`} 
-          onClick={openDatePicker} 
-          readOnly 
-        />월
+          value={month} 
+          placeholder="월(예: 5)" 
+          onClick={openDatePicker}
+          onChange={onMonthChange} 
+          onKeyUp={onManualInput}
+          style={{ width: '60px' }} 
+        />
+        <span>월</span>
       </div>
       <DatePicker 
-        open={isDatePickerOpen} 
+        open={isDatePickerOpen}
         picker="month" 
-        onChange={handleDateSelect} 
-        onOpenChange={(open) => setDatePickerOpen(open)} // Sync open state
-        style={{ visibility: 'hidden', position: 'absolute' }} // Hide input field
-        monthCellRender={(date) => `${date.month() + 1}월`}
+        value={selectedDate} 
+        onChange={onDateChange} 
+        format={(value) => `${value.year()}년 ${value.month() + 1}월`} 
+        style={{ visibility: 'hidden', top:-30 }}  // DatePicker UI 숨기기
+        monthCellRender={(date) => {
+          const isSelected = selectedDate && date.isSame(selectedDate, 'month');
+          return (
+            <div style={{ 
+              backgroundColor: isSelected ? '#1890ff' : 'transparent',
+              color: isSelected ? '#fff' : 'inherit',
+              borderRadius: '4px',
+              padding: '4px 0',
+              textAlign: 'center'
+            }}>
+              {`${date.month() + 1}월`}
+            </div>
+          );
+        }}
       />
     </ConfigProvider>
   );
 };
 
-export default MonthPicker;
+export default App;
