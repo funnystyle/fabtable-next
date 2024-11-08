@@ -1,0 +1,4 @@
+.draggable-modal {
+  z-index: -1!important;
+  pointer-events: none!important; /* Allow clicks to pass through non-modal areas */
+}
