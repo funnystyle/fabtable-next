@@ -57,7 +57,7 @@ const AdminLayout = () => {
               tab={
                 <span>
                   {tab.title}
-                  <CloseOutlined onClick={() => removeTab(tab.key)} />
+                  {/* <CloseOutlined onClick={() => removeTab(tab.key)} /> */}
                 </span>
               }
               key={tab.key}
