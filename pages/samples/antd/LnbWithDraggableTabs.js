@@ -15,9 +15,7 @@ const LnbWithDraggableTabs = () => {
     { key: '3', label: 'Settings', content: <div>Settings Content</div> },
   ];
 
-  const [tabs, setTabs] = useState([
-    { key: '1', label: 'Dashboard', content: <div>Dashboard Content</div> }
-  ]); // 탭 데이터를 상태로 관리
+  const [tabs, setTabs] = useState([]); // 탭 데이터를 상태로 관리
 
   // LNB 메뉴 클릭 시 호출되는 이벤트 핸들러
   const handleMenuClick = ({ key }) => {
@@ -45,7 +43,7 @@ const LnbWithDraggableTabs = () => {
   };
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ height: '100vh'}}>
       {/* LNB 사이드바 렌더링 */}
       <Sider width={200}>
         <Menu mode="inline" onClick={handleMenuClick} items={menuItems.map((item) => ({
@@ -56,14 +54,11 @@ const LnbWithDraggableTabs = () => {
 
       {/* 콘텐츠 영역 */}
       <Layout>
-        <Content style={{ padding: '16px' }}>
+        <Content style={{ padding: '16px', backgroundColor: "white"  }}>
           <DragDropContext
             onDragEnd={(result) => {
               const { source, destination } = result;
               if (!destination) return;
-              if (destination.index === 0) {
-                destination.index = 1;
-              }
               const updatedTabs = Array.from(tabs);
               const [movedTab] = updatedTabs.splice(source.index, 1);
               updatedTabs.splice(destination.index, 0, movedTab);
@@ -92,14 +87,13 @@ const LnbWithDraggableTabs = () => {
                           {...provided.dragHandleProps}
                           style={{
                             display: 'inline-block',
-                            margin: '0 4px',
                             borderRadius: '4px',
                             ...provided.draggableProps.style,
                           }}
                         >
                           {/* TabPane을 드래그 가능하게 설정 */}
                           <Tabs
-                            type={tab.key==1 ? "card": "editable-card"}
+                            type="editable-card"
                             activeKey={activeKey}
                             onChange={handleTabChange}
                             onEdit={(targetKey, action) => {
@@ -108,6 +102,9 @@ const LnbWithDraggableTabs = () => {
                               }
                             }}
                             hideAdd
+                            tabBarStyle={{
+                              borderBottom: '1px solid #f0f0f0',
+                            }}
                           >
                             <TabPane tab={tab.label} key={tab.key} closable />
                           </Tabs>
@@ -121,7 +118,7 @@ const LnbWithDraggableTabs = () => {
             </Droppable>
           </DragDropContext>
           <div>
-            {tabs.length > 0 && tabs[activeKey - 1] && tabs[activeKey - 1].content}
+            {tabs.length > 0 && tabs.find((tab) => tab.key === activeKey)?.content}
           </div>
         </Content>
       </Layout>
