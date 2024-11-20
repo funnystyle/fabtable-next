@@ -46,10 +46,7 @@ const HomePage = () => {
           <Link href="/samples/antd/multimodal" color='blue.400' _hover={{ color: 'blue.500' }}>Multi Modal (can drage move)</Link>
       </p>
       <p>
-          <Link href="/samples/antd/tabcontent_topmenu" color='blue.400' _hover={{ color: 'blue.500' }}>Top Menu - Tab Content</Link>
-      </p>
-      <p>
-          <Link href="/samples/antd/tabcontent_leftmenu" color='blue.400' _hover={{ color: 'blue.500' }}>Left Menu - Tab Content</Link>
+          <Link href="/samples/antd/tabcontent_topmenu" color='blue.400' _hover={{ color: 'blue.500' }}>Top Menu - Tab Content(탭 드래그 안됨)</Link>
       </p>
     </div>
   );
