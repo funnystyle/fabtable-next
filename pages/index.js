@@ -1,6 +1,7 @@
 // pages/index.js
 import React from "react";
 import { Link } from '@chakra-ui/next-js'
+import LnbWithDraggableTabs from "@pages/samples/antd/LnbWithDraggableTabs";
 
 const HomePage = () => {
   return (
@@ -47,6 +48,9 @@ const HomePage = () => {
       </p>
       <p>
           <Link href="/samples/antd/tabcontent_topmenu" color='blue.400' _hover={{ color: 'blue.500' }}>Top Menu - Tab Content(탭 드래그 안됨)</Link>
+      </p>
+      <p>
+        <Link href="/samples/antd/LnbWithDraggableTabs" color='blue.400' _hover={{ color: 'blue.500' }}>LnbWithDraggableTabs</Link>
       </p>
     </div>
   );
