@@ -61,6 +61,7 @@ const LnbWithDraggableTabs1 = () => {
   // 탭 닫기 버튼 클릭 시 호출되는 이벤트 핸들러
   const handleTabClose = (targetKey) => {
     const filteredTabs = tabs.filter((tab) => tab.key !== targetKey); // 닫힌 탭 제외
+    console.log(filteredTabs)
     setTabs(filteredTabs); // 상태 업데이트
     if (filteredTabs.length > 0) {
       setActiveKey(filteredTabs[0].key); // 첫 번째 탭을 활성화
