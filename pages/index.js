@@ -52,6 +52,9 @@ const HomePage = () => {
       <p>
         <Link href="/samples/antd/LnbWithDraggableTabs" color='blue.400' _hover={{ color: 'blue.500' }}>LnbWithDraggableTabs</Link>
       </p>
+      <p>
+        <Link href="/samples/antd/LnbWithDraggableTabs1" color='blue.400' _hover={{ color: 'blue.500' }}>LnbWithDraggableTabs1</Link>
+      </p>
     </div>
   );
 };
