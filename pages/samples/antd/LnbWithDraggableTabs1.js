@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Layout, Menu, Tabs } from 'antd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, sortableKeyboardCoordinates, horizontalListSortingStrategy, arrayMove } from "@dnd-kit/sortable";
+import { SortableContext, sortableKeyboardCoordinates, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
 import { Tab } from "@pages/samples/antd/Tab";
 import useActiveKeyStore from "@store/useActiveKeyStore";
 
@@ -60,16 +60,17 @@ const LnbWithDraggableTabs1 = () => {
 
   // 탭 닫기 버튼 클릭 시 호출되는 이벤트 핸들러
   const handleTabClose = (targetKey) => {
-    const filteredTabs = tabs.filter((tab) => tab.key !== targetKey); // 닫힌 탭 제외
-    console.log(filteredTabs)
-    setTabs(filteredTabs); // 상태 업데이트
-    if (filteredTabs.length > 0) {
-      setActiveKey(filteredTabs[0].key); // 첫 번째 탭을 활성화
-    } else {
-      setActiveKey(null); // 모든 탭이 닫히면 비활성화
-    }
-  };
+    const filteredTabs = tabs.filter((tab) => tab.key !== targetKey);
 
+    setTimeout(() => {
+      setTabs(filteredTabs); // 실제로 상태 변경
+      if (filteredTabs.length > 0) {
+        setActiveKey(filteredTabs[0].key);
+      } else {
+        setActiveKey(null);
+      }
+    }, 150); // 애니메이션 시간과 동기화
+  };
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -77,10 +78,18 @@ const LnbWithDraggableTabs1 = () => {
     })
   );
 
+  const onCloseArea = (target) => {
+    return target != null && (target instanceof SVGElement || target instanceof SVGPathElement);
+  }
+
   function handleDragEnd(event) {
     const {active, over} = event;
 
     if (active && over && active.id === over.id) {
+      if (event.delta.x === 0 && event.delta.y === 0 && onCloseArea(event?.activatorEvent?.target)) {
+        handleTabClose(active.id);
+      }
+
       setActiveKey(active.id);
     }
 
@@ -115,7 +124,7 @@ const LnbWithDraggableTabs1 = () => {
             {/* Droppable 영역 */}
             <SortableContext
               items={tabs.map((tab) => tab.key)}
-              strategy={horizontalListSortingStrategy}
+              strategy={rectSortingStrategy}
             >
                 <div
                   style={{
