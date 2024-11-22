@@ -6,7 +6,7 @@ import useActiveKeyStore from "@store/useActiveKeyStore";
 
 const { TabPane } = Tabs;
 
-export default function Tab({tab}) {
+const TabComponent = ({ tab }) => {
   const {activeKey} = useActiveKeyStore();
 
   const {
@@ -47,3 +47,5 @@ export default function Tab({tab}) {
     </div>
   );
 }
+
+export default TabComponent;

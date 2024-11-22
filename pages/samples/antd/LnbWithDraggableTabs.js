@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { Layout, Menu, Tabs } from 'antd';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, sortableKeyboardCoordinates, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
-import { Tab } from "@pages/samples/antd/Tab";
+import React, {useState} from 'react';
+import {Layout, Menu} from 'antd';
+import {closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors} from "@dnd-kit/core";
+import {rectSortingStrategy, SortableContext, sortableKeyboardCoordinates} from "@dnd-kit/sortable";
+import TabComponent from "@pages/samples/antd/TabComponent";
 import useActiveKeyStore from "@store/useActiveKeyStore";
 
 const { Sider, Content } = Layout;
-const { TabPane } = Tabs;
 
 const LnbWithDraggableTabs1 = () => {
   const {activeKey, setActiveKey} = useActiveKeyStore();
@@ -136,7 +134,7 @@ const LnbWithDraggableTabs1 = () => {
                 >
                   {/* Draggable 탭 렌더링 */}
                   {tabs.map((tab, index) => (
-                    <Tab key={tab.key} tab={tab} activeKey={activeKey} onTabClose={handleTabClose}  />
+                    <TabComponent key={tab.key} tab={tab} activeKey={activeKey} onTabClose={handleTabClose}  />
                   ))}
                 </div>
             </SortableContext>
