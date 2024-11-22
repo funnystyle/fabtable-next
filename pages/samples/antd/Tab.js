@@ -6,7 +6,7 @@ import useActiveKeyStore from "@store/useActiveKeyStore";
 
 const { TabPane } = Tabs;
 
-export function Tab({tab}) {
+export default function Tab({tab}) {
   const {activeKey} = useActiveKeyStore();
 
   const {
@@ -17,7 +17,7 @@ export function Tab({tab}) {
     transition,
   } = useSortable({
       animateLayoutChanges: ({ isSorting, wasDragging }) => !(isSorting || wasDragging), // 애니메이션 조건 추가
-      id:tab.key
+      id:tab?.key
   });
 
   const style = {
@@ -28,7 +28,7 @@ export function Tab({tab}) {
   return (
     <div
         ref={setNodeRef}
-        key={tab.key}
+        key={tab?.key}
         style={style}
         {...attributes}
 
@@ -42,7 +42,7 @@ export function Tab({tab}) {
         }}
         {...listeners}
       >
-        <TabPane tab={tab.label} key={tab.key} closable />
+        <TabPane tab={tab?.label} key={tab?.key} closable />
       </Tabs>
     </div>
   );
