@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import { Layout, Menu, Tabs } from 'antd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import { closestCenter, DndContext, KeyboardSensor, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
-import { SortableContext, sortableKeyboardCoordinates, rectSortingStrategy, arrayMove } from "@dnd-kit/sortable";
-import { Tab } from "@pages/samples/antd/Tab";
-import useActiveKeyStore from "@store/useActiveKeyStore";
 
 const { Sider, Content } = Layout;
 const { TabPane } = Tabs;
 
-const LnbWithDraggableTabs1 = () => {
-  const {activeKey, setActiveKey} = useActiveKeyStore();
+const LnbWithDraggableTabs = () => {
+  const [activeKey, setActiveKey] = useState(null); // 활성화된 탭의 key 상태
 
   // LNB에 표시될 메뉴 항목 정의
   const menuItems = [
@@ -58,50 +54,21 @@ const LnbWithDraggableTabs1 = () => {
     setActiveKey(key); // 활성화된 탭의 키 업데이트
   };
 
+  // 탭 전환 시 호출되는 이벤트 핸들러
+  const handleTabChange = (key) => {
+    setActiveKey(key); // 활성화된 탭의 key 업데이트
+  };
+
   // 탭 닫기 버튼 클릭 시 호출되는 이벤트 핸들러
   const handleTabClose = (targetKey) => {
-    const filteredTabs = tabs.filter((tab) => tab.key !== targetKey);
-
-    setTimeout(() => {
-      setTabs(filteredTabs); // 실제로 상태 변경
-      if (filteredTabs.length > 0) {
-        setActiveKey(filteredTabs[0].key);
-      } else {
-        setActiveKey(null);
-      }
-    }, 150); // 애니메이션 시간과 동기화
+    const filteredTabs = tabs.filter((tab) => tab.key !== targetKey); // 닫힌 탭 제외
+    setTabs(filteredTabs); // 상태 업데이트
+    if (filteredTabs.length > 0) {
+      setActiveKey(filteredTabs[0].key); // 첫 번째 탭을 활성화
+    } else {
+      setActiveKey(null); // 모든 탭이 닫히면 비활성화
+    }
   };
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
-  );
-
-  const onCloseArea = (target) => {
-    return target != null && (target instanceof SVGElement || target instanceof SVGPathElement);
-  }
-
-  function handleDragEnd(event) {
-    const {active, over} = event;
-
-    if (active && over && active.id === over.id) {
-      if (event.delta.x === 0 && event.delta.y === 0 && onCloseArea(event?.activatorEvent?.target)) {
-        handleTabClose(active.id);
-      }
-
-      setActiveKey(active.id);
-    }
-
-    if (active && over && active.id !== over.id) {
-      const overIndex = tabs.findIndex((tab) => tab.key === over.id);
-      const activeIndex = tabs.findIndex((tab) => tab.key === active.id);
-      const nextTabs = [...tabs];
-      nextTabs.splice(overIndex, 0, nextTabs.splice(activeIndex, 1)[0]);
-
-      setTabs(nextTabs);
-    }
-  }
 
   return (
     <Layout style={{ height: '100vh'}}>
@@ -116,17 +83,25 @@ const LnbWithDraggableTabs1 = () => {
       {/* 콘텐츠 영역 */}
       <Layout>
         <Content style={{ padding: '16px', backgroundColor: "white"  }}>
-          <DndContext
-            sensors={sensors}
-            collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+          <DragDropContext
+            onDragEnd={(result) => {
+              const { source, destination } = result;
+              if (!destination) return;
+              const updatedTabs = Array.from(tabs);
+              const [movedTab] = updatedTabs.splice(source.index, 1);
+              updatedTabs.splice(destination.index, 0, movedTab);
+              setTabs(updatedTabs);
+            }}
           >
             {/* Droppable 영역 */}
-            <SortableContext
-              items={tabs.map((tab) => tab.key)}
-              strategy={rectSortingStrategy}
+            <Droppable
+              droppableId="droppableList"
+              direction="horizontal"
             >
+              {(provided) => (
                 <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
                   style={{
                     display: 'flex',
                     flexWrap: 'wrap', // 넘치는 경우 다음 줄로
@@ -136,11 +111,44 @@ const LnbWithDraggableTabs1 = () => {
                 >
                   {/* Draggable 탭 렌더링 */}
                   {tabs.map((tab, index) => (
-                    <Tab key={tab.key} tab={tab} activeKey={activeKey} onTabClose={handleTabClose}  />
+                    <Draggable key={tab.key} draggableId={tab.key} index={index}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{
+                            display: 'inline-block',
+                            borderRadius: '4px',
+                            ...provided.draggableProps.style,
+                          }}
+                        >
+                          {/* TabPane을 드래그 가능하게 설정 */}
+                          <Tabs
+                            type="editable-card"
+                            activeKey={activeKey}
+                            onChange={handleTabChange}
+                            onEdit={(targetKey, action) => {
+                              if (action === 'remove') {
+                                handleTabClose(targetKey);
+                              }
+                            }}
+                            hideAdd
+                            tabBarStyle={{
+                              borderBottom: '1px solid #f0f0f0',
+                            }}
+                          >
+                            <TabPane tab={tab.label} key={tab.key} closable />
+                          </Tabs>
+                        </div>
+                      )}
+                    </Draggable>
                   ))}
+                  {provided.placeholder} {/* 드래그 시 공간 확보 */}
                 </div>
-            </SortableContext>
-          </DndContext>
+              )}
+            </Droppable>
+          </DragDropContext>
           <div>
             {tabs.length > 0 && tabs.find((tab) => tab.key === activeKey)?.content}
           </div>
@@ -150,4 +158,4 @@ const LnbWithDraggableTabs1 = () => {
   );
 };
 
-export default LnbWithDraggableTabs1;
+export default LnbWithDraggableTabs;
