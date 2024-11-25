@@ -1,5 +1,4 @@
 import axios from "axios";
-import { REACT_APP_API_BASE_URL } from "@env";
 // import * as SecureStore from "expo-secure-store";
 // import * as qs from "qs";
 
