@@ -2,7 +2,7 @@ import axios from "axios";
 // import * as SecureStore from "expo-secure-store";
 // import * as qs from "qs";
 
-const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}`;
+const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
 // axios.defaults.paramsSerializer = (params) => {
 //   return qs.stringify(params);

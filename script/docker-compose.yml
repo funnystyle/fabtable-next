@@ -9,7 +9,7 @@ services:
       - "8885:3000"
     environment:
       - NODE_ENV=production
-      - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
+      - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
     networks:
       - blue-green-net
 
@@ -21,7 +21,7 @@ services:
       - "8886:3000"
     environment:
       - NODE_ENV=production
-      - REACT_APP_API_BASE_URL=https://api.fabtable.fnfworks.com
+      - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
     networks:
       - blue-green-net
 

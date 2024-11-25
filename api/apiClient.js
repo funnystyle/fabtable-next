@@ -5,7 +5,7 @@ import { LOCAL_STORAGE_FABTABLE_USERINFO } from "@/lib/Constant";
 
 // Axios 인스턴스 생성
 const apiClient = axios.create({
-  baseURL: `${process.env.REACT_APP_API_BASE_URL}/api/v1`, // 환경 변수를 baseURL로 사용
+  baseURL: `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1`, // 환경 변수를 baseURL로 사용
 });
 
 // 요청 인터셉터 추가
