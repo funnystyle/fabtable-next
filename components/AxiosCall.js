@@ -1,9 +1,9 @@
 import axios from "axios";
-// import { API_BASE_URL } from "@env";
+import { REACT_APP_API_BASE_URL } from "@env";
 // import * as SecureStore from "expo-secure-store";
 // import * as qs from "qs";
 
-const API_BASE_URL = "http://localhost:8991";
+const API_BASE_URL = `${process.env.REACT_APP_API_BASE_URL}`;
 
 // axios.defaults.paramsSerializer = (params) => {
 //   return qs.stringify(params);
