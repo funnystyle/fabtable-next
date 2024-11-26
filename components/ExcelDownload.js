@@ -34,7 +34,8 @@ export const ExcelDownload = ({ tableRef, header, columns, downloadUrl, allRows,
         selectedRows
       };
 
-      console.log('Excel download request data:', requestData)
+      console.log('Excel download url:', downloadUrl)
+      console.log('Excel download request data:', JSON.stringify(requestData));
 
       // 서버로 엑셀 다운로드 요청 보내기
       fetch(downloadUrl, {
@@ -44,7 +45,13 @@ export const ExcelDownload = ({ tableRef, header, columns, downloadUrl, allRows,
         },
         body: JSON.stringify(requestData),
         })
-          .then(response => response.blob()) // 응답을 blob으로 변환
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`Server error: ${response.status} ${response.statusText}`);
+
+            }
+            return response.blob(); // 응답을 blob으로 변환
+          })
           .then(blob => {
             // 다운로드를 위해 링크 생성 후 클릭 이벤트 트리거
             const link = document.createElement('a');
@@ -56,9 +63,10 @@ export const ExcelDownload = ({ tableRef, header, columns, downloadUrl, allRows,
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url); // URL 객체 해제
           })
-          .catch(error => {
-            console.error('Excel download failed:', error);
-          });
+        .catch(error => {
+          console.error('Excel download failed:', error);
+          alert('다운로드에 실패했습니다. 서버 오류가 발생했습니다.');
+        });
       }
   }
 }

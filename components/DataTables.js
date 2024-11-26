@@ -59,9 +59,8 @@ const DataTables = ({ header, columns, data, url, page }) => {
 
   useEffect(() => {
 
-    console.log("DataTables useEffect");
-
     // 테이블 생성
+
     const dataTableOptions = createDataTablesOptions(tableRef, header, columns, data, url, page);
     const table = $(tableRef.current).DataTable(dataTableOptions);
 
