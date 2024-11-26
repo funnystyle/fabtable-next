@@ -12,6 +12,8 @@ import "datatables.net-colreorder-dt/css/colReorder.dataTables.min.css";
 import "datatables.net-buttons-dt/css/buttons.dataTables.min.css";
 import "datatables.net-select";
 import "datatables.net-select-dt/css/select.dataTables.min.css";
+import "datatables.net-fixedcolumns";
+import "datatables.net-fixedcolumns-dt/css/fixedColumns.dataTables.min.css";
 import { createDataTablesOptions } from "@components/DataTableOptions";
 import { useRouter } from "next/router";
 import ContextMenu from "@components/ContextMenu";
