@@ -19,7 +19,7 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
 
   let dataTableOptions = {
     fixedColumns: {
-      leftColumns: 1, // 왼쪽에서 고정할 열의 수
+      leftColumns: 2, // 왼쪽에서 고정할 열의 수
       rightColumns: 0, // 오른쪽에서 고정할 열의 수 (필요 시 설정)
     },
     columns: columns,
