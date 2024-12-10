@@ -54,6 +54,9 @@ const HomePage = () => {
       <p>
         <Link href="/samples/antd/PDFViewer" color='blue.400' _hover={{ color: 'blue.500' }}>PDFViewer</Link>
       </p>
+      <p>
+        <Link href="/samples/pdf/PDFViewer" color='blue.400' _hover={{ color: 'blue.500' }}>PDFViewer</Link>
+      </p>
     </div>
   );
 };
