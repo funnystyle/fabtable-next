@@ -4,6 +4,8 @@ import axios from "axios";
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
+console.log("API_BASE_URL", API_BASE_URL);
+
 // axios.defaults.paramsSerializer = (params) => {
 //   return qs.stringify(params);
 // };
@@ -21,7 +23,7 @@ export const getAxios = async (url, data) => {
   //   queryString = "?" + axios.defaults.paramsSerializer(data);
   // }
 
-  // console.log("url", API_BASE_URL + url + queryString);
+  console.log("url", API_BASE_URL + url + queryString);
 
   const response = await axios.get(API_BASE_URL + url + queryString, {
     // headers: {

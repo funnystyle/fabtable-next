@@ -54,6 +54,12 @@ const HomePage = () => {
       <p>
         <Link href="/samples/antd/PDFViewer" color='blue.400' _hover={{ color: 'blue.500' }}>PDFViewer</Link>
       </p>
+      <p>
+        <Link href="/samples/translation/i18n" color='blue.400' _hover={{ color: 'blue.500' }}>i18n (다국어)</Link>
+      </p>
+      <p>
+        <Link href="/samples/antd/EditableTable" color='blue.400' _hover={{ color: 'blue.500' }}>EditableTable</Link>
+      </p>
     </div>
   );
 };

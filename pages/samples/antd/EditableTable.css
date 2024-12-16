@@ -1,0 +1,4 @@
+/* 테이블 셀의 기본 패딩을 제거 */
+tbody .ant-table-cell {
+  padding: 0 !important;
+}
