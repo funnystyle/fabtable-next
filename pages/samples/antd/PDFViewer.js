@@ -6,7 +6,7 @@ import "core-js/full/promise/with-resolvers.js";
 
 // Set the worker source for react-pdf
 console.log(pdfjs.version)
-pdfjs.GlobalWorkerOptions.workerSrc = `./pdf.worker.min.js`;
+pdfjs.GlobalWorkerOptions.workerSrc = `../../../js/pdf.worker.js`;
 
 
 const PdfViewer = () => {
