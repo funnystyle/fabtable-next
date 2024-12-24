@@ -60,6 +60,9 @@ const HomePage = () => {
       <p>
         <Link href="/samples/antd/EditableTable" color='blue.400' _hover={{ color: 'blue.500' }}>EditableTable</Link>
       </p>
+      <p>
+        <Link href="/samples/orderInfo/OrderInfoCreate" color='blue.400' _hover={{ color: 'blue.500' }}>OrderInfoCreate</Link>
+      </p>
     </div>
   );
 };

@@ -1,14 +1,14 @@
 import axios from "axios";
 // import * as SecureStore from "expo-secure-store";
-// import * as qs from "qs";
+import * as qs from "qs";
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
 console.log("API_BASE_URL", API_BASE_URL);
 
-// axios.defaults.paramsSerializer = (params) => {
-//   return qs.stringify(params);
-// };
+axios.defaults.paramsSerializer = (params) => {
+  return qs.stringify(params);
+};
 /**
  * @description axios를 사용하여 API를 호출하는 함수입니다.
  * @param {string} url - API 주소를 입력합니다.
@@ -19,20 +19,22 @@ export const getAxios = async (url, data) => {
   // const token = await getToken(); // 토큰을 가져오는 함수를 호출합니다.
 
   let queryString = "";
-  // if (typeof data === "object" && Object.keys(data).length > 0) {
-  //   queryString = "?" + axios.defaults.paramsSerializer(data);
-  // }
+  if (typeof data === "object" && Object.keys(data).length > 0) {
+    queryString = "?" + axios.defaults.paramsSerializer(data);
+  }
 
   console.log("url", API_BASE_URL + url + queryString);
 
-  const response = await axios.get(API_BASE_URL + url + queryString, {
-    // headers: {
-    //   Authorization: `Bearer ${token}`,
-    // },
-  });
-
-  console.log(response);
-  return response.data;
+  try {
+    const response = await axios.get(API_BASE_URL + url + queryString, {
+      // headers: {
+      //   Authorization: `Bearer ${token}`,
+      // },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 /**
