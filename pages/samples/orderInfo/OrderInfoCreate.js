@@ -33,6 +33,27 @@ const OrderInfoCreate = () => {
     }
   }, [isSuccess]);
 
+
+  const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
+
+  // 선택된 코드 정보를 갱신하는 함수
+  const handleSelectChange = (value, option, item) => {
+    const codeGroupId = option?.props['data-codegroup-id'];  // codeGroupId를 추출
+    const newSelectedCodes = [...selectedCodes];
+
+    // 이미 선택된 코드가 있으면 업데이트, 없으면 추가
+    const index = newSelectedCodes.findIndex(
+        (item) => item.codeGroupId === codeGroupId
+    );
+    if (index !== -1) {
+      newSelectedCodes[index] = { codeGroupId, commonCodeId: value };
+    } else {
+      newSelectedCodes.push({ codeGroupId, commonCodeId: value });
+    }
+
+    setSelectedCodes(newSelectedCodes);
+  };
+
   const renderFormItem = (item) => {
     if (item.standardInfoDiv === 'STRING') {
       return (
@@ -44,6 +65,52 @@ const OrderInfoCreate = () => {
         >
           <Input placeholder={`예: ${item.description || '값을 입력하세요'}`} />
         </Form.Item>
+      );
+    }
+
+    // 'CODE' 타입 처리
+    if (item.standardInfoDiv === 'CODE') {
+
+      //selectedCodes에 선택된 코드 정보가 저장됩니다
+      //                parentCodeGroupId가 있을 경우 의 commonCodeId가 parentCode인 commonCode만 보여집니다
+
+      let codeList = item.codeList;
+      if (item.parentCodeGroupId) {
+        codeList = item.codeList.filter((code) => code.parentCommonCodeId === selectedCodes.find((selectedCode) => selectedCode.codeGroupId === item.parentCodeGroupId)?.commonCodeId);
+      }
+
+      if (item.codeGroupId === 7) {
+        console.log("item.codeList : ", item.codeList);
+        console.log("item.parentCodeGroupId : ", item.parentCodeGroupId);
+        console.log("selectedCodes : ", selectedCodes);
+        console.log("codeList : ", codeList);
+      }
+
+      // todo 1갱일때 기본값 설정
+      // 다른거 선택시 선택 초기화
+
+      return (
+          <Form.Item
+              key={item.id}
+              label={item.displayName}
+              name={item.columnName}
+              rules={[{ required: true, message: `${item.displayName}를 선택하세요!` }]}
+          >
+            <Select placeholder={`선택하세요`}
+                    onChange={handleSelectChange}
+                    data-codegroup-id={item.codeGroupId}
+            >
+              {/* 옵션들이 data.list에서 올바르게 매핑되어 있어야 합니다
+               selectedCodes에 선택된 코드 정보가 저장됩니다
+               parentCodeGroupId가 있을 경우 의 commonCodeId가 parentCode인 commonCode만 보여집니다
+               */}
+              {codeList && codeList.map((option) => (
+                  <Option key={option.id} value={option.id} data-codegroup-id={item.codeGroupId}>
+                    {option.codeName}
+                  </Option>
+              ))}
+            </Select>
+          </Form.Item>
       );
     }
     // 다른 타입에 대한 처리 추가 가능
