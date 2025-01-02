@@ -1,18 +1,25 @@
 // components/OrderInfoCreate.tsx
 import React from 'react';
-import { Form, Input, DatePicker, Select, Button, Row, Col, message } from 'antd';
+import { Form, Input, DatePicker, Select, Button, Row, Col, message, Radio } from 'antd';
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@components/AxiosCall";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAxios, postAxios } from "@api/apiClient";
 
 const { Option } = Select;
 
 const OrderInfoCreate = () => {
   const [form] = Form.useForm();
 
+  const { mutate: orderInfoCreate } = useMutation({
+    mutationKey: "orderInfoCreate",
+    mutationFn: (values) => postAxios("/admin/order-info", values),
+  });
+
   const handleSubmit = async (values) => {
     console.log('Form Values:', values);
+    await orderInfoCreate(values);
     message.success('수주 등록이 완료되었습니다!');
+
   };
 
   const handleReset = () => {
@@ -23,7 +30,7 @@ const OrderInfoCreate = () => {
   const [queryKey, setQueryKey] = useState(["standardInfoResponse", Math.random()]);
   const { data:standardInfoResponse, isLoading, isSuccess, isError } = useQuery({
     queryKey,
-    queryFn: () => getAxios("/api/v1/user/standard-info", {entityName : "OrderInfo"}),
+    queryFn: () => getAxios("/user/standard-info", {entityName : "OrderInfo"}),
   });
 
   useEffect(() => {
@@ -37,13 +44,39 @@ const OrderInfoCreate = () => {
   const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
 
   // 선택된 코드 정보를 갱신하는 함수
-  const handleSelectChange = (value, option, item) => {
+  const handleSelectChange = (value, option) => {
+
     const codeGroupId = option?.props['data-codegroup-id'];  // codeGroupId를 추출
+    const codeId = option?.props['data-id'];  // codeId를 추출
+
     const newSelectedCodes = [...selectedCodes];
 
     // 이미 선택된 코드가 있으면 업데이트, 없으면 추가
     const index = newSelectedCodes.findIndex(
         (item) => item.codeGroupId === codeGroupId
+    );
+    if (index !== -1) {
+      newSelectedCodes[index] = { codeGroupId, commonCodeId: codeId };
+    } else {
+      newSelectedCodes.push({ codeGroupId, commonCodeId: codeId });
+    }
+
+    setSelectedCodes(newSelectedCodes);
+  };
+
+  const handleRadioChange = (e) => {
+
+    console.log('e:', e);
+    console.log('e.target:', e.target);
+    console.log('e.target.data-codegroup-id:', e.target['data-codegroup-id']);
+
+    const value = e.target.value;
+    const codeGroupId = e.target['data-codegroup-id'];  // codeGroupId를 추출
+    const newSelectedCodes = [...selectedCodes];
+
+    // 이미 선택된 코드가 있으면 업데이트, 없으면 추가
+    const index = newSelectedCodes.findIndex(
+      (item) => item.codeGroupId === codeGroupId
     );
     if (index !== -1) {
       newSelectedCodes[index] = { codeGroupId, commonCodeId: value };
@@ -61,7 +94,7 @@ const OrderInfoCreate = () => {
           key={item.id}
           label={item.displayName}
           name={item.columnName}
-          rules={[{ required: true, message: `${item.displayName}를 입력하세요!` }]}
+          // rules={[{ required: true, message: `${item.displayName}를 입력하세요!` }]}
         >
           <Input placeholder={`예: ${item.description || '값을 입력하세요'}`} />
         </Form.Item>
@@ -79,13 +112,9 @@ const OrderInfoCreate = () => {
         codeList = item.codeList.filter((code) => code.parentCommonCodeId === selectedCodes.find((selectedCode) => selectedCode.codeGroupId === item.parentCodeGroupId)?.commonCodeId);
       }
 
-      if (item.codeGroupId === 7) {
-        console.log("item.codeList : ", item.codeList);
-        console.log("item.parentCodeGroupId : ", item.parentCodeGroupId);
-        console.log("selectedCodes : ", selectedCodes);
-        console.log("codeList : ", codeList);
+      if (item.columnName === 'channel') {
+        console.log("codeList", codeList);
       }
-
       // todo 1갱일때 기본값 설정
       // 다른거 선택시 선택 초기화
 
@@ -94,22 +123,44 @@ const OrderInfoCreate = () => {
               key={item.id}
               label={item.displayName}
               name={item.columnName}
-              rules={[{ required: true, message: `${item.displayName}를 선택하세요!` }]}
+              // rules={[{ required: true, message: `${item.displayName}를 선택하세요!` }]}
           >
-            <Select placeholder={`선택하세요`}
-                    onChange={handleSelectChange}
-                    data-codegroup-id={item.codeGroupId}
-            >
-              {/* 옵션들이 data.list에서 올바르게 매핑되어 있어야 합니다
-               selectedCodes에 선택된 코드 정보가 저장됩니다
-               parentCodeGroupId가 있을 경우 의 commonCodeId가 parentCode인 commonCode만 보여집니다
-               */}
-              {codeList && codeList.map((option) => (
-                  <Option key={option.id} value={option.id} data-codegroup-id={item.codeGroupId}>
-                    {option.codeName}
-                  </Option>
-              ))}
-            </Select>
+
+            <Select
+              placeholder="선택하세요"
+              onChange={handleSelectChange}
+              data-codegroup-id={item.codeGroupId}
+
+              // disabled={codeList && codeList.length === 1}
+              defaultValue={
+                codeList && codeList.length === 1
+                  ? codeList[0].codeName
+                  : undefined
+              }
+              options={
+                codeList
+                  ? codeList.map(option => ({
+                      value: option.codeName,
+                      label: option.codeName,
+                      'data-codegroup-id': item.codeGroupId,
+                      'data-id': option.id,
+                    }))
+                  : []
+              }
+            />
+
+              {/*<Radio.Group*/}
+              {/*    onChange={handleRadioChange}*/}
+              {/*    data-codegroup-id={item.codeGroupId}*/}
+              {/*>*/}
+              {/*  {codeList && codeList.map((option) => (*/}
+              {/*    <Radio key={option.id} value={option.codeName} data-codegroup-id={item.codeGroupId}>*/}
+              {/*      {option.codeName}*/}
+              {/*    </Radio>*/}
+              {/*  ))}*/}
+              {/*</Radio.Group>*/}
+
+
           </Form.Item>
       );
     }
