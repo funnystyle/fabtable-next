@@ -1,6 +1,6 @@
 // components/OrderInfoCreate.tsx
 import React from 'react';
-import { Form, Input, DatePicker, Select, Button, Row, Col, message, Radio } from 'antd';
+import { Form, Input, DatePicker, Select, Button, Row, Col, message, Radio, Checkbox } from 'antd';
 import { useState, useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAxios, postAxios } from "@api/apiClient";
@@ -164,6 +164,35 @@ const OrderInfoCreate = () => {
           </Form.Item>
       );
     }
+
+
+    if (item.standardInfoDiv === 'DATE') {
+      return (
+        <Form.Item
+          key={item.id}
+          label={item.displayName}
+          name={item.columnName}
+        >
+          <DatePicker style={{ width: '100%' }} />
+        </Form.Item>
+      );
+    }
+
+
+    // 'CHECKBOX' 타입 처리
+    if (item.standardInfoDiv === 'CHECKBOX') {
+      return (
+        <Form.Item
+          key={item.id}
+          label={item.displayName}
+          name={item.columnName}
+          valuePropName="checked" // valuePropName을 "checked"로 설정
+        >
+          <Checkbox />
+        </Form.Item>
+      );
+    }
+
     // 다른 타입에 대한 처리 추가 가능
     return null;
   };
