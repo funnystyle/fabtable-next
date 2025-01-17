@@ -66,6 +66,9 @@ const HomePage = () => {
       <p>
         <Link href="/samples/antd/memoInput" color='blue.400' _hover={{ color: 'blue.500' }}>memoInput</Link>
       </p>
+      <p>
+        <Link href="/samples/antd/layout" color='blue.400' _hover={{ color: 'blue.500' }}>layout</Link>
+      </p>
     </div>
   );
 };
