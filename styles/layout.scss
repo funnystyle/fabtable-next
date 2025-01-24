@@ -1,0 +1,37 @@
+@charset "UTF-8";
+
+.ant-layout {
+	background-color: #fff;
+}
+
+.header {
+	height: 44px;
+	background-color: #fff;
+	border-bottom: 1px solid #d4d4d4;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+}
+
+.lnb-area {
+	background-color: #f9f9f9;
+	border-right: 1px solid #edf2f7;
+	overflow-y: auto;
+	position: fixed;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	z-index: 1000;
+
+	.ant-menu-light {
+		background-color: transparent;
+		border-inline-end: 0 !important;
+	}
+}
+
+.contents {
+	height: calc(100vh - 44px);
+	margin-top: 44px;
+	background-color: #fff;
+}
