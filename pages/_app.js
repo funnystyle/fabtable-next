@@ -8,8 +8,7 @@ import i18next from "../i18n"; // i18next 설정 파일 임포트
 
 import HomePage from "./components/HomePage"; // i18next 설정 파일 임포트
 
-// import "../styles/globals.css";
-import "../styles/base.scss";
+import "@/assets/scss/base.scss";
 
 function App({ Component, pageProps }) {
 	return (
