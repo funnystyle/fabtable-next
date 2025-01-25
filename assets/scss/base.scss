@@ -5,8 +5,14 @@
 * {
 	font-family: "Pretendard";
 	font-size: toRem(16);
-	font-weight: 400;
 }
+
+$pointBlue: #1677ff;
+$gray5: #718096;
+$blackAl700: rgba(
+	$color: #000000,
+	$alpha: 0.64,
+);
 
 @function toRem($value) {
 	$remValue: calc(($value / 16) * 1rem);
