@@ -6,7 +6,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next"; // i18next Provider 추가
 import i18next from "../i18n"; // i18next 설정 파일 임포트
 
-import Index from "./index"; // i18next 설정 파일 임포트
+import HomePage from "./components/HomePage"; // i18next 설정 파일 임포트
 
 // import "../styles/globals.css";
 import "../styles/base.scss";
@@ -16,10 +16,10 @@ function App({ Component, pageProps }) {
 		<ChakraProvider>
 			<QueryClientProvider client={queryClient}>
 				<I18nextProvider i18n={i18next}>
-					<Index>
+					<HomePage>
 						{/* i18next 설정을 제공 */}
 						<Component {...pageProps} />
-					</Index>
+					</HomePage>
 				</I18nextProvider>
 			</QueryClientProvider>
 		</ChakraProvider>
