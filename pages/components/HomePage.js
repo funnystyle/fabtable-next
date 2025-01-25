@@ -336,7 +336,14 @@ const HomePage = ({ children }) => {
 							type="text"
 							className="btn-help"
 						>
-							도움말
+							<span
+								style={{
+									opacity: collapsed ? 0 : 1,
+									display: collapsed ? "none" : "inline",
+								}}
+							>
+								도움말
+							</span>
 						</Button>
 					</Sider>
 				)}
