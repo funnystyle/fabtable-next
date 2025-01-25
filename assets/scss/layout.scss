@@ -80,7 +80,7 @@
 
 				&.user {
 					width: auto;
-					margin-left: toRem(6);
+					margin-left: toRem(2);
 					padding-left: toRem(6);
 					position: relative;
 
@@ -252,6 +252,7 @@
 		.ant-menu-submenu-arrow::before,
 		.ant-menu-submenu-arrow::after {
 			height: 1px;
+			color: rgba($color: #000000, $alpha: 0.48);
 		}
 	}
 

@@ -311,7 +311,7 @@ const HomePage = ({ children }) => {
 
 						<Menu
 							defaultSelectedKeys={["1"]}
-							defaultOpenKeys={["sub1"]}
+							defaultOpenKeys={["sub1", "sub2"]}
 							mode="inline"
 							items={basicItems}
 							inlineIndent="10"
@@ -328,13 +328,7 @@ const HomePage = ({ children }) => {
 								관리 및 설정
 							</p>
 
-							<Menu
-								defaultSelectedKeys={["1"]}
-								defaultOpenKeys={["sub1"]}
-								mode="inline"
-								items={adminItems}
-								inlineIndent="10"
-							/>
+							<Menu mode="inline" items={adminItems} inlineIndent="10" />
 						</div>
 
 						<Button
