@@ -2,8 +2,15 @@
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
-@import "./layout.scss";
-
 * {
 	font-family: "Pretendard";
+	font-size: toRem(16);
+	font-weight: 400;
 }
+
+@function toRem($value) {
+	$remValue: calc(($value / 16) * 1rem);
+	@return $remValue;
+}
+
+@import "./layout.scss";

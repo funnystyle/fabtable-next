@@ -13,12 +13,14 @@ import {
 	AreaChartOutlined,
 } from "@ant-design/icons";
 
+import Link from "next/link";
+
 const { Header, Sider, Content } = Layout;
 
 const items = [
 	{
 		key: "1",
-		label: <a href="/">대시보드</a>,
+		label: <Link href={"/"}>대시보드</Link>,
 		icon: <GoldFilled />,
 	},
 	{
@@ -28,7 +30,7 @@ const items = [
 		children: [
 			{
 				key: "sub1-1",
-				label: <a href="/ScheduleYear">연간 종합 일정</a>,
+				label: <Link href={"/ScheduleYear"}>연간 종합 일정</Link>,
 			},
 			{
 				key: "sub1-2",

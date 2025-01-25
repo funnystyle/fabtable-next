@@ -5,7 +5,7 @@
 }
 
 .header {
-	height: 44px;
+	height: toRem(44);
 	background-color: #fff;
 	border-bottom: 1px solid #d4d4d4;
 	position: fixed;
@@ -15,7 +15,7 @@
 }
 
 .lnb-area {
-	padding: 12px;
+	padding: toRem(12);
 	background-color: #f9f9f9;
 	border-right: 1px solid #edf2f7;
 	overflow-y: auto;
@@ -35,25 +35,25 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	height: 36px;
-	margin-bottom: 16px;
-	padding-left: 8px;
+	height: toRem(36);
+	margin-bottom: toRem(16);
+	padding-left: toRem(8);
 }
 
 .logo {
-	font-size: 18px;
+	font-size: toRem(18);
 	color: #1d56bc;
 	font-weight: 800;
 	transition: opacity 0.3s ease-in-out;
 }
 
 .btn-menu {
-	font-size: 18px;
+	font-size: toRem(18);
 	transition: margin-right 0.2s ease-in-out;
 }
 
 .contents {
-	height: calc(100vh - 44px);
-	margin-top: 44px;
+	height: calc(100vh - toRem(44));
+	margin-top: toRem(44);
 	background-color: #fff;
 }
