@@ -3,11 +3,13 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 * {
-	font-family: "Pretendard";
+	font-family: "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+		"Noto Sans", sans-serif !important;
 	font-size: toRem(16);
 }
 
 $pointBlue: #1677ff;
+$title: #1a202c;
 $gray5: #718096;
 $blackAl700: rgba(
 	$color: #000000,
@@ -20,3 +22,4 @@ $blackAl700: rgba(
 }
 
 @import "./layout.scss";
+@import "./contents.scss";

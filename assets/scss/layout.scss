@@ -169,9 +169,9 @@
 
 		.name {
 			margin-left: toRem(8);
-			border-bottom: toRem(1) solid #1a202c;
+			border-bottom: toRem(1) solid $title;
 			font-size: toRem(16);
-			color: #1a202c;
+			color: $title;
 			font-weight: 600;
 		}
 	}
@@ -312,8 +312,49 @@
 	}
 }
 
-.contents {
-	height: calc(100vh - toRem(44));
-	margin-top: toRem(44);
-	background-color: #fff;
+/* title */
+h4 {
+	&.title-page {
+		margin-bottom: toRem(16);
+		line-height: 1.83;
+	}
+}
+
+/* input */
+.ant-select-single {
+	height: toRem(24);
+}
+
+.ant-picker {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.ant-btn {
+	gap: toRem(4);
+	padding: 0 toRem(8);
+
+	&.ant-btn-round {
+		&.ant-btn-sm {
+			padding-inline-start: toRem(8);
+			padding-inline-end: toRem(8);
+			font-size: toRem(12);
+		}
+	}
+
+	&.ant-btn-variant-text {
+		padding-left: 0;
+		padding-right: 0;
+		border-radius: 0;
+
+		&:hover {
+			background-color: transparent !important;
+		}
+
+		&.ant-btn-sm {
+			border-bottom: 1px solid $pointBlue;
+			font-size: toRem(12);
+			font-weight: 700;
+		}
+	}
 }
