@@ -112,7 +112,6 @@
 	padding: toRem(12);
 	background-color: #fff;
 	border-right: 1px solid #d9d9d9;
-	overflow-y: auto;
 	position: fixed;
 	left: 0;
 	top: 0;
@@ -123,13 +122,19 @@
 		height: toRem(32);
 		padding: 0 toRem(10);
 		margin-bottom: toRem(16);
+		line-height: toRem(32);
 
-		.team {
+		.ant-tag {
+			display: inline-block;
 			height: toRem(20);
 			padding: 0 toRem(4);
+			margin-right: 0;
 			border-radius: toRem(4);
+			font-family: "Pretendard";
+			font-size: toRem(14);
 			font-weight: 600;
 			line-height: toRem(20);
+			vertical-align: middle;
 
 			&.blue {
 				background-color: #2f54eb;
@@ -258,6 +263,17 @@
 
 	.set-menu-area {
 		margin-top: toRem(16);
+	}
+
+	&.ant-layout-sider-collapsed {
+		.lnb-top {
+			justify-content: center;
+		}
+	}
+
+	.lnb-scroll {
+		height: calc(100vh - 165px);
+		overflow-y: auto;
 	}
 }
 

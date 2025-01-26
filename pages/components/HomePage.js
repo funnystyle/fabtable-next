@@ -1,6 +1,6 @@
 // pages/index.js
 import React, { useState, useEffect } from "react";
-import { Layout, Menu, Button } from "antd";
+import { Layout, Menu, Button, Tag } from "antd";
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
@@ -31,7 +31,7 @@ const { Header, Sider, Content } = Layout;
 const basicItems = [
 	{
 		key: "1",
-		label: <Link href={"/"}>대시보드</Link>,
+		label: <Link href={"/dashboard"}>대시보드</Link>,
 		icon: <GoldFilled />,
 	},
 	{
@@ -41,32 +41,32 @@ const basicItems = [
 		children: [
 			{
 				key: "sub1-1",
-				label: <Link href={"/ScheduleYear"}>연간 종합 일정</Link>,
+				label: <Link href={"/year"}>연간 종합 일정</Link>,
 			},
 			{
 				key: "sub1-2",
-				label: "월간 종합 일정",
+				label: <Link href={"/month"}>월간 종합 일정</Link>,
 			},
 		],
 	},
 	{
 		key: "2",
-		label: "영업 관리",
+		label: <Link href={"/order"}>영업 관리</Link>,
 		icon: <EditFilled />,
 	},
 	{
 		key: "3",
-		label: "CS 관리",
+		label: <Link href={"/cs"}>CS 관리</Link>,
 		icon: <AudioFilled />,
 	},
 	{
 		key: "4",
-		label: "생산 관리",
+		label: <Link href={"/produce"}>생산 관리</Link>,
 		icon: <ToolFilled />,
 	},
 	{
 		key: "5",
-		label: "품질 관리",
+		label: <Link href={"/qc"}>품질 관리</Link>,
 		icon: <TrademarkCircleFilled />,
 	},
 	{
@@ -76,15 +76,15 @@ const basicItems = [
 		children: [
 			{
 				key: "sub2-1",
-				label: "불량률 현황",
+				label: <Link href={"/noncommerce"}>불량률 현황</Link>,
 			},
 			{
 				key: "sub2-2",
-				label: "사이클 타임",
+				label: <Link href={"/cycletime"}>사이클 타임</Link>,
 			},
 			{
 				key: "sub3",
-				label: "SPC 현황",
+				label: <Link href={"/spc"}>SPC 현황</Link>,
 			},
 		],
 	},
@@ -93,7 +93,7 @@ const basicItems = [
 const adminItems = [
 	{
 		key: "1",
-		label: "기초 코드 관리",
+		label: <Link href={"/admin/code"}>기초 코드 관리</Link>,
 		icon: <FontColorsOutlined />,
 	},
 	{
@@ -103,15 +103,15 @@ const adminItems = [
 		children: [
 			{
 				key: "sub1-1",
-				label: "제품 관리",
+				label: <Link href={"/admin/product"}>제품 관리</Link>,
 			},
 			{
 				key: "sub1-2",
-				label: "부서별 현황 관리",
+				label: <Link href={"/admin/product"}>부서별 현황 관리</Link>,
 			},
 			{
 				key: "sub1-3",
-				label: "부서별 상세 화면 관리",
+				label: <Link href={"/admin/detail"}>부서별 상세 화면 관리</Link>,
 			},
 			{
 				key: "sub1-4",
@@ -119,11 +119,17 @@ const adminItems = [
 				children: [
 					{
 						key: "sub1-4-1",
-						label: "부적합 종류 관리",
+						label: (
+							<Link href={"/admin/noncommerce/type"}>부적합 종류 관리</Link>
+						),
 					},
 					{
 						key: "sub1-4-3",
-						label: "등록 및 조치사항 설정",
+						label: (
+							<Link href={"/admin/noncommerce/config"}>
+								등록 및 조치사항 설정
+							</Link>
+						),
 					},
 				],
 			},
@@ -131,22 +137,22 @@ const adminItems = [
 	},
 	{
 		key: "2",
-		label: "양식 및 파일 관리",
+		label: <Link href={"/admin/file"}>양식 및 파일 관리</Link>,
 		icon: <FolderOpenFilled />,
 	},
 	{
 		key: "3",
-		label: "부서 및 직급 관리",
+		label: <Link href={"/admin/depart"}>부서 및 직급 관리</Link>,
 		icon: <IdcardFilled />,
 	},
 	{
 		key: "4",
-		label: "사용자 등록 관리",
+		label: <Link href={"/admin/user"}>사용자 등록 관리</Link>,
 		icon: <UserAddOutlined />,
 	},
 	{
 		key: "5",
-		label: "공정 작업자 관리",
+		label: <Link href={"/admin/worker"}>공정 작업자 관리</Link>,
 		icon: <TeamOutlined />,
 	},
 ];
@@ -222,7 +228,7 @@ const HomePage = ({ children }) => {
 				<div
 					className="header-wrap"
 					style={{
-						marginLeft: isMobile ? "0px" : collapsed ? "56px" : "260px",
+						marginLeft: isMobile ? "0px" : collapsed ? "64px" : "260px",
 						transition: "margin-left 0.2s ease-in-out",
 					}}
 				>
@@ -251,7 +257,7 @@ const HomePage = ({ children }) => {
 						collapsible
 						collapsed={collapsed}
 						width={260}
-						collapsedWidth={56}
+						collapsedWidth={64}
 					>
 						<div className="lnb-top">
 							{/* 로고 */}
@@ -295,29 +301,22 @@ const HomePage = ({ children }) => {
 								display: collapsed ? "none" : "block",
 							}}
 						>
-							<span className="team blue">품질팀</span>
-							<span className="name">홍길동 님</span>
+							<Tag className="blue">품질팀</Tag>
+
+							{/* 
+							<Tag className="pink">영업팀</Tag>
+							<Tag className="orange">생산팀</Tag>
+							<Tag className="purple">부서4</Tag>
+							<Tag className="red">부서5</Tag>
+							<Tag className="green">부서6</Tag> 
+							*/}
+
+							<span className="name">
+								<Link href={"/"}>홍길동 님</Link>
+							</span>
 						</div>
 
-						<p
-							className="tit-menu"
-							style={{
-								opacity: collapsed ? 0 : 1,
-								display: collapsed ? "none" : "block",
-							}}
-						>
-							일반 업무
-						</p>
-
-						<Menu
-							defaultSelectedKeys={["1"]}
-							defaultOpenKeys={["sub1", "sub2"]}
-							mode="inline"
-							items={basicItems}
-							inlineIndent="10"
-						/>
-
-						<div className="set-menu-area">
+						<div className="lnb-scroll">
 							<p
 								className="tit-menu"
 								style={{
@@ -325,10 +324,30 @@ const HomePage = ({ children }) => {
 									display: collapsed ? "none" : "block",
 								}}
 							>
-								관리 및 설정
+								일반 업무
 							</p>
 
-							<Menu mode="inline" items={adminItems} inlineIndent="10" />
+							<Menu
+								defaultSelectedKeys={["1"]}
+								defaultOpenKeys={["sub1", "sub2"]}
+								mode="inline"
+								items={basicItems}
+								inlineIndent="10"
+							/>
+
+							<div className="set-menu-area">
+								<p
+									className="tit-menu"
+									style={{
+										opacity: collapsed ? 0 : 1,
+										display: collapsed ? "none" : "block",
+									}}
+								>
+									관리 및 설정
+								</p>
+
+								<Menu mode="inline" items={adminItems} inlineIndent="10" />
+							</div>
 						</div>
 
 						<Button
@@ -351,7 +370,7 @@ const HomePage = ({ children }) => {
 				{/* 오른쪽 본문 컨텐츠 */}
 				<Layout
 					style={{
-						marginLeft: isMobile ? "0px" : collapsed ? "56px" : "260px",
+						marginLeft: isMobile ? "0px" : collapsed ? "64px" : "260px",
 						transition: "margin-left 0.2s ease-in-out",
 					}}
 				>
