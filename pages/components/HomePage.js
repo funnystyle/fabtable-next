@@ -224,30 +224,6 @@ const HomePage = ({ children }) => {
 
 	return (
 		<Layout>
-			<Header className="header">
-				<div
-					className="header-wrap"
-					style={{
-						marginLeft: collapsed ? "64px" : "260px",
-						transition: "margin-left 0.2s ease-in-out",
-					}}
-				>
-					<div className="h-txt-area">
-						<strong>활기찬 월요일!</strong>
-
-						<span className="date">2024년 9월 2일</span>
-					</div>
-
-					<p className="time">
-						<ClockCircleOutlined />
-						00:00:00
-					</p>
-
-					<Menu mode="horizontal" items={topItems} className="top-menu" />
-				</div>
-			</Header>
-
-			{/* 헤더 아래 전체 레이아웃 */}
 			<Layout>
 				{/* GNB (왼쪽 메뉴) */}
 				<Sider
@@ -364,6 +340,27 @@ const HomePage = ({ children }) => {
 						transition: "margin-left 0.2s ease-in-out",
 					}}
 				>
+					<Header className="header">
+						<div
+							className="header-wrap"
+							style={{
+								transition: "margin-left 0.2s ease-in-out",
+							}}
+						>
+							<div className="h-txt-area">
+								<strong>활기찬 월요일!</strong>
+
+								<span className="date">2024년 9월 2일</span>
+							</div>
+
+							<p className="time">
+								<ClockCircleOutlined />
+								00:00:00
+							</p>
+
+							<Menu mode="horizontal" items={topItems} className="top-menu" />
+						</div>
+					</Header>
 					<Content className="contents">{children}</Content>
 				</Layout>
 			</Layout>
