@@ -6,16 +6,17 @@
 	padding: toRem(40);
 	margin-top: toRem(44);
 	background-color: #fff;
+	flex-shrink: 0;
+	overflow: auto;
 
 	.contents-flex {
 		.contents-left {
-			min-width: toRem(640);
 			flex-grow: 1;
 		}
 
 		.contents-right {
-			min-width: toRem(160);
 			width: toRem(240);
+			flex-shrink: 0;
 		}
 	}
 
@@ -92,6 +93,173 @@
 
 		.ant-card-bordered {
 			border-color: #cbd5e0;
+		}
+	}
+
+	.calendar-tb {
+		width: 100%;
+		margin-top: toRem(12);
+
+		thead {
+			tr {
+				th {
+					height: toRem(30);
+					background-color: rgba(0, 0, 0, 0.04);
+					font-size: toRem(14);
+					font-weight: 500;
+					text-align: left;
+					color: rgba(0, 0, 0, 0.88);
+
+					&:first-child {
+						padding-left: toRem(10);
+					}
+
+					&:last-child {
+						padding-right: toRem(10);
+					}
+
+					&.sun {
+						color: $pointRed;
+					}
+
+					&.sat {
+						color: $pointBlue;
+					}
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				td {
+					height: toRem(90);
+					padding: toRem(4) toRem(2) toRem(12);
+					border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+					font-size: toRem(12);
+					color: rgba(0, 0, 0, 0.88);
+					line-height: 1.6;
+					vertical-align: top;
+					cursor: pointer;
+
+					&:first-child {
+						padding-left: toRem(10);
+					}
+
+					&:last-child {
+						padding-right: toRem(10);
+					}
+
+					&:hover {
+						background-color: rgba(0, 0, 0, 0.02);
+					}
+
+					.day-txt {
+						margin-bottom: toRem(12);
+					}
+
+					.schedule-txt-list {
+						padding-left: toRem(12);
+						margin-left: toRem(4);
+						position: relative;
+
+						& + .schedule-txt-list {
+							margin-top: toRem(12);
+						}
+
+						li {
+							display: flex;
+							gap: toRem(4);
+
+							strong {
+								font-size: 600;
+							}
+						}
+
+						&::before {
+							content: "";
+							width: toRem(4);
+							height: 100%;
+							border-radius: 20px;
+							position: absolute;
+							left: 0;
+							top: 0;
+						}
+
+						&.delivery {
+							&::before {
+								background-color: #90cdf4;
+							}
+						}
+
+						&.produce {
+							&::before {
+								background-color: #d6bcfa;
+							}
+						}
+
+						&.test {
+							&::before {
+								background-color: #f6ad55;
+							}
+						}
+					}
+
+					&.other {
+						.day-txt {
+							color: rgba(0, 0, 0, 0.25);
+						}
+
+						.schedule-txt-list {
+							color: rgba(0, 0, 0, 0.24);
+
+							&::before {
+								background-color: rgba(0, 0, 0, 0.24);
+							}
+						}
+					}
+
+					&.today {
+						position: relative;
+
+						&::before {
+							content: "";
+							height: toRem(4);
+							background-color: $pointBlue;
+							position: absolute;
+							left: 0;
+							right: 0;
+							top: 0;
+						}
+
+						.day-txt {
+							color: $pointBlue;
+							font-weight: 600;
+						}
+					}
+
+					&.pick {
+						background-color: #eff8ff;
+					}
+				}
+			}
+		}
+	}
+}
+
+.ant-picker-dropdown {
+	.ant-picker-panel-container {
+		box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05),
+			0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px 0px rgba(0, 0, 0, 0.08);
+	}
+}
+
+/* ~ 912px ----------- */
+@media only screen and (max-width: 912px) {
+	.contents {
+		.contents-flex {
+			.contents-right {
+				width: toRem(160);
+			}
 		}
 	}
 }

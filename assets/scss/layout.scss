@@ -112,11 +112,11 @@
 	padding: toRem(12);
 	background-color: #fff;
 	border-right: 1px solid #d9d9d9;
-	position: fixed;
-	left: 0;
-	top: 0;
-	bottom: 0;
-	z-index: 1000;
+	// position: fixed;
+	// left: 0;
+	// top: 0;
+	// bottom: 0;
+	// z-index: 1000;
 
 	.user-info {
 		height: toRem(32);
@@ -356,5 +356,10 @@ h4 {
 			font-size: toRem(12);
 			font-weight: 700;
 		}
+	}
+
+	&.active {
+		border-color: #0958d9;
+		color: #0958d9;
 	}
 }

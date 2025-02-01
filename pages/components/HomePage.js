@@ -228,7 +228,7 @@ const HomePage = ({ children }) => {
 				<div
 					className="header-wrap"
 					style={{
-						marginLeft: isMobile ? "0px" : collapsed ? "64px" : "260px",
+						marginLeft: collapsed ? "64px" : "260px",
 						transition: "margin-left 0.2s ease-in-out",
 					}}
 				>
@@ -250,73 +250,84 @@ const HomePage = ({ children }) => {
 			{/* 헤더 아래 전체 레이아웃 */}
 			<Layout>
 				{/* GNB (왼쪽 메뉴) */}
-				{!isMobile && (
-					<Sider
-						className="lnb-area"
-						trigger={null}
-						collapsible
-						collapsed={collapsed}
-						width={260}
-						collapsedWidth={64}
-					>
-						<div className="lnb-top">
-							{/* 로고 */}
-							{!isMobile && (
-								<div
-									className="logo"
-									style={{
-										opacity: collapsed ? 0 : 1,
-										display: collapsed ? "none" : "block",
-									}}
-								>
-									<img src={"./assets/images/logo.svg"} />
-									FabTable
-								</div>
-							)}
-
-							{/* 햄버거 버튼 */}
-							<Button
-								type="text"
-								icon={
-									collapsed || isMobile ? (
-										<MenuUnfoldOutlined />
-									) : (
-										<MenuFoldOutlined />
-									)
-								}
-								onClick={() =>
-									isMobile ? setDrawerVisible(true) : setCollapsed(!collapsed)
-								}
-								style={{
-									marginRight: collapsed || isMobile ? "0" : "8px",
-								}}
-								className="btn-menu"
-							/>
-						</div>
-
+				<Sider
+					className="lnb-area"
+					trigger={null}
+					collapsible
+					collapsed={collapsed}
+					breakpoint="lg"
+					width={260}
+					collapsedWidth={64}
+				>
+					<div className="lnb-top">
+						{/* 로고 */}
 						<div
-							className="user-info"
+							className="logo"
 							style={{
 								opacity: collapsed ? 0 : 1,
 								display: collapsed ? "none" : "block",
 							}}
 						>
-							<Tag className="blue">품질팀</Tag>
-
-							{/* 
-							<Tag className="pink">영업팀</Tag>
-							<Tag className="orange">생산팀</Tag>
-							<Tag className="purple">부서4</Tag>
-							<Tag className="red">부서5</Tag>
-							<Tag className="green">부서6</Tag> 
-							*/}
-
-							<span className="name">
-								<Link href={"/"}>홍길동 님</Link>
-							</span>
+							<img src={"./assets/images/logo.svg"} />
+							FabTable
 						</div>
 
-						<div className="lnb-scroll">
+						{/* 햄버거 버튼 */}
+						<Button
+							type="text"
+							icon={<MenuFoldOutlined />}
+							onClick={() =>
+								isMobile ? setDrawerVisible(true) : setCollapsed(!collapsed)
+							}
+							style={{
+								marginRight: collapsed || isMobile ? "0" : "8px",
+							}}
+							className="btn-menu"
+						/>
+					</div>
+
+					<div
+						className="user-info"
+						style={{
+							opacity: collapsed ? 0 : 1,
+							display: collapsed ? "none" : "block",
+						}}
+					>
+						<Tag className="blue">품질팀</Tag>
+
+						{/* 
+						<Tag className="pink">영업팀</Tag>
+						<Tag className="orange">생산팀</Tag>
+						<Tag className="purple">부서4</Tag>
+						<Tag className="red">부서5</Tag>
+						<Tag className="green">부서6</Tag> 
+						*/}
+
+						<span className="name">
+							<Link href={"/"}>홍길동 님</Link>
+						</span>
+					</div>
+
+					<div className="lnb-scroll">
+						<p
+							className="tit-menu"
+							style={{
+								opacity: collapsed ? 0 : 1,
+								display: collapsed ? "none" : "block",
+							}}
+						>
+							일반 업무
+						</p>
+
+						<Menu
+							defaultSelectedKeys={["1"]}
+							defaultOpenKeys={["sub1", "sub2"]}
+							mode="inline"
+							items={basicItems}
+							inlineIndent="10"
+						/>
+
+						<div className="set-menu-area">
 							<p
 								className="tit-menu"
 								style={{
@@ -324,53 +335,32 @@ const HomePage = ({ children }) => {
 									display: collapsed ? "none" : "block",
 								}}
 							>
-								일반 업무
+								관리 및 설정
 							</p>
 
-							<Menu
-								defaultSelectedKeys={["1"]}
-								defaultOpenKeys={["sub1", "sub2"]}
-								mode="inline"
-								items={basicItems}
-								inlineIndent="10"
-							/>
-
-							<div className="set-menu-area">
-								<p
-									className="tit-menu"
-									style={{
-										opacity: collapsed ? 0 : 1,
-										display: collapsed ? "none" : "block",
-									}}
-								>
-									관리 및 설정
-								</p>
-
-								<Menu mode="inline" items={adminItems} inlineIndent="10" />
-							</div>
+							<Menu mode="inline" items={adminItems} inlineIndent="10" />
 						</div>
+					</div>
 
-						<Button
-							icon={<QuestionCircleFilled />}
-							type="text"
-							className="btn-help"
+					<Button
+						icon={<QuestionCircleFilled />}
+						type="text"
+						className="btn-help"
+					>
+						<span
+							style={{
+								opacity: collapsed ? 0 : 1,
+								display: collapsed ? "none" : "inline",
+							}}
 						>
-							<span
-								style={{
-									opacity: collapsed ? 0 : 1,
-									display: collapsed ? "none" : "inline",
-								}}
-							>
-								도움말
-							</span>
-						</Button>
-					</Sider>
-				)}
+							도움말
+						</span>
+					</Button>
+				</Sider>
 
 				{/* 오른쪽 본문 컨텐츠 */}
 				<Layout
 					style={{
-						marginLeft: isMobile ? "0px" : collapsed ? "64px" : "260px",
 						transition: "margin-left 0.2s ease-in-out",
 					}}
 				>
