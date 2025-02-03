@@ -81,8 +81,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/script/deploy.sh
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/script/deploy.sh
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/script/${{ github.ref_name }}.sh
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/script/${{ github.ref_name }}.sh
       #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
       #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
       #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
