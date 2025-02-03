@@ -7,7 +7,6 @@ BLUE_PORT=8887
 GREEN_PORT=8888
 
 # 아래는 수정하지 않아도 됨
-
 # 이미지 및 컨테이너 변수
 SERVICE_IMAGE="${SERVICE_NAME}-docker"
 BLUE_CONTAINER="${SERVICE_NAME}-blue"
