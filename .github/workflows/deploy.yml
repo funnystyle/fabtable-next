@@ -71,7 +71,7 @@ jobs:
           host: ${{ secrets.SYNOLOGY_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: ./script/*
+          source: ./deploy/*
           target: ${{ env.DEPLOY_PATH }}
 
       - name: SSH into Synology NAS and run Deploy Script
