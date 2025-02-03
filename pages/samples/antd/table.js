@@ -18,7 +18,7 @@ const SampleProductTable = () => {
   // 헤더 데이터 가져오기
   const fetchColumns = async () => {
     try {
-      const response = await axios.get("http://localhost:8991/api/sample/products/headers");
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sample/products/headers`);
       const formattedColumns = response.data.map((col) => ({
         title: col.title,
         dataIndex: col.dataIndex,
@@ -36,7 +36,7 @@ const SampleProductTable = () => {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8991/api/sample/products/data", {
+      const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/sample/products/data`, {
         params: {
           category: filters.category || "",
           page: pagination.current - 1,

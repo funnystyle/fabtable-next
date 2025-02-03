@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 기본 변수 : 프로젝트 생성 시 이 부분만 수정
-SERVER_DOMAIN="fabtable.fnfworks.com"
+SERVER_DOMAIN="publish.fabtable.fnfworks.com"
 SERVICE_NAME="$1-$2"
 BLUE_PORT=8887
 GREEN_PORT=8888
