@@ -25,6 +25,7 @@ import {
 } from "@ant-design/icons";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const { Header, Sider, Content } = Layout;
 
@@ -244,7 +245,7 @@ const HomePage = ({ children }) => {
 								display: collapsed ? "none" : "block",
 							}}
 						>
-							<img src={"./assets/images/logo.svg"} />
+							<Image src={"./assets/images/logo.svg"} />
 							FabTable
 						</div>
 

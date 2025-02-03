@@ -52,7 +52,7 @@ const TabItems = [
 	},
 ];
 
-const month = () => {
+const MonthComponent = () => {
 	const [isVisible, setIsVisible] = useState(true);
 
 	const toggleDiv = () => {
@@ -650,4 +650,4 @@ const month = () => {
 	);
 };
 
-export default month;
+export default MonthComponent;
