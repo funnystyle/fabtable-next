@@ -3,8 +3,8 @@
 # 기본 변수 : 프로젝트 생성 시 이 부분만 수정
 SERVER_DOMAIN="fabtable.fnfworks.com"
 SERVICE_NAME="fabtable-next"
-BLUE_PORT=19999
-GREEN_PORT=29999
+BLUE_PORT=8885
+GREEN_PORT=8886
 
 # 아래는 수정하지 않아도 됨
 
