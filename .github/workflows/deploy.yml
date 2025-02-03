@@ -6,16 +6,17 @@ on:
       - master
       - publish
 
-env:
-  SERVICE_NAME: fabtable-next
-  DEPLOY_PATH: /var/services/homes/fnfworks/docker-app/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker
-  DOCKER_IMAGE_NAME: ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker
-  DOCKER_IMAGE_FILE: ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker.tar
 #  DOCKER_IMAGE_PORT: 8888
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      SERVICE_NAME: fabtable-next
+      DEPLOY_PATH: /var/services/homes/fnfworks/docker-app/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker
+      DOCKER_IMAGE_NAME: ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker
+      DOCKER_IMAGE_FILE: ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker.tar
 
     steps:
       - name: Checkout code
