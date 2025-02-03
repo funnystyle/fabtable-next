@@ -9,7 +9,7 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
     networks:
-      - blue-green-net
+      - app-network
 
   ${GREEN_CONTAINER}:
     container_name: ${GREEN_CONTAINER}
@@ -20,7 +20,7 @@ services:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
     networks:
-      - blue-green-net
+      - app-network
 
 networks:
   app-network:
