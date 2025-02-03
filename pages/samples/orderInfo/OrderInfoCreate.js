@@ -10,22 +10,6 @@ const { Option } = Select;
 const OrderInfoCreate = () => {
   const [form] = Form.useForm();
 
-  const { mutate: orderInfoCreate } = useMutation({
-    mutationKey: "orderInfoCreate",
-    mutationFn: (values) => postAxios("/admin/order-info", values),
-  });
-
-  const handleSubmit = async (values) => {
-    console.log('Form Values:', values);
-    await orderInfoCreate(values);
-    message.success('수주 등록이 완료되었습니다!');
-
-  };
-
-  const handleReset = () => {
-    form.resetFields();
-  };
-
   const [standardInfoList, setStandardInfoList] = useState([]);
   const [queryKey, setQueryKey] = useState(["standardInfoResponse", Math.random()]);
   const { data:standardInfoResponse, isLoading, isSuccess, isError } = useQuery({
@@ -39,6 +23,33 @@ const OrderInfoCreate = () => {
       setStandardInfoList(standardInfoResponse.data.list);
     }
   }, [isSuccess]);
+
+  const { mutate: orderInfoCreate } = useMutation({
+    mutationKey: "orderInfoCreate",
+    mutationFn: (values) => postAxios("/admin/order-info", values),
+  });
+
+  const handleSubmit = async (values) => {
+    standardInfoList.forEach((item) => {
+      if (item.standardInfoDiv === 'DATE' && values[item.columnName]) {
+        values[item.columnName] = values[item.columnName].format('YYYY-MM-DD');
+      }
+    });
+
+
+
+    await orderInfoCreate(values);
+    message.success('수주 등록이 완료되었습니다!');
+
+    // 같은 폴더의 OrderInfoList로 이동
+    window.location.href = "/samples/orderInfo/OrderInfoList";
+
+  };
+
+  const handleReset = () => {
+    form.resetFields();
+  };
+
 
 
   const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장

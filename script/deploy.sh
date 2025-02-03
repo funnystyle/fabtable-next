@@ -1,98 +1,125 @@
 #!/bin/bash
 
-IS_GREEN=$(sudo /usr/local/bin/docker ps | grep fabtable-next-green)
-#IMAGE_TAG=$1
-#DOCKER_USERNAME=$2
+# 기본 변수 : 프로젝트 생성 시 이 부분만 수정
+SERVER_DOMAIN="fabtable.fnfworks.com"
+SERVICE_NAME="fabtable-next"
+BLUE_PORT=19999
+GREEN_PORT=29999
 
-if [ -z "$IS_GREEN"  ];then # blue라면
+# 아래는 수정하지 않아도 됨
 
-  echo "### BLUE => GREEN ###"
+# 이미지 및 컨테이너 변수
+SERVICE_IMAGE="${SERVICE_NAME}-docker"
+BLUE_CONTAINER="${SERVICE_NAME}-blue"
+GREEN_CONTAINER="${SERVICE_NAME}-green"
 
-  echo "1. get green image"
-  sudo /usr/local/bin/docker rmi fabtable-next-docker:latest
-  #docker rmi -f fabtable-next-green
-  sudo /usr/local/bin/docker load -i /var/services/homes/fnfworks/docker-app/fabtable-next-docker/deploy/fabtable-next-docker.tar
+# 경로 설정
+DOCKER_BIN="/usr/local/bin/docker"
+DOCKER_COMPOSE_BIN="/usr/local/bin/docker-compose"
+DEPLOY_DIR="/var/services/homes/fnfworks/docker-app/${SERVICE_IMAGE}/deploy"
+NGINX_CONF_DIR="/etc/nginx/conf.d"
 
-  #docker-compose -f /home/ubuntu/docker/docker-compose.yml pull green # green으로 이미지를 내려받습니다.
+# 템플릿 및 출력 파일 경로
+COMPOSE_TEMPLATE="${DEPLOY_DIR}/docker-compose.template.yml"
+COMPOSE_FILE="${DEPLOY_DIR}/docker-compose.yml"
+NGINX_TEMPLATE="${DEPLOY_DIR}/nginx.template.conf"
+NGINX_CONF="${DEPLOY_DIR}/nginx.conf"
+SERVICE_URL_TEMPLATE="${DEPLOY_DIR}/service-url.template.inc"
+SERVICE_URL_BLUE="${DEPLOY_DIR}/service-url-blue.inc"
+SERVICE_URL_GREEN="${DEPLOY_DIR}/service-url-green.inc"
 
-  echo "2. green container up"
-  #docker-compose -f /home/ubuntu/docker/docker-compose.yml up -d green # green 컨테이너 실행
-  sudo /usr/local/bin/docker rm fabtable-next-green
-  sudo /usr/local/bin/docker-compose -f /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/docker-compose.yml up -d fabtable-next-green # green 컨테이너 실행
+# Nginx 설정 파일 심볼릭 링크
+NGINX_CONF_SYMLINK="${NGINX_CONF_DIR}/http.${SERVICE_NAME}.conf"
+SERVICE_URL_SYMLINK="${NGINX_CONF_DIR}/${SERVICE_NAME}-service-url.inc"
 
-  for RETRY_COUNT in {1..10}
-  do
-    echo "3. green health check..."
-    sleep 3
-    REQUEST=$(curl http://127.0.0.1:8886) # green으로 request
+# 🔹 함수: 템플릿 파일을 생성하는 공통 함수
+create_config_file() {
+    local template_file="$1"
+    local output_file="$2"
+    shift 2  # 앞 두 개의 인수를 제거
+    echo "🔄 Generating ${output_file}..."
+    sed "$@" "$template_file" > "$output_file"
+}
 
-    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지
-      echo "health check success"
-      break ;
-    fi
+# 🔹 템플릿을 기반으로 설정 파일 생성
+create_config_file "$COMPOSE_TEMPLATE" "$COMPOSE_FILE" \
+    -e "s/\${SERVICE_NAME}/${SERVICE_NAME}/g" \
+    -e "s/\${SERVICE_IMAGE}/${SERVICE_IMAGE}/g" \
+    -e "s/\${BLUE_CONTAINER}/${BLUE_CONTAINER}/g" \
+    -e "s/\${GREEN_CONTAINER}/${GREEN_CONTAINER}/g" \
+    -e "s/\${BLUE_PORT}/${BLUE_PORT}/g" \
+    -e "s/\${GREEN_PORT}/${GREEN_PORT}/g"
 
-    if [ ${RETRY_COUNT} -eq 10 ]
-    then
-      echo "> Health check 실패. "
-      echo "> 엔진엑스에 연결하지 않고 배포를 종료합니다."
-      exit 1
-    fi
+create_config_file "$NGINX_TEMPLATE" "$NGINX_CONF" \
+    -e "s|\${SERVER_DOMAIN}|${SERVER_DOMAIN}|g" \
+    -e "s|\${SERVICE_NAME}|${SERVICE_NAME}|g"
 
-    echo "> Health check 연결 실패. 재시도..."
+create_config_file "$SERVICE_URL_TEMPLATE" "$SERVICE_URL_BLUE" \
+    -e "s|\${SERVICE_PORT}|${BLUE_PORT}|g"
 
-  done
+create_config_file "$SERVICE_URL_TEMPLATE" "$SERVICE_URL_GREEN" \
+    -e "s|\${SERVICE_PORT}|${GREEN_PORT}|g"
 
-  echo "4. reload nginx"
-  #sudo cp /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-green.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-green.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
-  sudo nginx -s reload
-
-  echo "5. blue container down"
-  sudo /usr/local/bin/docker-compose -f /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/docker-compose.yml stop fabtable-next-blue
+# 🔹 현재 실행 중인 서비스 확인 및 전환 대상 결정
+IS_GREEN=$(${DOCKER_BIN} ps | grep ${GREEN_CONTAINER})
+if [ -z "$IS_GREEN" ]; then
+    CURRENT_CONTAINER=${BLUE_CONTAINER}
+    NEW_CONTAINER=${GREEN_CONTAINER}
+    NEW_PORT=${GREEN_PORT}
+    NEW_SERVICE_FILE=${SERVICE_URL_GREEN}
 else
-  echo "### GREEN => BLUE ###"
-
-  echo "1. get blue image"
-  #docker-compose -f /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/docker-compose.yml pull fabtable-next-blue
-  sudo /usr/local/bin/docker rmi fabtable-next-docker:latest
-  #docker rmi -f fabtable-next-blue
-  sudo /usr/local/bin/docker load -i /var/services/homes/fnfworks/docker-app/fabtable-next-docker/deploy/fabtable-next-docker.tar
-
-  echo "2. blue container up"
-  sudo /usr/local/bin/docker rm fabtable-next-blue
-  sudo /usr/local/bin/docker-compose -f /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/docker-compose.yml up -d fabtable-next-blue
-
-  for RETRY_COUNT in {1..10}
-  do
-    echo "3. blue health check..."
-    sleep 3
-    REQUEST=$(curl http://127.0.0.1:8885) # blue로 request
-
-    if [ -n "$REQUEST" ]; then # 서비스 가능하면 health check 중지
-      echo "health check success"
-      break ;
-    fi
-
-    if [ ${RETRY_COUNT} -eq 10 ]
-    then
-      echo "> Health check 실패. "
-      echo "> 엔진엑스에 연결하지 않고 배포를 종료합니다."
-      exit 1
-    fi
-
-    echo "> Health check 연결 실패. 재시도..."
-
-  done
-
-  echo "4. reload nginx"
-#  sudo cp /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/fabtable-next-blue.inc /etc/nginx/conf.d/fabtable-next-service-url.inc
-  sudo ln -sf /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/http.fabtable-next.conf /etc/nginx/conf.d/http.fabtable-next.conf
-  #sudo cp /etc/nginx/conf.d/app/service-url-blue.inc /etc/nginx/conf.d/app/service-url.inc
-  sudo nginx -s reload
-
-  echo "5. green container down"
-  #docker-compose -f /home/ubuntu/docker/docker-compose.yml stop green
-  sudo /usr/local/bin/docker-compose -f /var/services/homes/fnfworks/docker-app/fabtable-next-docker/script/docker-compose.yml stop fabtable-next-green
+    CURRENT_CONTAINER=${GREEN_CONTAINER}
+    NEW_CONTAINER=${BLUE_CONTAINER}
+    NEW_PORT=${BLUE_PORT}
+    NEW_SERVICE_FILE=${SERVICE_URL_BLUE}
 fi
+
+echo "### Swapping ${CURRENT_CONTAINER} → ${NEW_CONTAINER} ###"
+
+# 🔹 함수: 새로운 컨테이너 배포
+deploy_service() {
+    echo "1. Get New Image"
+    sudo ${DOCKER_BIN} rmi ${SERVICE_IMAGE}:latest
+    sudo ${DOCKER_BIN} load -i ${DEPLOY_DIR}/${SERVICE_IMAGE}.tar
+
+    echo "2. Start New Container: ${NEW_CONTAINER}"
+    sudo ${DOCKER_BIN} rm ${NEW_CONTAINER}
+    sudo ${DOCKER_COMPOSE_BIN} -f ${COMPOSE_FILE} up -d ${NEW_CONTAINER}
+
+    for RETRY_COUNT in {1..10}
+    do
+        echo "3. Health Check: ${NEW_CONTAINER}..."
+        sleep 3
+        REQUEST=$(curl -s http://127.0.0.1:${NEW_PORT})
+
+        if [ -n "$REQUEST" ]; then
+            echo "✅ Health Check Success: ${NEW_CONTAINER}"
+            break;
+        fi
+
+        if [ ${RETRY_COUNT} -eq 10 ]; then
+            echo "❌ Health Check Failed. Deployment Aborted."
+            exit 1
+        fi
+
+        echo "⚠️ Health Check Failed. Retrying..."
+    done
+}
+
+# 🔹 함수: Nginx 설정 및 재시작
+setup_nginx() {
+    echo "4. Reload Nginx"
+    sudo ln -sf ${NEW_SERVICE_FILE} ${SERVICE_URL_SYMLINK}
+    sudo ln -sf ${NGINX_CONF} ${NGINX_CONF_SYMLINK}
+    sudo nginx -s reload
+}
+
+# 🔹 함수 실행 (컨테이너 배포 + Nginx 설정 업데이트)
+deploy_service
+setup_nginx
+
+# 🔹 기존 컨테이너 중지
+echo "5. Stop Old Container: ${CURRENT_CONTAINER}"
+sudo ${DOCKER_COMPOSE_BIN} -f ${COMPOSE_FILE} stop ${CURRENT_CONTAINER}
+
+echo "🎉 Deployment Completed! ${NEW_CONTAINER} is now active."

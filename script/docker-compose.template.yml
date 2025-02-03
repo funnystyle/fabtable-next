@@ -1,0 +1,27 @@
+version: '3'
+services:
+  ${BLUE_CONTAINER}:
+    container_name: ${BLUE_CONTAINER}
+    image: ${SERVICE_IMAGE}:latest
+    ports:
+      - "${BLUE_PORT}:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
+    networks:
+      - blue-green-net
+
+  ${GREEN_CONTAINER}:
+    container_name: ${GREEN_CONTAINER}
+    image: ${SERVICE_IMAGE}:latest
+    ports:
+      - "${GREEN_PORT}:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_BASE_URL=https://api.fabtable.fnfworks.com
+    networks:
+      - blue-green-net
+
+networks:
+  app-network:
+    driver: bridge
