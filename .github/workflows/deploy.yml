@@ -4,11 +4,12 @@ on:
   push:
     branches:
       - master
+      - publish
 
 env:
-  DEPLOY_PATH: /var/services/homes/fnfworks/docker-app/fabtable-next-docker
-  DOCKER_IMAGE_NAME: fabtable-next-docker
-  DOCKER_IMAGE_FILE: fabtable-next-docker.tar
+  DEPLOY_PATH: /var/services/homes/fnfworks/docker-app/fabtable-next-${{ github.ref_name }}-docker
+  DOCKER_IMAGE_NAME: fabtable-next-${{ github.ref_name }}-docker
+  DOCKER_IMAGE_FILE: fabtable-next-${{ github.ref_name }}-docker.tar
 #  DOCKER_IMAGE_PORT: 8888
 
 jobs:
@@ -108,7 +109,7 @@ jobs:
                 {
                   "title": "${{ github.repository }}",
                   "title_link": "https://github.com/${{github.repository}}",
-                  "text": "Fabtable-next.js 배포 성공",
+                  "text": "Fabtable-next.js ${{ github.ref_name }} 배포 성공",
                   "color": "#D6ED17",
                   "fields": [
                     {
