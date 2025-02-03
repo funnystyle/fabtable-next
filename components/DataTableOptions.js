@@ -79,7 +79,6 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
       const tr = this.find('thead tr');
       const th = $(tr[tr.length - 1]).find('th');
       th.each(function (i, data) {
-        console.log(data);
         $(data).attr('colspan',1);
       });
     }
@@ -93,6 +92,8 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
   // url이 있으면 serverSide
   const serverUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}${url}`;
 
+  console.log("serverUrl", serverUrl)
+
   return {
     ...dataTableOptions,
     serverSide: true,
@@ -103,7 +104,7 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
       url: serverUrl,
       type: "POST",
       data: function (d) {
-        console.log(d);
+        console.log("data", d);
         return JSON.stringify(d);
       },
     },

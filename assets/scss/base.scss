@@ -1,0 +1,57 @@
+@charset 'utf-8';
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+* {
+	padding: 0;
+	margin: 0;
+	resize: none;
+	appearance: none;
+	box-sizing: border-box;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-size-adjust: none;
+	-webkit-appearance: none;
+	font-family: "Pretendard", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+		"Noto Sans", sans-serif !important;
+	font-size: toRem(16);
+}
+
+ul,
+ol,
+dl,
+li,
+dt,
+dd {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+}
+
+th,
+td {
+	padding: 0;
+	margin: 0;
+}
+
+$pointBlue: #1677ff;
+$pointRed: #f5222d;
+$title: #1a202c;
+$gray5: #718096;
+$blackAl700: rgba(
+	$color: #000000,
+	$alpha: 0.64,
+);
+
+@function toRem($value) {
+	$remValue: calc(($value / 16) * 1rem);
+	@return $remValue;
+}
+
+@import "./layout.scss";
+@import "./contents.scss";
