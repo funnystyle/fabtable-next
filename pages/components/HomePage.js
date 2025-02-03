@@ -245,7 +245,7 @@ const HomePage = ({ children }) => {
 								display: collapsed ? "none" : "block",
 							}}
 						>
-							<Image src={"@assets/images/logo.svg"} />
+							<img src={"/images/logo.svg"} />
 							FabTable
 						</div>
 
