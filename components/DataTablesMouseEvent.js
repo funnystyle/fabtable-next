@@ -34,7 +34,7 @@ export const handleKeyDown = (e, data) => {
 
     // 선택된 행이 없을 경우 첫 번째 행 선택
     if (selectedRowsIndexes.length === 0) {
-      const firstIndex = 0;
+      const firstIndex = data.table.rows({ page: 'current' }).indexes().toArray()[0];
       data.table.row(firstIndex).select();
       data.prevSelectedRow.current = data.table.row(firstIndex).node();
       return;
@@ -45,25 +45,28 @@ export const handleKeyDown = (e, data) => {
     const nextIndex = isArrowUp ? currentIndex - 1 : currentIndex + 1;
 
     // 인덱스 범위 검사
-    if (nextIndex < 0 || nextIndex >= data.table.rows().count()) return;
+    if (nextIndex < 0 || nextIndex >= data.table.rows({ page: 'current' }).indexes().toArray().length) return;
+
+    const currentIndexRow = data.table.row(data.prevSelectedRow.current).index();
+    const nextIndexRow = data.table.rows({ page: 'current' }).indexes().toArray()[nextIndex];
 
     // Shift가 눌리지 않은 경우: 기존 선택 해제 후 새로운 행 선택
     if (!e.shiftKey) {
       data.table.rows().deselect();
-      data.table.row(nextIndex).select();
-      data.prevSelectedRow.current = data.table.row(nextIndex).node();
+      data.table.row(nextIndexRow).select();
+      data.prevSelectedRow.current = data.table.row(nextIndexRow).node();
       return;
     }
 
     // Shift가 눌린 경우: 연속적인 선택/해제 처리
     if (data.prevSelectedRow.current) {
-      const isSelected = data.table.row(nextIndex).node().classList.contains("selected");
+      const isSelected = data.table.row(nextIndexRow).node().classList.contains("selected");
       if (!isSelected) {
-        data.table.row(nextIndex).select();
+        data.table.row(nextIndexRow).select();
       } else {
-        data.table.row(currentIndex).deselect();
+        data.table.row(currentIndexRow).deselect();
       }
-      data.prevSelectedRow.current = data.table.row(nextIndex).node();
+      data.prevSelectedRow.current = data.table.row(nextIndexRow).node();
     }
   }
 };
@@ -142,11 +145,16 @@ export const handleMouseDown = (e, data) => {
   }
 
   if (data.isShiftPressed.current && data.prevSelectedRow.current) {
-    const start = Math.min(data.dragStartRow.current, data.table.row(data.prevSelectedRow.current).index());
-    const end = Math.max(data.dragStartRow.current, data.table.row(data.prevSelectedRow.current).index());
+    const currentPageList = data.table.rows({ page: 'current' }).indexes().toArray();
+    const startIndexRow = currentPageList.indexOf(data.dragStartRow.current);
+    const endIndexRow = currentPageList.indexOf(data.table.row(data.prevSelectedRow.current).index());
+
+    const start = Math.min(startIndexRow, endIndexRow);
+    const end = Math.max(startIndexRow, endIndexRow);
 
     for (let i = start; i <= end; i++) {
-      data.table.row(i).select(); // 시작 행부터 끝 행까지 선택
+      let j = data.table.rows({ page: 'current' }).indexes().toArray()[i];
+      data.table.row(j).select(); // 시작 행부터 끝 행까지 선택
     }
   }
 }
@@ -158,11 +166,6 @@ export const handleMouseDown = (e, data) => {
  */
 export const handleMouseOver = (e, data) => {
   if (data.isDragging.current) {
-    const target = e.currentTarget;
-    const endRow = data.table.row(target).index();
-    const start = Math.min(data.dragStartRow.current, endRow);
-    const end = Math.max(data.dragStartRow.current, endRow);
-
     // 1. 모두 선택 해제
     data.table.rows().deselect();
 
@@ -171,12 +174,23 @@ export const handleMouseOver = (e, data) => {
       data.table.row(index).select();
     });
 
+    const currentPageList = data.table.rows({ page: 'current' }).indexes().toArray();
+    const target = e.currentTarget;
+    const endRow = data.table.row(target).index();
+
+    const startIndexRow = currentPageList.indexOf(data.dragStartRow.current);
+    const endIndexRow = currentPageList.indexOf(endRow);
+
+    const start = Math.min(startIndexRow, endIndexRow);
+    const end = Math.max(startIndexRow, endIndexRow);
+
     // 3. 드래그 중인 행 선택
     for (let i = start; i <= end; i++) {
+      let j = data.table.rows({ page: 'current' }).indexes().toArray()[i];
       if (data.dragIsSelecting.current) {
-        data.table.row(i).select(); // 시작 행부터 끝 행까지 선택
+        data.table.row(j).select(); // 시작 행부터 끝 행까지 선택
       } else {
-        data.table.row(i).deselect(); // 시작 행부터 끝 행까지 선택 해제
+        data.table.row(j).deselect(); // 시작 행부터 끝 행까지 선택 해제
       }
     }
   }
