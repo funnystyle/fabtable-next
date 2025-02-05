@@ -278,11 +278,17 @@
 }
 
 .logo {
+	width: toRem(140);
 	padding-left: toRem(8);
 	font-size: toRem(18);
 	color: #1d56bc;
 	font-weight: 800;
 	transition: opacity 0.3s ease-in-out;
+
+	img {
+		display: inline-block;
+		margin-right: toRem(4);
+	}
 }
 
 .btn-menu {
