@@ -19,6 +19,19 @@
 		}
 	}
 
+	.ant-tabs {
+		.ant-tabs-tab {
+			padding: toRem(16) 0;
+			font-size: toRem(16);
+
+			&.ant-tabs-tab-active {
+				.ant-tabs-tab-btn {
+					font-weight: 600;
+				}
+			}
+		}
+	}
+
 	.team-btn {
 		gap: 6px;
 		margin-right: toRem(14);

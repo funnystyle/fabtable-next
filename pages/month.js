@@ -53,10 +53,18 @@ const TabItems = [
 ];
 
 const MonthComponent = () => {
-	const [isVisible, setIsVisible] = useState(true);
+	const [visibleItems, setVisibleItems] = useState([true, true, true, true]);
 
-	const toggleDiv = () => {
-		setIsVisible(!isVisible); // 상태를 반전
+	const toggleItem = (index) => {
+		setVisibleItems((prev) =>
+			prev.map((item, i) => (i === index ? !item : item))
+		);
+	};
+
+	const closeItem = (index) => {
+		setVisibleItems((prev) =>
+			prev.map((item, i) => (i === index ? false : item))
+		);
 	};
 
 	return (
@@ -139,6 +147,8 @@ const MonthComponent = () => {
 									iconPosition="end"
 									size="small"
 									shape="round"
+									className={`${visibleItems[0] ? "active" : ""}`}
+									onClick={() => toggleItem(0)}
 								>
 									영업팀
 								</Button>
@@ -149,6 +159,8 @@ const MonthComponent = () => {
 									iconPosition="end"
 									size="small"
 									shape="round"
+									className={`${visibleItems[1] ? "active" : ""}`}
+									onClick={() => toggleItem(1)}
 								>
 									생산팀
 								</Button>
@@ -159,6 +171,8 @@ const MonthComponent = () => {
 									iconPosition="end"
 									size="small"
 									shape="round"
+									className={`${visibleItems[2] ? "active" : ""}`}
+									onClick={() => toggleItem(2)}
 								>
 									품질팀
 								</Button>
@@ -172,8 +186,8 @@ const MonthComponent = () => {
 								<Button
 									variant="outlined"
 									icon={<PieChartOutlined />}
-									onClick={() => setIsVisible(true)}
-									className={isVisible ? "active" : ""}
+									className={`${visibleItems[3] ? "active" : ""}`}
+									onClick={() => toggleItem(3)}
 								>
 									총 현황 뷰
 								</Button>
@@ -201,182 +215,212 @@ const MonthComponent = () => {
 								<td className="other">
 									<p className="day-txt">29</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td className="other">
 									<p className="day-txt">30</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">01</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">02</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>100</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>50</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>50</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td className="today pick">
 									<p className="day-txt">03</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">04</p>
@@ -389,105 +433,121 @@ const MonthComponent = () => {
 								<td>
 									<p className="day-txt">06</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">07</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">08</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">09</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 
-									<ul className="schedule-txt-list produce">
-										<li>
-											<span>생산계획</span>
-											<strong>100</strong>
-										</li>
-										<li>
-											<span>생산완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[1] && (
+										<ul className="schedule-txt-list produce">
+											<li>
+												<span>생산계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>생산완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">10</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">11</p>
@@ -500,16 +560,18 @@ const MonthComponent = () => {
 								<td>
 									<p className="day-txt">13</p>
 
-									<ul className="schedule-txt-list test">
-										<li>
-											<span>검사계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>검사완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[2] && (
+										<ul className="schedule-txt-list test">
+											<li>
+												<span>검사계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>검사완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">14</p>
@@ -520,16 +582,18 @@ const MonthComponent = () => {
 								<td>
 									<p className="day-txt">16</p>
 
-									<ul className="schedule-txt-list delivery">
-										<li>
-											<span>납품계획</span>
-											<strong>20</strong>
-										</li>
-										<li>
-											<span>납품완료</span>
-											<strong>19</strong>
-										</li>
-									</ul>
+									{visibleItems[0] && (
+										<ul className="schedule-txt-list delivery">
+											<li>
+												<span>납품계획</span>
+												<strong>20</strong>
+											</li>
+											<li>
+												<span>납품완료</span>
+												<strong>19</strong>
+											</li>
+										</ul>
+									)}
 								</td>
 								<td>
 									<p className="day-txt">17</p>
@@ -588,7 +652,7 @@ const MonthComponent = () => {
 					</table>
 				</div>
 
-				{isVisible && (
+				{visibleItems[3] && (
 					<div className="contents-right">
 						<Flex
 							align="center"
@@ -603,7 +667,7 @@ const MonthComponent = () => {
 								shape="circle"
 								icon={<CloseOutlined />}
 								size="small"
-								onClick={toggleDiv}
+								onClick={() => closeItem(3)}
 							/>
 						</Flex>
 
@@ -612,36 +676,44 @@ const MonthComponent = () => {
 						</p>
 
 						<Space direction="vertical" size={12} className="total-date-list">
-							<Card title="영업일정">
-								<Flex justify="space-between">
-									<p className="txt-date">납품계획</p>
-									<strong className="txt-num">880</strong>
-								</Flex>
-								<Flex justify="space-between">
-									<p className="txt-date">납품완료</p>
-									<strong className="txt-num">56</strong>
-								</Flex>
-							</Card>
-							<Card title="생산일정">
-								<Flex justify="space-between">
-									<p className="txt-date">생산계획</p>
-									<strong className="txt-num">880</strong>
-								</Flex>
-								<Flex justify="space-between">
-									<p className="txt-date">생산완료</p>
-									<strong className="txt-num">56</strong>
-								</Flex>
-							</Card>
-							<Card title="검사일정">
-								<Flex justify="space-between">
-									<p className="txt-date">검사계획</p>
-									<strong className="txt-num">880</strong>
-								</Flex>
-								<Flex justify="space-between">
-									<p className="txt-date">검사완료</p>
-									<strong className="txt-num">56</strong>
-								</Flex>
-							</Card>
+							{visibleItems[0] && (
+								<Card title="영업일정">
+									<Flex justify="space-between">
+										<p className="txt-date">납품계획</p>
+										<strong className="txt-num">880</strong>
+									</Flex>
+									<Flex justify="space-between">
+										<p className="txt-date">납품완료</p>
+										<strong className="txt-num">56</strong>
+									</Flex>
+								</Card>
+							)}
+
+							{visibleItems[1] && (
+								<Card title="생산일정">
+									<Flex justify="space-between">
+										<p className="txt-date">생산계획</p>
+										<strong className="txt-num">880</strong>
+									</Flex>
+									<Flex justify="space-between">
+										<p className="txt-date">생산완료</p>
+										<strong className="txt-num">56</strong>
+									</Flex>
+								</Card>
+							)}
+
+							{visibleItems[2] && (
+								<Card title="검사일정">
+									<Flex justify="space-between">
+										<p className="txt-date">검사계획</p>
+										<strong className="txt-num">880</strong>
+									</Flex>
+									<Flex justify="space-between">
+										<p className="txt-date">검사완료</p>
+										<strong className="txt-num">56</strong>
+									</Flex>
+								</Card>
+							)}
 						</Space>
 					</div>
 				)}
