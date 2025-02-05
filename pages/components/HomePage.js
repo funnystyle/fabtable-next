@@ -26,9 +26,6 @@ import {
 
 import Link from "next/link";
 import Image from "next/image";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
-import * as AntIcons from '@ant-design/icons';
 
 const { Header, Sider, Content } = Layout;
 
@@ -214,37 +211,6 @@ const HomePage = ({ children }) => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 
-	const [menuItems, setMenuItems] = useState([]);
-	const [queryKey, setQueryKey] = useState(["menuResponse", Math.random()]);
-	const { data:menuResponse, isLoading, isSuccess, isError } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/menu", {}),
-	});
-
-	const getIconForMenu = (iconName) => {
-		// AntIcons에서 iconName에 해당하는 아이콘을 동적으로 가져옵니다.
-		const IconComponent = AntIcons[iconName];
-		return IconComponent ? <IconComponent /> : null; // 아이콘이 있으면 반환하고, 없으면 null
-	};
-
-	const mapMenu = (menu) => {
-		return {
-			key: menu.id.toString(),
-			label: menu.childrenMenus && menu.childrenMenus.length > 0 ? menu.name : <Link href={menu.url}>{menu.name}</Link>,
-			icon: getIconForMenu(menu.icon),
-				//menu.icon ? <SomeIcon /> : null, // 아이콘은 실제로 제공되지 않아서 예시로 처리함
-			children: menu.childrenMenus && menu.childrenMenus.length > 0 ? menu.childrenMenus.map(mapMenu) : undefined,
-		};
-	};
-
-	useEffect(() => {
-		if (isSuccess && menuResponse) {
-			console.log("menuResponse", menuResponse);
-
-			setMenuItems(menuResponse.data.list);
-		}
-	}, [menuResponse]);
-
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
@@ -256,116 +222,6 @@ const HomePage = ({ children }) => {
 			return () => window.removeEventListener("resize", handleResize);
 		}
 	}, []);
-
-	const menuList = (menuData) => {
-
-		// 현재 URL을 기반으로 selectedKeys와 openKeys를 동적으로 설정
-		const getDefaultSelectedKeys = () => {
-			// 현재 URL이 포함된 메뉴 항목을 찾아서 key를 리턴
-			let selectedKey = [];
-
-			if (location.pathname === "/") { // 대시보드 기본선택 되도록 설정
-				selectedKey.push("2");
-				return selectedKey;
-			}
-
-			menuList.forEach((menu) => {
-				menu.children.forEach((item) => {
-					if (location.pathname === item.url) {
-						selectedKey.push(item.key);
-					}
-					if (item.children) {
-						item.children.forEach((subItem) => {
-							if (location.pathname === subItem.url) {
-								selectedKey.push(subItem.key);
-							}
-						});
-					}
-				});
-			});
-			return selectedKey;
-		};
-
-		const getDefaultOpenKeys = () => {
-			// 현재 URL에 맞는 메뉴를 열어주는 openKey 설정
-			let openKeys = [];
-			menuList.forEach((menu) => {
-				menu.children.forEach((item) => {
-					if (location.pathname === item.url) {
-						openKeys.push(menu.key); // 해당 그룹의 메뉴를 열도록 설정
-					}
-					if (item.children) {
-						item.children.forEach((subItem) => {
-							if (location.pathname === subItem.url) {
-								openKeys.push(menu.key); // 해당 그룹의 메뉴를 열도록 설정
-							}
-						});
-					}
-				});
-			});
-			return openKeys;
-		};
-
-		console.log("menuDataList", menuData)
-
-
-		if (!menuData || menuData.length === 0) {
-			return <></>;
-		}
-
-		let menuList = [];
-
-		menuData.forEach((group) => {
-			if (group.type === "GROUP") {
-				let menu = {};
-				menu.key = group.id.toString();
-				menu.name = group.name;
-				let groupMenus = [];
-				group.childrenMenus.forEach((menu) => {
-					const newItem = mapMenu(menu);
-					if (menu.type === "CATEGORY") {
-						groupMenus.push({
-							key: `sub${newItem.key}`,
-							label: newItem.label,
-							icon: newItem.icon,
-							children: newItem.children,
-						});
-					} else {
-						groupMenus.push(newItem);
-					}
-				});
-				menu.children = groupMenus;
-				menuList.push(menu);
-			}
-		});
-
-		return (
-			<>
-				{menuList.map((menu, index) => (
-					<div key={menu.key}>
-						<p
-							className="tit-menu"
-							style={{
-								opacity: collapsed ? 0 : 1,
-								display: collapsed ? "none" : "block",
-							}}
-						>
-							{menu.name} {/* 메뉴 이름: 일반 업무, 관리 및 설정 등 */}
-						</p>
-
-						<Menu
-							mode="inline"
-							items={menu.children}
-							inlineIndent="10"
-							defaultSelectedKeys={getDefaultSelectedKeys()}
-							defaultOpenKeys={getDefaultOpenKeys()}
-						/>
-						{index < menuList.length - 1 && <div className="set-menu-area" />} {/* 두 그룹 사이에 구분선 추가 */}
-					</div>
-				))}
-			</>
-		)
-	}
 
 	return (
 		<Layout>
@@ -416,12 +272,12 @@ const HomePage = ({ children }) => {
 					>
 						<Tag className="blue">품질팀</Tag>
 
-						{/* 
+						{/*
 						<Tag className="pink">영업팀</Tag>
 						<Tag className="orange">생산팀</Tag>
 						<Tag className="purple">부서4</Tag>
 						<Tag className="red">부서5</Tag>
-						<Tag className="green">부서6</Tag> 
+						<Tag className="green">부서6</Tag>
 						*/}
 
 						<span className="name">
@@ -430,7 +286,37 @@ const HomePage = ({ children }) => {
 					</div>
 
 					<div className="lnb-scroll">
-						{menuList(menuItems)}
+						<p
+							className="tit-menu"
+							style={{
+								opacity: collapsed ? 0 : 1,
+								display: collapsed ? "none" : "block",
+							}}
+						>
+							일반 업무
+						</p>
+
+						<Menu
+							defaultSelectedKeys={["1"]}
+							defaultOpenKeys={["sub1", "sub2"]}
+							mode="inline"
+							items={basicItems}
+							inlineIndent="10"
+						/>
+
+						<div className="set-menu-area">
+							<p
+								className="tit-menu"
+								style={{
+									opacity: collapsed ? 0 : 1,
+									display: collapsed ? "none" : "block",
+								}}
+							>
+								관리 및 설정
+							</p>
+
+							<Menu mode="inline" items={adminItems} inlineIndent="10" />
+						</div>
 					</div>
 
 					<Button
