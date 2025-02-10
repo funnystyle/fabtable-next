@@ -43,44 +43,21 @@ const TableOnRowSelect = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [selectedRowKeys, anchorRowKey, cursorRowKey, data, currentPage]);
 
-  const handleRowClick = (event, record) => {
-    handleRowClickAntd(event, record,
-        setSelectedRowKeys, selectedRowKeys,
-        anchorRowKey, setAnchorRowKey,
-        setCursorRowKey
-    )
+  const handleAntdTableEventData = () => {
+    return {
+      selectedRowKeys, setSelectedRowKeys,
+      anchorRowKey, setAnchorRowKey,
+      cursorRowKey, setCursorRowKey,
+      isDragging, setIsDragging,
+      ctrlDragging, setCtrlDragging,
+      shiftDragging, setShiftDragging,
+      dragStartKeyRef, dragEndKeyRef,
+      initialSelectedKeysRef, data
+    }
   }
 
-  const handleMouseDown = (event, record) => {
-    handleMouseDownAntd(event, record,
-        dragStartKeyRef, initialSelectedKeysRef,
-        selectedRowKeys,
-        setAnchorRowKey,
-        setIsDragging,
-        setShiftDragging,
-        setCtrlDragging
-    )
-  };
-
-  const handleMouseEnter = (event, record) => {
-    handleMouseEnterAntd(event, record,
-        selectedRowKeys, setSelectedRowKeys,
-        anchorRowKey,
-        isDragging, shiftDragging,
-        dragStartKeyRef, dragEndKeyRef
-    )
-  };
-
-  const handleMouseUp = () => {
-    handleMouseUpAntd(selectedRowKeys, setSelectedRowKeys,
-        setCursorRowKey,
-        setIsDragging, setShiftDragging, setCtrlDragging,
-        dragStartKeyRef, dragEndKeyRef
-    )
-  };
-
   return (
-    <div ref={tableRef} tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={handleMouseUp}>
+    <div ref={tableRef} tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
       <Table
         rowSelection={{ selectedRowKeys, type: "checkbox", fixed: true }}
         columns={[
@@ -103,9 +80,9 @@ const TableOnRowSelect = () => {
           }
         }}
         onRow={(record) => ({
-          onClick: (event) => handleRowClick(event, record),
-          onMouseDown: (event) => handleMouseDown(event, record),
-          onMouseEnter: (event) => handleMouseEnter(event, record),
+          onClick: (event) => handleRowClickAntd(event, record, handleAntdTableEventData()),
+          onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
+          onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
         })}
       />
     </div>

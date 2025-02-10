@@ -68,11 +68,8 @@ export const handleKeyDownAntd = (event, data, document, tableRef,
       }
     };
 
-export const handleRowClickAntd = (event, record,
-                               setSelectedRowKeys, selectedRowKeys,
-                               anchorRowKey, setAnchorRowKey,
-                               setCursorRowKey
-) => {
+export const handleRowClickAntd = (event, record, props) => {
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
     const { key } = record;
 
     if (event.shiftKey) {
@@ -97,14 +94,8 @@ export const handleRowClickAntd = (event, record,
     setCursorRowKey(key);
   };
 
-export const handleMouseDownAntd = (event, record,
-                                    dragStartKeyRef, initialSelectedKeysRef,
-                                    selectedRowKeys,
-                                    setAnchorRowKey,
-                                    setIsDragging,
-                                    setShiftDragging,
-                                    setCtrlDragging
-) => {
+export const handleMouseDownAntd = (event, record, props) => {
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
     event.preventDefault();
     setIsDragging(true);
     dragStartKeyRef.current = record.key;
@@ -120,12 +111,8 @@ export const handleMouseDownAntd = (event, record,
     }
   };
 
-export const handleMouseEnterAntd = (event, record,
-                                 selectedRowKeys, setSelectedRowKeys,
-                                 anchorRowKey,
-                                 isDragging, shiftDragging,
-                                 dragStartKeyRef, dragEndKeyRef
-) => {
+export const handleMouseEnterAntd = (event, record, props) => {
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
     if (!isDragging || dragStartKeyRef.current === null) return;
 
     let newSelectedKeys = [...selectedRowKeys];
@@ -142,11 +129,8 @@ export const handleMouseEnterAntd = (event, record,
     dragEndKeyRef.current = record.key;
   };
 
-export const handleMouseUpAntd = (selectedRowKeys, setSelectedRowKeys,
-                          setCursorRowKey,
-                          setIsDragging, setShiftDragging, setCtrlDragging,
-                          dragStartKeyRef, dragEndKeyRef
-) => {
+export const handleMouseUpAntd = (props) => {
+    const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
     setIsDragging(false);
     setCtrlDragging(false);
     setShiftDragging(false);
