@@ -61,8 +61,8 @@ const TableOnRowSelect2 = ({ header, serverData }) => {
         title: col.title, // 컬럼 제목
         dataIndex: col.data, // 데이터 인덱스
         key: col.columnName, // 고유 키
-        fixed: col.fixed ? (col.fixed === true ? "left" : col.fixed) : undefined, // 고정 여부
-        sorter: col.sortable ? (a, b) => (a[col.data] > b[col.data] ? 1 : -1) : undefined // 정렬 여부
+        fixed: col.fixed ? "left" : undefined, // 고정 여부
+        // sorter: col.sortable ? (a, b) => (a[col.data] > b[col.data] ? 1 : -1) : undefined // 정렬 여부
       }));
   };
 
@@ -90,6 +90,7 @@ const TableOnRowSelect2 = ({ header, serverData }) => {
           onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
           onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
         })}
+        scroll={{ x: 'max-content' }}
       />
     </div>
   );
