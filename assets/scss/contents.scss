@@ -276,7 +276,7 @@
 	}
 }
 
-@media (max-width: 1024px) {
+@media (hover: none) and (pointer: coarse) {
 	.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover,
 	.ant-btn-variant-dashed:not(:disabled):not(.ant-btn-disabled):hover {
 		color: inherit;
