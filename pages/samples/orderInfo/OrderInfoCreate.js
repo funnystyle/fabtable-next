@@ -42,7 +42,7 @@ const OrderInfoCreate = () => {
     message.success('수주 등록이 완료되었습니다!');
 
     // 같은 폴더의 OrderInfoList로 이동
-    window.location.href = "/samples/orderInfo/OrderInfoList";
+    window.location.href = "/samples/orderInfo/OrderInfoListAntd";
 
   };
 

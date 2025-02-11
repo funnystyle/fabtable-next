@@ -72,6 +72,8 @@ export const handleRowClickAntd = (event, record, props) => {
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
     const { key } = record;
 
+    console.log("record", record);
+
     if (event.shiftKey) {
       const start = Math.min(anchorRowKey, key);
       const end = Math.max(anchorRowKey, key);
@@ -87,6 +89,7 @@ export const handleRowClickAntd = (event, record, props) => {
         setAnchorRowKey(key);
       }
     } else {
+      console.log("key", key);
       setSelectedRowKeys([key]);
       setAnchorRowKey(key);
     }

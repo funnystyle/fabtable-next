@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Table } from "antd";
 import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@pages/samples/antd/AntdTableEvent";
 
-const TableOnRowSelect = () => {
+const TableOnRowSelect = ({ header, serverData }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
   const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
   const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치
@@ -20,13 +20,11 @@ const TableOnRowSelect = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // 기본 페이지당 10개 설정 (Ant Design default)
 
-  const data = React.useMemo(() =>
-    Array.from({ length: 46 }, (_, i) => ({
-      key: i,
-      name: `File ${i}`,
-      age: i + 20,
-      address: `Folder ${i}`
-    })), []);
+  const data = serverData.map(item => ({
+    ...item,
+    key: item.id // key 값을 item.id로 설정
+  }));
+
 
   useEffect(() => {
     focusTable(tableRef);
@@ -56,15 +54,23 @@ const TableOnRowSelect = () => {
     }
   }
 
+  const generateColumns = (columnData) => {
+    return columnData
+      .sort((a, b) => a.displayOrder - b.displayOrder) // displayOrder 기준 정렬
+      .map(col => ({
+        title: col.title, // 컬럼 제목
+        dataIndex: col.data, // 데이터 인덱스
+        key: col.columnName, // 고유 키
+        fixed: col.fixed ? (col.fixed === true ? "left" : col.fixed) : undefined, // 고정 여부
+        sorter: col.sortable ? (a, b) => (a[col.data] > b[col.data] ? 1 : -1) : undefined // 정렬 여부
+      }));
+  };
+
   return (
     <div ref={tableRef} tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
       <Table
         rowSelection={{ selectedRowKeys, type: "checkbox", fixed: true }}
-        columns={[
-          { title: "Name", dataIndex: "name" },
-          { title: "Age", dataIndex: "age" },
-          { title: "Address", dataIndex: "address" }
-        ]}
+        columns={generateColumns(header)}
         rowKey={(record) => record.key}
         dataSource={data}
         pagination={{
