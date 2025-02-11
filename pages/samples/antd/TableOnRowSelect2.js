@@ -20,10 +20,10 @@ const TableOnRowSelect2 = ({ header, serverData }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 10; // 기본 페이지당 10개 설정 (Ant Design default)
 
-  const data = serverData.map(item => ({
+  const data = serverData != undefined ? serverData.map(item => ({
     ...item,
     key: item.id // key 값을 item.id로 설정
-  }));
+  })) : [];
 
 
   useEffect(() => {
