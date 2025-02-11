@@ -12,6 +12,9 @@ const PrintPreview = () => {
     right: 3,
   });
 
+  const [pageWidth, setPageWidth] = useState(80);
+  const [pageHeight, setPageHeight] = useState(30);
+
   // 미리보기 기능
   const handlePreview = () => {
     setIsModalOpen(true);
@@ -21,6 +24,12 @@ const PrintPreview = () => {
   const handlePrint = useReactToPrint({
     documentTitle: "Print Preview1",
     contentRef: printRef,
+    pageStyle: `
+      @page {
+        size: ${pageWidth}mm ${pageHeight}mm;
+        margin: 0;
+      }
+    `,
   });
 
   return (
@@ -52,10 +61,10 @@ const PrintPreview = () => {
             style={{ width: 80, marginRight: "10px" }}
             onChange={(value) => setPadding((prev) => ({ ...prev, top: value }))}
             options={[
-              { value: 3, label: "3px" },
-              { value: 5, label: "5px" },
-              { value: 10, label: "10px" },
-              { value: 20, label: "20px" },
+              { value: 3, label: "3mm" },
+              { value: 5, label: "5mm" },
+              { value: 10, label: "10mm" },
+              { value: 20, label: "20mm" },
             ]}
           />
           <span>하 마진: </span>
@@ -64,10 +73,10 @@ const PrintPreview = () => {
             style={{ width: 80, marginRight: "10px" }}
             onChange={(value) => setPadding((prev) => ({ ...prev, bottom: value }))}
             options={[
-              { value: 3, label: "3px" },
-              { value: 5, label: "5px" },
-              { value: 10, label: "10px" },
-              { value: 20, label: "20px" },
+              { value: 3, label: "3mm" },
+              { value: 5, label: "5mm" },
+              { value: 10, label: "10mm" },
+              { value: 20, label: "20mm" },
             ]}
           />
           <span>좌 마진: </span>
@@ -76,10 +85,10 @@ const PrintPreview = () => {
             style={{ width: 80, marginRight: "10px" }}
             onChange={(value) => setPadding((prev) => ({ ...prev, left: value }))}
             options={[
-              { value: 3, label: "3px" },
-              { value: 5, label: "5px" },
-              { value: 10, label: "10px" },
-              { value: 20, label: "20px" },
+              { value: 3, label: "3mm" },
+              { value: 5, label: "5mm" },
+              { value: 10, label: "10mm" },
+              { value: 20, label: "20mm" },
             ]}
           />
           <span>우 마진: </span>
@@ -88,10 +97,10 @@ const PrintPreview = () => {
             style={{ width: 80 }}
             onChange={(value) => setPadding((prev) => ({ ...prev, right: value }))}
             options={[
-              { value: 3, label: "3px" },
-              { value: 5, label: "5px" },
-              { value: 10, label: "10px" },
-              { value: 20, label: "20px" },
+              { value: 3, label: "3mm" },
+              { value: 5, label: "5mm" },
+              { value: 10, label: "10mm" },
+              { value: 20, label: "20mm" },
             ]}
           />
         </div>
@@ -101,10 +110,12 @@ const PrintPreview = () => {
           ref={printRef}
           style={{
             border: "1px solid #ddd",
-            paddingTop: `${padding.top}px`,
-            paddingBottom: `${padding.bottom}px`,
-            paddingLeft: `${padding.left}px`,
-            paddingRight: `${padding.right}px`,
+            paddingTop: `${padding.top}mm`,
+            paddingBottom: `${padding.bottom}mm`,
+            paddingLeft: `${padding.left}mm`,
+            paddingRight: `${padding.right}mm`,
+            width: `${pageWidth}mm`,
+            height: `${pageHeight}mm`,
           }}
         >
           <h2>미리보기 내용</h2>
