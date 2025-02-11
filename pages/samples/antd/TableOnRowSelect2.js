@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { Table } from "antd";
-import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@pages/samples/antd/AntdTableEvent";
+import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@components/AntdTableEvent";
 
 const TableOnRowSelect2 = ({ header, serverData }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
