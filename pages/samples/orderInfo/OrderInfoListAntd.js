@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getPage } from "@components/StringUtil";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
-import TableOnRowSelect2 from "@pages/samples/antd/TableOnRowSelect2";
+import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 
 const OrderInfoListAntd = () => {
   const [header, setHeader] = useState(null);
