@@ -275,3 +275,19 @@
 		}
 	}
 }
+
+@media (max-width: 1024px) {
+	.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled):hover,
+	.ant-btn-variant-dashed:not(:disabled):not(.ant-btn-disabled):hover {
+		color: inherit;
+		border-color: inherit;
+		background: inherit;
+	}
+
+	.ant-btn-variant-outlined:not(:disabled):not(.ant-btn-disabled).active:hover,
+	.ant-btn-variant-dashed:not(:disabled):not(.ant-btn-disabled).active:hover {
+		color: #0958d9;
+		border-color: #0958d9;
+		background: #ffffff;
+	}
+}
