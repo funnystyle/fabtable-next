@@ -5,10 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import TableOnRowSelect2 from "@pages/samples/antd/TableOnRowSelect2";
 
-const url = "/api/v1/admin/order-info";
-
-
-const DataTablePage = () => {
+const OrderInfoListAntd = () => {
   const [header, setHeader] = useState(null);
 
   const [queryKey, setQueryKey] = useState(["headerData", Math.random()]); // 변경된 부분
@@ -42,4 +39,4 @@ const DataTablePage = () => {
   );
 };
 
-export default DataTablePage;
+export default OrderInfoListAntd;

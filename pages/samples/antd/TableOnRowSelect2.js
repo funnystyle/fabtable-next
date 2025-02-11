@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { Table } from "antd";
 import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@pages/samples/antd/AntdTableEvent";
 
-const TableOnRowSelect = ({ header, serverData }) => {
+const TableOnRowSelect2 = ({ header, serverData }) => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
   const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
   const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치
@@ -95,4 +95,4 @@ const TableOnRowSelect = ({ header, serverData }) => {
   );
 };
 
-export default TableOnRowSelect;
+export default TableOnRowSelect2;
