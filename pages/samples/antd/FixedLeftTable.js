@@ -68,7 +68,7 @@ export default function FixedLeftTable() {
       columns={columns}
       dataSource={data}
       scroll={{ x: 1000 }} // ✅ 가로 스크롤 활성화
-      bordered
+      // bordered
     />
   );
 }
