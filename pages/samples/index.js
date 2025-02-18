@@ -1,10 +1,43 @@
 // pages/index.js
+"use client"; // Next.js 클라이언트 컴포넌트
+
 import React from "react";
 import { Link } from '@chakra-ui/next-js'
+import { useTranslation } from 'next-i18next'
+import LanguageSwitcher from "@components/LanguageSwitcher";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+
+export async function getStaticProps({locale}) {
+  const data = {
+    props: {
+      // 페이지에서 번역 데이터를 미리 가져오기
+      ...(await serverSideTranslations(locale ?? 'en', ['common'])),
+    },
+  }
+
+  console.log(data);
+  console.log(data?.props?._nextI18Next?.initialI18nStore);
+
+  return data;
+}
 
 const SampleIndex = () => {
+  const { t, i18n, ready } = useTranslation('common', { useSuspense: false });
+
+  if (!ready) {
+    return <div>Loading...</div>; // 번역 데이터 로딩 중일 때
+  }
+
+  console.log("현재 언어:", i18n.language); // 현재 적용된 언어 확인
+  console.log("로드된 언어 목록:", i18n.languages); // 사용 가능한 언어 확인
+  console.log("t('greeting'):", t('greeting'));
+  const greeting = t('greeting');
+
   return (
     <div>
+      <LanguageSwitcher />
+      {/*<h1>{greeting}</h1>*/}
       <h1>MKP 샘플페이지</h1>
       <p>
         <Link href="/samples/board" color='blue.400' _hover={{ color: 'blue.500' }}>게시판 샘플 - React Query & Zustand</Link>
@@ -92,3 +125,5 @@ const SampleIndex = () => {
 };
 
 export default SampleIndex;
+
+

@@ -5,6 +5,8 @@ import queryClient from "../queryClient";
 import { ChakraProvider } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next"; // i18next Provider 추가
 import i18next from "../i18n"; // i18next 설정 파일 임포트
+import { appWithTranslation } from 'next-i18next';
+import i18nConfig from '../next-i18next.config';
 
 import HeadMeta from "./components/HeadMeta";
 import HomePage from "./components/HomePage"; // 레이아웃
@@ -27,4 +29,4 @@ function App({ Component, pageProps }) {
 	);
 }
 
-export default App;
+export default appWithTranslation(App, i18nConfig);

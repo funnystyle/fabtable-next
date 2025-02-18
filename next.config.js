@@ -14,4 +14,7 @@ module.exports = {
   output: "standalone",
   transpilePackages: [ "antd", "@ant-design", "rc-util", "rc-pagination", "rc-picker", "rc-notification", "rc-tooltip", "rc-tree", "rc-table" ], // https://github.com/ant-design/ant-design/issues/46053
   pageExtensions: ['mdx', 'md', 'jsx', 'js', 'tsx', 'ts'], // https://nextjs.org/docs/pages/api-reference/config/next-config-js/pageExtensions
+  i18n: require('./next-i18next.config.js').i18n,
+  reactStrictMode: true,
+  swcMinify: true,
 };
