@@ -134,7 +134,12 @@ const MonthComponent = () => {
 								/>
 							</ConfigProvider>
 
-							<Button color="primary" variant="text" size="small">
+							<Button
+								color="primary"
+								variant="text"
+								size="small"
+								className="this-month"
+							>
 								이번달
 							</Button>
 						</Flex>
