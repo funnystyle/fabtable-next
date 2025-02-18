@@ -78,6 +78,15 @@ const SampleIndex = () => {
       <p>
         <Link href="/samples/antd/TableOnRowSelect" color='blue.400' _hover={{ color: 'blue.500' }}>Table on Row Select</Link>
       </p>
+      <p>
+        <Link href="/samples/antd/TransferWithTreeDND" color='blue.400' _hover={{ color: 'blue.500' }}>Transfer With Tree Drag & Drop</Link>
+      </p>
+      <p>
+        <Link href="/samples/antd/CenteredModal" color='blue.400' _hover={{ color: 'blue.500' }}>Centered Modal</Link>
+      </p>
+      <p>
+        <Link href="/samples/antd/NestedModals" color='blue.400' _hover={{ color: 'blue.500' }}>Nested Modals</Link>
+      </p>
     </div>
   );
 };
