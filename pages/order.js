@@ -16,6 +16,8 @@ import {
 	Pagination,
 	Table,
 	Tag,
+	Tooltip,
+	Popover,
 } from "antd";
 import {
 	RedoOutlined,
@@ -48,6 +50,21 @@ const TabItems = [
 	},
 ];
 
+const popText = <span className="pop-title">S01</span>;
+const popContent = (
+	<div className="pop-txt">
+		▸ MARU7000s, MARU5000s, MARU3000s, ARA5000s
+		<br />
+		- 2% 구간 동 특성 검사
+		<br />
+		(제릭스 / JPA 2프로 교정 눈관리 라벨 부착)
+		<br />
+		<br />
+		▸ MARU9000s
+		<br />- 1% 구간 동 특성 검사
+	</div>
+);
+
 const data = [
 	{
 		key: "1",
@@ -61,7 +78,17 @@ const data = [
 		productNum: "A24-000019",
 		productVersion: "230300.010",
 		poNum: "-",
-		specialNum: "-",
+		specialNum: (
+			<Popover
+				placement="leftTop"
+				autoAdjustOverflow={true}
+				title={popText}
+				content={popContent}
+				overlayInnerStyle={{ backgroundColor: "#FFFBE6", maxWidth: "264px" }}
+			>
+				<Button type="text">S01</Button>
+			</Popover>
+		),
 		mgmr: "Y",
 		nowState: <Tag className="CurrentStatus001">발주기입</Tag>,
 		deliPlanDate: "2024-12-26",
@@ -88,7 +115,15 @@ const data = [
 		no: 2,
 		serialnum: "570241202080",
 		release: "양산",
-		vendor: "PSK",
+		vendor: (
+			<Tooltip
+				title="비티에이머티어리얼즈 유한회사"
+				color="#FFFBE6"
+				overlayInnerStyle={{ color: "rgba(0, 0, 0, 0.88)" }}
+			>
+				<span>BTA</span>
+			</Tooltip>
+		),
 		product: "MARU",
 		model: "7000s",
 		detailmodel: "8000",
@@ -800,6 +835,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "no" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 49,
+			fixed: "left",
 		},
 		{
 			title: "시리얼번호",
@@ -809,6 +845,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "serialnum" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 115,
+			fixed: "left",
 		},
 		{
 			title: "출고종류",
@@ -818,6 +855,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "release" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 76,
+			fixed: "left",
 		},
 		{
 			title: "납품처",
@@ -827,6 +865,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "vendor" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
+			fixed: "left",
 		},
 		{
 			title: "제품군",
@@ -836,6 +875,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
+			fixed: "left",
 		},
 		{
 			title: "모델",
@@ -845,6 +885,7 @@ const OrderComponent = () => {
 			sortOrder: sortedInfo.columnKey === "model" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
+			fixed: "left",
 		},
 		{
 			title: "세부모델",
@@ -855,6 +896,7 @@ const OrderComponent = () => {
 				sortedInfo.columnKey === "detailmodel" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
+			fixed: "left",
 		},
 		{
 			title: "제조번호",
@@ -1289,11 +1331,13 @@ const OrderComponent = () => {
 					onChange={handleChange}
 					pagination={false}
 					size="small"
-					className="width-auto"
+					className="ellipsis-column"
 					bordered
 					scroll={{
 						x: "max-content",
+						y: 500,
 					}}
+					style={{ tableLayout: "fixed" }}
 				/>
 			</Space>
 		</Layout>

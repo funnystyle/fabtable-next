@@ -414,6 +414,22 @@
 	}
 }
 
+.ellipsis-column {
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+}
+
+.pop-title {
+	font-size: toRem(14);
+	font-weight: 600;
+}
+
+.pop-txt {
+	font-size: toRem(14);
+	line-height: toRem(16);
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {
