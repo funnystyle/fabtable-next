@@ -2,11 +2,24 @@
 
 .contents {
 	min-width: toRem(712);
-	height: calc(100vh - toRem(44));
 	padding: toRem(40);
 	background-color: #fff;
 	flex-shrink: 0;
-	overflow: auto;
+
+	.contents-scroll {
+		margin-top: toRem(12);
+		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			width: 7px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #eaeaea;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
+	}
 
 	.contents-flex {
 		.contents-left {
@@ -146,8 +159,8 @@
 					height: toRem(90);
 					padding: toRem(4) toRem(2) toRem(12);
 					border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-					font-size: toRem(12);
-					line-height: 1.6;
+					font-size: toRem(14);
+					line-height: 1.57;
 					vertical-align: top;
 					cursor: pointer;
 
@@ -181,7 +194,7 @@
 							gap: toRem(4);
 
 							strong {
-								font-size: 600;
+								font-weight: 600;
 							}
 						}
 
@@ -277,6 +290,14 @@
 		&::after {
 			right: 0;
 		}
+
+		& + .btn-spacing-area {
+			padding-left: 0;
+
+			&::before {
+				display: none;
+			}
+		}
 	}
 
 	.ant-input-search {
@@ -307,12 +328,19 @@
 	}
 }
 
+.drop-btn-area {
+	button {
+		width: toRem(92);
+	}
+}
+
 .ant-dropdown {
-	width: toRem(143);
+	min-width: toRem(92);
+	max-width: toRem(143);
 	padding: 0 toRem(4);
 
 	.check-all {
-		width: 100%;
+		width: toRem(123);
 		justify-content: space-between;
 	}
 
@@ -327,6 +355,20 @@
 		.ant-dropdown-menu-item {
 			padding-left: toRem(8);
 			padding-right: toRem(8);
+		}
+		.ant-dropdown-menu-submenu-title {
+			padding-left: toRem(8);
+			padding-right: toRem(28);
+		}
+
+		.ant-dropdown-menu-item-group-title {
+			width: toRem(89);
+			padding-left: toRem(8);
+			padding-right: toRem(8);
+		}
+
+		.ant-dropdown-menu-item-group-list {
+			margin: 0;
 		}
 	}
 }
@@ -414,11 +456,11 @@
 	}
 }
 
-.ellipsis-column {
-	white-space: nowrap !important;
-	overflow: hidden !important;
-	text-overflow: ellipsis !important;
-}
+// .ellipsis-column {
+// 	white-space: nowrap !important;
+// 	overflow: hidden !important;
+// 	text-overflow: ellipsis !important;
+// }
 
 .pop-title {
 	font-size: toRem(14);

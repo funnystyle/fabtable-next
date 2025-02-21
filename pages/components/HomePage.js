@@ -210,12 +210,23 @@ const topItems = [
 const HomePage = ({ children }) => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const [contentHeight, setContentHeight] = useState("100vh");
 
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
 				setIsMobile(window.innerWidth <= 768);
 			};
+
+			const updateHeight = () => {
+				const header = document.querySelector(".header")?.offsetHeight || 0;
+				const contentsTop =
+					document.querySelector(".contents-top")?.offsetHeight || 0;
+
+				setContentHeight(`calc(100vh - ${header}px - ${contentsTop}px - 93px`);
+			};
+
+			updateHeight();
 
 			handleResize(); // Initialize state on mount
 			window.addEventListener("resize", handleResize);
@@ -273,12 +284,12 @@ const HomePage = ({ children }) => {
 						<Tag className="blue">품질팀</Tag>
 
 						{/*
-						<Tag className="pink">영업팀</Tag>
-						<Tag className="orange">생산팀</Tag>
-						<Tag className="purple">부서4</Tag>
-						<Tag className="red">부서5</Tag>
-						<Tag className="green">부서6</Tag>
-						*/}
+							<Tag className="pink">영업팀</Tag>
+							<Tag className="orange">생산팀</Tag>
+							<Tag className="purple">부서4</Tag>
+							<Tag className="red">부서5</Tag>
+							<Tag className="green">부서6</Tag>
+							*/}
 
 						<span className="name">
 							<Link href={"/"}>홍길동 님</Link>
@@ -362,7 +373,9 @@ const HomePage = ({ children }) => {
 							<Menu mode="horizontal" items={topItems} className="top-menu" />
 						</div>
 					</Header>
-					<Content className="contents">{children}</Content>
+					<Content className="contents">
+						{React.cloneElement(children, { contentHeight })}
+					</Content>
 				</Layout>
 			</Layout>
 		</Layout>

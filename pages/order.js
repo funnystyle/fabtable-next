@@ -1,5 +1,5 @@
 // pages/order.js
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
 	Layout,
 	Typography,
@@ -18,6 +18,7 @@ import {
 	Tag,
 	Tooltip,
 	Popover,
+	message,
 } from "antd";
 import {
 	RedoOutlined,
@@ -630,11 +631,106 @@ const data = [
 	},
 ];
 
-const OrderComponent = () => {
+const handleMenuClick = (e) => {
+	message.info("Click on menu item.");
+	console.log("click", e);
+};
+
+const stateItems = [
+	{
+		label: "납품완료",
+		key: "1",
+	},
+	{
+		label: "반출대기",
+		key: "2",
+	},
+	{
+		label: "반출완료",
+		key: "3",
+	},
+];
+
+const printItems = [
+	{
+		label: "라벨 인쇄",
+		key: "1",
+	},
+	{
+		label: "성적서 인쇄",
+		key: "2",
+	},
+];
+
+const excelItems = [
+	{
+		label: "편집 항목만",
+		key: "1",
+	},
+	{
+		label: "전체 항목",
+		key: "2",
+		children: [
+			{
+				key: "2-1",
+				label: "선택한 행",
+			},
+			{
+				key: "2-2",
+				label: "전체 행",
+			},
+		],
+	},
+];
+
+const lineItems = [
+	{
+		key: "1",
+		type: "group",
+		label: "목록 행 개수",
+		children: [
+			{
+				key: "1-1",
+				label: "10 행",
+			},
+			{
+				key: "1-2",
+				label: "20 행",
+			},
+			{
+				key: "1-3",
+				label: "30 행",
+			},
+			{
+				key: "1-4",
+				label: "50 행",
+			},
+			{
+				key: "1-5",
+				label: "100 행",
+			},
+			{
+				key: "1-6",
+				label: "150 행",
+			},
+			{
+				key: "1-7",
+				label: "200 행",
+			},
+			{
+				key: "1-8",
+				label: "500 행",
+			},
+		],
+	},
+];
+
+const OrderComponent = ({ contentHeight }) => {
 	const { token } = useToken();
 	const [allChecked, setAllChecked] = useState(true);
 	const [checkedItems, setCheckedItems] = useState(Array(16).fill(true));
 	const [position, setPosition] = useState("end");
+
 	const contentStyle = {
 		backgroundColor: token.colorBgElevated,
 		borderRadius: token.borderRadiusLG,
@@ -1127,219 +1223,235 @@ const OrderComponent = () => {
 
 	return (
 		<Layout>
-			<Flex align="center" justify="space-between" className="title-area">
-				<Title level={4} className="title-page">
-					영업 관리
-				</Title>
-
-				<Flex gap="small">
-					<AutoComplete
-						popupClassName="certain-category-search-dropdown"
-						popupMatchSelectWidth={400}
-						style={{
-							width: 400,
-						}}
-						options={options}
-						size="large"
-					>
-						<Input.Search
-							size="large"
-							placeholder="검색어를 입력하세요"
-							allowClear
-							className="input-search"
-						/>
-					</AutoComplete>
-
-					<Button
-						icon={<FilterOutlined />}
-						iconPosition={position}
-						size="large"
-					>
-						조건 검색
-					</Button>
-				</Flex>
-			</Flex>
-
-			<Tabs defaultActiveKey="1" items={TabItems} onChange={onChange} />
-
-			<Space direction="vertical" size={12} style={{ width: "100%" }}>
-				{/* 상단 버튼 */}
-				<Flex gap="small" align="center" className="btn-big">
-					<Button
-						variant="outlined"
-						icon={<RedoOutlined />}
-						className="icon-redo"
-					>
-						전체 목록
-					</Button>
-
-					<Flex gap="small" className="btn-spacing-area">
-						<Button variant="outlined">수주 종합정보</Button>
-
-						<Dropdown
-							menu={{
-								items,
-							}}
-							dropdownRender={(menu) => (
-								<div style={contentStyle}>
-									<Space
-										style={{
-											padding: 12,
-										}}
-										className="check-all"
-									>
-										<Checkbox
-											defaultChecked
-											checked={allChecked}
-											onChange={handleAllChange}
-										>
-											전체
-										</Checkbox>
-
-										<Button
-											icon={<RedoOutlined />}
-											target="_blank"
-											size="small"
-											className="icon-redo"
-										/>
-									</Space>
-
-									<Divider />
-
-									{React.cloneElement(menu, {
-										style: menuStyle,
-									})}
-
-									<Divider />
-
-									<Space
-										style={{
-											padding: 12,
-										}}
-									>
-										<Checkbox
-											defaultChecked
-											checked={checkedItems[16]}
-											onChange={() => handleItemChange(16)}
-										>
-											ETC
-										</Checkbox>
-									</Space>
-								</div>
-							)}
-						>
-							<Button>
-								<Space>
-									상태별 보기
-									<DownOutlined />
-								</Space>
-							</Button>
-						</Dropdown>
-					</Flex>
+			<div className="contents-top">
+				<Flex align="center" justify="space-between" className="title-area">
+					<Title level={4} className="title-page">
+						영업 관리
+					</Title>
 
 					<Flex gap="small">
-						<Button
-							variant="outlined"
-							icon={<DownOutlined />}
-							iconPosition={position}
+						<AutoComplete
+							popupClassName="certain-category-search-dropdown"
+							popupMatchSelectWidth={400}
+							style={{
+								width: 400,
+							}}
+							options={options}
+							size="large"
 						>
-							상태변경
-						</Button>
-
-						<Button
-							variant="outlined"
-							icon={<DownOutlined />}
-							iconPosition={position}
-						>
-							일괄변경
-						</Button>
-
-						<Button>항목편집</Button>
-
-						<Button variant="outlined" icon={<DownloadOutlined />}>
-							엑셀 다운로드
-						</Button>
+							<Input.Search
+								size="large"
+								placeholder="검색어를 입력하세요"
+								allowClear
+								className="input-search"
+							/>
+						</AutoComplete>
 
 						<Button
-							variant="outlined"
-							icon={<DownOutlined />}
+							icon={<FilterOutlined />}
 							iconPosition={position}
+							size="large"
 						>
-							인쇄하기
+							조건 검색
 						</Button>
 					</Flex>
 				</Flex>
 
-				{/* 갯수, 페이징, 버튼 영역 */}
-				<Flex align="center" justify="space-between">
-					<Flex gap="small" align="center">
-						<Flex gap="small" className="list-num">
-							총 <span>73589</span>
-						</Flex>
+				<Tabs defaultActiveKey="1" items={TabItems} onChange={onChange} />
 
-						<Flex gap="small" className="list-num">
-							<strong>1</strong> 건 선택
-						</Flex>
-					</Flex>
-
-					<Flex align="center" className="paging-area">
-						<button
-							onClick={() => onChange(1)}
-							disabled={current === 1}
-							className="btn-page"
-						>
-							<VerticalRightOutlined />
-						</button>
-
-						<Pagination
-							simple
-							current={current}
-							total={totalItems}
-							onChange={onChange}
-							itemRender={itemRender}
-						/>
-
-						{/* 맨 뒤로 */}
-						<button
-							onClick={() => onChange(totalPages)}
-							disabled={current === totalPages}
-							className="btn-page"
-						>
-							<VerticalLeftOutlined />
-						</button>
-					</Flex>
-
-					<Flex gap="small" align="center">
+				<Space direction="vertical" size={12} style={{ width: "100%" }}>
+					{/* 상단 버튼 */}
+					<Flex gap="small" align="center" className="btn-big">
 						<Button
+							variant="outlined"
 							icon={<RedoOutlined />}
-							target="_blank"
 							className="icon-redo"
-						/>
+						>
+							전체 목록
+						</Button>
 
-						<Button
-							icon={<SettingOutlined />}
-							target="_blank"
-							className="icon-redo"
-						/>
+						<Flex gap="small" className="btn-spacing-area">
+							<Button variant="outlined">수주 종합정보</Button>
+
+							<Dropdown
+								menu={{
+									items,
+								}}
+								dropdownRender={(menu) => (
+									<div style={contentStyle}>
+										<Space
+											style={{
+												padding: 12,
+											}}
+											className="check-all"
+										>
+											<Checkbox
+												defaultChecked
+												checked={allChecked}
+												onChange={handleAllChange}
+											>
+												전체
+											</Checkbox>
+
+											<Button
+												icon={<RedoOutlined />}
+												target="_blank"
+												size="small"
+												className="icon-redo"
+											/>
+										</Space>
+
+										<Divider />
+
+										{React.cloneElement(menu, {
+											style: menuStyle,
+										})}
+
+										<Divider />
+
+										<Space
+											style={{
+												padding: 12,
+											}}
+										>
+											<Checkbox
+												defaultChecked
+												checked={checkedItems[16]}
+												onChange={() => handleItemChange(16)}
+											>
+												ETC
+											</Checkbox>
+										</Space>
+									</div>
+								)}
+							>
+								<Button>
+									<Space>
+										상태별 보기
+										<DownOutlined />
+									</Space>
+								</Button>
+							</Dropdown>
+
+							<Dropdown menu={{ items: stateItems, onClick: handleMenuClick }}>
+								<Button>
+									<Space>
+										상태변경
+										<DownOutlined />
+									</Space>
+								</Button>
+							</Dropdown>
+						</Flex>
+
+						<Flex gap="small" className="btn-spacing-area">
+							<Button>수주 복제하기</Button>
+
+							<Button>수주 일괄수정</Button>
+						</Flex>
+
+						<Flex gap="small">
+							<Button>항목편집</Button>
+
+							<Dropdown
+								menu={{ items: excelItems, onClick: handleMenuClick }}
+								className="excel-menu"
+							>
+								<Button>
+									<Space>
+										엑셀 다운로드
+										<DownOutlined />
+									</Space>
+								</Button>
+							</Dropdown>
+
+							<Dropdown menu={{ items: printItems, onClick: handleMenuClick }}>
+								<Button>
+									<Space>
+										인쇄하기
+										<DownOutlined />
+									</Space>
+								</Button>
+							</Dropdown>
+						</Flex>
 					</Flex>
-				</Flex>
 
+					{/* 갯수, 페이징, 버튼 영역 */}
+					<Flex align="center" justify="space-between">
+						<Flex gap="small" align="center">
+							<Flex gap="small" className="list-num">
+								총 <span>73589</span>
+							</Flex>
+
+							<Flex gap="small" className="list-num">
+								<strong>1</strong> 건 선택
+							</Flex>
+						</Flex>
+
+						<Flex align="center" className="paging-area">
+							<button
+								onClick={() => onChange(1)}
+								disabled={current === 1}
+								className="btn-page"
+							>
+								<VerticalRightOutlined />
+							</button>
+
+							<Pagination
+								simple
+								current={current}
+								total={totalItems}
+								onChange={onChange}
+								itemRender={itemRender}
+							/>
+
+							{/* 맨 뒤로 */}
+							<button
+								onClick={() => onChange(totalPages)}
+								disabled={current === totalPages}
+								className="btn-page"
+							>
+								<VerticalLeftOutlined />
+							</button>
+						</Flex>
+
+						<Flex gap="small" align="center">
+							<Button
+								icon={<RedoOutlined />}
+								target="_blank"
+								className="icon-redo"
+							/>
+
+							<Dropdown menu={{ items: lineItems, onClick: handleMenuClick }}>
+								<Button>
+									<Space>
+										<SettingOutlined />
+									</Space>
+								</Button>
+							</Dropdown>
+						</Flex>
+					</Flex>
+				</Space>
+			</div>
+
+			<div style={{ height: contentHeight }} className="contents-scroll">
 				{/* 테이블 */}
-				<Table
-					columns={columns}
-					dataSource={data}
-					onChange={handleChange}
-					pagination={false}
-					size="small"
-					className="ellipsis-column"
-					bordered
-					scroll={{
-						x: "max-content",
-						y: 500,
-					}}
-					style={{ tableLayout: "fixed" }}
-				/>
-			</Space>
+				<div className="tb-container">
+					<Table
+						columns={columns}
+						dataSource={data}
+						onChange={handleChange}
+						pagination={false}
+						size="small"
+						className="ellipsis-column basic-tb"
+						bordered
+						scroll={{
+							x: "max-content",
+							y: "calc(60vh - 38px)",
+						}}
+						style={{ tableLayout: "fixed" }}
+					/>
+				</div>
+			</div>
 		</Layout>
 	);
 };

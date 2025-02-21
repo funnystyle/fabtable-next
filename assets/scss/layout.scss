@@ -266,6 +266,16 @@
 	.lnb-scroll {
 		height: calc(100vh - 165px);
 		overflow-y: auto;
+
+		&::-webkit-scrollbar {
+			width: 7px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #eaeaea;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
 	}
 }
 
