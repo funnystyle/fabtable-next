@@ -725,6 +725,11 @@ const lineItems = [
 	},
 ];
 
+const preventDefault = (e) => {
+	e.preventDefault();
+	console.log("Clicked! But prevent default.");
+};
+
 const OrderComponent = ({ contentHeight }) => {
 	const { token } = useToken();
 	const [allChecked, setAllChecked] = useState(true);
@@ -1221,6 +1226,22 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 	];
 
+	const [tags, setTags] = useState([
+		"2024-01-01 ~ 2025-02-22",
+		"MARU",
+		"7000s",
+		"9000s",
+	]);
+
+	// 개별 태그 삭제 핸들러
+	const handleTagClose = (tagToRemove) => {
+		setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
+	};
+
+	const handleTagDeleteAll = () => {
+		setTags([]);
+	};
+
 	return (
 		<Layout>
 			<div className="contents-top">
@@ -1260,6 +1281,27 @@ const OrderComponent = ({ contentHeight }) => {
 				<Tabs defaultActiveKey="1" items={TabItems} onChange={onChange} />
 
 				<Space direction="vertical" size={12} style={{ width: "100%" }}>
+					{/*  검색결과 */}
+					<Flex align="center">
+						<strong className="tit-search-result">검색결과 :</strong>
+
+						{tags.map((tag, index) => (
+							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+								{tag}
+							</Tag>
+						))}
+
+						<Button
+							color="primary"
+							variant="text"
+							size="small"
+							className="all-delete-tag"
+							onClick={handleTagDeleteAll}
+						>
+							모두 삭제
+						</Button>
+					</Flex>
+
 					{/* 상단 버튼 */}
 					<Flex gap="small" align="center" className="btn-big">
 						<Button

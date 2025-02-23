@@ -472,6 +472,16 @@
 	line-height: toRem(16);
 }
 
+.tit-search-result {
+	margin-right: toRem(8);
+	font-weight: 600;
+}
+
+.all-delete-tag {
+	border-bottom: toRem(1) solid $pointBlue;
+	font-size: toRem(12);
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {
