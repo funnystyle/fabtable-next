@@ -12,15 +12,15 @@ import HomePage from "./components/HomePage"; // 레이아웃
 import "@/assets/scss/base.scss";
 
 function App({ Component, pageProps }) {
+	const getLayout =
+		Component.getLayout || ((page) => <HomePage>{page}</HomePage>);
+
 	return (
 		<ChakraProvider>
 			<QueryClientProvider client={queryClient}>
 				<I18nextProvider i18n={i18next}>
 					<HeadMeta />
-					<HomePage>
-						{/* i18next 설정을 제공 */}
-						<Component {...pageProps} />
-					</HomePage>
+					{getLayout(<Component {...pageProps} />)}
 				</I18nextProvider>
 			</QueryClientProvider>
 		</ChakraProvider>

@@ -1,5 +1,5 @@
-// pages/month.js
-import React, { useRef, useState } from "react";
+// pages/modal.js
+import React, { useRef, useState, createContext } from "react";
 import {
 	Layout,
 	Button,
@@ -12,12 +12,18 @@ import {
 	Radio,
 	Checkbox,
 	Tag,
+	Space,
 } from "antd";
 import {
 	ClockCircleOutlined,
 	CalendarOutlined,
 	InfoCircleOutlined,
 	CheckOutlined,
+	CloseCircleFilled,
+	InfoCircleFilled,
+	CheckCircleFilled,
+	ExclamationCircleFilled,
+	ExclamationCircleOutlined,
 } from "@ant-design/icons";
 import Draggable from "react-draggable";
 import Link from "next/link";
@@ -28,6 +34,46 @@ const handleChange = (value) => {
 
 const onChange = (value) => {
 	console.log("changed", value);
+};
+
+const config = {
+	title: "Modal title",
+	icon: <InfoCircleFilled style={{ color: "#1677FF" }} />,
+	content: <div>모달 텍스트</div>,
+	okText: "확인",
+	cancelText: "취소",
+};
+
+const configError = {
+	title: "Modal title",
+	icon: <CloseCircleFilled style={{ color: "#FF4D4F" }} />,
+	content: <div>모달 텍스트</div>,
+	okText: "확인",
+	cancelText: "취소",
+};
+
+const configSucces = {
+	title: "Modal title",
+	icon: <CheckCircleFilled style={{ color: "#52C41A" }} />,
+	content: <div>모달 텍스트</div>,
+	okText: "확인",
+	cancelText: "취소",
+};
+
+const configWarning = {
+	title: "Modal title",
+	icon: <ExclamationCircleFilled style={{ color: "#FAAD14" }} />,
+	content: <div>모달 텍스트</div>,
+	okText: "확인",
+	cancelText: "취소",
+};
+
+const configWarning2 = {
+	title: "Modal title",
+	icon: <ExclamationCircleOutlined style={{ color: "#FAAD14" }} />,
+	content: <div>컨펌형 모달 텍스트</div>,
+	okText: "확인",
+	cancelText: "취소",
 };
 
 const ModalComponent = ({}) => {
@@ -65,11 +111,12 @@ const ModalComponent = ({}) => {
 		});
 	};
 
+	const [modal, contextHolder] = Modal.useModal();
+
 	return (
 		<Layout>
 			<Flex gap="small">
 				<Button onClick={showModal}>Open Draggable Modal</Button>
-				{/* <Button onClick={showModal}>Open custom Modal</Button> */}
 			</Flex>
 
 			<Modal
@@ -140,14 +187,18 @@ const ModalComponent = ({}) => {
 						</Link>
 					</p>
 
-					<Flex align="center" gap={4} className="tit-modal-area">
-						<p className="tit-modal-input">입력 폼 타이틀</p>
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">입력 폼 타이틀</p>
 
 						<CheckOutlined />
 
 						<Tag>태그</Tag>
 
 						<Button>버튼</Button>
+
+						<Button type="text" className="btn-reset-txt">
+							입력 초기화
+						</Button>
 					</Flex>
 
 					<Flex gap="middle" className="modal-input-area">
@@ -297,7 +348,6 @@ const ModalComponent = ({}) => {
 								label="체크박스"
 								tooltip={{
 									title: "Tooltip with customize icon",
-									icon: <InfoCircleOutlined />,
 								}}
 								name="checkbox1"
 							>
@@ -336,6 +386,46 @@ const ModalComponent = ({}) => {
 					</p>
 				</div>
 			</Modal>
+
+			<Space>
+				<Button
+					onClick={async () => {
+						modal.confirm(config);
+					}}
+				>
+					Normal
+				</Button>
+				<Button
+					onClick={async () => {
+						modal.confirm(configError);
+					}}
+				>
+					Error
+				</Button>
+				<Button
+					onClick={async () => {
+						modal.confirm(configSucces);
+					}}
+				>
+					Success
+				</Button>
+				<Button
+					onClick={async () => {
+						modal.confirm(configWarning);
+					}}
+				>
+					Warning
+				</Button>
+				<Button
+					onClick={async () => {
+						modal.confirm(configWarning2);
+					}}
+				>
+					Warning 2
+				</Button>
+			</Space>
+			{/* `contextHolder` should always be placed under the context you want to access */}
+			{contextHolder}
 		</Layout>
 	);
 };
