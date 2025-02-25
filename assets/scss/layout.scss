@@ -668,24 +668,36 @@ h4 {
 	.ant-select-single {
 		height: toRem(32);
 	}
+}
 
-	.modal-input-area {
-		> form {
-			flex: 1;
+.modal-input-area {
+	.ant-input-number {
+		width: 100%;
+	}
 
-			.ant-input-number {
-				width: 100%;
-			}
+	.ant-checkbox {
+		& + span {
+			padding: 0 toRem(4);
 		}
+	}
 
-		.ant-checkbox {
-			& + span {
-				padding: 0 toRem(4);
+	& + .modal-txt {
+		margin-top: toRem(16);
+	}
+
+	.ant-select-single {
+		height: 100%;
+	}
+
+	& + .tit-area {
+		margin-top: 0;
+	}
+
+	&.ant-form {
+		> .ant-flex {
+			.ant-form-item {
+				flex: 1;
 			}
-		}
-
-		& + .modal-txt {
-			margin-top: toRem(16);
 		}
 	}
 }
@@ -771,6 +783,12 @@ h4 {
 .drawer-wrap {
 	height: 100vh;
 	background-color: rgba(0, 0, 0, 0.45);
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top: 0;
+	z-index: 10;
 
 	.drawer-top {
 		height: toRem(64);
@@ -796,10 +814,38 @@ h4 {
 
 	.drawer-container {
 		display: flex;
-		justify-content: center;
+		justify-content: flex-start;
+		align-items: center;
+		flex-direction: column;
 		height: calc(100% - 64px);
 		padding: toRem(56);
 		padding-right: toRem(400);
+		overflow: auto;
+
+		&::-webkit-scrollbar {
+			width: 7px;
+		}
+		&::-webkit-scrollbar-thumb {
+			background-color: #eaeaea;
+		}
+		&::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
+	}
+
+	.preview {
+		width: toRem(482);
+		height: toRem(664);
+		background-color: #ffdfdf;
+		border: 3px solid #ff5050;
+		font-size: 32px;
+		color: #fc5555;
+		line-height: toRem(664);
+		text-align: center;
+
+		& + .preview {
+			margin-top: 26px;
+		}
 	}
 }
 

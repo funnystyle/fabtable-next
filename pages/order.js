@@ -1,5 +1,5 @@
 // pages/order.js
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
 	Layout,
 	Typography,
@@ -19,6 +19,13 @@ import {
 	Tooltip,
 	Popover,
 	message,
+	Form,
+	Select,
+	Row,
+	Col,
+	Radio,
+	InputNumber,
+	Modal,
 } from "antd";
 import {
 	RedoOutlined,
@@ -31,7 +38,13 @@ import {
 	VerticalLeftOutlined,
 	LeftOutlined,
 	RightOutlined,
+	CalendarOutlined,
+	ExclamationCircleFilled,
 } from "@ant-design/icons";
+
+import DrawerComponent from "./components/drawer";
+import Draggable from "react-draggable";
+import Link from "next/link";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -651,17 +664,6 @@ const stateItems = [
 	},
 ];
 
-const printItems = [
-	{
-		label: "라벨 인쇄",
-		key: "1",
-	},
-	{
-		label: "성적서 인쇄",
-		key: "2",
-	},
-];
-
 const excelItems = [
 	{
 		label: "편집 항목만",
@@ -904,12 +906,12 @@ const OrderComponent = ({ contentHeight }) => {
 
 	// 테이블
 	const [sortedInfo, setSortedInfo] = useState({
-		columnKey: "deliPlanDate",
-		order: "ascend",
+		// columnKey: "deliPlanDate",
+		// order: "ascend",
 	});
-	const handleChange = (pagination, filters, sorter) => {
+	const handleChange = (pagination, filters, sorter = {}) => {
 		console.log("Various parameters", pagination, filters, sorter);
-		setSortedInfo(sorter);
+		setSortedInfo(sorter.columnKey ? sorter : {});
 	};
 
 	const stringSorter = (a, b, key) => {
@@ -1242,6 +1244,704 @@ const OrderComponent = ({ contentHeight }) => {
 		setTags([]);
 	};
 
+	// --------- 드로어 관련
+	const [openDrawer, setOpenDrawer] = useState(false); // Drawer 열림 상태
+	const [drawerHeader, setDrawerHeader] = useState(null); // Drawer 헤더
+	const [drawerContent, setDrawerContent] = useState(null); // Drawer 본문 내용
+	const [drawerFooter, setDrawerFooter] = useState(null); // Drawer 푸터 버튼
+	const [drawerTitle, setDrawerTitle] = useState(""); // Drawer 제목 상태
+
+	// 드로어 열기
+	const showDrawer = (type) => {
+		setDrawerTitle("인쇄 설정");
+		setDrawerHeader(
+			<Flex align="center" justify="space-between" className="drawer-top">
+				<Flex align="center" gap={10}>
+					<h1 className="title-drawer">인쇄하기</h1>
+					<p className="drawer-descript">총 52 페이지</p>
+				</Flex>
+				<Flex gap={8} className="drawer-top-btn">
+					<Button onClick={closeDrawer}>취소</Button>
+					<Button type="primary">다음</Button>
+				</Flex>
+			</Flex>
+		);
+
+		if (type === "label") {
+			setDrawerContent(
+				<>
+					<Form layout="vertical">
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">인쇄 구분</p>
+						</Flex>
+
+						<Form.Item>
+							<Select
+								defaultValue="print1"
+								onChange={handleChange}
+								options={[
+									{
+										value: "print1",
+										label: "라벨 인쇄",
+									},
+									{
+										value: "print2",
+										label: "성적서 인쇄",
+									},
+								]}
+							/>
+						</Form.Item>
+
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">라벨 설정</p>
+
+							<Button type="link" className="btn-reset-txt">
+								설정 초기화
+							</Button>
+						</Flex>
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item label="라벨 종류" name="radio1">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio1-1">라벨 1 --&gt; 2 --&gt; 3</Radio>
+										<Radio value="radio1-2">라벨 1</Radio>
+										<Radio value="radio1-3">라벨 2</Radio>
+										<Radio value="radio1-4">라벨 3</Radio>
+										<Radio value="radio1-5">라벨 4</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+
+						<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item label="라벨 1 규격 (mm)" name="radio2">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio2-1">규격 1 (30*70)</Radio>
+										<Radio value="radio2-2">규격 2 (40*70)</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item label="라벨 2 규격 (mm)" name="radio3">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio3-1">규격 1 (35*70)</Radio>
+										<Radio value="radio3-2">규격 2 (45*70)</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+
+						<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">기타</p>
+
+							<Button type="link" className="btn-reset-txt">
+								설정 초기화
+							</Button>
+						</Flex>
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item label="AS 연락처" name="radio4">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio4-1">한국 본사</Radio>
+										<Radio value="radio4-2">중국 상해법인</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item label="장착 방향" name="radio5">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio5-1">정방향 ( &lt;-- ) </Radio>
+										<Radio value="radio5-2">역방향 ( --&gt; ) </Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+					</Form>
+				</>
+			);
+		} else if (type === "report") {
+			setDrawerContent(
+				<>
+					<Form layout="vertical">
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">인쇄 구분</p>
+						</Flex>
+
+						<Form.Item>
+							<Select
+								defaultValue="select2"
+								onChange={handleChange}
+								options={[
+									{
+										value: "select1",
+										label: "라벨 인쇄",
+									},
+									{
+										value: "select2",
+										label: "성적서 인쇄",
+									},
+								]}
+							/>
+						</Form.Item>
+
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">성적서 구분</p>
+
+							<Button type="link" className="btn-reset-txt">
+								설정 초기화
+							</Button>
+						</Flex>
+
+						<Row gutter={16}>
+							<Col span={24}>
+								<Form.Item name="radio6">
+									<Radio.Group
+										style={{
+											display: "flex",
+											flexDirection: "column",
+											gap: 8,
+										}}
+									>
+										<Radio value="radio6-1">표준 성적서</Radio>
+									</Radio.Group>
+								</Form.Item>
+							</Col>
+						</Row>
+
+						<Flex align="center" gap={4} className="tit-area">
+							<p className="tit-type no-bullet">양식 선택</p>
+						</Flex>
+
+						<Form.Item>
+							<Select
+								defaultValue="select3"
+								onChange={handleChange}
+								options={[
+									{
+										value: "select3",
+										label: "mkp-calibration-ko-A",
+									},
+									{
+										value: "select4",
+										label: "mkp-calibration-ko-B",
+									},
+									{
+										value: "select5",
+										label: "mkp-calibration-ko-C",
+									},
+									{
+										value: "select6",
+										label:
+											"mkp-calibrationcalibrationcalibrationcalibration ...",
+									},
+								]}
+							/>
+						</Form.Item>
+					</Form>
+				</>
+			);
+		}
+
+		setOpenDrawer(true);
+	};
+
+	// 드로어 닫기
+	const closeDrawer = () => {
+		setOpenDrawer(false);
+	};
+
+	const printItems = [
+		{
+			label: "라벨 인쇄",
+			key: "1",
+			onClick: () => showDrawer("label"), // 클릭 시 라벨 인쇄 Drawer 열기
+		},
+		{
+			label: "성적서 인쇄",
+			key: "2",
+			onClick: () => showDrawer("report"), // 클릭 시 성적서 인쇄 Drawer 열기
+		},
+	];
+	// --------- 드로어 관련
+
+	// --------- 모달 관련
+	const [openCopyModal, setOpenCopyModal] = useState(false); // Modal 열림 상태
+	const [openEditModal, setOpenEditModal] = useState(false);
+	const [modalContent, setModalContent] = useState(null); // Modal 내용
+	const [modal, contextHolder] = Modal.useModal();
+
+	// 복제 모달 열기
+	const showCopyModal = () => {
+		setModalContent(
+			<>
+				<Flex align="center" justify="space-between">
+					<p className="total-txt">
+						선택 총 <strong>1</strong> 건
+					</p>
+
+					<Button type="link" className="btn-reset-txt">
+						입력 초기화
+					</Button>
+				</Flex>
+
+				<p className="modal-txt">복수의 수주 복제 시 수량을 꼭 확인하세요.</p>
+
+				<Flex align="center" gap={4} className="tit-area">
+					<p className="tit-type">복제 설정</p>
+				</Flex>
+
+				<Form layout="vertical" className="modal-input-area">
+					<Row gutter={16}>
+						<Col span={6}>
+							<Form.Item label="복제수량" name="num-input1">
+								<InputNumber
+									min={1}
+									max={10}
+									defaultValue={3}
+									onChange={onChange}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item
+								label="분류코드"
+								tooltip={
+									<>
+										제조2팀 (0) <br />
+										R&D혁신센터 (1) <br />
+										제조2팀 (2)
+									</>
+								}
+							>
+								<Select
+									defaultValue="groupCode1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "groupCode1",
+											label: "0",
+										},
+										{
+											value: "groupCode2",
+											label: "1",
+										},
+										{
+											value: "groupCode3",
+											label: "2",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item
+								label={<Link href={"/"}>날짜 선택</Link>}
+								name="input4"
+							>
+								<Input
+									placeholder="날짜"
+									suffix={
+										<CalendarOutlined style={{ color: "rgba(0,0,0,0.25)" }} />
+									}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label="출고종류">
+								<Select
+									defaultValue="release1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "release1",
+											label: "제품 매출",
+										},
+										{
+											value: "release2",
+											label: "수리 (유상)",
+										},
+										{
+											value: "release3",
+											label: "수리 (무상)",
+										},
+										{
+											value: "release4",
+											label: "DEMO (유상)",
+										},
+										{
+											value: "release5",
+											label: "DEMO (무상)",
+										},
+										{
+											value: "release6",
+											label: "CS 대체품",
+										},
+										{
+											value: "release7",
+											label: "STOCK (CS)",
+										},
+										{
+											value: "release8",
+											label: "STOCK (양산)",
+										},
+										{
+											value: "release9",
+											label: "사내활용",
+										},
+										{
+											value: "release10",
+											label: "ETC",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+					</Row>
+
+					<Row gutter={16}>
+						<Col span={12}>
+							<Form.Item label="P/O 번호" name="po_num">
+								<Input placeholder="미해당 시 비워두세요" />
+							</Form.Item>
+						</Col>
+
+						<Col span={12}>
+							<Form.Item label="프로젝트 번호" name="project_num">
+								<Input placeholder="미해당 시 비워두세요" />
+							</Form.Item>
+						</Col>
+					</Row>
+				</Form>
+			</>
+		);
+
+		setOpenCopyModal(true);
+	};
+
+	// 일괄수정 모달 열기
+	const showEditModal = () => {
+		setModalContent(
+			<>
+				<Flex align="center" justify="space-between">
+					<p className="total-txt">
+						총 <strong>50</strong> 건
+					</p>
+
+					<Button type="link" className="btn-reset-txt">
+						입력 초기화
+					</Button>
+				</Flex>
+
+				<Flex align="center" gap={4} className="tit-area">
+					<p className="tit-type">기본 정보</p>
+				</Flex>
+
+				<Form layout="vertical" className="modal-input-area">
+					<Row gutter={16}>
+						<Col span={6}>
+							<Form.Item label={<Link href={"/"}>등록자</Link>} name="writer1">
+								<Select
+									defaultValue="writer1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "writer1",
+											label: "홍길동",
+										},
+										{
+											value: "writer2",
+											label: "홍길동",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label={<Link href={"/"}>납품자</Link>} name="writer1">
+								<Select
+									defaultValue="supplier1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "supplier1",
+											label: "이몽룡",
+										},
+										{
+											value: "supplier2",
+											label: "이몽룡",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item
+								label={<Link href={"/"}>납품계확일</Link>}
+								name="delivery1"
+							>
+								<Input
+									placeholder="날짜"
+									suffix={
+										<CalendarOutlined style={{ color: "rgba(0,0,0,0.25)" }} />
+									}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label="비고" name="po_num">
+								<Input placeholder="-" />
+							</Form.Item>
+						</Col>
+					</Row>
+
+					<Row gutter={16}>
+						<Col span={24}>
+							<Form.Item label="영업팀 메모" name="business-memo">
+								<Input placeholder="-" />
+							</Form.Item>
+						</Col>
+					</Row>
+				</Form>
+
+				<Flex align="center" gap={4} className="tit-area">
+					<p className="tit-type">고객 정보</p>
+				</Flex>
+
+				<Form layout="vertical" className="modal-input-area">
+					<Row gutter={16}>
+						<Col span={6}>
+							<Form.Item label="납품처" name="vendor1">
+								<Select
+									defaultValue="vendor1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "vendor1",
+											label: "원익IPS",
+										},
+										{
+											value: "vendor2",
+											label: "원익IPS",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label="납품처" name="client1">
+								<Select
+									defaultValue="client1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "client1",
+											label: "삼성",
+										},
+										{
+											value: "client2",
+											label: "삼성",
+										},
+									]}
+								/>
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label="P/O 번호" name="po_num2">
+								<Input placeholder="-" />
+							</Form.Item>
+						</Col>
+
+						<Col span={6}>
+							<Form.Item label="프로젝트번호" name="project_num2">
+								<Input placeholder="-" />
+							</Form.Item>
+						</Col>
+					</Row>
+
+					<Row gutter={16}>
+						<Col span={24}>
+							<Form.Item label="영업팀 메모" name="business-memo">
+								<Input placeholder="-" />
+							</Form.Item>
+						</Col>
+					</Row>
+				</Form>
+
+				<Flex align="center" gap={4} className="tit-area">
+					<p className="tit-type">제품 정보</p>
+				</Flex>
+
+				<Form layout="vertical" className="modal-input-area">
+					<Flex gap={16}>
+						<Form.Item label="현재상태" name="state1">
+							<Select
+								defaultValue="state1"
+								onChange={handleChange}
+								options={[
+									{
+										value: "state1",
+										label: "납품완료",
+									},
+									{
+										value: "state2",
+										label: "납품대기",
+									},
+								]}
+							/>
+						</Form.Item>
+
+						<Form.Item label="포트위치" name="potposition1">
+							<Select
+								defaultValue="potposition1"
+								onChange={handleChange}
+								options={[
+									{
+										value: "potposition1",
+										label: "Side",
+									},
+									{
+										value: "potposition2",
+										label: "Side",
+									},
+								]}
+							/>
+						</Form.Item>
+
+						<Form.Item label="최소 압력" name="min-press">
+							<InputNumber
+								min={1}
+								max={10}
+								defaultValue={3}
+								onChange={onChange}
+							/>
+						</Form.Item>
+
+						<Form.Item label="중심 압력" name="mid-press">
+							<InputNumber
+								min={1}
+								max={10}
+								defaultValue={3}
+								onChange={onChange}
+							/>
+						</Form.Item>
+
+						<Form.Item label="최대 압력" name="max-press">
+							<InputNumber
+								min={1}
+								max={10}
+								defaultValue={3}
+								onChange={onChange}
+							/>
+						</Form.Item>
+					</Flex>
+				</Form>
+			</>
+		);
+
+		setOpenEditModal(true);
+	};
+
+	// 모달 닫기
+	const closeModal = () => {
+		setOpenCopyModal(false);
+		setOpenEditModal(false);
+	};
+
+	const handleConfirmEdit = () => {
+		modal.confirm({
+			title: "수주 정보 일괄수정",
+			icon: <ExclamationCircleFilled style={{ color: "#FAAD14" }} />,
+			content:
+				"여러 건의 수주 정보를 일괄 수정할까요? 수정 후에는 다시 되돌릴 수 없습니다. ",
+			okText: "확인",
+			cancelText: "취소",
+			onOk() {
+				console.log("수정 완료!");
+				setTimeout(() => {
+					closeModal();
+				}, 100);
+			},
+			onCancel() {
+				console.log("수정 취소");
+			},
+		});
+	};
+
+	const [disabled, setDisabled] = useState(true);
+	const [bounds, setBounds] = useState({
+		left: 0,
+		top: 0,
+		bottom: 0,
+		right: 0,
+	});
+	const draggleRef = useRef(null);
+
+	const onStart = (_event, uiData) => {
+		const { clientWidth, clientHeight } = window.document.documentElement;
+		const targetRect = draggleRef.current?.getBoundingClientRect();
+		if (!targetRect) {
+			return;
+		}
+		setBounds({
+			left: -targetRect.left + uiData.x,
+			right: clientWidth - (targetRect.right - uiData.x),
+			top: -targetRect.top + uiData.y,
+			bottom: clientHeight - (targetRect.bottom - uiData.y),
+		});
+	};
+	// --------- 모달 관련
+
 	return (
 		<Layout>
 			<div className="contents-top">
@@ -1258,7 +1958,6 @@ const OrderComponent = ({ contentHeight }) => {
 								width: 400,
 							}}
 							options={options}
-							size="large"
 						>
 							<Input.Search
 								size="large"
@@ -1386,9 +2085,9 @@ const OrderComponent = ({ contentHeight }) => {
 						</Flex>
 
 						<Flex gap="small" className="btn-spacing-area">
-							<Button>수주 복제하기</Button>
+							<Button onClick={showCopyModal}>수주 복제하기</Button>
 
-							<Button>수주 일괄수정</Button>
+							<Button onClick={showEditModal}>수주 일괄수정</Button>
 						</Flex>
 
 						<Flex gap="small">
@@ -1406,7 +2105,7 @@ const OrderComponent = ({ contentHeight }) => {
 								</Button>
 							</Dropdown>
 
-							<Dropdown menu={{ items: printItems, onClick: handleMenuClick }}>
+							<Dropdown menu={{ items: printItems }}>
 								<Button>
 									<Space>
 										인쇄하기
@@ -1494,6 +2193,91 @@ const OrderComponent = ({ contentHeight }) => {
 					/>
 				</div>
 			</div>
+
+			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
+			<div style={{ display: openDrawer ? "block" : "none" }}>
+				<DrawerComponent
+					open={openDrawer}
+					onClose={closeDrawer}
+					title={drawerTitle}
+					headerContent={drawerHeader} // 동적으로 헤더 변경
+					content={drawerContent} // 동적으로 본문 변경
+					footer={drawerFooter} // 동적으로 푸터 버튼 변경
+				/>
+			</div>
+
+			{/* ModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
+			<div style={{ display: openCopyModal ? "block" : "none" }}>
+				<Modal
+					title={
+						<div
+							className="modal-title"
+							onMouseOver={() => setDisabled(false)}
+							onMouseOut={() => setDisabled(true)}
+						>
+							수주 복제하기
+						</div>
+					}
+					open={openCopyModal}
+					onCancel={() => setOpenCopyModal(false)}
+					onOk={() => setOpenCopyModal(false)}
+					okText="복제"
+					cancelText="취소"
+					width={640}
+					modalRender={(modal) => (
+						<Draggable
+							disabled={disabled}
+							bounds={bounds}
+							nodeRef={draggleRef}
+							onStart={(event, uiData) => onStart(event, uiData)}
+						>
+							<div ref={draggleRef}>{modal}</div>
+						</Draggable>
+					)}
+				>
+					{modalContent}
+				</Modal>
+			</div>
+
+			{/* ModalComponent 추가 - "수주 일괄수정하기" 클릭 시 열림 */}
+			<div style={{ display: openEditModal ? "block" : "none" }}>
+				<Modal
+					title={
+						<div
+							className="modal-title"
+							onMouseOver={() => setDisabled(false)}
+							onMouseOut={() => setDisabled(true)}
+						>
+							수주 정보 일괄수정
+						</div>
+					}
+					open={openEditModal}
+					onCancel={() => setOpenEditModal(false)}
+					onOk={() => {
+						setTimeout(() => {
+							handleConfirmEdit();
+						}, 300);
+					}}
+					okText="수정"
+					cancelText="취소"
+					width={780}
+					modalRender={(modal) => (
+						<Draggable
+							disabled={disabled}
+							bounds={bounds}
+							nodeRef={draggleRef}
+							onStart={(event, uiData) => onStart(event, uiData)}
+						>
+							<div ref={draggleRef}>{modal}</div>
+						</Draggable>
+					)}
+				>
+					{modalContent}
+				</Modal>
+			</div>
+
+			{/* contextHolder를 포함해야 modal.confirm이 정상 작동 */}
+			{contextHolder}
 		</Layout>
 	);
 };
