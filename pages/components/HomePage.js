@@ -374,7 +374,7 @@ const HomePage = ({ children }) => {
 						</div>
 					</Header>
 					<Content className="contents">
-						{React.cloneElement(children, { contentHeight })}
+						{children ? React.cloneElement(children, { contentHeight }) : null}
 					</Content>
 				</Layout>
 			</Layout>
