@@ -129,6 +129,20 @@ const OrderInfoCreateNew = () => {
           ).map(selectedCode => selectedCode.childRelations.filter(childRelation => childRelation.id === item.codeGroupId));
 
           console.log("filteredSelectedCodeChildRelations : ", filteredSelectedCodeChildRelations);
+          // if (filteredSelectedCodeChildRelations.length > 0) {
+          //   // 모든 childRelations를 한 배열로 평탄화
+          //   const allChildRelations = filteredSelectedCodeChildRelations.flat();
+          //
+          //   // childCodeId 리스트 추출
+          //   const childCodeIdLists = allChildRelations.map(rel => rel.map(child => child.childCodeId));
+          //
+          //   // 교집합 계산
+          //   const intersection = childCodeIdLists.reduce((acc, list) =>
+          //     acc.filter(id => list.includes(id))
+          //   );
+          //
+          //   console.log("교집합 childCodeId: ", intersection);
+          // }
         }
       }
 
