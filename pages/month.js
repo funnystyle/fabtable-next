@@ -77,7 +77,7 @@ const MonthComponent = ({ contentHeight }) => {
 			>
 				<div className="contents-left">
 					<div className="contents-top">
-						<Title level={4} className="title-page">
+						<Title level={2} className="title-page">
 							월간 일정 달력
 						</Title>
 
@@ -202,7 +202,7 @@ const MonthComponent = ({ contentHeight }) => {
 						</Flex>
 					</div>
 
-					<div style={{ height: contentHeight }} className="contents-scroll">
+					<div className="contents-scroll">
 						<table className="calendar-tb">
 							<thead>
 								<tr>

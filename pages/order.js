@@ -26,6 +26,7 @@ import {
 	Radio,
 	InputNumber,
 	Modal,
+	DatePicker,
 } from "antd";
 import {
 	RedoOutlined,
@@ -45,6 +46,7 @@ import {
 import DrawerComponent from "./components/drawer";
 import Draggable from "react-draggable";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -737,6 +739,15 @@ const OrderComponent = ({ contentHeight }) => {
 	const [allChecked, setAllChecked] = useState(true);
 	const [checkedItems, setCheckedItems] = useState(Array(16).fill(true));
 	const [position, setPosition] = useState("end");
+	const router = useRouter();
+
+	const onTabChange = (key) => {
+		if (key === "1") {
+			router.push("/order");
+		} else if (key === "2") {
+			router.push("/orderwrite");
+		}
+	};
 
 	const contentStyle = {
 		backgroundColor: token.colorBgElevated,
@@ -764,7 +775,10 @@ const OrderComponent = ({ contentHeight }) => {
 		key: `${i + 1}`,
 		label: (
 			<div onClick={(e) => e.stopPropagation()}>
-				<Checkbox checked={checkedItems[i]} onChange={() => handleItemChange(i)}>
+				<Checkbox
+					checked={checkedItems[i]}
+					onChange={() => handleItemChange(i)}
+				>
 					{
 						[
 							"발주기입",
@@ -851,7 +865,7 @@ const OrderComponent = ({ contentHeight }) => {
 							renderItem(item.title, item.date)
 						),
 					},
-				]
+			  ]
 			: [];
 
 	const [current, setCurrent] = useState(2);
@@ -1585,12 +1599,7 @@ const OrderComponent = ({ contentHeight }) => {
 								label={<Link href={"/"}>납품계획일</Link>}
 								name="input4"
 							>
-								<Input
-									placeholder="날짜 선택"
-									suffix={
-										<CalendarOutlined style={{ color: "rgba(0,0,0,0.25)" }} />
-									}
-								/>
+								<DatePicker onChange={onChange} placeholder="날짜 선택" />
 							</Form.Item>
 						</Col>
 
@@ -1729,12 +1738,7 @@ const OrderComponent = ({ contentHeight }) => {
 								label={<Link href={"/"}>납품계획일</Link>}
 								name="delivery1"
 							>
-								<Input
-									placeholder="날짜"
-									suffix={
-										<CalendarOutlined style={{ color: "rgba(0,0,0,0.25)" }} />
-									}
-								/>
+								<DatePicker onChange={onChange} placeholder="날짜 선택" />
 							</Form.Item>
 						</Col>
 
@@ -1948,7 +1952,7 @@ const OrderComponent = ({ contentHeight }) => {
 		<Layout>
 			<div className="contents-top">
 				<Flex align="center" justify="space-between" className="title-area">
-					<Title level={4} className="title-page">
+					<Title level={2} className="title-page">
 						영업 관리
 					</Title>
 
@@ -1979,7 +1983,7 @@ const OrderComponent = ({ contentHeight }) => {
 					</Flex>
 				</Flex>
 
-				<Tabs defaultActiveKey="1" items={TabItems} onChange={onChange} />
+				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
 
 				<Space direction="vertical" size={12} style={{ width: "100%" }}>
 					{/*  검색결과 */}
@@ -2176,7 +2180,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Space>
 			</div>
 
-			<div style={{ height: contentHeight }} className="contents-scroll">
+			<div style={{ marginTop: contentHeight }} className="contents-scroll">
 				{/* 테이블 */}
 				<div className="tb-container">
 					<Table

@@ -2,13 +2,27 @@
 
 .contents {
 	min-width: toRem(712);
-	padding: toRem(40);
+	padding: toRem(40) toRem(40) toRem(40) toRem(260);
 	background-color: #fff;
 	flex-shrink: 0;
+	transition: padding-left 0.2s ease-in-out;
+
+	.contents-top {
+		background-color: #fff;
+		padding: toRem(40) toRem(40) toRem(12) 0;
+		position: fixed;
+		left: toRem(300);
+		top: toRem(44);
+		right: 0;
+		z-index: 10;
+		transition: left 0.2s ease-in-out;
+	}
 
 	.contents-scroll {
-		margin-top: toRem(12);
+		height: 100%;
+		margin-left: toRem(40);
 		overflow-y: auto;
+		transition: margin-left 0.2s ease-in-out;
 
 		&::-webkit-scrollbar {
 			width: 7px;
@@ -22,12 +36,25 @@
 	}
 
 	.contents-flex {
+		margin-left: toRem(40);
+		transition: padding-left 0.2s ease-in-out;
+
 		.contents-left {
 			flex-grow: 1;
+
+			.contents-top {
+				padding-right: 0;
+				position: static;
+			}
+
+			.contents-scroll {
+				margin-left: 0;
+			}
 		}
 
 		.contents-right {
 			width: toRem(240);
+			margin-top: toRem(40);
 			flex-shrink: 0;
 		}
 	}
@@ -41,6 +68,14 @@
 				.ant-tabs-tab-btn {
 					font-weight: 600;
 				}
+			}
+		}
+	}
+
+	.ant-tabs-top {
+		> .ant-tabs-nav {
+			.ant-tabs-ink-bar {
+				height: toRem(4);
 			}
 		}
 	}
@@ -123,7 +158,6 @@
 
 	.calendar-tb {
 		width: 100%;
-		margin-top: toRem(12);
 
 		thead {
 			tr {
@@ -321,6 +355,33 @@
 	}
 }
 
+.collapsed-mode {
+	.header {
+		left: toRem(64);
+		transition: left 0.2s ease-in-out;
+	}
+
+	.contents {
+		padding-left: toRem(104);
+		transition: padding-left 0.2s ease-in-out;
+
+		.contents-flex {
+			margin-left: toRem(0);
+			transition: padding-left 0.2s ease-in-out;
+		}
+
+		.contents-top {
+			left: toRem(104);
+			transition: left 0.2s ease-in-out;
+		}
+
+		.contents-scroll {
+			margin-left: 0;
+			transition: margin-left 0.2s ease-in-out;
+		}
+	}
+}
+
 .ant-picker-dropdown {
 	.ant-picker-panel-container {
 		box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05),
@@ -480,6 +541,113 @@
 .all-delete-tag {
 	border-bottom: toRem(1) solid $pointBlue;
 	font-size: toRem(12);
+}
+
+/* 등록 상세 */
+.btn-space-area {
+	padding-right: toRem(8);
+	position: relative;
+
+	&::after {
+		content: "";
+		width: toRem(1);
+		height: toRem(12);
+		background-color: rgba(0, 0, 0, 0.12);
+		transform: translateY(-50%);
+		position: absolute;
+		right: 0;
+		top: 50%;
+	}
+}
+
+.btn-all-reset {
+	height: toRem(22);
+	border-bottom: toRem(1) solid $pointBlue;
+	color: $pointBlue;
+
+	&:not(:disabled):not(.ant-btn-disabled):hover {
+		color: #4096ff;
+	}
+}
+
+.product-info {
+	display: flex;
+	align-items: center;
+
+	li {
+		font-size: toRem(16);
+		font-weight: 600;
+		position: relative;
+
+		& + li {
+			padding-left: toRem(14);
+			margin-left: toRem(14);
+
+			&::before {
+				content: "";
+				width: toRem(1);
+				height: toRem(12);
+				background-color: rgba(0, 0, 0, 0.12);
+				transform: translateY(-50%);
+				position: absolute;
+				left: 0;
+				top: 50%;
+			}
+		}
+	}
+}
+
+.info-input-box {
+	padding: toRem(16) toRem(24) 0;
+	background-color: rgba(0, 0, 0, 0.02);
+	border: 1px solid #f0f0f0;
+	border-radius: toRem(10);
+}
+
+.info-input-area {
+	.ant-form-item {
+		flex: 1;
+	}
+
+	.ant-select-single {
+		height: toRem(32);
+	}
+
+	.ant-picker {
+		width: 100%;
+
+		.ant-picker-input {
+			height: toRem(30);
+		}
+	}
+}
+
+.info-wrap {
+	margin-top: toRem(44);
+}
+
+.info-input-wrap {
+	.info-input-box {
+		flex: 1;
+
+		.ant-typography {
+			margin-bottom: toRem(16);
+		}
+
+		.ant-form-item {
+			margin-bottom: toRem(16);
+		}
+
+		.ant-select {
+			& + .ant-input {
+				margin-top: toRem(6);
+			}
+		}
+	}
+}
+
+.top-btn-area {
+	padding-right: toRem(160);
 }
 
 /* ~ 912px ----------- */

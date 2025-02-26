@@ -1,6 +1,7 @@
 // pages/index.js
 import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button, Tag } from "antd";
+import { useRouter } from "next/router";
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
@@ -212,6 +213,8 @@ const HomePage = ({ children }) => {
 	const [isMobile, setIsMobile] = useState(false);
 	const [contentHeight, setContentHeight] = useState("100vh");
 
+	const router = useRouter();
+
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
@@ -223,16 +226,26 @@ const HomePage = ({ children }) => {
 				const contentsTop =
 					document.querySelector(".contents-top")?.offsetHeight || 0;
 
-				setContentHeight(`calc(100vh - ${header}px - ${contentsTop}px - 93px`);
+				setContentHeight(`calc(${header}px + ${contentsTop}px - 40px)`);
 			};
 
-			updateHeight();
+			// 페이지 이동 시 높이 업데이트
+			const handleRouteChange = () => {
+				setTimeout(updateHeight, 50); // 약간의 딜레이를 줘서 정확한 값 적용
+			};
 
-			handleResize(); // Initialize state on mount
+			updateHeight(); // 초기 높이 설정
+			handleResize(); // 초기 화면 크기 설정
+
 			window.addEventListener("resize", handleResize);
-			return () => window.removeEventListener("resize", handleResize);
+			router.events.on("routeChangeComplete", handleRouteChange); // 페이지 변경 감지
+
+			return () => {
+				window.removeEventListener("resize", handleResize);
+				router.events.off("routeChangeComplete", handleRouteChange); // 이벤트 해제
+			};
 		}
-	}, []);
+	}, [router.events]);
 
 	return (
 		<Layout>
@@ -351,6 +364,7 @@ const HomePage = ({ children }) => {
 					style={{
 						transition: "margin-left 0.2s ease-in-out",
 					}}
+					className={`${collapsed ? "collapsed-mode" : "expanded-mode"}`}
 				>
 					<Header className="header">
 						<div

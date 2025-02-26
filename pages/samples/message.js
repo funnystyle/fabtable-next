@@ -33,6 +33,7 @@ const MessageComponent = ({}) => {
 	return (
 		<Layout>
 			{contextHolder}
+			<br />
 			<Space>
 				<Button onClick={info}>Normal</Button>
 				<Button onClick={success}>Success</Button>
