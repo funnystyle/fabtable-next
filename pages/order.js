@@ -1580,11 +1580,11 @@ const OrderComponent = ({ contentHeight }) => {
 
 						<Col span={6}>
 							<Form.Item
-								label={<Link href={"/"}>날짜 선택</Link>}
+								label={<Link href={"/"}>납품계획일</Link>}
 								name="input4"
 							>
 								<Input
-									placeholder="날짜"
+									placeholder="날짜 선택"
 									suffix={
 										<CalendarOutlined style={{ color: "rgba(0,0,0,0.25)" }} />
 									}
