@@ -1724,7 +1724,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 						<Col span={6}>
 							<Form.Item
-								label={<Link href={"/"}>납품계확일</Link>}
+								label={<Link href={"/"}>납품계획일</Link>}
 								name="delivery1"
 							>
 								<Input
