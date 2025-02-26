@@ -763,28 +763,30 @@ const OrderComponent = ({ contentHeight }) => {
 	const items = Array.from({ length: 16 }, (_, i) => ({
 		key: `${i + 1}`,
 		label: (
-			<Checkbox checked={checkedItems[i]} onChange={() => handleItemChange(i)}>
-				{
-					[
-						"발주기입",
-						"조립완료",
-						"리크완료",
-						"PID완료",
-						"교정완료",
-						"생산완료",
-						"Rework",
-						"검사진행",
-						"검사완료",
-						"판정대기",
-						"입고완료",
-						"납품완료",
-						"반출대기",
-						"반출완료",
-						"처분대기",
-						"처분완료",
-					][i]
-				}
-			</Checkbox>
+			<div onClick={(e) => e.stopPropagation()}>
+				<Checkbox checked={checkedItems[i]} onChange={() => handleItemChange(i)}>
+					{
+						[
+							"발주기입",
+							"조립완료",
+							"리크완료",
+							"PID완료",
+							"교정완료",
+							"생산완료",
+							"Rework",
+							"검사진행",
+							"검사완료",
+							"판정대기",
+							"입고완료",
+							"납품완료",
+							"반출대기",
+							"반출완료",
+							"처분대기",
+							"처분완료",
+						][i]
+					}
+				</Checkbox>
+			</div>
 		),
 	}));
 
@@ -849,7 +851,7 @@ const OrderComponent = ({ contentHeight }) => {
 							renderItem(item.title, item.date)
 						),
 					},
-			  ]
+				]
 			: [];
 
 	const [current, setCurrent] = useState(2);
