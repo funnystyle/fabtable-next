@@ -17,6 +17,8 @@ const OrderInfoCreateNew = () => {
     queryFn: () => getAxios("/user/record-column", {}),
   });
 
+
+  const mySet = new Set(); // 빈 Set 생성
   useEffect(() => {
     if (isSuccess) {
       console.log("columnResponse : ", columnResponse);
@@ -36,8 +38,6 @@ const OrderInfoCreateNew = () => {
       }
     });
 
-
-
     await orderInfoCreate(values);
     message.success('수주 등록이 완료되었습니다!');
 
@@ -50,8 +50,6 @@ const OrderInfoCreateNew = () => {
     form.resetFields();
   };
 
-
-
   const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
 
   // 선택된 코드 정보를 갱신하는 함수
@@ -61,12 +59,15 @@ const OrderInfoCreateNew = () => {
     const codeId = option?.props['data-id'];  // codeId를 추출
     const childRelations = JSON.parse(option?.props['data-child-relations']);  // childRelations를 추출
 
-    const newSelectedCodes = [...selectedCodes];
+    let newSelectedCodes = [...selectedCodes];
 
-    // 이미 선택된 코드가 있으면 업데이트, 없으면 추가
-    const index = newSelectedCodes.findIndex(
-        (item) => item.codeGroupId === codeGroupId
+    // 상위 코드가 변경될 경우, 기존에 선택된 해당 그룹의 하위 코드 삭제
+    newSelectedCodes = newSelectedCodes.filter(
+      (item) => !childRelations.some(child => child.id === item.codeGroupId) // 하위 코드와 연결된 기존 선택 항목 제거
     );
+
+    // 기존에 선택된 코드가 있으면 업데이트, 없으면 추가
+    const index = newSelectedCodes.findIndex((item) => item.codeGroupId === codeGroupId);
     if (index !== -1) {
       newSelectedCodes[index] = { codeGroupId, commonCodeId: codeId, childRelations };
     } else {
@@ -75,78 +76,55 @@ const OrderInfoCreateNew = () => {
 
     setSelectedCodes(newSelectedCodes);
 
-    console.log("newSelectedCodes : ", newSelectedCodes);
-  };
 
-  const handleRadioChange = (e) => {
-
-    console.log('e:', e);
-    console.log('e.target:', e.target);
-    console.log('e.target.data-codegroup-id:', e.target['data-codegroup-id']);
-
-    const value = e.target.value;
-    const codeGroupId = e.target['data-codegroup-id'];  // codeGroupId를 추출
-    const childRelations = JSON.parse(e.target['data-child-relations']);  // childRelations를 추출
-    const newSelectedCodes = [...selectedCodes];
-
-    // 이미 선택된 코드가 있으면 업데이트, 없으면 추가
-    const index = newSelectedCodes.findIndex(
-      (item) => item.codeGroupId === codeGroupId
-    );
-    if (index !== -1) {
-      newSelectedCodes[index] = { codeGroupId, commonCodeId: value, childRelations };
-    } else {
-      newSelectedCodes.push({ codeGroupId, commonCodeId: value, childRelations });
-    }
-
-    setSelectedCodes(newSelectedCodes);
+    const formValues = form.getFieldsValue(); // 현재 폼의 모든 필드 값 가져오기
+    Object.keys(formValues).filter((name) => {
+      mySet.forEach((item) => {
+        childRelations.forEach((relation) => {
+          if (relation.id === item.codeGroupId && item.name === name) {
+            form.resetFields([name]);
+          }
+        });
+      });
+    });
   };
 
   const renderFormItem = (item) => {
 
-    console.log(item);
     // 'CODE' 타입 처리
     if (item.connectionDiv === 'CODE' && item.formDiv === 'SELECT') {
 
-      let codeList = item.codeList;
-
+      let codeList = [];
       for (let i = 0; i < item.codeList.length; i++) {
         const code = item.codeList[i];
 
         if (code.parentRelations && code.parentRelations.length > 0) {
-          // selectedCodes에서 codeGroupId만 추출하여 리스트로 만듦
-          const selectedCodeGroupIds = selectedCodes.map(selectedCode => selectedCode.codeGroupId);
+          // selectedCodes에서 현재 코드의 부모 코드의 관계에 속하는 모든 codeGroupId를 필터링
+          const filteredSelectedCodeGroupIds = selectedCodes
+            .map(selectedCode => selectedCode.codeGroupId)
+            .filter(codeGroupId => code.parentRelations.some(relation => relation.id === codeGroupId));
 
-          // selectedCodeGroupIds 배열을 기준으로 필터링
-          const filteredSelectedCodeGroupIds = selectedCodeGroupIds.filter(codeGroupId =>
-            code.parentRelations.some(relation => relation.id === codeGroupId)
+          // 부모 코드들에 대한 선택된 값 리스트
+          const parentSelectedCodes = selectedCodes
+            .filter(selectedCode => filteredSelectedCodeGroupIds.includes(selectedCode.codeGroupId))
+            .map(selectedCode => selectedCode.commonCodeId);
+
+          // 하나라도 부모 코드 관계에 해당하면 추가
+          const isChildRelation = parentSelectedCodes.some(parentSelectedCode =>
+            code.parentRelations.some(relation =>
+              relation.relations.some(rel => rel.parentCodeId === parentSelectedCode)
+            )
           );
 
-          // filteredSelectedCodeGroupIds에 포함된 codeGroupId에 대해
-          // 각 selectedCode에서 childRelations 중 code.codeGroupId와 일치하는 것을 찾기
-          const filteredSelectedCodeChildRelations = selectedCodes.filter(selectedCode =>
-            filteredSelectedCodeGroupIds.includes(selectedCode.codeGroupId)
-          ).map(selectedCode => selectedCode.childRelations.filter(childRelation => childRelation.id === item.codeGroupId));
-
-          console.log("filteredSelectedCodeChildRelations : ", filteredSelectedCodeChildRelations);
-          // if (filteredSelectedCodeChildRelations.length > 0) {
-          //   // 모든 childRelations를 한 배열로 평탄화
-          //   const allChildRelations = filteredSelectedCodeChildRelations.flat();
-          //
-          //   // childCodeId 리스트 추출
-          //   const childCodeIdLists = allChildRelations.map(rel => rel.map(child => child.childCodeId));
-          //
-          //   // 교집합 계산
-          //   const intersection = childCodeIdLists.reduce((acc, list) =>
-          //     acc.filter(id => list.includes(id))
-          //   );
-          //
-          //   console.log("교집합 childCodeId: ", intersection);
-          // }
+          if (isChildRelation) {
+            codeList.push(code);
+          }
+        } else {
+          codeList.push(code);
         }
       }
 
-
+      mySet.add({ codeGroupId: item.codeGroupId, name: item.name });
 
       return (
           <Form.Item
@@ -159,12 +137,8 @@ const OrderInfoCreateNew = () => {
               placeholder="선택하세요"
               onChange={handleSelectChange}
               data-codegroup-id={item.codeGroupId}
-
-              // disabled={codeList && codeList.length === 1}
-              defaultValue={
-                codeList && codeList.length === 1
-                  ? codeList[0].codeName
-                  : undefined
+              initialValues={
+                 undefined
               }
               options={
                 codeList
@@ -173,7 +147,7 @@ const OrderInfoCreateNew = () => {
                       label: option.codeName,
                       'data-codegroup-id': item.codeGroupId,
                       'data-id': option.id,
-                      'data-child-relations' : JSON.stringify(option.childRelations)
+                      'data-child-relations' : JSON.stringify(option.childRelations),
                     }))
                   : []
               }
