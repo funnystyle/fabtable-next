@@ -159,7 +159,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 					{/* //신규 수주 등록시 */}
 
 					{/* 기 등록된 수주 내용 수정시 */}
-					<Flex align="center" justify="space-between">
+					<Flex justify="space-between" className="detail-top-area">
 						<Flex gap={12}>
 							<Tag className="CurrentStatus007">Rework</Tag>
 
@@ -169,7 +169,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 							</ul>
 						</Flex>
 
-						<Flex align="center" gap={8}>
+						<Flex align="center" gap={8} className="detail-btn-area">
 							<Flex gap={8} className="btn-space-area">
 								<Button>수주 종합정보</Button>
 

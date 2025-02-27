@@ -1,7 +1,20 @@
 @charset "UTF-8";
 
+* {
+	&::-webkit-scrollbar {
+		width: 7px;
+		height: 7px;
+	}
+	&::-webkit-scrollbar-thumb {
+		background-color: #eaeaea;
+	}
+	&::-webkit-scrollbar-track {
+		background-color: transparent;
+	}
+}
+
 .ant-layout {
-	min-width: 972px;
+	min-width: 730px;
 	min-height: 100%;
 	background-color: #fff;
 }
@@ -121,6 +134,7 @@
 	position: fixed;
 	left: 0;
 	top: 0;
+	z-index: 10;
 
 	.user-info {
 		height: toRem(32);
@@ -278,16 +292,6 @@
 	.lnb-scroll {
 		height: calc(100vh - 165px);
 		overflow-y: auto;
-
-		&::-webkit-scrollbar {
-			width: 7px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background-color: #eaeaea;
-		}
-		&::-webkit-scrollbar-track {
-			background-color: transparent;
-		}
 	}
 }
 
@@ -687,16 +691,6 @@ h3.title-bullet {
 	margin-top: toRem(26);
 	overflow-y: auto;
 
-	&::-webkit-scrollbar {
-		width: 7px;
-	}
-	&::-webkit-scrollbar-thumb {
-		background-color: #eaeaea;
-	}
-	&::-webkit-scrollbar-track {
-		background-color: transparent;
-	}
-
 	.ant-select-single {
 		height: toRem(32);
 	}
@@ -859,16 +853,6 @@ h3.title-bullet {
 		padding: toRem(56);
 		padding-right: toRem(400);
 		overflow: auto;
-
-		&::-webkit-scrollbar {
-			width: 7px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background-color: #eaeaea;
-		}
-		&::-webkit-scrollbar-track {
-			background-color: transparent;
-		}
 	}
 
 	.preview {
@@ -908,16 +892,6 @@ h3.title-bullet {
 		.ant-select-single {
 			height: toRem(32);
 		}
-
-		&::-webkit-scrollbar {
-			width: 7px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background-color: #eaeaea;
-		}
-		&::-webkit-scrollbar-track {
-			background-color: transparent;
-		}
 	}
 }
 
@@ -945,9 +919,18 @@ h3.title-bullet {
 }
 
 /* Anchor */
-.anchor-contents {
-	padding-right: toRem(160);
-	flex: 1;
+.contents {
+	.anchor-contents {
+		margin-right: toRem(160);
+		margin-left: toRem(40);
+		flex: 1;
+		overflow: auto;
+
+		.contents-scroll {
+			min-width: toRem(912);
+			margin-left: 0;
+		}
+	}
 }
 
 .anchor-area {
@@ -966,5 +949,26 @@ h3.title-bullet {
 .ant-empty-normal {
 	.ant-empty-image {
 		height: toRem(29);
+	}
+}
+
+/* ~ 912px ----------- */
+@media only screen and (max-width: 1010px) {
+	.contents {
+		.top-btn-area {
+			padding-right: 0;
+		}
+
+		.anchor-contents {
+			overflow-y: auto;
+			margin-right: 0;
+			.contents-scroll {
+				min-width: toRem(912);
+			}
+		}
+	}
+
+	.anchor-area {
+		display: none;
 	}
 }
