@@ -133,7 +133,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 				<div className="top-btn-area">
 					{/* 신규 수주 등록시 */}
 					<Flex align="center" justify="space-between">
-						<Tag>발주기입</Tag>
+						<Tag className="CurrentStatus001">발주기입</Tag>
 
 						<Flex align="center" gap={8}>
 							<Flex className="btn-space-area">

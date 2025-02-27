@@ -17,13 +17,13 @@ import Link from "next/link";
 import Draggable from "react-draggable";
 
 const onChange = (e) => {
-	console.log(`checked = ${e.target.checked}`);
+	// console.log(`checked = ${e.target.checked}`);
 };
 
 const ModalComponent = ({}) => {
 	const handleChange = (pagination, filters, sorter = {}) => {
 		console.log("Various parameters", pagination, filters, sorter);
-		setSortedInfo(sorter.columnKey ? sorter : {});
+		// setSortedInfo(sorter.columnKey ? sorter : {});
 	};
 
 	// --------- 모달 관련
