@@ -17,7 +17,7 @@ import { DownOutlined } from "@ant-design/icons";
 
 import DrawerComponent from "../components/drawer";
 
-const customeDrawerComponent = () => {
+const CustomeDrawerComponent = () => {
 	const handleChange = (pagination, filters, sorter = {}) => {
 		console.log("Various parameters", pagination, filters, sorter);
 		setSortedInfo(sorter.columnKey ? sorter : {});
@@ -213,4 +213,4 @@ const customeDrawerComponent = () => {
 	);
 };
 
-export default customeDrawerComponent;
+export default CustomeDrawerComponent;
