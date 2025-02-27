@@ -948,6 +948,7 @@ const OrderComponent = ({ contentHeight }) => {
 	const columns = [
 		{
 			title: "No",
+			showSorterTooltip: { title: "No", },
 			dataIndex: "no",
 			key: "no",
 			sorter: (a, b) => a.no - b.no,
@@ -958,6 +959,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "시리얼번호",
+			showSorterTooltip: { title: "시리얼번호", },
 			dataIndex: "serialnum",
 			key: "serialnum",
 			sorter: (a, b) => stringSorter(a, b, "serialnum"),
@@ -968,6 +970,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "출고종류",
+			showSorterTooltip: { title: "출고종류", },
 			dataIndex: "release",
 			key: "release",
 			sorter: (a, b) => stringSorter(a, b, "release"),
@@ -978,6 +981,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "납품처",
+			showSorterTooltip: { title: "납품처", },
 			dataIndex: "vendor",
 			key: "vendor",
 			sorter: (a, b) => stringSorter(a, b, "vendor"),
@@ -988,6 +992,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "제품군",
+			showSorterTooltip: { title: "제품군", },
 			dataIndex: "product",
 			key: "product",
 			sorter: (a, b) => stringSorter(a, b, "product"),
@@ -998,6 +1003,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "모델",
+			showSorterTooltip: { title: "모델", },
 			dataIndex: "model",
 			key: "model",
 			sorter: (a, b) => stringSorter(a, b, "model"),
@@ -1008,6 +1014,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "세부모델",
+			showSorterTooltip: { title: "세부모델", },
 			dataIndex: "detailmodel",
 			key: "detailmodel",
 			sorter: (a, b) => stringSorter(a, b, "detailmodel"),
@@ -1019,6 +1026,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "제조번호",
+			showSorterTooltip: { title: "제조번호", },
 			dataIndex: "productNum",
 			key: "productNum",
 			sorter: (a, b) => stringSorter(a, b, "productNum"),
@@ -1029,6 +1037,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "제조버전",
+			showSorterTooltip: { title: "제조버전", },
 			dataIndex: "productVersion",
 			key: "productVersion",
 			sorter: (a, b) => stringSorter(a, b, "productVersion"),
@@ -1039,6 +1048,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "P/O번호",
+			showSorterTooltip: { title: "P/O번호", },
 			dataIndex: "poNum",
 			key: "poNum",
 			sorter: (a, b) => stringSorter(a, b, "poNum"),
@@ -1048,6 +1058,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "특주번호",
+			showSorterTooltip: { title: "특주번호", },
 			dataIndex: "specialNum",
 			key: "specialNum",
 			align: "center",
@@ -1059,6 +1070,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "MGMR",
+			showSorterTooltip: { title: "MGMR", },
 			dataIndex: "mgmr",
 			key: "mgmr",
 			align: "center",
@@ -1069,6 +1081,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "현재상태",
+			showSorterTooltip: { title: "현재상태", },
 			dataIndex: "nowState",
 			key: "nowState",
 			align: "center",
@@ -1094,6 +1107,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "납품계획일",
+			showSorterTooltip: { title: "납품계획일", },
 			dataIndex: "deliPlanDate",
 			key: "deliPlanDate",
 			align: "center",
@@ -1104,6 +1118,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "납품일",
+			showSorterTooltip: { title: "납품일", },
 			dataIndex: "deliDate",
 			key: "deliDate",
 			align: "center",
@@ -1113,6 +1128,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "통신방식",
+			showSorterTooltip: { title: "통신방식", },
 			dataIndex: "commuWay",
 			key: "commuWay",
 			sorter: (a, b) => stringSorter(a, b, "commuWay"),
@@ -1121,6 +1137,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "통신코드",
+			showSorterTooltip: { title: "통신코드", },
 			dataIndex: "commuCode",
 			key: "commuCode",
 			sorter: (a, b) => stringSorter(a, b, "commuCode"),
@@ -1129,6 +1146,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "피팅종류",
+			showSorterTooltip: { title: "피팅종류", },
 			dataIndex: "fitting",
 			key: "fitting",
 			sorter: (a, b) => stringSorter(a, b, "fitting"),
@@ -1137,6 +1155,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "사이즈/씰",
+			showSorterTooltip: { title: "사이즈/씰", },
 			dataIndex: "size",
 			key: "size",
 			sorter: (a, b) => stringSorter(a, b, "size"),
@@ -1145,6 +1164,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "사용가스",
+			showSorterTooltip: { title: "사용가스", },
 			dataIndex: "useGas",
 			key: "useGas",
 			sorter: (a, b) => stringSorter(a, b, "useGas"),
@@ -1153,6 +1173,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "유량",
+			showSorterTooltip: { title: "유량", },
 			dataIndex: "flow",
 			key: "flow",
 			sorter: (a, b) => stringSorter(a, b, "flow"),
@@ -1161,6 +1182,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "C.F",
+			showSorterTooltip: { title: "C.F", },
 			dataIndex: "cf",
 			key: "cf",
 			sorter: (a, b) => stringSorter(a, b, "cf"),
@@ -1169,6 +1191,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "환산유량",
+			showSorterTooltip: { title: "환산유량", },
 			dataIndex: "converseFlow",
 			key: "converseFlow",
 			sorter: (a, b) => stringSorter(a, b, "converseFlow"),
@@ -1178,6 +1201,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "입력단위",
+			showSorterTooltip: { title: "입력단위", },
 			dataIndex: "unit",
 			key: "unit",
 			sorter: (a, b) => stringSorter(a, b, "unit"),
@@ -1186,6 +1210,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "사용압력",
+			showSorterTooltip: { title: "사용압력", },
 			dataIndex: "press",
 			key: "press",
 			sorter: (a, b) => stringSorter(a, b, "press"),
@@ -1194,6 +1219,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "노즐경",
+			showSorterTooltip: { title: "노즐경", },
 			dataIndex: "nozzle",
 			key: "nozzle",
 			sorter: (a, b) => stringSorter(a, b, "nozzle"),
@@ -1202,6 +1228,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "바이패스 튜브",
+			showSorterTooltip: { title: "바이패스 튜브", },
 			dataIndex: "tube",
 			key: "tube",
 			sorter: (a, b) => stringSorter(a, b, "tube"),
@@ -1210,6 +1237,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "비고",
+			showSorterTooltip: { title: "비고", },
 			dataIndex: "etc",
 			key: "etc",
 			sorter: (a, b) => stringSorter(a, b, "etc"),
@@ -1218,6 +1246,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "영업팀 메모",
+			showSorterTooltip: { title: "영업팀 메모", },
 			dataIndex: "businessMemo",
 			key: "businessMemo",
 			sorter: (a, b) => stringSorter(a, b, "businessMemo"),
@@ -1227,6 +1256,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "제조팀 메모",
+			showSorterTooltip: { title: "제조팀 메모", },
 			dataIndex: "makeMemo",
 			key: "makeMemo",
 			sorter: (a, b) => stringSorter(a, b, "makeMemo"),
@@ -1235,6 +1265,7 @@ const OrderComponent = ({ contentHeight }) => {
 		},
 		{
 			title: "제조팀 메모",
+			showSorterTooltip: { title: "제조팀 메모", },
 			dataIndex: "qualityMemo",
 			key: "qualityMemo",
 			sorter: (a, b) => stringSorter(a, b, "qualityMemo"),
