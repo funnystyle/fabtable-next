@@ -11,7 +11,7 @@ const OrderInfoCreateNew = () => {
   const [form] = Form.useForm();
 
   const [columnList, setColumnList] = useState([]);
-  const [queryKey, setQueryKey] = useState(["standardInfoResponse", Math.random()]);
+  const [queryKey, setQueryKey] = useState(["recordColumn", Math.random()]);
   const { data:columnResponse, isLoading, isSuccess, isError } = useQuery({
     queryKey,
     queryFn: () => getAxios("/user/record-column", {}),

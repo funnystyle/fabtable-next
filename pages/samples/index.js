@@ -100,6 +100,9 @@ const SampleIndex = () => {
         <Link href="/samples/orderInfo/OrderInfoCreateNew" color='blue.400' _hover={{ color: 'blue.500' }}>OrderInfoCreateNew</Link>
       </p>
       <p>
+        <Link href="/samples/orderInfo/OrderInfoCreateNewFinal" color='blue.400' _hover={{ color: 'blue.500' }}>OrderInfoCreateNewFinal</Link>
+      </p>
+      <p>
         <Link href="/samples/orderInfo/OrderInfoListAntd" color='blue.400' _hover={{ color: 'blue.500' }}>OrderInfoListAntd</Link>
       </p>
       <p>
