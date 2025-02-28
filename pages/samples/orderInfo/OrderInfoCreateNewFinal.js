@@ -1,11 +1,12 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
 import React, { useEffect, useState } from "react";
-import { Anchor, Flex, Form, Layout, message, Tabs, Typography, } from "antd";
+import { Anchor, Button, Flex, Form, Layout, message, Tabs, Tag, Typography, } from "antd";
 import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
+import { CloseOutlined, EditFilled } from "@ant-design/icons";
 
 const { Title } = Typography;
 
@@ -126,6 +127,32 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
 
 				<div className="top-btn-area">
+					{/* 신규 수주 등록시 */}
+					<Flex align="center" justify="space-between">
+						<Tag className="CurrentStatus001">발주기입</Tag>
+
+						<Flex align="center" gap={8}>
+							<Flex className="btn-space-area">
+								<Button type="text" className="btn-all-reset">
+									전체 초기화
+								</Button>
+							</Flex>
+
+							<Flex gap={8}>
+								<Button icon={<CloseOutlined />} iconPosition={position}>
+									취소
+								</Button>
+								<Button
+									type="primary"
+									icon={<EditFilled />}
+									iconPosition={position}
+								>
+									등록
+								</Button>
+							</Flex>
+						</Flex>
+					</Flex>
+					{/* //신규 수주 등록시 */}
 				</div>
 			</div>
 
