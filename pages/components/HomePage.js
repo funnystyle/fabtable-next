@@ -1,6 +1,7 @@
 // pages/index.js
 import React, { useState, useEffect } from "react";
 import { Layout, Menu, Button, Tag } from "antd";
+import { useRouter } from "next/router";
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
@@ -210,6 +211,9 @@ const topItems = [
 const HomePage = ({ children }) => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
+	const [contentHeight, setContentHeight] = useState("100vh");
+
+	const router = useRouter();
 
 	useEffect(() => {
 		if (typeof window !== "undefined") {
@@ -217,11 +221,31 @@ const HomePage = ({ children }) => {
 				setIsMobile(window.innerWidth <= 768);
 			};
 
-			handleResize(); // Initialize state on mount
+			const updateHeight = () => {
+				const header = document.querySelector(".header")?.offsetHeight || 0;
+				const contentsTop =
+					document.querySelector(".contents-top")?.offsetHeight || 0;
+
+				setContentHeight(`calc(${header}px + ${contentsTop}px - 40px)`);
+			};
+
+			// 페이지 이동 시 높이 업데이트
+			const handleRouteChange = () => {
+				setTimeout(updateHeight, 50); // 약간의 딜레이를 줘서 정확한 값 적용
+			};
+
+			updateHeight(); // 초기 높이 설정
+			handleResize(); // 초기 화면 크기 설정
+
 			window.addEventListener("resize", handleResize);
-			return () => window.removeEventListener("resize", handleResize);
+			router.events.on("routeChangeComplete", handleRouteChange); // 페이지 변경 감지
+
+			return () => {
+				window.removeEventListener("resize", handleResize);
+				router.events.off("routeChangeComplete", handleRouteChange); // 이벤트 해제
+			};
 		}
-	}, []);
+	}, [router.events]);
 
 	return (
 		<Layout>
@@ -273,12 +297,12 @@ const HomePage = ({ children }) => {
 						<Tag className="blue">품질팀</Tag>
 
 						{/*
-						<Tag className="pink">영업팀</Tag>
-						<Tag className="orange">생산팀</Tag>
-						<Tag className="purple">부서4</Tag>
-						<Tag className="red">부서5</Tag>
-						<Tag className="green">부서6</Tag>
-						*/}
+							<Tag className="pink">영업팀</Tag>
+							<Tag className="orange">생산팀</Tag>
+							<Tag className="purple">부서4</Tag>
+							<Tag className="red">부서5</Tag>
+							<Tag className="green">부서6</Tag>
+							*/}
 
 						<span className="name">
 							<Link href={"/"}>홍길동 님</Link>
@@ -340,6 +364,7 @@ const HomePage = ({ children }) => {
 					style={{
 						transition: "margin-left 0.2s ease-in-out",
 					}}
+					className={`${collapsed ? "collapsed-mode" : "expanded-mode"}`}
 				>
 					<Header className="header">
 						<div
@@ -362,7 +387,9 @@ const HomePage = ({ children }) => {
 							<Menu mode="horizontal" items={topItems} className="top-menu" />
 						</div>
 					</Header>
-					<Content className="contents">{children}</Content>
+					<Content className="contents">
+						{children ? React.cloneElement(children, { contentHeight }) : null}
+					</Content>
 				</Layout>
 			</Layout>
 		</Layout>
