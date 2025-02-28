@@ -786,6 +786,13 @@ const OrderWriteComponent = ({ contentHeight }) => {
 												]}
 											/>
 
+										</Form.Item>
+
+										<Form.Item label="유량">
+											<Input placeholder="-" disabled />
+										</Form.Item>
+
+										<Form.Item label="C.F">
 											<Input placeholder="-" disabled />
 										</Form.Item>
 
