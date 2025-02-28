@@ -10,8 +10,8 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko"; // dayjs 한국어 설정
 import i18next from "../i18n"; // i18next 설정 파일 임포트
 
-import HeadMeta from "./components/HeadMeta";
-import HomePage from "./components/HomePage"; // 레이아웃
+import HeadMeta from "@publish/components/HeadMeta";
+import HomePage from "@publish/components/HomePage"; // 레이아웃
 
 import "@/assets/scss/base.scss";
 

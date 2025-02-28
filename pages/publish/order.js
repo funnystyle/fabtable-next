@@ -43,7 +43,7 @@ import {
 	ExclamationCircleFilled,
 } from "@ant-design/icons";
 
-import DrawerComponent from "./components/drawer";
+import DrawerComponent from "@publish/components/drawer";
 import Draggable from "react-draggable";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -743,9 +743,9 @@ const OrderComponent = ({ contentHeight }) => {
 
 	const onTabChange = (key) => {
 		if (key === "1") {
-			router.push("/order");
+			router.push("/publish/order");
 		} else if (key === "2") {
-			router.push("/orderwrite");
+			router.push("/publish/orderwrite");
 		}
 	};
 

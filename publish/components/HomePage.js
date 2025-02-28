@@ -33,7 +33,7 @@ const { Header, Sider, Content } = Layout;
 const basicItems = [
 	{
 		key: "1",
-		label: <Link href={"/dashboard"}>대시보드</Link>,
+		label: <Link href={"/publish/dashboard"}>대시보드</Link>,
 		icon: <GoldFilled />,
 	},
 	{
@@ -43,32 +43,32 @@ const basicItems = [
 		children: [
 			{
 				key: "sub1-1",
-				label: <Link href={"/year"}>연간 종합 일정</Link>,
+				label: <Link href={"/publish/year"}>연간 종합 일정</Link>,
 			},
 			{
 				key: "sub1-2",
-				label: <Link href={"/month"}>월간 종합 일정</Link>,
+				label: <Link href={"/publish/month"}>월간 종합 일정</Link>,
 			},
 		],
 	},
 	{
 		key: "2",
-		label: <Link href={"/order"}>영업 관리</Link>,
+		label: <Link href={"/publish/order"}>영업 관리</Link>,
 		icon: <EditFilled />,
 	},
 	{
 		key: "3",
-		label: <Link href={"/cs"}>CS 관리</Link>,
+		label: <Link href={"/publish/cs"}>CS 관리</Link>,
 		icon: <AudioFilled />,
 	},
 	{
 		key: "4",
-		label: <Link href={"/produce"}>생산 관리</Link>,
+		label: <Link href={"/publish/produce"}>생산 관리</Link>,
 		icon: <ToolFilled />,
 	},
 	{
 		key: "5",
-		label: <Link href={"/qc"}>품질 관리</Link>,
+		label: <Link href={"/publish/qc"}>품질 관리</Link>,
 		icon: <TrademarkCircleFilled />,
 	},
 	{
@@ -78,15 +78,15 @@ const basicItems = [
 		children: [
 			{
 				key: "sub2-1",
-				label: <Link href={"/noncommerce"}>불량률 현황</Link>,
+				label: <Link href={"/publish/noncommerce"}>불량률 현황</Link>,
 			},
 			{
 				key: "sub2-2",
-				label: <Link href={"/cycletime"}>사이클 타임</Link>,
+				label: <Link href={"/publish/cycletime"}>사이클 타임</Link>,
 			},
 			{
 				key: "sub3",
-				label: <Link href={"/spc"}>SPC 현황</Link>,
+				label: <Link href={"/publish/spc"}>SPC 현황</Link>,
 			},
 		],
 	},
@@ -95,7 +95,7 @@ const basicItems = [
 const adminItems = [
 	{
 		key: "1",
-		label: <Link href={"/admin/code"}>기초 코드 관리</Link>,
+		label: <Link href={"/publish/admin/code"}>기초 코드 관리</Link>,
 		icon: <FontColorsOutlined />,
 	},
 	{
@@ -105,15 +105,15 @@ const adminItems = [
 		children: [
 			{
 				key: "sub1-1",
-				label: <Link href={"/admin/product"}>제품 관리</Link>,
+				label: <Link href={"/publish/admin/product"}>제품 관리</Link>,
 			},
 			{
 				key: "sub1-2",
-				label: <Link href={"/admin/product"}>부서별 현황 관리</Link>,
+				label: <Link href={"/publish/admin/product"}>부서별 현황 관리</Link>,
 			},
 			{
 				key: "sub1-3",
-				label: <Link href={"/admin/detail"}>부서별 상세 화면 관리</Link>,
+				label: <Link href={"/publish/admin/detail"}>부서별 상세 화면 관리</Link>,
 			},
 			{
 				key: "sub1-4",
@@ -122,13 +122,13 @@ const adminItems = [
 					{
 						key: "sub1-4-1",
 						label: (
-							<Link href={"/admin/noncommerce/type"}>부적합 종류 관리</Link>
+							<Link href={"/publish/admin/noncommerce/type"}>부적합 종류 관리</Link>
 						),
 					},
 					{
 						key: "sub1-4-3",
 						label: (
-							<Link href={"/admin/noncommerce/config"}>
+							<Link href={"/publish/admin/noncommerce/config"}>
 								등록 및 조치사항 설정
 							</Link>
 						),
@@ -139,22 +139,22 @@ const adminItems = [
 	},
 	{
 		key: "2",
-		label: <Link href={"/admin/file"}>양식 및 파일 관리</Link>,
+		label: <Link href={"/publish/admin/file"}>양식 및 파일 관리</Link>,
 		icon: <FolderOpenFilled />,
 	},
 	{
 		key: "3",
-		label: <Link href={"/admin/depart"}>부서 및 직급 관리</Link>,
+		label: <Link href={"/publish/admin/depart"}>부서 및 직급 관리</Link>,
 		icon: <IdcardFilled />,
 	},
 	{
 		key: "4",
-		label: <Link href={"/admin/user"}>사용자 등록 관리</Link>,
+		label: <Link href={"/publish/admin/user"}>사용자 등록 관리</Link>,
 		icon: <UserAddOutlined />,
 	},
 	{
 		key: "5",
-		label: <Link href={"/admin/worker"}>공정 작업자 관리</Link>,
+		label: <Link href={"/publish/admin/worker"}>공정 작업자 관리</Link>,
 		icon: <TeamOutlined />,
 	},
 ];
@@ -305,7 +305,7 @@ const HomePage = ({ children }) => {
 							*/}
 
 						<span className="name">
-							<Link href={"/"}>홍길동 님</Link>
+							<Link href={"/publish/"}>홍길동 님</Link>
 						</span>
 					</div>
 
