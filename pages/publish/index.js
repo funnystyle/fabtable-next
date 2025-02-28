@@ -7,9 +7,9 @@ const DashBoard = () => {
 	return (
 		<Layout>
 			<div>대시보드</div>
-			<br/>
-			<Link href="publish">퍼블리싱 페이지</Link> <br />
-			<Link href="samples">샘플 페이지</Link>
+			<Link href="publish/samples/customdrawer">커스텀 드로어</Link> <br />
+			<Link href="publish/samples/message">메세지</Link> <br />
+			<Link href="publish/samples/modal">모달</Link>
 		</Layout>
 	);
 };

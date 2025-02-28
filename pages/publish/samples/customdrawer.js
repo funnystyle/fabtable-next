@@ -15,7 +15,7 @@ import {
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 
-import DrawerComponent from "../components/drawer";
+import DrawerComponent from "@publish/components/drawer";
 
 const CustomeDrawerComponent = () => {
 	const handleChange = (pagination, filters, sorter = {}) => {
