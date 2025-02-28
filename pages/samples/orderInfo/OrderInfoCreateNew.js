@@ -89,42 +89,52 @@ const OrderInfoCreateNew = () => {
     });
   };
 
+  const handleCodeListFilter = (item) => {
+    let codeList = [];
+    for (let i = 0; i < item.codeList.length; i++) {
+      const code = item.codeList[i];
+
+      if (code.parentRelations == null && code.parentRelations.length <= 0) { // 최상위 코드일 경우 바로 입력
+        codeList.push(code);
+      } else { // 자식코드일 경우 선택된 코드에 따라 필터링
+        // selectedCodes에서 현재 코드의 부모 코드의 관계에 속하는 모든 codeGroupId를 필터링
+        const filteredSelectedCodeGroupIds = selectedCodes
+          .map(selectedCode => selectedCode.codeGroupId)
+          .filter(codeGroupId => code.parentRelations.some(relation => relation.id === codeGroupId));
+
+        // 부모 코드들에 대한 선택된 값 리스트
+        const parentSelectedCodes = selectedCodes
+          .filter(selectedCode => filteredSelectedCodeGroupIds.includes(selectedCode.codeGroupId))
+          .map(selectedCode => selectedCode.commonCodeId);
+
+        // 하나라도 부모 코드 관계에 해당하면 추가
+        const isChildRelation = parentSelectedCodes.every(parentSelectedCode =>
+          code.parentRelations.some(relation =>
+            relation.relations.some(rel => rel.parentCodeId === parentSelectedCode)
+          )
+        );
+
+        if (isChildRelation) {
+          codeList.push(code);
+        }
+      }
+    }
+
+    return codeList;
+  }
+
   const renderFormItem = (item) => {
 
     // 'CODE' 타입 처리
     if (item.connectionDiv === 'CODE' && item.formDiv === 'SELECT') {
 
-      let codeList = [];
-      for (let i = 0; i < item.codeList.length; i++) {
-        const code = item.codeList[i];
-
-        if (code.parentRelations && code.parentRelations.length > 0) {
-          // selectedCodes에서 현재 코드의 부모 코드의 관계에 속하는 모든 codeGroupId를 필터링
-          const filteredSelectedCodeGroupIds = selectedCodes
-            .map(selectedCode => selectedCode.codeGroupId)
-            .filter(codeGroupId => code.parentRelations.some(relation => relation.id === codeGroupId));
-
-          // 부모 코드들에 대한 선택된 값 리스트
-          const parentSelectedCodes = selectedCodes
-            .filter(selectedCode => filteredSelectedCodeGroupIds.includes(selectedCode.codeGroupId))
-            .map(selectedCode => selectedCode.commonCodeId);
-
-          // 하나라도 부모 코드 관계에 해당하면 추가
-          const isChildRelation = parentSelectedCodes.some(parentSelectedCode =>
-            code.parentRelations.some(relation =>
-              relation.relations.some(rel => rel.parentCodeId === parentSelectedCode)
-            )
-          );
-
-          if (isChildRelation) {
-            codeList.push(code);
-          }
-        } else {
-          codeList.push(code);
-        }
-      }
+      const codeList = handleCodeListFilter(item);
 
       mySet.add({ codeGroupId: item.codeGroupId, name: item.name });
+
+      if (codeList.length === 0) {
+        form.resetFields([item.name]);
+      }
 
       return (
           <Form.Item
@@ -133,28 +143,61 @@ const OrderInfoCreateNew = () => {
               name={item.name}
               // rules={[{ required: true, message: `${item.displayName}를 선택하세요!` }]}
           >
-            <Select
-              placeholder="선택하세요"
-              onChange={handleSelectChange}
-              data-codegroup-id={item.codeGroupId}
-              initialValues={
-                 undefined
-              }
-              options={
-                codeList
-                  ? codeList.map(option => ({
-                      value: option.codeName,
-                      label: option.codeName,
-                      'data-codegroup-id': item.codeGroupId,
-                      'data-id': option.id,
-                      'data-child-relations' : JSON.stringify(option.childRelations),
-                    }))
-                  : []
-              }
-            />
+            {codeList.length === 0 ? (
+              // ✅ codeList가 비어있을 때: 비활성화된 Select
+              <Select placeholder="선택할 옵션이 없습니다." disabled={true} />
+            ) : (
+              <Select
+                placeholder="선택하세요"
+                onChange={handleSelectChange}
+                data-codegroup-id={item.codeGroupId}
+                defaultValue={
+                codeList.length === 1 ? codeList[0].codeName : undefined
+                }
+
+                options={
+                  codeList
+                    ? codeList.map(option => ({
+                        value: option.codeName,
+                        label: option.codeName,
+                        'data-codegroup-id': item.codeGroupId,
+                        'data-id': option.id,
+                        'data-child-relations' : JSON.stringify(option.childRelations),
+                      }))
+                    : []
+                }
+              />
+            )}
           </Form.Item>
       );
     }
+
+    if (item.connectionDiv === 'NONE' && item.formDiv === 'STRING') {
+      console.log("item", item);
+      return (
+        <Form.Item
+          key={item.id}
+          label={item.displayName}
+          name={item.name}
+          // rules={[{ required: true, message: `${item.displayName}를 입력하세요!` }]}
+        >
+          <Input placeholder={`${item.displayName || '값을 입력하세요'}`} />
+        </Form.Item>
+      );
+    }
+
+    if (item.connectionDiv === 'NONE' && item.formDiv === 'DATE') {
+      return (
+        <Form.Item
+          key={item.id}
+          label={item.displayName}
+          name={item.name}
+        >
+          <DatePicker style={{ width: '100%' }} />
+        </Form.Item>
+      );
+    }
+
 
     // 다른 타입에 대한 처리 추가 가능
     return null;
