@@ -218,7 +218,9 @@ const HomePage = ({ children }) => {
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
+				const isSmallScreen = window.innerWidth <= 1200;
 				setIsMobile(window.innerWidth <= 768);
+				setCollapsed(isSmallScreen);
 			};
 
 			const updateHeight = () => {
