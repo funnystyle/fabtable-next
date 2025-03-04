@@ -9,7 +9,6 @@ const { Title } = Typography;
 export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelectedCodes, item) => {
   const componentsList = item.components;
 
-  console.log("item", item);
   // item.subDisplayName이 있을 경우 타이틀 표시
   return (
     <div className="info-input-box">

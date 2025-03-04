@@ -13,10 +13,6 @@ export const handleCodeListFilter = (selectedCodes, item) => {
         .map(selectedCode => selectedCode.codeGroupId)
         .filter(codeGroupId => code.parentRelations.some(relation => relation.id === codeGroupId));
 
-      if (item.codeGroupId === 30) {
-        console.log("filteredSelectedCodeGroupIds:", filteredSelectedCodeGroupIds);
-        console.log("code.parentRelations:", code.parentRelations);
-      }
       // 부모 코드들에 대한 선택된 값 리스트
       const parentSelectedCodes = selectedCodes
         .filter(selectedCode => filteredSelectedCodeGroupIds.includes(selectedCode.codeGroupId))

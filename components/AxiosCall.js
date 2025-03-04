@@ -4,8 +4,6 @@ import * as qs from "qs";
 
 const API_BASE_URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}`;
 
-console.log("API_BASE_URL", API_BASE_URL);
-
 axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params);
 };

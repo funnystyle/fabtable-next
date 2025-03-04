@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Anchor, Button, Flex, Form, Layout, message, Tabs, Tag, Typography, } from "antd";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {getAxios, postAxios} from "@api/apiClient";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
@@ -105,10 +105,15 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	});
 	useEffect(() => {
 		if (isSuccess) {
-			console.log("input-box-list : ", inputBoxResponse);
 			setInputBoxList(inputBoxResponse.data.list);
 		}
 	}, [isSuccess]);
+
+	const { mutate: orderInfoCreate } = useMutation({
+		mutationKey: "orderInfoCreate",
+		mutationFn: (values) => postAxios("/user/record", values),
+	});
+
 
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
@@ -117,6 +122,14 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	const handleReset = () => {
 		form.resetFields();
 	};
+
+	const handleSubmit = async (event) => {
+		const values = await form.validateFields();
+		console.log("Success:", values);
+
+		await orderInfoCreate(values);
+		message.success('수주 등록이 완료되었습니다!');
+	}
 
 	return (
 		<Layout>
@@ -149,6 +162,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 									type="primary"
 									icon={<EditFilled />}
 									iconPosition={position}
+									onClick={handleSubmit}
 								>
 									등록
 								</Button>
