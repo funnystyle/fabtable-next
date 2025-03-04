@@ -114,6 +114,9 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	const codeRelationSet = new Set();
 	const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
 
+	const handleReset = () => {
+		form.resetFields();
+	};
 
 	return (
 		<Layout>
@@ -133,7 +136,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 
 						<Flex align="center" gap={8}>
 							<Flex className="btn-space-area">
-								<Button type="text" className="btn-all-reset">
+								<Button type="text" onClick={handleReset} className="btn-all-reset">
 									전체 초기화
 								</Button>
 							</Flex>
