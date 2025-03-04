@@ -9,6 +9,15 @@ export const handleInputComponent = (form, codeRelationSet, selectedCodes, setSe
 
   const recordColumn = component.recordColumn;
 
+  if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
+    return (
+      <Form.Item key={recordColumn.id} label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+        <Input placeholder={`${'자동입력됩니다.'}`} disabled />
+      </Form.Item>
+    );
+  }
+
+
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
     return (
       <Form.Item key={recordColumn.id} label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
