@@ -196,52 +196,6 @@ const OrderComponent = ({ contentHeight }) => {
 		boxShadow: "none",
 	};
 
-	const handleAllChange = (e) => {
-		const checked = e.target.checked;
-		setAllChecked(checked);
-		setCheckedItems(Array(17).fill(checked));
-	};
-
-	const handleItemChange = (index) => {
-		const updated = [...checkedItems];
-		updated[index] = !updated[index];
-		setCheckedItems(updated);
-		setAllChecked(updated.every(Boolean));
-	};
-
-	const items = Array.from({ length: 16 }, (_, i) => ({
-		key: `${i + 1}`,
-		label: (
-			<div onClick={(e) => e.stopPropagation()}>
-				<Checkbox
-					checked={checkedItems[i]}
-					onChange={() => handleItemChange(i)}
-				>
-					{
-						[
-							"발주기입",
-							"조립완료",
-							"리크완료",
-							"PID완료",
-							"교정완료",
-							"생산완료",
-							"Rework",
-							"검사진행",
-							"검사완료",
-							"판정대기",
-							"입고완료",
-							"납품완료",
-							"반출대기",
-							"반출완료",
-							"처분대기",
-							"처분완료",
-						][i]
-					}
-				</Checkbox>
-			</div>
-		),
-	}));
-
 	const [searchItems, setSearchItems] = useState([
 		{ title: "검색어1", date: "02.04" },
 		{ title: "검색어2", date: "02.05" },
@@ -382,20 +336,6 @@ const OrderComponent = ({ contentHeight }) => {
 		};
 		return getTime(a[key]) - getTime(b[key]);
 	};
-
-	const columns = [
-		{
-			title: "No",
-			showSorterTooltip: { title: "No" },
-			dataIndex: "id",
-			key: "id",
-			sorter: (a, b) => a["id"] - b["id"],
-			sortOrder: sortedInfo.columnKey === "id" ? sortedInfo.order : null,
-			ellipsis: true,
-			width: 49,
-			fixed: "left",
-		},
-	];
 
 	const [tags, setTags] = useState([
 		"2024-01-01 ~ 2025-02-22",
@@ -1254,17 +1194,75 @@ const OrderComponent = ({ contentHeight }) => {
 		});
 	}
 
+	const [statusList, setStatusList] = useState([]);
+	const [searchStatusList, setSearchStatusList] = useState([]);
+	const items = statusList.map((status, i) => ({
+		key: `${i + 1}`,
+		label: (
+			<div onClick={(e) => e.stopPropagation()}>
+				<Checkbox
+					checked={checkedItems[i]}
+					onChange={() => handleItemChange(i, status)}
+				>
+					{status}
+				</Checkbox>
+			</div>
+		),
+	}));
+
+	const handleAllChange = (e) => {
+		const checked = e.target.checked;
+		setAllChecked(checked);
+		setCheckedItems(Array(17).fill(checked));
+		if (checked) {
+			console.log(statusList);
+			setSearchStatusList([...statusList]);
+		} else {
+			setSearchStatusList([]);
+		}
+	};
+
+	const handleItemChange = (index, status) => {
+		if(searchStatusList.includes(status)) {
+			setSearchStatusList(searchStatusList.filter(item => item !== status));
+		} else {
+			setSearchStatusList([...searchStatusList, status]);
+		}
+
+		const updated = [...checkedItems];
+		updated[index] = !updated[index];
+		setCheckedItems(updated);
+
+		setAllChecked(updated.every(Boolean));
+	};
+
+	const [queryKey3, setQueryKey3] = useState(["status-list", Math.random()]);
+	const { data:statusListResponse, isSuccess:isSuccess3 } = useQuery({
+		queryKey: queryKey3,
+		queryFn: () => getAxios("/user/code", {groupName: "현재상태"}),
+	});
+	useEffect(() => {
+		if (isSuccess3) {
+			const stList = statusListResponse.data.list.map((item) => item.codeName);
+			setStatusList(stList);
+			setSearchStatusList(stList);
+		}
+	}, [isSuccess3]);
+
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [recordList, setRecordList] = useState([]);
 	const [size, setSize] = useState(10);
-	const [queryKey, setQueryKey] = useState(["record-list", Math.random()]);
+	const [queryKey, setQueryKey] = useState(["record-list", searchKeyword, size, searchStatusList, Math.random()]);
 	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
 		queryKey,
-		queryFn: () => getAxios("/user/record", {searchKeyword}),
+		queryFn: () => getAxios("/user/record", {searchKeyword,
+			size,
+			statusList: searchStatusList,
+		}),
 	});
 	useEffect(() => {
-		setQueryKey(["record-list", searchKeyword, Math.random()]);
-	}, [searchKeyword, size]);
+		setQueryKey(["record-list", searchKeyword, size, searchStatusList, Math.random()]);
+	}, [searchKeyword, size, searchStatusList]);
 	useEffect(() => {
 		if (isSuccess) {
 			setRecordList(transformTagData(recordResponse.data));
