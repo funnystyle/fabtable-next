@@ -1253,14 +1253,19 @@ const OrderComponent = ({ contentHeight }) => {
 		});
 	}
 
+	const [searchKeyword, setSearchKeyword] = useState("");
 	const [recordList, setRecordList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["record-list", Math.random()]);
 	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
 		queryKey,
-		queryFn: () => getAxios("/user/record", {}),
+		queryFn: () => getAxios("/user/record", {searchKeyword}),
 	});
 	useEffect(() => {
+		setQueryKey(["record-list", searchKeyword, Math.random()]);
+	}, [searchKeyword]);
+	useEffect(() => {
 		if (isSuccess) {
+			console.log("recordResponse", recordResponse);
 			setRecordList(transformTagData(recordResponse.data));
 		}
 	}, [isSuccess]);
@@ -1302,6 +1307,8 @@ const OrderComponent = ({ contentHeight }) => {
 								placeholder="검색어를 입력하세요"
 								allowClear
 								className="input-search"
+								// onChange={(e) => setSearchKeyword(e.target.value)}
+								onSearch={(value) => setSearchKeyword(value)}
 							/>
 						</AutoComplete>
 
