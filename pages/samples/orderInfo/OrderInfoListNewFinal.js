@@ -49,6 +49,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import {useQuery} from "@tanstack/react-query";
 import {getAxios} from "@api/apiClient";
+import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -1255,6 +1256,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	const [searchKeyword, setSearchKeyword] = useState("");
 	const [recordList, setRecordList] = useState([]);
+	const [size, setSize] = useState(10);
 	const [queryKey, setQueryKey] = useState(["record-list", Math.random()]);
 	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
 		queryKey,
@@ -1262,10 +1264,9 @@ const OrderComponent = ({ contentHeight }) => {
 	});
 	useEffect(() => {
 		setQueryKey(["record-list", searchKeyword, Math.random()]);
-	}, [searchKeyword]);
+	}, [searchKeyword, size]);
 	useEffect(() => {
 		if (isSuccess) {
-			console.log("recordResponse", recordResponse);
 			setRecordList(transformTagData(recordResponse.data));
 		}
 	}, [isSuccess]);
@@ -1282,8 +1283,6 @@ const OrderComponent = ({ contentHeight }) => {
 
 		}
 	}, [isSuccess2]);
-
-
 
 	return (
 		<Layout>
@@ -1464,62 +1463,6 @@ const OrderComponent = ({ contentHeight }) => {
 							</Flex>
 						</Flex>
 					</div>
-
-					{/* 갯수, 페이징, 버튼 영역 */}
-					<Flex align="center" justify="space-between">
-						<Flex gap="small" align="center">
-							<Flex gap="small" className="list-num">
-								총 <span>73589</span>
-							</Flex>
-
-							<Flex gap="small" className="list-num">
-								<strong>1</strong> 건 선택
-							</Flex>
-						</Flex>
-
-						<Flex align="center" className="paging-area">
-							<button
-								onClick={() => onChange(1)}
-								disabled={current === 1}
-								className="btn-page"
-							>
-								<VerticalRightOutlined />
-							</button>
-
-							<Pagination
-								simple
-								current={current}
-								total={totalItems}
-								onChange={onChange}
-								itemRender={itemRender}
-							/>
-
-							{/* 맨 뒤로 */}
-							<button
-								onClick={() => onChange(totalPages)}
-								disabled={current === totalPages}
-								className="btn-page"
-							>
-								<VerticalLeftOutlined />
-							</button>
-						</Flex>
-
-						<Flex gap="small" align="center">
-							<Button
-								icon={<RedoOutlined />}
-								target="_blank"
-								className="icon-redo"
-							/>
-
-							<Dropdown menu={{ items: lineItems, onClick: handleMenuClick }}>
-								<Button>
-									<Space>
-										<SettingOutlined />
-									</Space>
-								</Button>
-							</Dropdown>
-						</Flex>
-					</Flex>
 				</Space>
 			</div>
 
@@ -1531,22 +1474,7 @@ const OrderComponent = ({ contentHeight }) => {
 			>
 				<div style={{ marginTop: contentHeight }} className="contents-scroll">
 					{/* 테이블 */}
-					<div className="tb-container">
-						<Table
-							columns={headerList}
-							dataSource={recordList}
-							onChange={handleChange}
-							pagination={false}
-							size="small"
-							className="ellipsis-column basic-tb"
-							bordered
-							scroll={{
-								x: "max-content",
-								y: "calc(60vh - 38px)",
-							}}
-							style={{ tableLayout: "fixed" }}
-						/>
-					</div>
+					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} />
 				</div>
 			</Dropdown>
 
