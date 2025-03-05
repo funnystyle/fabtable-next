@@ -101,7 +101,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	const [queryKey, setQueryKey] = useState(["input-box-list", Math.random()]);
 	const { data:inputBoxResponse, isLoading, isSuccess, isError } = useQuery({
 		queryKey,
-		queryFn: () => getAxios("/user/input-box", {}),
+		queryFn: () => getAxios("/user/input-box", {type:"recordCreate"}),
 	});
 	useEffect(() => {
 		if (isSuccess) {

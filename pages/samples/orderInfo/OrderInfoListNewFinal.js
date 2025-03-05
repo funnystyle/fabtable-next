@@ -47,9 +47,10 @@ import DrawerComponent from "@publish/components/drawer";
 import Draggable from "react-draggable";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAxios, postAxios, putAxios } from "@api/apiClient";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
+import { handleCopyModal } from "@components/list/handleCopyModal";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -88,21 +89,6 @@ const handleMenuClick = (e) => {
 	message.info("Click on menu item.");
 	console.log("click", e);
 };
-
-const stateItems = [
-	{
-		label: "납품완료",
-		key: "1",
-	},
-	{
-		label: "반출대기",
-		key: "2",
-	},
-	{
-		label: "반출완료",
-		key: "3",
-	},
-];
 
 const excelItems = [
 	{
@@ -640,146 +626,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	// 복제 모달 열기
 	const showCopyModal = () => {
-		setModalContent(
-			<>
-				<Flex align="center" justify="space-between">
-					<p className="total-txt">
-						선택 총 <strong>1</strong> 건
-					</p>
-
-					<Button type="link" className="btn-reset-txt">
-						입력 초기화
-					</Button>
-				</Flex>
-
-				<p className="modal-txt">복수의 수주 복제 시 수량을 꼭 확인하세요.</p>
-
-				<Flex align="center" gap={4} className="tit-area">
-					<p className="tit-type">복제 설정</p>
-				</Flex>
-
-				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
-						<Col span={6}>
-							<Form.Item label="복제수량" name="num-input1">
-								<InputNumber
-									min={1}
-									max={10}
-									defaultValue={3}
-									onChange={onChange}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item
-								label="분류코드"
-								tooltip={
-									<>
-										제조2팀 (0) <br />
-										R&D혁신센터 (1) <br />
-										제조2팀 (2)
-									</>
-								}
-							>
-								<Select
-									defaultValue="groupCode1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "groupCode1",
-											label: "0",
-										},
-										{
-											value: "groupCode2",
-											label: "1",
-										},
-										{
-											value: "groupCode3",
-											label: "2",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item
-								label={<Link href={"/"}>납품계획일</Link>}
-								name="input4"
-							>
-								<DatePicker onChange={onChange} placeholder="날짜 선택" />
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label="출고종류">
-								<Select
-									defaultValue="release1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "release1",
-											label: "제품 매출",
-										},
-										{
-											value: "release2",
-											label: "수리 (유상)",
-										},
-										{
-											value: "release3",
-											label: "수리 (무상)",
-										},
-										{
-											value: "release4",
-											label: "DEMO (유상)",
-										},
-										{
-											value: "release5",
-											label: "DEMO (무상)",
-										},
-										{
-											value: "release6",
-											label: "CS 대체품",
-										},
-										{
-											value: "release7",
-											label: "STOCK (CS)",
-										},
-										{
-											value: "release8",
-											label: "STOCK (양산)",
-										},
-										{
-											value: "release9",
-											label: "사내활용",
-										},
-										{
-											value: "release10",
-											label: "ETC",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-					</Row>
-
-					<Row gutter={16}>
-						<Col span={12}>
-							<Form.Item label="P/O 번호" name="po_num">
-								<Input placeholder="미해당 시 비워두세요" />
-							</Form.Item>
-						</Col>
-
-						<Col span={12}>
-							<Form.Item label="프로젝트 번호" name="project_num">
-								<Input placeholder="미해당 시 비워두세요" />
-							</Form.Item>
-						</Col>
-					</Row>
-				</Form>
-			</>
-		);
+		setModalContent(handleCopyModal(selectedRowKeys.length));
 
 		setOpenCopyModal(true);
 	};
@@ -1140,6 +987,8 @@ const OrderComponent = ({ contentHeight }) => {
 	} = theme.useToken();
 	// --------- 우클릭 관련
 
+	const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
+
 	function transformColumns(jsonResult, sortedInfo) {
 		return jsonResult.map(item => {
 			const { recordColumn, displayName, width, fixedDiv, alignDiv } = item;
@@ -1196,6 +1045,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	const [statusList, setStatusList] = useState([]);
 	const [searchStatusList, setSearchStatusList] = useState([]);
+	const [stateStatusList, setStateStatusList] = useState([]);
 	const items = statusList.map((status, i) => ({
 		key: `${i + 1}`,
 		label: (
@@ -1236,6 +1086,21 @@ const OrderComponent = ({ contentHeight }) => {
 		setAllChecked(updated.every(Boolean));
 	};
 
+
+	const { mutate: nowStateChange } = useMutation({
+		mutationKey: "nowStateChange",
+		mutationFn: (values) => putAxios("/user/record", values),
+	});
+
+	const handleStatueChange = async (e) => {
+		if (selectedRowKeys.length > 0) {
+			await nowStateChange({ ids: selectedRowKeys, nowState: statusList[e.key] });
+			setTimeout(() => {
+				handleSearch();
+			}, 100);
+		}
+	}
+
 	const [queryKey3, setQueryKey3] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess3 } = useQuery({
 		queryKey: queryKey3,
@@ -1246,6 +1111,8 @@ const OrderComponent = ({ contentHeight }) => {
 			const stList = statusListResponse.data.list.map((item) => item.codeName);
 			setStatusList(stList);
 			setSearchStatusList(stList);
+
+			setStateStatusList(stList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`})));
 		}
 	}, [isSuccess3]);
 
@@ -1260,8 +1127,11 @@ const OrderComponent = ({ contentHeight }) => {
 			statusList: searchStatusList,
 		}),
 	});
-	useEffect(() => {
+	const handleSearch = () => {
 		setQueryKey(["record-list", searchKeyword, size, searchStatusList, Math.random()]);
+	}
+	useEffect(() => {
+		handleSearch();
 	}, [searchKeyword, size, searchStatusList]);
 	useEffect(() => {
 		if (isSuccess) {
@@ -1391,21 +1261,6 @@ const OrderComponent = ({ contentHeight }) => {
 												style: menuStyle,
 											})}
 
-											<Divider />
-
-											<Space
-												style={{
-													padding: 12,
-												}}
-											>
-												<Checkbox
-													defaultChecked
-													checked={checkedItems[16]}
-													onChange={() => handleItemChange(16)}
-												>
-													ETC
-												</Checkbox>
-											</Space>
 										</div>
 									)}
 								>
@@ -1418,7 +1273,7 @@ const OrderComponent = ({ contentHeight }) => {
 								</Dropdown>
 
 								<Dropdown
-									menu={{ items: stateItems, onClick: handleMenuClick }}
+									menu={{ items: stateStatusList, onClick: handleStatueChange }}
 								>
 									<Button>
 										<Space>
@@ -1472,7 +1327,7 @@ const OrderComponent = ({ contentHeight }) => {
 			>
 				<div style={{ marginTop: contentHeight }} className="contents-scroll">
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} />
+					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys} />
 				</div>
 			</Dropdown>
 

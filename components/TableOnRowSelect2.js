@@ -6,8 +6,7 @@ import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd
 import { RedoOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
-  const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, selectedRowKeys, setSelectedRowKeys }) => {
   const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
   const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치
   const [isDragging, setIsDragging] = useState(false);
