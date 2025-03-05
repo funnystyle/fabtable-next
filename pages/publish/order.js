@@ -952,7 +952,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "no",
 			key: "no",
 			sorter: (a, b) => a.no - b.no,
-			sortOrder: sortedInfo.columnKey === "no" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 49,
 			fixed: "left",
@@ -963,7 +962,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "serialnum",
 			key: "serialnum",
 			sorter: (a, b) => stringSorter(a, b, "serialnum"),
-			sortOrder: sortedInfo.columnKey === "serialnum" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 115,
 			fixed: "left",
@@ -974,7 +972,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "release",
 			key: "release",
 			sorter: (a, b) => stringSorter(a, b, "release"),
-			sortOrder: sortedInfo.columnKey === "release" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 76,
 			fixed: "left",
@@ -985,7 +982,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "vendor",
 			key: "vendor",
 			sorter: (a, b) => stringSorter(a, b, "vendor"),
-			sortOrder: sortedInfo.columnKey === "vendor" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
 			fixed: "left",
@@ -996,7 +992,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "product",
 			key: "product",
 			sorter: (a, b) => stringSorter(a, b, "product"),
-			sortOrder: sortedInfo.columnKey === "product" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
 			fixed: "left",
@@ -1007,7 +1002,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "model",
 			key: "model",
 			sorter: (a, b) => stringSorter(a, b, "model"),
-			sortOrder: sortedInfo.columnKey === "model" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
 			fixed: "left",
@@ -1018,8 +1012,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "detailmodel",
 			key: "detailmodel",
 			sorter: (a, b) => stringSorter(a, b, "detailmodel"),
-			sortOrder:
-				sortedInfo.columnKey === "detailmodel" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
 			fixed: "left",
@@ -1030,8 +1022,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "productNum",
 			key: "productNum",
 			sorter: (a, b) => stringSorter(a, b, "productNum"),
-			sortOrder:
-				sortedInfo.columnKey === "productNum" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 100,
 		},
@@ -1041,8 +1031,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "productVersion",
 			key: "productVersion",
 			sorter: (a, b) => stringSorter(a, b, "productVersion"),
-			sortOrder:
-				sortedInfo.columnKey === "productVersion" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 100,
 		},
@@ -1052,7 +1040,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "poNum",
 			key: "poNum",
 			sorter: (a, b) => stringSorter(a, b, "poNum"),
-			sortOrder: sortedInfo.columnKey === "poNum" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 110,
 		},
@@ -1063,8 +1050,6 @@ const OrderComponent = ({ contentHeight }) => {
 			key: "specialNum",
 			align: "center",
 			sorter: (a, b) => stringSorter(a, b, "specialNum"),
-			sortOrder:
-				sortedInfo.columnKey === "specialNum" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 80,
 		},
@@ -1075,7 +1060,6 @@ const OrderComponent = ({ contentHeight }) => {
 			key: "mgmr",
 			align: "center",
 			sorter: (a, b) => stringSorter(a, b, "mgmr"),
-			sortOrder: sortedInfo.columnKey === "mgmr" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 70,
 		},
@@ -1101,7 +1085,6 @@ const OrderComponent = ({ contentHeight }) => {
 				// 문자 기준 사전순 정렬
 				return nameA.localeCompare(nameB, "ko-KR");
 			},
-			sortOrder: sortedInfo.columnKey === "nowState" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 85,
 		},
@@ -1112,8 +1095,6 @@ const OrderComponent = ({ contentHeight }) => {
 			key: "deliPlanDate",
 			align: "center",
 			sorter: (a, b) => dateSorter(a, b, "deliPlanDate"),
-			sortOrder:
-				sortedInfo.columnKey === "deliPlanDate" ? sortedInfo.order : null,
 			width: 95,
 		},
 		{
@@ -1123,7 +1104,6 @@ const OrderComponent = ({ contentHeight }) => {
 			key: "deliDate",
 			align: "center",
 			sorter: (a, b) => dateSorter(a, b, "deliDate"),
-			sortOrder: sortedInfo.columnKey === "deliDate" ? sortedInfo.order : null,
 			width: 95,
 		},
 		{
@@ -1132,7 +1112,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "commuWay",
 			key: "commuWay",
 			sorter: (a, b) => stringSorter(a, b, "commuWay"),
-			sortOrder: sortedInfo.columnKey === "commuWay" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1141,7 +1120,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "commuCode",
 			key: "commuCode",
 			sorter: (a, b) => stringSorter(a, b, "commuCode"),
-			sortOrder: sortedInfo.columnKey === "commuCode" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1150,7 +1128,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "fitting",
 			key: "fitting",
 			sorter: (a, b) => stringSorter(a, b, "fitting"),
-			sortOrder: sortedInfo.columnKey === "fitting" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1159,7 +1136,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "size",
 			key: "size",
 			sorter: (a, b) => stringSorter(a, b, "size"),
-			sortOrder: sortedInfo.columnKey === "size" ? sortedInfo.order : null,
 			width: 85,
 		},
 		{
@@ -1168,7 +1144,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "useGas",
 			key: "useGas",
 			sorter: (a, b) => stringSorter(a, b, "useGas"),
-			sortOrder: sortedInfo.columnKey === "useGas" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1177,7 +1152,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "flow",
 			key: "flow",
 			sorter: (a, b) => stringSorter(a, b, "flow"),
-			sortOrder: sortedInfo.columnKey === "flow" ? sortedInfo.order : null,
 			width: 72,
 		},
 		{
@@ -1186,7 +1160,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "cf",
 			key: "cf",
 			sorter: (a, b) => stringSorter(a, b, "cf"),
-			sortOrder: sortedInfo.columnKey === "cf" ? sortedInfo.order : null,
 			width: 64,
 		},
 		{
@@ -1195,8 +1168,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "converseFlow",
 			key: "converseFlow",
 			sorter: (a, b) => stringSorter(a, b, "converseFlow"),
-			sortOrder:
-				sortedInfo.columnKey === "converseFlow" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1205,7 +1176,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "unit",
 			key: "unit",
 			sorter: (a, b) => stringSorter(a, b, "unit"),
-			sortOrder: sortedInfo.columnKey === "unit" ? sortedInfo.order : null,
 			width: 80,
 		},
 		{
@@ -1214,7 +1184,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "press",
 			key: "press",
 			sorter: (a, b) => stringSorter(a, b, "press"),
-			sortOrder: sortedInfo.columnKey === "press" ? sortedInfo.order : null,
 			width: 136,
 		},
 		{
@@ -1223,7 +1192,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "nozzle",
 			key: "nozzle",
 			sorter: (a, b) => stringSorter(a, b, "nozzle"),
-			sortOrder: sortedInfo.columnKey === "nozzle" ? sortedInfo.order : null,
 			width: 70,
 		},
 		{
@@ -1232,7 +1200,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "tube",
 			key: "tube",
 			sorter: (a, b) => stringSorter(a, b, "tube"),
-			sortOrder: sortedInfo.columnKey === "tube" ? sortedInfo.order : null,
 			width: 105,
 		},
 		{
@@ -1241,7 +1208,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "etc",
 			key: "etc",
 			sorter: (a, b) => stringSorter(a, b, "etc"),
-			sortOrder: sortedInfo.columnKey === "etc" ? sortedInfo.order : null,
 			width: 160,
 		},
 		{
@@ -1250,8 +1216,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "businessMemo",
 			key: "businessMemo",
 			sorter: (a, b) => stringSorter(a, b, "businessMemo"),
-			sortOrder:
-				sortedInfo.columnKey === "businessMemo" ? sortedInfo.order : null,
 			width: 160,
 		},
 		{
@@ -1260,7 +1224,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "makeMemo",
 			key: "makeMemo",
 			sorter: (a, b) => stringSorter(a, b, "makeMemo"),
-			sortOrder: sortedInfo.columnKey === "makeMemo" ? sortedInfo.order : null,
 			width: 160,
 		},
 		{
@@ -1269,8 +1232,6 @@ const OrderComponent = ({ contentHeight }) => {
 			dataIndex: "qualityMemo",
 			key: "qualityMemo",
 			sorter: (a, b) => stringSorter(a, b, "qualityMemo"),
-			sortOrder:
-				sortedInfo.columnKey === "qualityMemo" ? sortedInfo.order : null,
 			width: 160,
 		},
 	];

@@ -1199,6 +1199,35 @@ const OrderComponent = ({ contentHeight }) => {
 	} = theme.useToken();
 	// --------- 우클릭 관련
 
+	function transformColumns(jsonResult, sortedInfo) {
+		return jsonResult.map(item => {
+			const { recordColumn, displayName, width, fixedDiv, alignDiv } = item;
+			const dataIndex = recordColumn == null ? "id" : recordColumn.name;
+
+			let sorterFunction = null;
+			if (recordColumn == null || recordColumn.dataType === "Integer" || recordColumn.dataType === "Double" || recordColumn.dataType === "Long" || recordColumn.dataType === "Float") {
+				sorterFunction = (a, b) => a[dataIndex] - b[dataIndex];
+			} else if (recordColumn.dataType === "String") {
+				sorterFunction = (a, b) => stringSorter(a, b, dataIndex);
+			} else if (recordColumn.dataType === "Date" || recordColumn.dataType === "Datetime") {
+				sorterFunction = (a, b) => dateSorter(a, b, dataIndex);
+			}
+
+			return {
+				title: displayName,
+				showSorterTooltip: { title: displayName },
+				dataIndex: dataIndex,
+				key: dataIndex,
+				sorter: sorterFunction,
+				sortOrder: sortedInfo.columnKey === dataIndex ? sortedInfo.order : null,
+				ellipsis: true,
+				width: width || 100,
+				align: alignDiv === "LEFT" ? "left" : alignDiv === "RIGHT" ? "right" : "center",
+				fixed: fixedDiv === "LEFT" ? "left" : fixedDiv === "RIGHT" ? "right" : false,
+			};
+		});
+	}
+
 	const [recordList, setRecordList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["record-list", Math.random()]);
 	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
@@ -1212,6 +1241,23 @@ const OrderComponent = ({ contentHeight }) => {
 			console.log("recordResponse.data.list", recordResponse);
 		}
 	}, [isSuccess]);
+
+	const [headerList, setHeaderList] = useState([]);
+	const [queryKey2, setQueryKey2] = useState(["columns", Math.random()]);
+	const { data:headerResponse, isSuccess:isSuccess2 } = useQuery({
+		queryKey: queryKey2,
+		queryFn: () => getAxios("/user/header", {headerDiv: "SALES"}),
+	});
+	useEffect(() => {
+		if (isSuccess) {
+			setHeaderList(transformColumns(headerResponse.data.list, sortedInfo));
+			console.log("transformColumns(headerResponse.data.list, sortedInfo)", transformColumns(headerResponse.data.list, sortedInfo));
+			console.log("columns", columns);
+
+		}
+	}, [isSuccess2]);
+
+
 
 	return (
 		<Layout>
@@ -1459,7 +1505,7 @@ const OrderComponent = ({ contentHeight }) => {
 					{/* 테이블 */}
 					<div className="tb-container">
 						<Table
-							columns={columns}
+							columns={headerList}
 							dataSource={recordList}
 							onChange={handleChange}
 							pagination={false}
