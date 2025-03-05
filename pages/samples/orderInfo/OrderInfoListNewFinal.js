@@ -1228,6 +1228,31 @@ const OrderComponent = ({ contentHeight }) => {
 		});
 	}
 
+	function transformTagData(data) {
+		const tagInfoMap = new Map();
+
+		// tagInfoList에서 모든 태그 코드 매핑 생성
+		data.tagInfoList.forEach(tagInfo => {
+			tagInfo.codeList.forEach(code => {
+				tagInfoMap.set(`${tagInfo.name}_${code.codeName}`, code.className);
+			});
+		});
+
+		// list 데이터를 변환 (기존 데이터 유지하면서 태그 변환)
+		return data.list.map((item) => {
+			const updatedItem = { ...item };
+
+			Object.keys(item).forEach(key => {
+				const tagKey = `${key}_${item[key]}`;
+				if (tagInfoMap.has(tagKey)) {
+					updatedItem[key] = <Tag className={tagInfoMap.get(tagKey)}>{item[key]}</Tag>;
+				}
+			});
+
+			return updatedItem;
+		});
+	}
+
 	const [recordList, setRecordList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["record-list", Math.random()]);
 	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
@@ -1236,9 +1261,7 @@ const OrderComponent = ({ contentHeight }) => {
 	});
 	useEffect(() => {
 		if (isSuccess) {
-			// setRecordList(recordResponse.data.list);
-			setRecordList(recordResponse.data.list);
-			console.log("recordResponse.data.list", recordResponse);
+			setRecordList(transformTagData(recordResponse.data));
 		}
 	}, [isSuccess]);
 
@@ -1251,8 +1274,6 @@ const OrderComponent = ({ contentHeight }) => {
 	useEffect(() => {
 		if (isSuccess) {
 			setHeaderList(transformColumns(headerResponse.data.list, sortedInfo));
-			console.log("transformColumns(headerResponse.data.list, sortedInfo)", transformColumns(headerResponse.data.list, sortedInfo));
-			console.log("columns", columns);
 
 		}
 	}, [isSuccess2]);
