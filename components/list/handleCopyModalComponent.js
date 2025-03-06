@@ -91,9 +91,5 @@ export const handleCopyModalComponent = (form, component, length) => {
   const recordColumn = component.recordColumn;
   console.log(component);
 
-  return (
-    <Col span={24 / length} key={`col-${component.recordColumn.id}`}>
-      {handleComponent(recordColumn)}
-    </Col>
-  )
+  return handleComponent(recordColumn);
 }

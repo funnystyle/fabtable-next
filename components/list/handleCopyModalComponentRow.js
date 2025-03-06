@@ -1,11 +1,11 @@
-import {Row} from "antd";
+import {Flex} from "antd";
 import {handleCopyModalComponent} from "@components/list/handleCopyModalComponent";
 
 export const handleCopyModalComponentRow = (form, components) => {
   console.log("components", components);
   return (
-    <Row gutter={16} key={`row-${components[0].id}`}>
+    <Flex gap={16}>
       {components.map((component) => handleCopyModalComponent(form, component, components.length))}
-    </Row>
+    </Flex>
   );
 }

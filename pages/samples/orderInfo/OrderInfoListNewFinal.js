@@ -51,6 +51,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAxios, postAxios, putAxios } from "@api/apiClient";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { handleCopyModal } from "@components/list/handleCopyModal";
+import {handleEditModal} from "@components/list/handleEditModal";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -624,23 +625,24 @@ const OrderComponent = ({ contentHeight }) => {
 	const [modalContent, setModalContent] = useState(null); // Modal 내용
 	const [modal, contextHolder] = Modal.useModal();
 
-	const [form] = Form.useForm();
+	const [copyForm] = Form.useForm();
+	const [editForm] = Form.useForm();
 
-	const [inputBoxList, setInputBoxList] = useState([]);
+	const [copyModalBoxList, setCopyModalBoxList] = useState([]);
 	const [queryKey4, setQueryKey4] = useState(["input-box-list", "recordListCopyModal", Math.random()]);
-	const { data:inputBoxResponse, isSuccess:isSuccess4 } = useQuery({
+	const { data:copyModalBoxResponse, isSuccess:isSuccess4 } = useQuery({
 		queryKey: queryKey4,
 		queryFn: () => getAxios("/user/input-box", {type:"recordListCopyModal"}),
 	});
 	useEffect(() => {
 		if (isSuccess4) {
-			setInputBoxList(inputBoxResponse.data.list);
+			setCopyModalBoxList(copyModalBoxResponse.data.list);
 		}
 	}, [isSuccess4]);
 
 	// 복제 모달 열기
 	const showCopyModal = () => {
-		setModalContent(handleCopyModal(form, selectedRowKeys.length, inputBoxList));
+		setModalContent(handleCopyModal(copyForm, selectedRowKeys.length, copyModalBoxList));
 
 		setOpenCopyModal(true);
 	};
@@ -651,7 +653,7 @@ const OrderComponent = ({ contentHeight }) => {
 	});
 
 	const handleSubmit = async (event) => {
-		const values = await form.validateFields();
+		const values = await copyForm.validateFields();
 		values["ids"] = selectedRowKeys;
 
 		await orderInfoCopy(values);
@@ -663,225 +665,21 @@ const OrderComponent = ({ contentHeight }) => {
 		message.success('복제가 완료되었습니다!');
 	}
 
+	const [editModalBoxList, setEditModalBoxList] = useState([]);
+	const [queryKey5, setQueryKey5] = useState(["input-box-list", "recordListCopyModal", Math.random()]);
+	const { data:editModalBoxResponse, isSuccess:isSuccess5 } = useQuery({
+		queryKey: queryKey5,
+		queryFn: () => getAxios("/user/input-box", {type:"recordListEditModal"}),
+	});
+	useEffect(() => {
+		if (isSuccess5) {
+			setEditModalBoxList(editModalBoxResponse.data.list);
+		}
+	}, [isSuccess5]);
+
 	// 일괄수정 모달 열기
 	const showEditModal = () => {
-		setModalContent(
-			<>
-				<Flex align="center" justify="space-between">
-					<p className="total-txt">
-						총 <strong>50</strong> 건
-					</p>
-
-					<Button type="link" className="btn-reset-txt">
-						입력 초기화
-					</Button>
-				</Flex>
-
-				<Flex align="center" gap={4} className="tit-area">
-					<p className="tit-type">기본 정보</p>
-				</Flex>
-
-				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
-						<Col span={6}>
-							<Form.Item label={<Link href={"/"}>등록자</Link>} name="writer1">
-								<Select
-									defaultValue="writer1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "writer1",
-											label: "홍길동",
-										},
-										{
-											value: "writer2",
-											label: "홍길동",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label={<Link href={"/"}>납품자</Link>} name="writer1">
-								<Select
-									defaultValue="supplier1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "supplier1",
-											label: "이몽룡",
-										},
-										{
-											value: "supplier2",
-											label: "이몽룡",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item
-								label={<Link href={"/"}>납품계획일</Link>}
-								name="delivery1"
-							>
-								<DatePicker onChange={onChange} placeholder="날짜 선택" />
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label="비고" name="po_num">
-								<Input placeholder="-" />
-							</Form.Item>
-						</Col>
-					</Row>
-
-					<Row gutter={16}>
-						<Col span={24}>
-							<Form.Item label="영업팀 메모" name="business-memo">
-								<Input placeholder="-" />
-							</Form.Item>
-						</Col>
-					</Row>
-				</Form>
-
-				<Flex align="center" gap={4} className="tit-area">
-					<p className="tit-type">고객 정보</p>
-				</Flex>
-
-				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
-						<Col span={6}>
-							<Form.Item label="납품처" name="vendor1">
-								<Select
-									defaultValue="vendor1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "vendor1",
-											label: "원익IPS",
-										},
-										{
-											value: "vendor2",
-											label: "원익IPS",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label="납품처" name="client1">
-								<Select
-									defaultValue="client1"
-									onChange={handleChange}
-									options={[
-										{
-											value: "client1",
-											label: "삼성",
-										},
-										{
-											value: "client2",
-											label: "삼성",
-										},
-									]}
-								/>
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label="P/O 번호" name="po_num2">
-								<Input placeholder="-" />
-							</Form.Item>
-						</Col>
-
-						<Col span={6}>
-							<Form.Item label="프로젝트번호" name="project_num2">
-								<Input placeholder="-" />
-							</Form.Item>
-						</Col>
-					</Row>
-
-					<Row gutter={16}>
-						<Col span={24}>
-							<Form.Item label="영업팀 메모" name="business-memo">
-								<Input placeholder="-" />
-							</Form.Item>
-						</Col>
-					</Row>
-				</Form>
-
-				<Flex align="center" gap={4} className="tit-area">
-					<p className="tit-type">제품 정보</p>
-				</Flex>
-
-				<Form layout="vertical" className="modal-input-area">
-					<Flex gap={16}>
-						<Form.Item label="현재상태" name="state1">
-							<Select
-								defaultValue="state1"
-								onChange={handleChange}
-								options={[
-									{
-										value: "state1",
-										label: "납품완료",
-									},
-									{
-										value: "state2",
-										label: "납품대기",
-									},
-								]}
-							/>
-						</Form.Item>
-
-						<Form.Item label="포트위치" name="potposition1">
-							<Select
-								defaultValue="potposition1"
-								onChange={handleChange}
-								options={[
-									{
-										value: "potposition1",
-										label: "Side",
-									},
-									{
-										value: "potposition2",
-										label: "Side",
-									},
-								]}
-							/>
-						</Form.Item>
-
-						<Form.Item label="최소 압력" name="min-press">
-							<InputNumber
-								min={1}
-								max={10}
-								defaultValue={3}
-								onChange={onChange}
-							/>
-						</Form.Item>
-
-						<Form.Item label="중심 압력" name="mid-press">
-							<InputNumber
-								min={1}
-								max={10}
-								defaultValue={3}
-								onChange={onChange}
-							/>
-						</Form.Item>
-
-						<Form.Item label="최대 압력" name="max-press">
-							<InputNumber
-								min={1}
-								max={10}
-								defaultValue={3}
-								onChange={onChange}
-							/>
-						</Form.Item>
-					</Flex>
-				</Form>
-			</>
-		);
+		setModalContent(handleEditModal(editForm, selectedRowKeys.length, editModalBoxList));
 
 		setOpenEditModal(true);
 	};
