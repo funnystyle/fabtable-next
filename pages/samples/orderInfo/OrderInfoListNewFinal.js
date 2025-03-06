@@ -697,6 +697,14 @@ const OrderComponent = ({ contentHeight }) => {
 			}, 100);
 		}
 	}
+	const handleContextMenuClick = (e) => {
+		if (parseInt(e.key) === 1) {
+			showCopyModal();
+		} else if (parseInt(e.key) === 2) {
+			showEditModal();
+		}
+	};
+
 
 	// 모달 닫기
 	const closeModal = () => {
@@ -1165,6 +1173,8 @@ const OrderComponent = ({ contentHeight }) => {
 			<Dropdown
 				menu={{
 					items: rightItem,
+					onClick: handleContextMenuClick,
+
 				}}
 				trigger={["contextMenu"]}
 			>

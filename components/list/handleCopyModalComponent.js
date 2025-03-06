@@ -5,12 +5,12 @@ import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import Link from "next/link";
 import dayjs from "dayjs";
 
-export const handleCopyModalComponent = (form, component, length) => {
+export const handleCopyModalComponent = (form, component, index) => {
 
   const handleComponent = (recordColumn) => {
     if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'NUMBER') {
       return (
-        <Form.Item key={recordColumn.id} label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
           <InputNumber
             min={1}
             max={10}
@@ -22,7 +22,7 @@ export const handleCopyModalComponent = (form, component, length) => {
 
     if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
       return (
-        <Form.Item key={recordColumn.id} label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
           <Input placeholder={`${recordColumn.displayName || '값을 입력하세요'}`}/>
         </Form.Item>
       );
@@ -37,7 +37,6 @@ export const handleCopyModalComponent = (form, component, length) => {
 
       return (
         <Form.Item
-          key={recordColumn.id}
           label={
             <Link href="/" onClick={(e) => handleSetToday(e, recordColumn.name)}>
               {recordColumn.displayName}
@@ -57,7 +56,6 @@ export const handleCopyModalComponent = (form, component, length) => {
 
       return (
         <Form.Item
-          key={component.id}
           label={recordColumn.displayName}
           name={recordColumn.name}
         >
@@ -89,7 +87,10 @@ export const handleCopyModalComponent = (form, component, length) => {
   }
 
   const recordColumn = component.recordColumn;
-  console.log(component);
 
-  return handleComponent(recordColumn);
+  return (
+    <div key={`component-${index}`}>
+      {handleComponent(recordColumn)}
+    </div>
+  )
 }
