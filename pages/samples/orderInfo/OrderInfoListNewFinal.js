@@ -684,6 +684,20 @@ const OrderComponent = ({ contentHeight }) => {
 		setOpenEditModal(true);
 	};
 
+	const handleEditSubmit = async (e) => {
+		const values = await editForm.validateFields();
+		values["ids"] = selectedRowKeys;
+
+		await nowStateChange(values);
+		setOpenEditModal(false);
+
+		if (selectedRowKeys.length > 0) {
+			setTimeout(() => {
+				handleSearch();
+			}, 100);
+		}
+	}
+
 	// 모달 닫기
 	const closeModal = () => {
 		setOpenCopyModal(false);
@@ -699,7 +713,7 @@ const OrderComponent = ({ contentHeight }) => {
 			okText: "확인",
 			cancelText: "취소",
 			onOk() {
-				console.log("수정 완료!");
+				handleEditSubmit();
 				setTimeout(() => {
 					closeModal();
 				}, 100);
@@ -921,7 +935,7 @@ const OrderComponent = ({ contentHeight }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const handleStatueChange = async (e) => {
+	const handleStatusChange = async (e) => {
 		if (selectedRowKeys.length > 0) {
 			await nowStateChange({ ids: selectedRowKeys, nowState: statusList[e.key] });
 			setTimeout(() => {
@@ -1102,7 +1116,7 @@ const OrderComponent = ({ contentHeight }) => {
 								</Dropdown>
 
 								<Dropdown
-									menu={{ items: stateStatusList, onClick: handleStatueChange }}
+									menu={{ items: stateStatusList, onClick: handleStatusChange }}
 								>
 									<Button>
 										<Space>
