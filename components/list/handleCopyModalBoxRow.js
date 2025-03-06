@@ -7,10 +7,10 @@ export const handleCopyModalBoxRow = (form, itemList, index) => {
   return (
     <div key={`box-row-${index}`}>
       <Flex align="center" gap={4} className="tit-area">
-        <p className="tit-type">{itemList[0].displayName}</p>
+        <p className="tit-type">{itemList[0][0].displayName}</p>
       </Flex>
 
-      <Form form={form} layout="vertical" className="modal-input-area info-input-area">
+      <Form form={form} layout="vertical" className="info-input-area modal-input-area">
         {itemList.map((item, i) => handleCopyModalBox(form, item, i))}
       </Form>
     </div>

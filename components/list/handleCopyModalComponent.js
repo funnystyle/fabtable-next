@@ -10,7 +10,7 @@ export const handleCopyModalComponent = (form, component, index) => {
   const handleComponent = (recordColumn) => {
     if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'NUMBER') {
       return (
-        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`} key={`component-${index}`}>
           <InputNumber
             min={1}
             max={10}
@@ -22,7 +22,7 @@ export const handleCopyModalComponent = (form, component, index) => {
 
     if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
       return (
-        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+        <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`} key={`component-${index}`}>
           <Input placeholder={`${recordColumn.displayName || '값을 입력하세요'}`}/>
         </Form.Item>
       );
@@ -43,6 +43,7 @@ export const handleCopyModalComponent = (form, component, index) => {
             </Link>
           }
           name={recordColumn.name}
+          key={`component-${index}`}
         >
           <DatePicker style={{width: '100%'}} placeholder="날짜 선택"/>
         </Form.Item>
@@ -58,6 +59,7 @@ export const handleCopyModalComponent = (form, component, index) => {
         <Form.Item
           label={recordColumn.displayName}
           name={recordColumn.name}
+          key={`component-${index}`}
         >
           {codeList.length === 0 ? (
             // ✅ codeList가 비어있을 때: 비활성화된 Select
@@ -88,9 +90,5 @@ export const handleCopyModalComponent = (form, component, index) => {
 
   const recordColumn = component.recordColumn;
 
-  return (
-    <div key={`component-${index}`}>
-      {handleComponent(recordColumn)}
-    </div>
-  )
+  return handleComponent(recordColumn);
 }
