@@ -624,12 +624,44 @@ const OrderComponent = ({ contentHeight }) => {
 	const [modalContent, setModalContent] = useState(null); // Modal 내용
 	const [modal, contextHolder] = Modal.useModal();
 
+	const [form] = Form.useForm();
+
+	const [inputBoxList, setInputBoxList] = useState([]);
+	const [queryKey4, setQueryKey4] = useState(["input-box-list", "recordListCopyModal", Math.random()]);
+	const { data:inputBoxResponse, isSuccess:isSuccess4 } = useQuery({
+		queryKey: queryKey4,
+		queryFn: () => getAxios("/user/input-box", {type:"recordListCopyModal"}),
+	});
+	useEffect(() => {
+		if (isSuccess4) {
+			setInputBoxList(inputBoxResponse.data.list);
+		}
+	}, [isSuccess4]);
+
 	// 복제 모달 열기
 	const showCopyModal = () => {
-		setModalContent(handleCopyModal(selectedRowKeys.length));
+		setModalContent(handleCopyModal(form, selectedRowKeys.length, inputBoxList));
 
 		setOpenCopyModal(true);
 	};
+
+	const { mutate: orderInfoCopy } = useMutation({
+		mutationKey: "orderInfoCopy",
+		mutationFn: (values) => postAxios("/user/record/copy", values),
+	});
+
+	const handleSubmit = async (event) => {
+		const values = await form.validateFields();
+		values["ids"] = selectedRowKeys;
+
+		await orderInfoCopy(values);
+		setOpenCopyModal(false);
+
+		setTimeout(() => {
+		handleSearch();
+		}, 100);
+		message.success('복제가 완료되었습니다!');
+	}
 
 	// 일괄수정 모달 열기
 	const showEditModal = () => {
@@ -1065,7 +1097,6 @@ const OrderComponent = ({ contentHeight }) => {
 		setAllChecked(checked);
 		setCheckedItems(Array(17).fill(checked));
 		if (checked) {
-			console.log(statusList);
 			setSearchStatusList([...statusList]);
 		} else {
 			setSearchStatusList([]);
@@ -1357,7 +1388,7 @@ const OrderComponent = ({ contentHeight }) => {
 					}
 					open={openCopyModal}
 					onCancel={() => setOpenCopyModal(false)}
-					onOk={() => setOpenCopyModal(false)}
+					onOk={handleSubmit}
 					okText="복제"
 					cancelText="취소"
 					width={640}
