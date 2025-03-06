@@ -652,6 +652,26 @@
 			}
 		}
 	}
+
+	&.product-cs-area{
+		.ant-form-item {
+			width: 10%;
+			flex-shrink: 0;
+
+			.ant-row {
+				display: block;
+
+				.ant-form-item-label {
+					> label {
+						display: block;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+	}
 }
 
 .info-wrap {
@@ -754,6 +774,9 @@
 .info-input-col2 {
 	> div {
 		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	.row-2 {
@@ -845,9 +868,13 @@
 			.ant-upload-list-item {
 				margin-top: toRem(16);
 			}
+		}
 
-			& + .ant-upload-list-item-container {
-				.ant-upload-list-item {
+		&.ant-upload-list-text {
+			margin-top: toRem(8);
+			
+			.ant-upload-list-item-container {
+				.ant-upload-list-item{
 					margin-top: toRem(8);
 				}
 			}

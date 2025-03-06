@@ -240,6 +240,12 @@ const CSComponent = ({ contentHeight }) => {
 			status: "done",
 			url: "http://www.baidu.com/xxx.png",
 		},
+		{
+			uid: "-1",
+			name: "xxx.png",
+			status: "done",
+			url: "http://www.baidu.com/xxx.png",
+		},
 	]);
 
 	const fileInputRef = useRef(null); // 숨겨진 파일 입력 필드 참조
@@ -869,7 +875,7 @@ const CSComponent = ({ contentHeight }) => {
 									</Button>
 								</Flex>
 
-								<Form layout="vertical" className="info-input-area col-5">
+								<Form layout="vertical" className="info-input-area col-5 product-cs-area">
 									<Flex gap={4}>
 										<Form.Item label="(1) 불량제품 S/N" name="poorSN">
 											<Input placeholder="-" />
