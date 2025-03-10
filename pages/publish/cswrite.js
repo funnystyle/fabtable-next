@@ -1,4 +1,4 @@
-// pages/cs.js
+// pages/cswrite.js
 import React, { useState, useRef } from "react";
 import {
 	Anchor,
