@@ -251,7 +251,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 
 								<div className="info-input-box">
 									<Form layout="vertical" className="info-input-area">
-										<Flex gap={16}>
+										<Flex className="gap-size">
 											<Form.Item label="제조번호" name="makeNum">
 												<Input placeholder="-" />
 											</Form.Item>
@@ -299,7 +299,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 											</Form.Item>
 										</Flex>
 
-										<Flex gap={16}>
+										<Flex className="gap-size">
 											<Form.Item label="생산부서">
 												<Select
 													defaultValue="productTeam1"
@@ -360,7 +360,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 											</Form.Item>
 										</Flex>
 
-										<Flex gap={16}>
+										<Flex className="gap-size">
 											<Form.Item label="비고" name="etc">
 												<Input placeholder="-" />
 											</Form.Item>
@@ -388,7 +388,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 
 							<div className="info-input-box">
 								<Form layout="vertical" className="info-input-area">
-									<Flex gap={16}>
+									<Flex className="gap-size">
 										<Form.Item label="납품처">
 											<Select
 												showSearch
@@ -476,7 +476,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 								<Button icon={<SettingOutlined />} size="small" />
 							</Flex>
 
-							<Flex gap={20} className="info-input-wrap">
+							<Flex className="info-input-wrap">
 								<div className="info-input-box">
 									<Title level={5}>제품군 정보</Title>
 

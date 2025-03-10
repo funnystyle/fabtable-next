@@ -619,6 +619,10 @@
 	}
 }
 
+.gap-size {
+	gap: toRem(16);
+}
+
 .info-input-area {
 	.ant-form-item {
 		flex: 1;
@@ -679,6 +683,8 @@
 }
 
 .info-input-wrap {
+	gap: toRem(20);
+
 	.info-input-box {
 		flex: 1;
 
@@ -694,6 +700,10 @@
 			& + .ant-input {
 				margin-top: toRem(6);
 			}
+		}
+
+		& + .info-input-box {
+			margin-top: 0;
 		}
 	}
 }
@@ -968,6 +978,14 @@
 		.ant-input {
 			flex: 1;
 		}
+	}
+
+	.info-input-wrap {
+		gap: toRem(10);
+	}
+
+	.gap-size {
+		gap: toRem(4);
 	}
 }
 
