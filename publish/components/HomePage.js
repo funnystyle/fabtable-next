@@ -113,7 +113,9 @@ const adminItems = [
 			},
 			{
 				key: "sub1-3",
-				label: <Link href={"/publish/admin/detail"}>부서별 상세 화면 관리</Link>,
+				label: (
+					<Link href={"/publish/admin/detail"}>부서별 상세 화면 관리</Link>
+				),
 			},
 			{
 				key: "sub1-4",
@@ -122,7 +124,9 @@ const adminItems = [
 					{
 						key: "sub1-4-1",
 						label: (
-							<Link href={"/publish/admin/noncommerce/type"}>부적합 종류 관리</Link>
+							<Link href={"/publish/admin/noncommerce/type"}>
+								부적합 종류 관리
+							</Link>
 						),
 					},
 					{
@@ -228,7 +232,7 @@ const HomePage = ({ children }) => {
 				const contentsTop =
 					document.querySelector(".contents-top")?.offsetHeight || 0;
 
-				setContentHeight(`calc(${header}px + ${contentsTop}px - 40px)`);
+				setContentHeight(`calc(${header}px + ${contentsTop}px - 30px)`);
 			};
 
 			// 페이지 이동 시 높이 업데이트

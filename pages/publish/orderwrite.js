@@ -25,6 +25,7 @@ import {
 	CheckOutlined,
 	DownOutlined,
 	SettingOutlined,
+	FilterOutlined,
 } from "@ant-design/icons";
 
 import Link from "next/link";
@@ -126,6 +127,16 @@ const OrderWriteComponent = ({ contentHeight }) => {
 					<Title level={2} className="title-page">
 						영업 관리
 					</Title>
+
+					<Button
+						icon={<FilterOutlined />}
+						iconPosition={position}
+						color="primary"
+						variant="outlined"
+						size="large"
+					>
+						수주 불러오기
+					</Button>
 				</Flex>
 
 				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
@@ -785,7 +796,6 @@ const OrderWriteComponent = ({ contentHeight }) => {
 													},
 												]}
 											/>
-
 										</Form.Item>
 
 										<Form.Item label="유량">

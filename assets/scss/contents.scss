@@ -653,7 +653,7 @@
 		}
 	}
 
-	&.product-cs-area{
+	&.product-cs-area {
 		.ant-form-item {
 			width: 10%;
 			flex-shrink: 0;
@@ -725,6 +725,7 @@
 .tag-new {
 	min-width: toRem(48);
 	background-color: $white;
+	font-size: toRem(14);
 	font-weight: 600;
 	text-align: center;
 }
@@ -733,6 +734,7 @@
 	min-width: toRem(48);
 	background-color: #007dc3;
 	border-color: #2f54eb;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -742,6 +744,7 @@
 	min-width: toRem(48);
 	background-color: #444;
 	border-color: #353535;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -751,6 +754,7 @@
 	min-width: toRem(48);
 	background-color: #f68621;
 	border-color: #d46b08;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -760,6 +764,7 @@
 	min-width: toRem(48);
 	background-color: #c0c0c0;
 	border-color: rgba(0, 0, 0, 0.25);
+	font-size: toRem(14);
 	color: rgba(0, 0, 0, 0.7);
 	font-weight: 600;
 	text-align: center;
@@ -872,9 +877,9 @@
 
 		&.ant-upload-list-text {
 			margin-top: toRem(8);
-			
+
 			.ant-upload-list-item-container {
-				.ant-upload-list-item{
+				.ant-upload-list-item {
 					margin-top: toRem(8);
 				}
 			}
