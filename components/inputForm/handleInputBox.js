@@ -11,10 +11,17 @@ export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelected
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {
     const componentsList = item[0].components;
+    console.log(item);
     return (
       <div className="info-input-box">
-        {item.subDisplayName && (
-          <Title level={5}>{item.subDisplayName}</Title>
+        {item[0].subDisplayName && (
+          <Flex justify="space-between">
+            <Title level={5} className="title-bullet">{item[0].subDisplayName}</Title>
+
+            <Button type="text" className="btn-all-reset">
+            초기화
+            </Button>
+          </Flex>
         )}
 
         <Form form={form} layout="vertical" className="info-input-area">
@@ -30,10 +37,18 @@ export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelected
           {index !== 0 && <div className="info-box-row-wrap"/> }
           <div className="info-input-box">
             {box.subDisplayName && (
-              <Title level={5}>{box.subDisplayName}</Title>
+              <Flex justify="space-between">
+                <Title level={5}>{box.subDisplayName}</Title>
+
+                <Button type="text" className="btn-all-reset">
+                  초기화
+                </Button>
+              </Flex>
             )}
 
+            <Form form={form} layout="vertical" className="info-input-area">
             {componentsList.map((components) => handleInputComponentRow(form, codeRelationSet, selectedCodes, setSelectedCodes, components))}
+            </Form>
           </div>
         </>
       );

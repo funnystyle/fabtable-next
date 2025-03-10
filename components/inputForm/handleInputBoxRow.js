@@ -9,7 +9,7 @@ export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelec
 
   return (
     <div>
-      <div id={itemList[0].name}>
+      <div id={itemList[0][0].name}>
         <div className="info-area">
           <Flex
             align="center"
@@ -17,13 +17,13 @@ export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelec
             className="info-title-area"
           >
             <Title level={3} className="title-bullet">
-              {itemList[0].displayName}
+              {itemList[0][0].displayName}
             </Title>
 
             <Button icon={<SettingOutlined />} size="small" />
           </Flex>
 
-          <Flex gap={20} className="info-input-wrap">
+          <Flex gap={20} className="info-input-col2">
             {itemList.map((item) => handleInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item))}
           </Flex>
         </div>
