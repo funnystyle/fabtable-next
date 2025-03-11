@@ -767,7 +767,6 @@ const producePopComponent = () => {
 			title: "값",
 			dataIndex: "value",
 			key: "value",
-			width: "50%",
 		},
 	];
 
@@ -782,7 +781,6 @@ const producePopComponent = () => {
 			title: "값",
 			dataIndex: "value",
 			key: "value",
-			width: "50%",
 		},
 	];
 	/* //제어계수 테이블 */
