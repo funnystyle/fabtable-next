@@ -15,7 +15,7 @@ const DashBoard = () => {
 			<br />
 			<Link href="publish/login/changepw">비밀번호 변경</Link>
 			<br />
-			<Link href="publish/login/changenew pw">새 비밀번호 입력</Link>
+			<Link href="publish/login/changenewpw">새 비밀번호 입력</Link>
 		</Layout>
 	);
 };

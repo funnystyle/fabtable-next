@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - publish
+      - mes
 
 env:
   SERVICE_NAME: fabtable-next
@@ -83,20 +84,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/deploy/${{ github.ref_name }}.sh
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/deploy/${{ github.ref_name }}.sh ${{ env.SERVICE_NAME }} ${{ github.ref_name }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker rmi ${{ env.DOCKER_IMAGE_NAME }}:latest
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker load -i ${{ env.DEPLOY_PATH }}/deploy/${{ env.DOCKER_IMAGE_FILE }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml up -d
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker stop ${{ env.DOCKER_IMAGE_NAME }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker rm ${{ env.DOCKER_IMAGE_NAME }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker run -d --name ${{ env.DOCKER_IMAGE_NAME }} -p ${{ env.DOCKER_IMAGE_PORT }}:8080 ${{ env.DOCKER_IMAGE_NAME }}:latest
-      #          script: |
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker load -i ${{ env.DEPLOY_PATH }}/deploy/${{ env.DOCKER_IMAGE_FILE }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/deploy/common/script.sh
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/deploy/common/script.sh ${{ env.SERVICE_NAME }} ${{ github.ref_name }}
 
       - name: Notify Slack on Success
         if: success() # 이 step은 job이 성공한 경우에만 실행된다.
