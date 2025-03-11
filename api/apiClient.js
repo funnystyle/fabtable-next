@@ -149,6 +149,7 @@ export const postAxios = async (url, data, fileYn) => {
   if (fileYn) {
     config.headers["Content-Type"] = "multipart/form-data";
   }
+
   try {
     const response = await apiClient.post(url, data, config);
     return response.data;
@@ -186,6 +187,7 @@ export const deleteAxios = async (url, data) => {
       return response.data;
   } catch (error) {
       handleApiError(error); // 에러 처리 함수 호출
+    return error;
   }
 };
 
@@ -196,11 +198,7 @@ export const handleApiError = (error) => {
 
   switch (status) {
     case 401:
-      // 사용자 정보 삭제
-      localStorage.removeItem(LOCAL_STORAGE_FABTABLE_USERINFO);
-      
-      // 홈으로 리다이렉트
-      router.push('/');
+      console.log('401 에러 - 인증 실패');
       break;
 
     case 403:
