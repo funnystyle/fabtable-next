@@ -1,30 +1,45 @@
 #!/bin/bash
 
-# 기본 변수 : 프로젝트 생성 시 이 부분만 수정
-SERVER_DOMAIN="fabtable.fnfworks.com"
-SERVICE_NAME="$1-$2"
-BLUE_PORT=8885
-GREEN_PORT=8886
+# 인자 확인
+if [ "$#" -ne 2 ]; then
+    echo "Usage: $0 <service_name> <config_name>"
+    exit 1
+fi
 
-# 아래는 수정하지 않아도 됨
+# 공통 설정 파일 불러오기
+COMMON_CONFIG_FILE="$(dirname $0)/conf/common.conf"
+if [ -f "$COMMON_CONFIG_FILE" ]; then
+    source "$COMMON_CONFIG_FILE"
+else
+    echo "❌ Common config file not found: $COMMON_CONFIG_FILE"
+    exit 1
+fi
+
+# 경로 설정
+DEPLOY_DIR="${HOME_DIR}/docker-app/${SERVICE_IMAGE}/deploy"
+
+CONFIG_FILE="${DEPLOY_DIR}/$2.conf"
+
+# 설정 파일 불러오기
+if [ -f "$CONFIG_FILE" ]; then
+    source "$CONFIG_FILE"
+else
+    echo "❌ Config file not found: $CONFIG_FILE"
+    exit 1
+fi
 
 # 이미지 및 컨테이너 변수
+SERVICE_NAME="$1-$2"
 SERVICE_IMAGE="${SERVICE_NAME}-docker"
 BLUE_CONTAINER="${SERVICE_NAME}-blue"
 GREEN_CONTAINER="${SERVICE_NAME}-green"
 
-# 경로 설정
-DOCKER_BIN="/usr/local/bin/docker"
-DOCKER_COMPOSE_BIN="/usr/local/bin/docker-compose"
-DEPLOY_DIR="/var/services/homes/fnfworks/docker-app/${SERVICE_IMAGE}/deploy"
-NGINX_CONF_DIR="/etc/nginx/conf.d"
-
 # 템플릿 및 출력 파일 경로
-COMPOSE_TEMPLATE="${DEPLOY_DIR}/docker-compose.template.yml"
+COMPOSE_TEMPLATE="${DEPLOY_DIR}/common/template/docker-compose.template.yml"
 COMPOSE_FILE="${DEPLOY_DIR}/docker-compose.yml"
-NGINX_TEMPLATE="${DEPLOY_DIR}/nginx.template.conf"
+NGINX_TEMPLATE="${DEPLOY_DIR}/common/template/nginx.template.conf"
 NGINX_CONF="${DEPLOY_DIR}/nginx.conf"
-SERVICE_URL_TEMPLATE="${DEPLOY_DIR}/service-url.template.inc"
+SERVICE_URL_TEMPLATE="${DEPLOY_DIR}/common/template/service-url.template.inc"
 SERVICE_URL_BLUE="${DEPLOY_DIR}/service-url-blue.inc"
 SERVICE_URL_GREEN="${DEPLOY_DIR}/service-url-green.inc"
 
@@ -43,12 +58,13 @@ create_config_file() {
 
 # 🔹 템플릿을 기반으로 설정 파일 생성
 create_config_file "$COMPOSE_TEMPLATE" "$COMPOSE_FILE" \
-    -e "s/\${SERVICE_NAME}/${SERVICE_NAME}/g" \
-    -e "s/\${SERVICE_IMAGE}/${SERVICE_IMAGE}/g" \
-    -e "s/\${BLUE_CONTAINER}/${BLUE_CONTAINER}/g" \
-    -e "s/\${GREEN_CONTAINER}/${GREEN_CONTAINER}/g" \
-    -e "s/\${BLUE_PORT}/${BLUE_PORT}/g" \
-    -e "s/\${GREEN_PORT}/${GREEN_PORT}/g"
+    -e "s|\${SERVICE_NAME}|${SERVICE_NAME}|g" \
+    -e "s|\${SERVICE_IMAGE}|${SERVICE_IMAGE}|g" \
+    -e "s|\${BLUE_CONTAINER}|${BLUE_CONTAINER}|g" \
+    -e "s|\${GREEN_CONTAINER}|${GREEN_CONTAINER}|g" \
+    -e "s|\${BLUE_PORT}|${BLUE_PORT}|g" \
+    -e "s|\${GREEN_PORT}|${GREEN_PORT}|g" \
+    -e "s|\${API_SERVER_DOMAIN}|${API_SERVER_DOMAIN}|g"
 
 create_config_file "$NGINX_TEMPLATE" "$NGINX_CONF" \
     -e "s|\${SERVER_DOMAIN}|${SERVER_DOMAIN}|g" \
