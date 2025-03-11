@@ -619,6 +619,10 @@
 	}
 }
 
+.gap-size {
+	gap: toRem(16);
+}
+
 .info-input-area {
 	.ant-form-item {
 		flex: 1;
@@ -652,6 +656,26 @@
 			}
 		}
 	}
+
+	&.product-cs-area {
+		.ant-form-item {
+			width: 10%;
+			flex-shrink: 0;
+
+			.ant-row {
+				display: block;
+
+				.ant-form-item-label {
+					> label {
+						display: block;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						overflow: hidden;
+					}
+				}
+			}
+		}
+	}
 }
 
 .info-wrap {
@@ -663,6 +687,8 @@
 }
 
 .info-input-wrap {
+	gap: toRem(20);
+
 	.info-input-box {
 		flex: 1;
 
@@ -678,6 +704,10 @@
 			& + .ant-input {
 				margin-top: toRem(6);
 			}
+		}
+
+		& + .info-input-box {
+			margin-top: 0;
 		}
 	}
 }
@@ -709,6 +739,7 @@
 .tag-new {
 	min-width: toRem(48);
 	background-color: $white;
+	font-size: toRem(14);
 	font-weight: 600;
 	text-align: center;
 }
@@ -717,6 +748,7 @@
 	min-width: toRem(48);
 	background-color: #007dc3;
 	border-color: #2f54eb;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -726,6 +758,7 @@
 	min-width: toRem(48);
 	background-color: #444;
 	border-color: #353535;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -735,6 +768,7 @@
 	min-width: toRem(48);
 	background-color: #f68621;
 	border-color: #d46b08;
+	font-size: toRem(14);
 	color: $white;
 	font-weight: 600;
 	text-align: center;
@@ -744,6 +778,7 @@
 	min-width: toRem(48);
 	background-color: #c0c0c0;
 	border-color: rgba(0, 0, 0, 0.25);
+	font-size: toRem(14);
 	color: rgba(0, 0, 0, 0.7);
 	font-weight: 600;
 	text-align: center;
@@ -758,6 +793,9 @@
 .info-input-col2 {
 	> div {
 		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
 	}
 
 	.row-2 {
@@ -849,8 +887,12 @@
 			.ant-upload-list-item {
 				margin-top: toRem(16);
 			}
+		}
 
-			& + .ant-upload-list-item-container {
+		&.ant-upload-list-text {
+			margin-top: toRem(8);
+
+			.ant-upload-list-item-container {
 				.ant-upload-list-item {
 					margin-top: toRem(8);
 				}
@@ -892,12 +934,118 @@
 	}
 }
 
+/* login */
+.login-wrap {
+	height: 100vh;
+
+	> div {
+		flex: 1;
+
+		&.login-img {
+			background-color: #afbad2;
+			align-items: center;
+			justify-content: center;
+		}
+
+		&.login-box-area {
+			align-items: center;
+			justify-content: center;
+			flex-direction: column;
+			position: relative;
+
+			.login-box {
+				width: toRem(420);
+
+				.ant-form-item {
+					margin-bottom: toRem(12);
+				}
+
+				.btn-login {
+					padding-top: toRem(24);
+					margin-bottom: 0;
+				}
+			}
+
+			.login-logo {
+				font-size: toRem(24);
+				color: #4d4f57;
+				font-weight: 600;
+				text-align: center;
+
+				img {
+					display: block;
+					width: toRem(110);
+					margin: 0 auto toRem(24);
+				}
+			}
+
+			.login-descript {
+				margin-top: toRem(4);
+				margin-bottom: toRem(32);
+				color: rgba(0, 0, 0, 0.45);
+				text-align: center;
+			}
+
+			.txt-or {
+				height: 1px;
+				margin-top: toRem(43);
+				margin-bottom: toRem(32);
+				background-color: rgba(0, 0, 0, 0.06);
+				position: relative;
+
+				span {
+					display: inline-block;
+					padding: 0 toRem(16);
+					background-color: $white;
+					font-size: toRem(14);
+					transform: translate(-50%, -50%);
+					position: absolute;
+					left: 50%;
+					top: 0;
+				}
+			}
+
+			.copyright {
+				font-size: toRem(14);
+				color: rgba(0, 0, 0, 0.45);
+				text-align: center;
+				position: absolute;
+				left: 0;
+				right: 0;
+				bottom: toRem(24);
+			}
+
+			.input-login-area {
+				.ant-input-affix-wrapper-readonly {
+					background-color: rgba(0, 0, 0, 0.04);
+				}
+			}
+		}
+	}
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {
 		.contents-flex {
 			.contents-right {
 				width: toRem(160);
+			}
+		}
+	}
+
+	/* login */
+	.login-wrap {
+		> div {
+			&.login-img {
+				display: none;
+			}
+
+			&.login-box-area {
+				.login-box {
+					width: 100%;
+					padding: 0 toRem(48);
+				}
 			}
 		}
 	}
@@ -940,6 +1088,14 @@
 		.ant-input {
 			flex: 1;
 		}
+	}
+
+	.info-input-wrap {
+		gap: toRem(10);
+	}
+
+	.gap-size {
+		gap: toRem(4);
 	}
 }
 

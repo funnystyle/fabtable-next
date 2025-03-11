@@ -147,6 +147,9 @@ const SampleIndex = () => {
       <p>
         <Link href="/samples/antd/ResizableTable" color='blue.400' _hover={{ color: 'blue.500' }}>Resizable Table</Link>
       </p>
+      <p>
+        <Link href="/samples/antd/WonikData" color='blue.400' _hover={{ color: 'blue.500' }}>원익 데이터 모달 (복사하기)</Link>
+      </p>
     </div>
   );
 };
