@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - publish
+      - mes
 
 env:
   SERVICE_NAME: fabtable-next
