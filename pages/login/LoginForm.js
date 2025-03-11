@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Flex, Button, Checkbox, Form, Input, message } from "antd";
-import Link from "next/link";
-import { LoginLogo } from "@pages/login/LoginLogo";
-import { LoginImage } from "@pages/login/LoginImage";
-import { LoginCopyright } from "@pages/login/LoginCopyright";
+import React, { useEffect } from "react";
+import { Button, Checkbox, Form, Input } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { setAccessToken } from "@lib/UserInfo";
+import { LoginFormUsername } from "@pages/login/LoginFormUsername";
+import { LoginFormPassword } from "@pages/login/LoginFormPassword";
 
 export const LoginForm = () => {
 
@@ -27,7 +25,6 @@ export const LoginForm = () => {
 
 	useEffect(() => {
 		if (loginError) {
-			console.log("loginError : ", loginError);
 			if (loginError.response.data.code === 404) {
 				const message = loginError.response.data.message;
 				form.setFields([
@@ -64,29 +61,9 @@ export const LoginForm = () => {
 			autoComplete="off"
 			size="large"
 		>
-			<Form.Item
-				name="username"
-				rules={[
-					{
-						required: true,
-						message: "아이디를 입력하세요",
-					},
-				]}
-			>
-				<Input placeholder="아이디" />
-			</Form.Item>
+			<LoginFormUsername />
 
-			<Form.Item
-				name="password"
-				rules={[
-					{
-						required: true,
-						message: "비밀번호를 입력하세요",
-					},
-				]}
-			>
-				<Input.Password placeholder="비밀번호" />
-			</Form.Item>
+			<LoginFormPassword placeholder={"비밀번호"} />
 
 			<Form.Item name="remember" valuePropName="checked" label={null}>
 				<Checkbox>로그인 정보 저장</Checkbox>
