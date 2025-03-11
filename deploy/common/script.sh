@@ -6,6 +6,12 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
+# 이미지 및 컨테이너 변수
+SERVICE_NAME="$1-$2"
+SERVICE_IMAGE="${SERVICE_NAME}-docker"
+BLUE_CONTAINER="${SERVICE_NAME}-blue"
+GREEN_CONTAINER="${SERVICE_NAME}-green"
+
 # 공통 설정 파일 불러오기
 COMMON_CONFIG_FILE="$(dirname $0)/conf/common.conf"
 if [ -f "$COMMON_CONFIG_FILE" ]; then
@@ -27,12 +33,6 @@ else
     echo "❌ Config file not found: $CONFIG_FILE"
     exit 1
 fi
-
-# 이미지 및 컨테이너 변수
-SERVICE_NAME="$1-$2"
-SERVICE_IMAGE="${SERVICE_NAME}-docker"
-BLUE_CONTAINER="${SERVICE_NAME}-blue"
-GREEN_CONTAINER="${SERVICE_NAME}-green"
 
 # 템플릿 및 출력 파일 경로
 COMPOSE_TEMPLATE="${DEPLOY_DIR}/common/template/docker-compose.template.yml"
