@@ -573,7 +573,7 @@ const controlData5 = [
 ];
 /* //제어계수 테이블 */
 
-const producePopComponent = () => {
+const ProducePopComponent = () => {
 	useEffect(() => {
 		document.documentElement.classList.add("f-html");
 		document.body.classList.add("f-body");
@@ -1036,6 +1036,6 @@ const producePopComponent = () => {
 	);
 };
 
-producePopComponent.getLayout = (page) => page;
+ProducePopComponent.getLayout = (page) => page;
 
-export default producePopComponent;
+export default ProducePopComponent;
