@@ -1,10 +1,10 @@
 import React from "react";
 import { Flex } from "antd";
-import { LoginLogo } from "@pages/login/LoginLogo";
-import { LoginCopyright } from "@pages/login/LoginCopyright";
-import { LoginPasswordChangeButton } from "@pages/login/LoginPasswordChangeButton";
-import { LoginTextOr } from "@pages/login/LoginTextOr";
-import { PasswordChangeForm } from "@pages/password-change/PasswordChangeForm";
+import { LoginLogo } from "@components/login/LoginLogo";
+import { LoginCopyright } from "@components/login/LoginCopyright";
+import { LoginPasswordChangeButton } from "@components/login/LoginPasswordChangeButton";
+import { LoginTextOr } from "@components/login/LoginTextOr";
+import { PasswordChangeForm } from "@components/password-change/PasswordChangeForm";
 
 export const PasswordChangeBox = () => {
 	return (

@@ -3,13 +3,12 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { setAccessToken } from "@lib/UserInfo";
-import { LoginFormUsername } from "@pages/login/LoginFormUsername";
+import { LoginFormUsername } from "@components/login/LoginFormUsername";
 
-export const LoginFormPassword = ({ placeholder }) => {
-
+export const LoginFormPassword = ({ name = "password", placeholder }) => {
 	return (
 			<Form.Item
-				name="password"
+				name={name}
 				rules={[
 					{
 						required: true,

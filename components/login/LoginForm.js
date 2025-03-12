@@ -3,8 +3,9 @@ import { Button, Checkbox, Form, Input } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { setAccessToken } from "@lib/UserInfo";
-import { LoginFormUsername } from "@pages/login/LoginFormUsername";
-import { LoginFormPassword } from "@pages/login/LoginFormPassword";
+import { LoginFormUsername } from "@components/login/LoginFormUsername";
+import { LoginFormPassword } from "@components/login/LoginFormPassword";
+import { LoginButton } from "@components/login/LoginButton";
 
 export const LoginForm = () => {
 
@@ -45,10 +46,6 @@ export const LoginForm = () => {
 		}
 	}, [loginError]);
 
-	const onFinishFailed = (errorInfo) => {
-		console.log("Failed:", errorInfo);
-	};
-
 	return (
 		<Form
 			form={form}
@@ -57,7 +54,6 @@ export const LoginForm = () => {
 				remember: true,
 			}}
 			onFinish={(values) => login(values)}
-			onFinishFailed={onFinishFailed}
 			autoComplete="off"
 			size="large"
 		>
@@ -69,11 +65,7 @@ export const LoginForm = () => {
 				<Checkbox>로그인 정보 저장</Checkbox>
 			</Form.Item>
 
-			<Form.Item label={null} className="btn-login">
-				<Button type="primary" htmlType="submit" size="large" block>
-					로그인
-				</Button>
-			</Form.Item>
+			<LoginButton buttonText={"로그인"} />
 		</Form>
 	);
 };
