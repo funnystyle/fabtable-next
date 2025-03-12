@@ -1024,6 +1024,157 @@
 	}
 }
 
+/* 제어계수 팝업 */
+.f-body,
+.f-html {
+	font-size: clamp(12px, 1.5vw, 18px);
+
+	.ant-layout {
+		font-size: inherit;
+	}
+}
+
+.system-popup-wrap {
+	width: 100%;
+
+	.system-title-area {
+		height: 52px;
+		padding: 0 20px;
+		border-bottom: 1px solid #d4d4d4;
+
+		.title-page {
+			margin-bottom: 0;
+			font-size: 24px;
+		}
+
+		.control-info-area {
+			p {
+				font-size: 16px;
+				font-weight: 600;
+				position: relative;
+
+				& + p {
+					padding-left: 10px;
+					margin-left: 10px;
+
+					&::before {
+						content: "";
+						width: 1px;
+						height: 12px;
+						background-color: rgba(0, 0, 0, 0.12);
+						transform: translateY(-50%);
+						position: absolute;
+						left: 0;
+						top: 50%;
+					}
+				}
+			}
+		}
+	}
+
+	.popup-contents {
+		height: calc(100vh - 53px);
+		padding: 10px 20px;
+		overflow-y: auto;
+
+		.title-bullet {
+			line-height: 40px;
+		}
+	}
+
+	.box-info-wrap {
+		border-top: 3px solid #d9d9d9;
+		border-bottom: 3px solid #d9d9d9;
+	}
+
+	.box-info-area {
+		flex: 1;
+
+		.title-box-area {
+			height: 34px;
+			padding: 0 16px;
+			background-color: #f1f7ff;
+			border-bottom: 1px solid #d9d9d9;
+
+			.title-box {
+				font-size: 14px;
+				color: #0958d9;
+				font-weight: 700;
+			}
+		}
+
+		& + .box-info-area {
+			border-left: 2px solid #d2d2d2;
+		}
+
+		.ant-table-wrapper {
+			.ant-table.ant-table-small {
+				.ant-table-cell {
+					padding: toRem(6) toRem(8);
+					border-color: #e4e8ed;
+					font-size: toRem(14);
+					letter-spacing: -2%;
+				}
+
+				th {
+					border-right: 1px solid #e4e8ed;
+				}
+
+				td {
+					border-right: 1px solid #e4e8ed;
+
+					&:last-child {
+						border-right: 0 !important;
+					}
+				}
+			}
+		}
+
+		.th-center {
+			table {
+				border-radius: 0 !important;
+			}
+			thead {
+				th {
+					padding-left: 0 !important;
+					padding-right: 0 !important;
+					text-align: center !important;
+
+					&:last-child {
+						border-right: 0 !important;
+						border-radius: 0 !important;
+					}
+				}
+			}
+			tbody {
+				th {
+					font-weight: 500;
+					white-space: nowrap;
+				}
+			}
+		}
+
+		// &.pid {
+		// 	width: 24%;
+		// 	flex: none;
+		// }
+
+		// &.variable {
+		// 	width: 17%;
+		// }
+
+		// &.control {
+		// 	width: 29%;
+		// 	flex: none;
+		// }
+
+		// &.analog {
+		// 	width: 16%;
+		// 	flex: none;
+		// }
+	}
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {

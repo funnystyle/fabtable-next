@@ -5,13 +5,12 @@ on:
     branches:
       - master
       - publish
+      - mes
 
 env:
+  # MUST CHANGE THESE VALUES WITH YOUR OWN
   SERVICE_NAME: fabtable-next
-  DEPLOY_PATH: /var/services/homes/fnfworks/docker-app/fabtable-next-${{ github.ref_name }}-docker
-  DOCKER_IMAGE_NAME: fabtable-next-${{ github.ref_name }}-docker
-  DOCKER_IMAGE_FILE: fabtable-next-${{ github.ref_name }}-docker.tar
-#  DOCKER_IMAGE_PORT: 8888
+  DEPLOY_PATH: /var/services/homes/fnfworks/docker-app
 
 jobs:
   build-and-deploy:
@@ -41,13 +40,13 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build -t ${{ env.DOCKER_IMAGE_NAME }}:latest .
+        run: docker build -t ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker:latest .
 
       - name: Save Docker image to file
-        run: docker save ${{ env.DOCKER_IMAGE_NAME }}:latest -o ${{ env.DOCKER_IMAGE_FILE }}
+        run: docker save ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker:latest -o ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker.tar
 
       - name: Fix permissions for Docker image file
-        run: chmod 777 ${{ env.DOCKER_IMAGE_FILE }}
+        run: chmod 777 ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker.tar
 
       - name: Ensure deployment directory exists on Synology NAS
         uses: appleboy/ssh-action@v0.1.7
@@ -56,7 +55,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            mkdir -p ${{ env.DEPLOY_PATH }}/deploy
+            mkdir -p ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy
 
       - name: Copy Docker image to Synology NAS
         uses: appleboy/scp-action@v0.1.7
@@ -64,8 +63,8 @@ jobs:
           host: ${{ secrets.SYNOLOGY_IP }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
-          source: ${{ env.DOCKER_IMAGE_FILE }}
-          target: ${{ env.DEPLOY_PATH }}/deploy
+          source: ${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker.tar
+          target: ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy
 
       - name: Copy Script Files to Synology NAS
         uses: appleboy/scp-action@v0.1.7
@@ -74,7 +73,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           source: ./deploy/*
-          target: ${{ env.DEPLOY_PATH }}
+          target: ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker
 
       - name: SSH into Synology NAS and run Deploy Script
         uses: appleboy/ssh-action@v1.0.3
@@ -83,24 +82,12 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/deploy/${{ github.ref_name }}.sh
-            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/deploy/${{ github.ref_name }}.sh ${{ env.SERVICE_NAME }} ${{ github.ref_name }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker rmi ${{ env.DOCKER_IMAGE_NAME }}:latest
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker load -i ${{ env.DEPLOY_PATH }}/deploy/${{ env.DOCKER_IMAGE_FILE }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml up -d
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker stop ${{ env.DOCKER_IMAGE_NAME }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker rm ${{ env.DOCKER_IMAGE_NAME }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker run -d --name ${{ env.DOCKER_IMAGE_NAME }} -p ${{ env.DOCKER_IMAGE_PORT }}:8080 ${{ env.DOCKER_IMAGE_NAME }}:latest
-      #          script: |
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker load -i ${{ env.DEPLOY_PATH }}/deploy/${{ env.DOCKER_IMAGE_FILE }}
-      #            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S /usr/local/bin/docker-compose -f ${{ env.DEPLOY_PATH }}/docker-compose.yml down
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy/common/script.sh
+            echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy/common/script.sh ${{ env.SERVICE_NAME }} ${{ github.ref_name }}
 
-      - name: Notify Slack on Success
-        if: success() # 이 step은 job이 성공한 경우에만 실행된다.
-        id: slack-success
+      - name: Notify Slack
+        if: always() # 항상 실행되지만, 실패/성공 상태를 구분하여 메시지 전송
+        id: slack-notify
         uses: slackapi/slack-github-action@v1.26.0
         with:
           channel-id: "C077B4DB7BL"
@@ -109,9 +96,9 @@ jobs:
               "attachments": [
                 {
                   "title": "${{ github.repository }}",
-                  "title_link": "https://github.com/${{github.repository}}",
-                  "text": "Fabtable-next.js ${{ github.ref_name }} 배포 성공",
-                  "color": "#D6ED17",
+                  "title_link": "https://github.com/${{ github.repository }}",
+                  "text": "Fabtable-next.js ${{ github.ref_name }} 배포 ${{ job.status == 'success' && '성공' || '실패' }}",
+                  "color": "${{ job.status == 'success' && '#D6ED17' || '#FF0000' }}",
                   "fields": [
                     {
                       "title": "Repository",
@@ -135,3 +122,4 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+

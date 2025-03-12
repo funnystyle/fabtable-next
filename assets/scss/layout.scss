@@ -363,12 +363,12 @@ h2 {
 	margin-bottom: toRem(12);
 }
 
-h3.title-bullet {
+.title-bullet {
 	display: flex;
 	align-items: center;
 	gap: toRem(8);
 	margin-left: toRem(12);
-	margin-bottom: 0;
+	margin-bottom: 0 !important;
 
 	&::before {
 		content: "";
