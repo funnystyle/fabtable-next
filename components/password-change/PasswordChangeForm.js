@@ -15,6 +15,8 @@ export const PasswordChangeForm = () => {
 
 	const [form] = Form.useForm();
 	const [isAuthorized, setIsAuthorized] = useState(false);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
 
 	const { mutate: passwordChangeCheck, data:passwordChangeCheckResponse, error:passwordChangeCheckError} = useMutation({
 		mutationKey: "password-change",
@@ -59,8 +61,12 @@ export const PasswordChangeForm = () => {
 
 	const onFinish = (values) => {
 		if (!isAuthorized) {
+			setUsername(values.username);
+			setPassword(values.password);
 			passwordChangeCheck(values);
 		} else {
+			values.username = username;
+			values.password = password;
 			passwordChange(values);
 		}
 	}
