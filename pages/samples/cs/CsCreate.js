@@ -1,12 +1,15 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
-import React, { useEffect, useState } from "react";
-import { Anchor, Button, Flex, Form, Layout, message, Tabs, Tag, Typography, } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { Anchor, Button, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, message, Select, Tabs, Tag, Typography, } from "antd";
 import { useRouter } from "next/router";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getAxios, postAxios} from "@api/apiClient";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
-import { CloseOutlined, EditFilled } from "@ant-design/icons";
+import { CloseOutlined, DeleteOutlined, EditFilled, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
+import Link from "next/link";
+import { handleCsRecordInputBoxRow } from "@components/inputForm/cs/handleCsRecordInputBoxRow";
+import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
 
 const { Title } = Typography;
 
@@ -63,7 +66,7 @@ const handleChange = (pagination, filters, sorter = {}) => {
 	setSortedInfo(sorter.columnKey ? sorter : {});
 };
 
-const OrderInfoCreateNewFinal = ({ contentHeight }) => {
+const CsCreate = ({ contentHeight }) => {
 	const [position, setPosition] = useState("end");
 	const router = useRouter();
 
@@ -109,6 +112,18 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 		}
 	}, [isSuccess]);
 
+	const [csRecordInputBoxList, setCsRecordInputBoxList] = useState([]);
+	const [queryKey2, setQueryKey2] = useState(["cs-record-input-box-list", Math.random()]);
+	const { data:csRecordInputBoxResponse, isSuccess:csRecordInputBoxSuccess } = useQuery({
+		queryKey:queryKey2,
+		queryFn: () => getAxios("/user/input-box", {type:"csCreateRecord"}),
+	});
+	useEffect(() => {
+		if (csRecordInputBoxSuccess) {
+			setCsRecordInputBoxList(csRecordInputBoxResponse.data.list);
+		}
+	}, [csRecordInputBoxSuccess]);
+
 	const { mutate: orderInfoCreate } = useMutation({
 		mutationKey: "orderInfoCreate",
 		mutationFn: (values) => postAxios("/user/record", values),
@@ -118,6 +133,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 	const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
+	const copyCountRef = useRef(3);
 
 	const handleReset = () => {
 		form.resetFields();
@@ -130,6 +146,12 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 		await orderInfoCreate(values);
 		message.success('수주 등록이 완료되었습니다!');
 	}
+
+	const [recordKeys, setRecordKeys] = useState([1, 2]);
+	const [checkedKeySet, setCheckedKeySet] = useState(new Set());
+
+	const [asKeys, setAsKeys] = useState([1, 2]);
+	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
 
 	return (
 		<Layout>
@@ -184,7 +206,11 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 						style={{ paddingTop: contentHeight }}
 						className="contents-scroll"
 					>
-						{inputBoxList.map((item) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item))}
+						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
+
+						{csRecordInputBoxList.map((item, index) => handleCsRecordInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, copyCountRef, index))}
+
+						{handleCsAsInputBox(asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>
@@ -215,4 +241,4 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 	);
 };
 
-export default OrderInfoCreateNewFinal;
+export default CsCreate;

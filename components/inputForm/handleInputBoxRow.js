@@ -5,10 +5,10 @@ import { handleInputBox } from "@components/inputForm/handleInputBox";
 
 const { Title } = Typography;
 
-export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelectedCodes, itemList) => {
+export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelectedCodes, itemList, index) => {
 
   return (
-    <div>
+    <div key={`input-box-row-${index}`}>
       <div id={itemList[0][0].name}>
         <div className="info-area">
           <Flex
@@ -24,7 +24,7 @@ export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelec
           </Flex>
 
           <Flex gap={20} className="info-input-col2">
-            {itemList.map((item) => handleInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item))}
+            {itemList.map((item, index) => handleInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
           </Flex>
         </div>
       </div>

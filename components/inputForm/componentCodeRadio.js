@@ -4,9 +4,11 @@ import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
-export const componentCodeRadio = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component) => {
+export const componentCodeRadio = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index = -1) => {
   const codeList = handleCodeListFilter(selectedCodes, recordColumn);
+  const name = handleComponentInputName(recordColumn, index);
 
   codeRelationSet.add({ codeGroupId: recordColumn.codeGroupId, name: recordColumn.name });
 
@@ -16,9 +18,9 @@ export const componentCodeRadio = (form, selectedCodes, setSelectedCodes, codeRe
 
   return (
     <Form.Item
-      key={component.id}
+      key={name}
       label={recordColumn.displayName}
-      name={recordColumn.name}
+      name={name}
     >
       {codeList.length === 0 ? (
         // ✅ codeList가 비어있을 때: 비활성화된 Radio.Group

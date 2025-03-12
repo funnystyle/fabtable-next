@@ -4,16 +4,17 @@ import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
-export const componentCodeCheckbox = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component) => {
+export const componentCodeCheckbox = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index = -1) => {
   const codeList = recordColumn.codeList;
   const hasEtc = codeList.some(option => option.codeName === "기타" || option.codeName === "etc");
-
+  const name = handleComponentInputName(recordColumn, index);
   return (
     <Form.Item
       label={recordColumn.displayName}
-      name={recordColumn.name}
-      key={component.id}
+      name={name}
+      key={name}
     >
       {codeList.length === 0 ? (
         // ✅ codeList가 비어있을 때: 비활성화된 체크박스 그룹

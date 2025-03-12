@@ -4,10 +4,12 @@ import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
-export const componentDisabled = (recordColumn) => {
+export const componentDisabled = (recordColumn, index = -1) => {
+  const name = handleComponentInputName(recordColumn, index);
   return (
-    <Form.Item key={recordColumn.id} label={`${recordColumn.displayName}`} name={`${recordColumn.name}`}>
+    <Form.Item key={name} label={`${recordColumn.displayName}`} name={name}>
       <Input placeholder={`${'자동입력됩니다.'}`} disabled />
     </Form.Item>
   );

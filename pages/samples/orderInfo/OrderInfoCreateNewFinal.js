@@ -179,7 +179,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 						style={{ paddingTop: contentHeight }}
 						className="contents-scroll"
 					>
-						{inputBoxList.map((item) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item))}
+						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>
