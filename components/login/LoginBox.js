@@ -1,10 +1,10 @@
 import React from "react";
 import { Flex } from "antd";
-import { LoginLogo } from "@pages/login/LoginLogo";
-import { LoginCopyright } from "@pages/login/LoginCopyright";
-import { LoginForm } from "@pages/login/LoginForm";
-import { LoginPasswordChangeButton } from "@pages/login/LoginPasswordChangeButton";
-import { LoginTextOr } from "@pages/login/LoginTextOr";
+import { LoginLogo } from "@components/login/LoginLogo";
+import { LoginCopyright } from "@components/login/LoginCopyright";
+import { LoginForm } from "@components/login/LoginForm";
+import { LoginPasswordChangeButton } from "@components/login/LoginPasswordChangeButton";
+import { LoginTextOr } from "@components/login/LoginTextOr";
 
 export const LoginBox = () => {
 	return (
@@ -16,7 +16,7 @@ export const LoginBox = () => {
 
 				<LoginTextOr />
 
-				<LoginPasswordChangeButton url={"/publish/login/changepw"} />
+				<LoginPasswordChangeButton url={"/password-change"} />
 			</div>
 
 			<LoginCopyright />

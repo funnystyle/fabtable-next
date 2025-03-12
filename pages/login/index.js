@@ -2,12 +2,12 @@
 import React from "react";
 import { Flex, Button, Checkbox, Form, Input } from "antd";
 import Link from "next/link";
-import { LoginLogo } from "@pages/login/LoginLogo";
-import { LoginImage } from "@pages/login/LoginImage";
-import { LoginCopyright } from "@pages/login/LoginCopyright";
-import { LoginForm } from "@pages/login/LoginForm";
-import { LoginPasswordChangeButton } from "@pages/login/LoginPasswordChangeButton";
-import { LoginBox } from "@pages/login/LoginBox";
+import { LoginLogo } from "@components/login/LoginLogo";
+import { LoginImage } from "@components/login/LoginImage";
+import { LoginCopyright } from "@components/login/LoginCopyright";
+import { LoginForm } from "@components/login/LoginForm";
+import { LoginPasswordChangeButton } from "@components/login/LoginPasswordChangeButton";
+import { LoginBox } from "@components/login/LoginBox";
 
 const loginComponent = () => {
 	return (

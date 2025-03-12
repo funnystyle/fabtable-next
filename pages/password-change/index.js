@@ -1,8 +1,8 @@
 // pages/login.js
 import React from "react";
 import { Flex } from "antd";
-import { LoginImage } from "@pages/login/LoginImage";
-import { PasswordChangeBox } from "@pages/password-change/PasswordChangeBox";
+import { LoginImage } from "@components/login/LoginImage";
+import { PasswordChangeBox } from "@components/password-change/PasswordChangeBox";
 
 const loginComponent = () => {
 	return (
