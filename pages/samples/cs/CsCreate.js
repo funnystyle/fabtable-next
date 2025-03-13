@@ -10,6 +10,8 @@ import { CloseOutlined, DeleteOutlined, EditFilled, PlusOutlined, RedoOutlined, 
 import Link from "next/link";
 import { handleCsRecordInputBoxRow } from "@components/inputForm/cs/handleCsRecordInputBoxRow";
 import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
+import {handleCsAsDetailInputBox} from "@components/inputForm/cs/handleCsAsDetailInputBox";
+import {handleCsFollowUplInputBox} from "@components/inputForm/cs/handleCsFollowUplInputBox";
 
 const { Title } = Typography;
 
@@ -150,8 +152,11 @@ const CsCreate = ({ contentHeight }) => {
 	const [recordKeys, setRecordKeys] = useState([1, 2]);
 	const [checkedKeySet, setCheckedKeySet] = useState(new Set());
 
-	const [asKeys, setAsKeys] = useState([1, 2]);
+	const [asKeys, setAsKeys] = useState([0]);
 	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
+
+	const [isAsDetailCommon, setIsAsDetailCommon] = useState(true);
+	const [isFollowUpCommon, setIsFollowUpCommon] = useState(true);
 
 	return (
 		<Layout>
@@ -210,7 +215,11 @@ const CsCreate = ({ contentHeight }) => {
 
 						{csRecordInputBoxList.map((item, index) => handleCsRecordInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, copyCountRef, index))}
 
-						{handleCsAsInputBox(asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
+						{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
+
+						{handleCsAsDetailInputBox(form, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, isAsDetailCommon, setIsAsDetailCommon)}
+
+						{handleCsFollowUplInputBox(form, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, isFollowUpCommon, setIsFollowUpCommon)}
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>

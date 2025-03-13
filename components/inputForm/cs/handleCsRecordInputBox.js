@@ -4,12 +4,12 @@ import { DeleteOutlined, SettingOutlined } from "@ant-design/icons";
 import React from "react";
 import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
 import { handleCsRecordInputComponentRow } from "@components/inputForm/cs/handleCsRecordInputComponentRow";
+import {handleComponentInputName} from "@components/inputForm/handleComponentInputName";
 
 const { Title } = Typography;
 
 export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, setSelectedCodes, item, index, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, index2) => {
 
-  // recordKeys에서 index를 빼야해
   const handleDeleteCsRecord = (index) => {
     const newRecordKeys = recordKeys.filter((_, idx) => idx !== index);
     setRecordKeys(newRecordKeys);
@@ -30,6 +30,22 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {
     const componentsList = item[0].components;
+
+    const handleReset = () => {
+      const nameList = [];
+
+      // `componentsList.map()`을 사용하여 name 수집
+      componentsList.forEach((components) => {
+        // name 생성
+        components.forEach((component) => {
+          const name = handleComponentInputName(component.recordColumn, index);
+          nameList.push(name);
+        });
+      });
+
+      form.resetFields(nameList);
+    }
+
     return (
       <div className="info-input-box" key={`cs-record-${index}-${index2}`}>
         {item[0].subDisplayName && (
@@ -53,7 +69,9 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
               </Flex>
             </Flex>
 
-            <Button type="text" className="btn-all-reset">
+            <Button type="text" className="btn-all-reset"
+            onClick={() => handleReset()}
+            >
             초기화
             </Button>
           </Flex>
@@ -67,6 +85,7 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
   } else {
     const handleInputBox = (box, index) => {
       const componentsList = box.components;
+
       return (
         <>
           {index !== 0 && <div className="info-box-row-wrap"/> }
@@ -75,7 +94,7 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
               <Flex justify="space-between">
                 <Title level={5}>{box.subDisplayName}</Title>
 
-                <Button type="text" className="btn-all-reset">
+                <Button type="text" className="btn-all-reset" onClick={() => handleReset()}>
                   초기화
                 </Button>
               </Flex>

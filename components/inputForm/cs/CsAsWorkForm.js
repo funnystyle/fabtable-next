@@ -11,12 +11,12 @@ import { CsAsWorkFileInputBox } from "@components/inputForm/cs/CsAsWorkFileInput
 
 const { Title } = Typography;
 
-export const CsAsWorkForm = () => {
+export const CsAsWorkForm = ({form, index}) => {
 
   return (
-      <Form layout="vertical" className="info-input-area">
+      <Form form={form} layout="vertical" className="info-input-area">
         <Flex gap={4}>
-          <Form.Item label="조치내용 (상세)" name="actionText1">
+          <Form.Item label="조치내용 (상세)" name={`actionText1-${index+1}`}>
             <Input.TextArea
               style={{
                 height: "90px",
@@ -24,7 +24,7 @@ export const CsAsWorkForm = () => {
             />
           </Form.Item>
 
-          <Form.Item label="조치결과" name="actionText2">
+          <Form.Item label="조치결과" name={`actionText2-${index+1}`}>
             <Input.TextArea
               style={{
                 height: "90px",

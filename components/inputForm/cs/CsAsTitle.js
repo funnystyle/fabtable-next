@@ -1,11 +1,6 @@
-import { Button, Checkbox, DatePicker, Flex, Form, Image, Input, Typography, Upload } from "antd";
-import { handleInputComponent } from "@components/inputForm/handleInputComponent";
-import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UploadOutlined } from "@ant-design/icons";
+import {Button, Flex, Form, Input, Typography} from "antd";
+import {DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined} from "@ant-design/icons";
 import React from "react";
-import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
-import { handleCsRecordInputComponentRow } from "@components/inputForm/cs/handleCsRecordInputComponentRow";
-import Link from "next/link";
-import { CsAsTopInputBox } from "@components/inputForm/cs/CsAsTopInputBox";
 
 const { Title } = Typography;
 
@@ -14,6 +9,12 @@ export const CsAsTitle = ({ keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }
   const handleDelete = () => {
     const newKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
     setKeys(newKeys);
+
+    setAsCheckedKeySet(new Set());
+  }
+
+  const handleAdd = () => {
+    setKeys([...keys, keys.length]);
   }
 
   return (
@@ -26,7 +27,9 @@ export const CsAsTitle = ({ keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }
               <Input placeholder="-" style={{ width: "110px", }} />
             </Form.Item>
 
-            <Button type="primary" icon={<PlusOutlined />} iconPosition={"end"}>출장업무 내용 추가</Button>
+            <Button type="primary" icon={<PlusOutlined />} iconPosition={"end"}
+                    onClick={() => handleAdd()}
+            >출장업무 내용 추가</Button>
 
             <Button icon={<DeleteOutlined />} iconPosition={"end"} onClick={() => handleDelete()}>삭제</Button>
           </Flex>
