@@ -1363,7 +1363,7 @@ const OrderComponent = ({ contentHeight }) => {
 							</Button>
 						</Flex>
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item label="라벨 종류" name="radio1">
 									<Radio.Group
@@ -1385,7 +1385,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 						<Divider style={{ marginTop: 16, marginBottom: 16 }} />
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item label="라벨 1 규격 (mm)" name="radio2">
 									<Radio.Group
@@ -1402,7 +1402,7 @@ const OrderComponent = ({ contentHeight }) => {
 							</Col>
 						</Row>
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item label="라벨 2 규격 (mm)" name="radio3">
 									<Radio.Group
@@ -1429,7 +1429,7 @@ const OrderComponent = ({ contentHeight }) => {
 							</Button>
 						</Flex>
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item label="AS 연락처" name="radio4">
 									<Radio.Group
@@ -1446,7 +1446,7 @@ const OrderComponent = ({ contentHeight }) => {
 							</Col>
 						</Row>
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item label="장착 방향" name="radio5">
 									<Radio.Group
@@ -1498,7 +1498,7 @@ const OrderComponent = ({ contentHeight }) => {
 							</Button>
 						</Flex>
 
-						<Row gutter={16}>
+						<Row gutter={8}>
 							<Col span={24}>
 								<Form.Item name="radio6">
 									<Radio.Group
@@ -1597,7 +1597,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Flex>
 
 				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={6}>
 							<Form.Item label="복제수량" name="num-input1">
 								<InputNumber
@@ -1702,7 +1702,7 @@ const OrderComponent = ({ contentHeight }) => {
 						</Col>
 					</Row>
 
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={12}>
 							<Form.Item label="P/O 번호" name="po_num">
 								<Input placeholder="미해당 시 비워두세요" />
@@ -1741,7 +1741,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Flex>
 
 				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={6}>
 							<Form.Item label={<Link href={"/"}>등록자</Link>} name="writer1">
 								<Select
@@ -1785,7 +1785,7 @@ const OrderComponent = ({ contentHeight }) => {
 								label={<Link href={"/"}>납품계획일</Link>}
 								name="delivery1"
 							>
-								<DatePicker onChange={onChange} placeholder="날짜 선택" />
+								<DatePicker onChange={onChange} placeholder="날짜 선택" style={{ width: "100%" }} />
 							</Form.Item>
 						</Col>
 
@@ -1796,7 +1796,7 @@ const OrderComponent = ({ contentHeight }) => {
 						</Col>
 					</Row>
 
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={24}>
 							<Form.Item label="영업팀 메모" name="business-memo">
 								<Input placeholder="-" />
@@ -1810,7 +1810,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Flex>
 
 				<Form layout="vertical" className="modal-input-area">
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={6}>
 							<Form.Item label="납품처" name="vendor1">
 								<Select
@@ -1862,7 +1862,7 @@ const OrderComponent = ({ contentHeight }) => {
 						</Col>
 					</Row>
 
-					<Row gutter={16}>
+					<Row gutter={8}>
 						<Col span={24}>
 							<Form.Item label="영업팀 메모" name="business-memo">
 								<Input placeholder="-" />
@@ -1876,7 +1876,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Flex>
 
 				<Form layout="vertical" className="modal-input-area">
-					<Flex gap={16}>
+					<Flex gap={8}>
 						<Form.Item label="현재상태" name="state1">
 							<Select
 								defaultValue="state1"
@@ -2408,6 +2408,13 @@ const OrderComponent = ({ contentHeight }) => {
 					okText="수정"
 					cancelText="취소"
 					width={780}
+					/* ✅ Modal Height 조정 */
+					bodyStyle={{
+						maxHeight: "400px", // ✅ 본문 높이 제한
+						overflowY: "auto",  // ✅ 내부 스크롤 활성화
+						overflowX: "hidden", // ✅ x축 스크롤 제거
+						padding: "5px",    // ✅ 가독성을 위한 패딩 추가
+					}}
 					modalRender={(modal) => (
 						<Draggable
 							disabled={disabled}
