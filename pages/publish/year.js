@@ -292,11 +292,13 @@ const data = [
 
 
 // ✅ Chart.js 관련
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend } from "chart.js";
+import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, LineController, BarController } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
+	LineController,
+	BarController,
 	CategoryScale,
 	LinearScale,
 	BarElement,
