@@ -23,7 +23,7 @@ export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelec
             <Button icon={<SettingOutlined />} size="small" />
           </Flex>
 
-          <Flex gap={20} className="info-input-col2">
+          <Flex gap={20} className="info-input-wrap">
             {itemList.map((item, index) => handleInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
           </Flex>
         </div>
