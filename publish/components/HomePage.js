@@ -290,6 +290,18 @@ const HomePage = ({ children }) => {
     return null;
 	};
 
+	// 📌 url 값으로 3-depth까지 메뉴 찾기
+	const findMenuItemByUrl = (menuList, url) => {
+		for (const item of menuList) {
+			if (item.url === url) return item;
+			if (item.children) {
+					const found = findMenuItemByUrl(item.children, url);
+					if (found) return found;
+			}
+		}
+		return null;
+	};
+	
 	// 📌 클릭한 메뉴의 부모 key 추적
 	const getParentKeys = (key, menuList, parents = []) => {
 		for (const item of menuList) {
@@ -313,7 +325,6 @@ const HomePage = ({ children }) => {
 		}
 		router.push(menuItem.url, undefined, { shallow: true });
 	};
-
 
 	// 📌 탭 닫기
 	const onTabRemove = (targetKey) => {
@@ -367,6 +378,28 @@ const HomePage = ({ children }) => {
 			};
 		}
 	}, [router.events]);
+
+	// 📌 useEffect 내부에 추가
+	useEffect(() => {
+			if (!router.isReady) return; // 라우터 준비될 때까지 대기
+
+			const { pathname } = router; // 현재 URL 가져오기
+
+			// 📌 해당 URL이 기본 메뉴에서 존재하는지 확인
+			const menuItem = findMenuItemByUrl([...basicItems, ...adminItems], pathname);
+			
+			if (menuItem) {
+					// 🔹 이미 추가된 탭이 아니라면 추가
+					if (!tabs.some((tab) => tab.key === menuItem.key)) {
+							setTabs((prevTabs) => [...prevTabs, { key: menuItem.key, label: menuItem.label, url: menuItem.url }]);
+					}
+
+					// 탭 활성화 & GNB 동기화
+					setActiveTab(menuItem.key);
+					setSelectedMenuKeys([menuItem.key]);
+			}
+	}, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
+
 
 	return (
 		<Layout>
