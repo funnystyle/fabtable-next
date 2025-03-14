@@ -1,7 +1,8 @@
 // pages/index.js
-import React, { useState, useEffect } from "react";
-import { Layout, Menu, Button, Tag } from "antd";
+import React, { useState, useEffect, lazy, Suspense } from "react";
+import { Layout, Menu, Button, Tag, Tabs, Spin } from "antd";
 import { useRouter } from "next/router";
+// import dynamic from "next/dynamic";
 import {
 	MenuUnfoldOutlined,
 	MenuFoldOutlined,
@@ -30,10 +31,37 @@ import Image from "next/image";
 
 const { Header, Sider, Content } = Layout;
 
+// 🔹 동적으로 페이지 로딩
+const pageComponents = {
+	// "/publish/dashboard": lazy(() => import("@/pages/publish/dashboard")),
+	"/publish/year": lazy(() => import("@/pages/publish/year")),
+	"/publish/month": lazy(() => import("@/pages/publish/month")),
+	"/publish/order": lazy(() => import("@/pages/publish/order")),
+	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
+	// "/publish/produce": lazy(() => import("@/pages/publish/produce")),
+	// "/publish/qc": lazy(() => import("@/pages/publish/qc")),
+	// "/publish/noncommerce": lazy(() => import("@/pages/publish/noncommerce")),
+	// "/publish/cycletime": lazy(() => import("@/pages/publish/cycletime")),
+	// "/publish/spc": lazy(() => import("@/pages/publish/spc")),
+
+	// 관리자 페이지
+	// "/publish/admin/code": lazy(() => import("@/pages/publish/admin/code")),
+	// "/publish/admin/product": lazy(() => import("@/pages/publish/admin/product")),
+	// "/publish/admin/detail": lazy(() => import("@/pages/publish/admin/detail")),
+	// "/publish/admin/noncommerce/type": lazy(() => import("@/pages/publish/admin/noncommerce/type")),
+	// "/publish/admin/noncommerce/config": lazy(() => import("@/pages/publish/admin/noncommerce/config")),
+	// "/publish/admin/file": lazy(() => import("@/pages/publish/admin/file")),
+	// "/publish/admin/depart": lazy(() => import("@/pages/publish/admin/depart")),
+	// "/publish/admin/user": lazy(() => import("@/pages/publish/admin/user")),
+	// "/publish/admin/worker": lazy(() => import("@/pages/publish/admin/worker")),
+};
+
+// 🔹 메뉴 항목 정의
 const basicItems = [
 	{
 		key: "1",
-		label: <Link href={"/publish/dashboard"}>대시보드</Link>,
+		label: "대시보드",
+		url: "/publish/dashboard",
 		icon: <GoldFilled />,
 	},
 	{
@@ -43,32 +71,38 @@ const basicItems = [
 		children: [
 			{
 				key: "sub1-1",
-				label: <Link href={"/publish/year"}>연간 종합 일정</Link>,
+				label: "연간 종합 일정",
+				url: "/publish/year",
 			},
 			{
 				key: "sub1-2",
-				label: <Link href={"/publish/month"}>월간 종합 일정</Link>,
+				label: "월간 종합 일정",
+				url: "/publish/month",
 			},
 		],
 	},
 	{
 		key: "2",
-		label: <Link href={"/publish/order"}>영업 관리</Link>,
+		label: "영업 관리",
+		url: "/publish/order",
 		icon: <EditFilled />,
 	},
 	{
 		key: "3",
-		label: <Link href={"/publish/cs"}>CS 관리</Link>,
+		label: "CS 관리",
+		url: "/publish/cs",
 		icon: <AudioFilled />,
 	},
 	{
 		key: "4",
-		label: <Link href={"/publish/produce"}>생산 관리</Link>,
+		label: "생산 관리",
+		url: "/publish/produce",
 		icon: <ToolFilled />,
 	},
 	{
 		key: "5",
-		label: <Link href={"/publish/qc"}>품질 관리</Link>,
+		label: "품질 관리",
+		url: "/publish/qc",
 		icon: <TrademarkCircleFilled />,
 	},
 	{
@@ -78,15 +112,18 @@ const basicItems = [
 		children: [
 			{
 				key: "sub2-1",
-				label: <Link href={"/publish/noncommerce"}>불량률 현황</Link>,
+				label: "불량률 현황",
+				url: "/publish/noncommerce",
 			},
 			{
 				key: "sub2-2",
-				label: <Link href={"/publish/cycletime"}>사이클 타임</Link>,
+				label: "사이클 타임",
+				url: "/publish/cycletime",
 			},
 			{
 				key: "sub3",
-				label: <Link href={"/publish/spc"}>SPC 현황</Link>,
+				label: "SPC 현황",
+				url: "/publish/spc",
 			},
 		],
 	},
@@ -94,71 +131,71 @@ const basicItems = [
 
 const adminItems = [
 	{
-		key: "1",
-		label: <Link href={"/publish/admin/code"}>기초 코드 관리</Link>,
+		key: "admin-1",
+		label: "기초 코드 관리",
+		url: "/publish/admin/code",
 		icon: <FontColorsOutlined />,
 	},
 	{
-		key: "sub1",
+		key: "admin-sub1",
 		label: "기준 정보 관리",
 		icon: <DatabaseOutlined />,
 		children: [
 			{
-				key: "sub1-1",
-				label: <Link href={"/publish/admin/product"}>제품 관리</Link>,
+				key: "admin-sub1-1",
+				label: "제품 관리",
+				url: "/publish/admin/product",
 			},
 			{
-				key: "sub1-2",
-				label: <Link href={"/publish/admin/product"}>부서별 현황 관리</Link>,
+				key: "admin-sub1-2",
+				label: "부서별 현황 관리",
+				url: "/publish/admin/product",
 			},
 			{
-				key: "sub1-3",
-				label: (
-					<Link href={"/publish/admin/detail"}>부서별 상세 화면 관리</Link>
-				),
+				key: "admin-sub1-3",
+				label: "부서별 상세 화면 관리",
+				url: "/publish/admin/detail",
 			},
 			{
-				key: "sub1-4",
+				key: "admin-sub1-4",
 				label: "부적합 관리",
 				children: [
 					{
-						key: "sub1-4-1",
-						label: (
-							<Link href={"/publish/admin/noncommerce/type"}>
-								부적합 종류 관리
-							</Link>
-						),
+						key: "admin-sub1-4-1",
+						label: "부적합 종류 관리",
+						url: "/publish/admin/noncommerce/type",
 					},
 					{
-						key: "sub1-4-3",
-						label: (
-							<Link href={"/publish/admin/noncommerce/config"}>
-								등록 및 조치사항 설정
-							</Link>
-						),
+						key: "admin-sub1-4-3",
+						label: "등록 및 조치사항 설정",
+						url: "/publish/admin/noncommerce/config",
 					},
 				],
 			},
 		],
 	},
 	{
-		key: "2",
-		label: <Link href={"/publish/admin/file"}>양식 및 파일 관리</Link>,
+		key: "admin-2",
+		label: "양식 및 파일 관리",
+		url: "/publish/admin/file",
 		icon: <FolderOpenFilled />,
 	},
 	{
-		key: "3",
-		label: <Link href={"/publish/admin/depart"}>부서 및 직급 관리</Link>,
+		key: "admin-3",
+		label: "부서 및 직급 관리",
+		url: "/publish/admin/depart",
 		icon: <IdcardFilled />,
 	},
 	{
-		key: "4",
-		label: <Link href={"/publish/admin/user"}>사용자 등록 관리</Link>,
+		key: "admin-4",
+		label: "사용자 등록 관리",
+		url: "/publish/admin/user",
 		icon: <UserAddOutlined />,
 	},
 	{
-		key: "5",
-		label: <Link href={"/publish/admin/worker"}>공정 작업자 관리</Link>,
+		key: "admin-5",
+		label: "공정 작업자 관리",
+		url: "/publish/admin/worker",
 		icon: <TeamOutlined />,
 	},
 ];
@@ -216,9 +253,87 @@ const HomePage = ({ children }) => {
 	const [collapsed, setCollapsed] = useState(false);
 	const [isMobile, setIsMobile] = useState(false);
 	const [contentHeight, setContentHeight] = useState("100vh");
-
+	const [activeTab, setActiveTab] = useState("1");
+	const [tabs, setTabs] = useState([{ key: "1", label: "대시보드", url: "/publish/dashboard" }]);
+	const [selectedMenuKeys, setSelectedMenuKeys] = useState(["1"]);
+	const [openKeys, setOpenKeys] = useState(["sub1", "sub2", "admin-sub1"]);
 	const router = useRouter();
 
+	// 📌 메뉴 클릭 시 탭 추가 및 GNB 활성화
+	const handleMenuClick = ({ key }) => {
+		const menuItem = findMenuItemByKey([...basicItems, ...adminItems], key);
+		if (!menuItem || !menuItem.url) return;
+
+		if (!tabs.some((tab) => tab.key === menuItem.key)) {
+				setTabs([...tabs, { key: menuItem.key, label: menuItem.label, url: menuItem.url }]);
+		}
+
+		setActiveTab(menuItem.key);
+		setSelectedMenuKeys([key]);
+
+		// 부모 메뉴 openKeys 자동 설정
+		const parentKeys = getParentKeys(key, [...basicItems, ...adminItems]);
+		setOpenKeys(parentKeys ? [...parentKeys] : []);
+
+		router.push(menuItem.url, undefined, { shallow: true });
+	};
+
+	// 📌 key 값으로 3-depth까지 메뉴 찾기
+	const findMenuItemByKey = (menuList, key) => {
+    for (const item of menuList) {
+			if (item.key === key) return item;
+			if (item.children) {
+					const found = findMenuItemByKey(item.children, key);
+					if (found) return found;
+			}
+    }
+    return null;
+	};
+
+	// 📌 클릭한 메뉴의 부모 key 추적
+	const getParentKeys = (key, menuList, parents = []) => {
+		for (const item of menuList) {
+				if (item.key === key) return parents;
+				if (item.children) {
+						const found = getParentKeys(key, item.children, [...parents, item.key]);
+						if (found) return found;
+				}
+		}
+		return null;
+	};
+
+	// 📌 탭 변경 시 GNB 활성화
+	const onTabChange = (key) => {
+		setActiveTab(key);
+		const menuItem = findMenuItemByKey([...basicItems, ...adminItems], key);
+		if (menuItem) {
+				setSelectedMenuKeys([menuItem.key]);
+				const parentKeys = getParentKeys(menuItem.key, [...basicItems, ...adminItems]);
+				setOpenKeys(parentKeys ? [...parentKeys] : []);
+		}
+		router.push(menuItem.url, undefined, { shallow: true });
+	};
+
+
+	// 📌 탭 닫기
+	const onTabRemove = (targetKey) => {
+		let newActiveKey = activeTab;
+		const newTabs = tabs.filter((tab) => tab.key !== targetKey);
+
+		if (targetKey === activeTab && newTabs.length) {
+			newActiveKey = newTabs[newTabs.length - 1].key;
+		}
+
+		setTabs(newTabs);
+		setActiveTab(newActiveKey);
+		router.push(newActiveKey, undefined, { shallow: true });
+	};
+
+	// 📌 GNB 서브메뉴 상태 변경
+	const onOpenChange = (keys) => {
+		setOpenKeys(keys);
+	};
+	
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
@@ -331,7 +446,11 @@ const HomePage = ({ children }) => {
 							defaultOpenKeys={["sub1", "sub2"]}
 							mode="inline"
 							items={basicItems}
+							selectedKeys={selectedMenuKeys}
+							openKeys={openKeys}
+							onOpenChange={onOpenChange}
 							inlineIndent="10"
+							onClick={handleMenuClick}
 						/>
 
 						<div className="set-menu-area">
@@ -345,7 +464,15 @@ const HomePage = ({ children }) => {
 								관리 및 설정
 							</p>
 
-							<Menu mode="inline" items={adminItems} inlineIndent="10" />
+							<Menu
+								mode="inline"
+								items={adminItems} 
+								selectedKeys={selectedMenuKeys}
+								openKeys={openKeys}
+								onOpenChange={onOpenChange}
+								inlineIndent="10"
+								onClick={handleMenuClick}
+							/>
 						</div>
 					</div>
 
@@ -393,8 +520,29 @@ const HomePage = ({ children }) => {
 							<Menu mode="horizontal" items={topItems} className="top-menu" />
 						</div>
 					</Header>
-					<Content className="contents">
+					{/* <Content className="contents">
 						{children ? React.cloneElement(children, { contentHeight }) : null}
+					</Content> */}
+					{/* Content 영역을 Tabs로 변경 */}
+					<Content className="contents">
+						<Content style={{  margin: "16px 16px", padding: 8, minHeight: 280}}>
+							<Tabs
+								hideAdd
+								size="small"
+								type="editable-card"
+								activeKey={activeTab}
+								onChange={onTabChange}
+								onEdit={(targetKey, action) => action === "remove" && onTabRemove(targetKey)}
+							>
+								{tabs.map((tab) => (
+									<Tabs.TabPane tab={tab.label} key={tab.key} closable={tab.key !== "1"}>
+										<Suspense fallback={<Spin size="large" />}>
+											{pageComponents[tab.url] ? React.createElement(pageComponents[tab.url]) : <div>페이지 없음</div>}
+										</Suspense>
+									</Tabs.TabPane>
+								))}
+							</Tabs>
+						</Content>
 					</Content>
 				</Layout>
 			</Layout>
