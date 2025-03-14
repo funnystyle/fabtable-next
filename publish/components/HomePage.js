@@ -520,12 +520,13 @@ const HomePage = ({ children }) => {
 							<Menu mode="horizontal" items={topItems} className="top-menu" />
 						</div>
 					</Header>
+					{/* 탭 없이 하려면 아래 코드를 적용 */}
 					{/* <Content className="contents">
 						{children ? React.cloneElement(children, { contentHeight }) : null}
 					</Content> */}
+					{/* 탭 적용하려면 아래 코드를 적용 */}
 					{/* Content 영역을 Tabs로 변경 */}
 					<Content className="contents">
-						<Content style={{  margin: "16px 16px", padding: 8, minHeight: 280}}>
 							<Tabs
 								hideAdd
 								size="small"
@@ -537,12 +538,11 @@ const HomePage = ({ children }) => {
 								{tabs.map((tab) => (
 									<Tabs.TabPane tab={tab.label} key={tab.key} closable={tab.key !== "1"}>
 										<Suspense fallback={<Spin size="large" />}>
-											{pageComponents[tab.url] ? React.createElement(pageComponents[tab.url]) : <div>페이지 없음</div>}
+											{pageComponents[tab.url] ? React.createElement(pageComponents[tab.url], { contentHeight }) : <div>페이지 없음</div>}
 										</Suspense>
 									</Tabs.TabPane>
 								))}
 							</Tabs>
-						</Content>
 					</Content>
 				</Layout>
 			</Layout>
