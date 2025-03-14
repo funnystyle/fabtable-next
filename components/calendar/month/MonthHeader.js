@@ -1,27 +1,11 @@
 // pages/month.js
 import React, { useEffect, useState } from "react";
-import {
-	Layout,
-	Typography,
-	Tabs,
-	Select,
-	DatePicker,
-	ConfigProvider,
-	Button,
-	Input,
-	Flex,
-	Card,
-	Space,
-} from "antd";
-import {
-	CheckOutlined,
-	SearchOutlined,
-	PieChartOutlined,
-	CloseOutlined,
-} from "@ant-design/icons";
-import koKR from "antd/es/locale/ko_KR";
+import { Button, Flex, Select, Tabs, Typography, } from "antd";
+import { CheckOutlined, PieChartOutlined, SearchOutlined, } from "@ant-design/icons";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
+import MonthPicker from "@components/calendar/MonthPicker";
+import CurrentMonthButton from "@components/calendar/CurrentMonthButton";
 
 const { Title } = Typography;
 
@@ -92,31 +76,9 @@ const MonthHeader = ({visibleItems, setVisibleItems, currentYear, setCurrentYear
 						options={years}
 					/>
 
-					<ConfigProvider locale={koKR}>
-						<DatePicker
-							onChange={onChange}
-							picker="month"
-							format="M 월"
-							placeholder="선택"
-							style={{
-								width: 80,
-							}}
-							value={currentMonth ? dayjs().month(currentMonth - 1) : null}
-						/>
-					</ConfigProvider>
+					<MonthPicker month={currentMonth} setMonth={setCurrentMonth} />
 
-					<Button
-						color="primary"
-						variant="text"
-						size="small"
-						className="this-month"
-						onClick={() => {
-							setCurrentMonth(dayjs().month() + 1)
-							setCurrentYear(dayjs().year())
-						}}
-					>
-						이번달
-					</Button>
+					<CurrentMonthButton setYear={setCurrentYear} setMonth={setCurrentMonth} />
 				</Flex>
 
 				<Flex align="center">
