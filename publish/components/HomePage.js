@@ -554,12 +554,12 @@ const HomePage = ({ children }) => {
 						</div>
 					</Header>
 					{/* 탭 없이 하려면 아래 코드를 적용 */}
-					{/* <Content className="contents">
+					<Content className="contents">
 						{children ? React.cloneElement(children, { contentHeight }) : null}
-					</Content> */}
+					</Content>
 					{/* 탭 적용하려면 아래 코드를 적용 */}
 					{/* Content 영역을 Tabs로 변경 */}
-					<Content className="contents">
+					{/* <Content className="contents">
 							<Tabs
 								hideAdd
 								size="small"
@@ -576,7 +576,7 @@ const HomePage = ({ children }) => {
 									</Tabs.TabPane>
 								))}
 							</Tabs>
-					</Content>
+					</Content> */}
 				</Layout>
 			</Layout>
 		</Layout>
