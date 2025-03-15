@@ -1785,7 +1785,11 @@ const OrderComponent = ({ contentHeight }) => {
 								label={<Link href={"/"}>납품계획일</Link>}
 								name="delivery1"
 							>
-								<DatePicker onChange={onChange} placeholder="날짜 선택" style={{ width: "100%" }} />
+								<DatePicker
+									onChange={onChange}
+									placeholder="날짜 선택"
+									style={{ width: "100%" }}
+								/>
 							</Form.Item>
 						</Col>
 
@@ -2116,27 +2120,6 @@ const OrderComponent = ({ contentHeight }) => {
 				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
 
 				<Space direction="vertical" size={12} style={{ width: "100%" }}>
-					{/*  검색결과 */}
-					<Flex align="center" className="search-result-area">
-						<strong className="tit-search-result">검색결과 :</strong>
-
-						{tags.map((tag, index) => (
-							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
-								{tag}
-							</Tag>
-						))}
-
-						<Button
-							color="primary"
-							variant="text"
-							size="small"
-							className="all-delete-tag"
-							onClick={handleTagDeleteAll}
-						>
-							모두 삭제
-						</Button>
-					</Flex>
-
 					{/* 상단 버튼 */}
 					<div className="contents-top-scroll">
 						<Flex gap="small" align="center" className="btn-big">
@@ -2314,13 +2297,36 @@ const OrderComponent = ({ contentHeight }) => {
 				</Space>
 			</div>
 
-			<Dropdown
-				menu={{
-					items: rightItem,
-				}}
-				trigger={["contextMenu"]}
-			>
-				<div style={{ marginTop: contentHeight }} className="contents-scroll">
+			<div style={{ marginTop: contentHeight }} className="contents-scroll">
+				<div style={{ marginBottom: "12px" }}>
+					{/*  검색결과 */}
+					<Flex align="center" className="search-result-area">
+						<strong className="tit-search-result">검색결과 :</strong>
+
+						{tags.map((tag, index) => (
+							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+								{tag}
+							</Tag>
+						))}
+
+						<Button
+							color="primary"
+							variant="text"
+							size="small"
+							className="all-delete-tag"
+							onClick={handleTagDeleteAll}
+						>
+							모두 삭제
+						</Button>
+					</Flex>
+				</div>
+
+				<Dropdown
+					menu={{
+						items: rightItem,
+					}}
+					trigger={["contextMenu"]}
+				>
 					{/* 테이블 */}
 					<div className="tb-container">
 						<Table
@@ -2338,9 +2344,8 @@ const OrderComponent = ({ contentHeight }) => {
 							style={{ tableLayout: "fixed" }}
 						/>
 					</div>
-				</div>
-			</Dropdown>
-
+				</Dropdown>
+			</div>
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
 				<DrawerComponent
@@ -2411,9 +2416,9 @@ const OrderComponent = ({ contentHeight }) => {
 					/* ✅ Modal Height 조정 */
 					bodyStyle={{
 						maxHeight: "400px", // ✅ 본문 높이 제한
-						overflowY: "auto",  // ✅ 내부 스크롤 활성화
+						overflowY: "auto", // ✅ 내부 스크롤 활성화
 						overflowX: "hidden", // ✅ x축 스크롤 제거
-						padding: "5px",    // ✅ 가독성을 위한 패딩 추가
+						padding: "5px", // ✅ 가독성을 위한 패딩 추가
 					}}
 					modalRender={(modal) => (
 						<Draggable

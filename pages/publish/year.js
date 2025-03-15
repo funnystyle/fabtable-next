@@ -423,11 +423,21 @@ const subData = [
 		month12: 160,
 	},
 ];
-	
-
 
 // ✅ Chart.js 관련
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, LineController, BarController } from "chart.js";
+import {
+	Chart as ChartJS,
+	CategoryScale,
+	LinearScale,
+	BarElement,
+	LineElement,
+	PointElement,
+	Title,
+	Tooltip,
+	Legend,
+	LineController,
+	BarController,
+} from "chart.js";
 import { Bar } from "react-chartjs-2";
 
 // Chart.js 플러그인 등록
@@ -448,12 +458,27 @@ ChartJS.register(
 const Chart = () => {
 	// 데이터셋 정의
 	const data = {
-		labels: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+		labels: [
+			"1월",
+			"2월",
+			"3월",
+			"4월",
+			"5월",
+			"6월",
+			"7월",
+			"8월",
+			"9월",
+			"10월",
+			"11월",
+			"12월",
+		],
 		datasets: [
 			{
 				type: "line",
 				label: "납품 완료",
-				data: [450, 650, 750, 550, 950, 1150, 1350, 1200, 850, 1050, 1400, 1550],
+				data: [
+					450, 650, 750, 550, 950, 1150, 1350, 1200, 850, 1050, 1400, 1550,
+				],
 				borderColor: "rgba(255, 99, 132, 1)",
 				backgroundColor: "rgba(255, 99, 132, 0.5)",
 				fill: false,
@@ -462,7 +487,9 @@ const Chart = () => {
 			{
 				type: "bar",
 				label: "납품 계획",
-				data: [500, 700, 800, 600, 1000, 1200, 1400, 1300, 900, 1100, 1500, 1600],
+				data: [
+					500, 700, 800, 600, 1000, 1200, 1400, 1300, 900, 1100, 1500, 1600,
+				],
 				backgroundColor: "rgba(54, 162, 235, 0.5)",
 				borderColor: "rgba(54, 162, 235, 1)",
 				borderWidth: 3,
@@ -473,6 +500,7 @@ const Chart = () => {
 	// 차트 옵션 설정
 	const options = {
 		responsive: true,
+		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				position: "top",
@@ -487,7 +515,9 @@ const Chart = () => {
 
 	return (
 		<Card style={{ width: "100%", textAlign: "center", marginBottom: "20px" }}>
-			<Bar data={data} options={options} height={80}/>
+			<div style={{ width: "100%", height: "400px" }}>
+				<Bar data={data} options={options} height={80} />
+			</div>
 		</Card>
 	);
 };
@@ -570,12 +600,11 @@ const YearComponent = ({ contentHeight }) => {
 								>
 									조건 초기화
 								</Button>
-								
+
 								<Flex gap="small">
 									<Button variant="outlined" icon={<SearchOutlined />}>
 										조건 검색
 									</Button>
-									
 								</Flex>
 								<Flex gap="small" className="btn-spacing-area">
 									<Button variant="outlined">올해</Button>
@@ -588,8 +617,6 @@ const YearComponent = ({ contentHeight }) => {
 							</Flex>
 						</Flex>
 					</div>
-
-
 				</div>
 			</Flex>
 
@@ -609,23 +636,22 @@ const YearComponent = ({ contentHeight }) => {
 					pagination={false}
 					style={{ width: "100%" }}
 					expandable={{
-						expandedRowRender: (record) =>
+						expandedRowRender: (record) => (
 							// record.key === (data.length).toString() ? (
-									<Table
-										columns={columns} // 확장 테이블의 컬럼을 따로 지정
-										dataSource={subData} // 확장 데이터
-										pagination={false}
-										bordered
-										size="small"
-										// style={{ width: "0%" }} // 🔹 테이블 폭 줄이기 (부모와 동일한 폭 유지)
-									/>
-							// ) : null,
-							,
-						rowExpandable: (record) => record.key === (data.length).toString(),
+							<Table
+								columns={columns} // 확장 테이블의 컬럼을 따로 지정
+								dataSource={subData} // 확장 데이터
+								pagination={false}
+								bordered
+								size="small"
+								// style={{ width: "0%" }} // 🔹 테이블 폭 줄이기 (부모와 동일한 폭 유지)
+							/>
+						),
+						// ) : null,
+						rowExpandable: (record) => record.key === data.length.toString(),
 					}}
 				/>
 			</Flex>
-
 		</Layout>
 	);
 };
