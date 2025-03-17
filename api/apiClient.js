@@ -159,6 +159,31 @@ export const postAxios = async (url, data, fileYn) => {
 };
 
 /**
+ * @description axios를 사용하여 POST 요청을 보내는 함수입니다.
+ * @param {string} url - API 주소를 입력합니다.
+ * @param {object} data - 요청 바디에 포함될 데이터를 입력합니다.
+ * @returns {Promise<any>} API 호출 결과를 반환합니다.
+ */
+export const postBlobAxios = async (url, data, fileYn) => {
+  let config = {
+    responseType: "blob", // 응답을 Blob으로 받도록 설정
+  };
+
+  if (fileYn) {
+    config.headers["Content-Type"] = "multipart/form-data";
+    //{ responseType: "blob" }
+    config.responseType = "blob";
+  }
+
+  try {
+    const response = await apiClient.post(url, data, config);
+    return response.data;
+  } catch (error) {
+    handleApiError(error); // 에러 처리 함수 호출
+  }
+};
+
+/**
  * @description axios를 사용하여 PUT 요청을 보내는 함수입니다.
  * @param {string} url - API 주소를 입력합니다.
  * @param {object} data - 요청 바디에 포함될 데이터를 입력합니다.

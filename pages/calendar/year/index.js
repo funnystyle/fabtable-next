@@ -57,7 +57,7 @@ const YearComponent = ({ contentHeight }) => {
 
 						<YearChart list={list}/>
 
-						<YearHeader setYear={setYear} month={month} setMonth={setMonth} />
+						<YearHeader year={year} setYear={setYear} month={month} setMonth={setMonth} />
 					</div>
 				</div>
 			</Flex>
