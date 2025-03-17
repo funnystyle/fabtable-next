@@ -249,7 +249,7 @@ const NonCommerce = () => {
 							</Flex>
 						</Flex>
 
-            <div style={{ display: "flex", width: "100%", gap: "10px", height: "500px", paddingTop: "20px", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", width: "100%", gap: "10px", height: "620px", paddingTop: "20px", flexWrap: "wrap" }}>
 
               {/* 차트: 가로 1/3 */}
               <Card 
@@ -257,10 +257,12 @@ const NonCommerce = () => {
                 bodyStyle={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
               >
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
+                <Flex gap="small" align="center" style={{ height: "40px" }}>
                   <h2>연간 누적 비교 (최근 3년)</h2>
+                  </Flex>
                 </div>
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  <Bar data={yearChartData} options={chartOptions} style={{ width: "100%", height: "100%" }} />
+                  <Bar data={yearChartData} options={chartOptions} style={{ width: "100%", height: "500px" }} />
                 </div>
               </Card>
 
@@ -272,7 +274,7 @@ const NonCommerce = () => {
 
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
                   <Flex align="start" justify="space-between">
-                    <Flex gap="small" align="center">
+                    <Flex gap="small" align="center" style={{ height: "40px" }}>
 
                       <button onClick={handlePrevYear} className="btn-page">
                         <LeftOutlined />
@@ -304,7 +306,7 @@ const NonCommerce = () => {
                   </Flex>
                 </div>
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  <Bar data={monthChartData} options={chartOptions} style={{ width: "100%", height: "100%" }} />
+                  <Bar data={monthChartData} options={chartOptions} style={{ width: "100%", height: "500px" }} />
                 </div>
               </Card>
             </div>
