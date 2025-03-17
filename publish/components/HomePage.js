@@ -40,7 +40,7 @@ const pageComponents = {
 	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
 	// "/publish/produce": lazy(() => import("@/pages/publish/produce")),
 	// "/publish/qc": lazy(() => import("@/pages/publish/qc")),
-	// "/publish/noncommerce": lazy(() => import("@/pages/publish/noncommerce")),
+	"/publish/statistic/noncommerce": lazy(() => import("@/pages/publish/statistic/noncommerce")),
 	// "/publish/cycletime": lazy(() => import("@/pages/publish/cycletime")),
 	// "/publish/spc": lazy(() => import("@/pages/publish/spc")),
 
@@ -113,17 +113,17 @@ const basicItems = [
 			{
 				key: "sub2-1",
 				label: "불량률 현황",
-				url: "/publish/noncommerce",
+				url: "/publish/statistic/noncommerce",
 			},
 			{
 				key: "sub2-2",
 				label: "사이클 타임",
-				url: "/publish/cycletime",
+				url: "/publish/statistic/cycletime",
 			},
 			{
 				key: "sub3",
 				label: "SPC 현황",
-				url: "/publish/spc",
+				url: "/publish/statistic/spc",
 			},
 		],
 	},
