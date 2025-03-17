@@ -1,23 +1,6 @@
 // pages/year.js
 import React, { useEffect, useState } from "react";
-import {
-	Layout,
-	Typography,
-	Table,
-	DatePicker,
-	ConfigProvider,
-	Button,
-	Input,
-	Flex,
-	Card,
-} from "antd";
-import {
-	CheckOutlined,
-	SearchOutlined,
-	PieChartOutlined,
-	CloseOutlined,
-} from "@ant-design/icons";
-import koKR from "antd/es/locale/ko_KR";
+import { Flex, Layout, Table, Typography, } from "antd";
 import "dayjs/locale/ko";
 import { YearChart } from "@components/calendar/year/YearChart";
 import YearHeader from "@components/calendar/year/YearHeader";
@@ -25,14 +8,13 @@ import { yearTableColumns } from "@components/calendar/year/data/yearTableColumn
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 
-// ✅ 테이블 데이터 정의
-const data = [
-	// 납품계뢱, 발주계획, 자재입고, 조립완료, 리크완료, PID 완료, 교정완료, 생산완료, 검사완료, 입고완료, 납품완료
-	// 납품계획은 나머지의 합과 같아야 함
-	// 1월부터 12월까지의 데이터
+
+
+const subData = [
+	// 납품완료 내의 하위 데이터들
 	{
 		key: "1",
-		div: "납품계획",
+		div: "납품완료",
 		month01: 500,
 		month02: 700,
 		month03: 800,
@@ -49,7 +31,7 @@ const data = [
 	// 나머지 항목 모두
 	{
 		key: "2",
-		div: "발주계획",
+		div: "발주대기",
 		month01: 100,
 		month02: 200,
 		month03: 300,
@@ -65,137 +47,7 @@ const data = [
 	},
 	{
 		key: "3",
-		div: "자재입고",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "4",
-		div: "조립완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "5",
-		div: "리크완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	// 나머지 항목 모두
-	{
-		key: "6",
-		div: "PID 완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "7",
-		div: "교정완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "8",
-		div: "생산완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "9",
-		div: "검사완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	// 나머지 항목 모두
-	{
-		key: "10",
-		div: "입고완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-	{
-		key: "11",
-		div: "납품완료",
+		div: "발주완료",
 		month01: 50,
 		month02: 70,
 		month03: 80,
@@ -260,8 +112,6 @@ const YearComponent = ({ contentHeight }) => {
 
 						<YearHeader setYear={setYear} month={month} setMonth={setMonth} />
 					</div>
-
-
 				</div>
 			</Flex>
 
@@ -274,15 +124,29 @@ const YearComponent = ({ contentHeight }) => {
 			>
 				<Table
 					columns={yearTableColumns}
-					dataSource={list}
+					dataSource={list.slice(0, list.length - 5)} // 마지막 5개 데이터를 제외한 데이터만 테이블로 사용
 					bordered
 					size="small"
-					scroll={{ x: "max-content" }}
+					// scroll={{ x: "max-content" }}
 					pagination={false}
 					style={{ width: "100%" }}
+					expandable={{
+						expandedRowRender: (record) => (
+							// record.key === (data.length).toString() ? (
+							<Table
+								columns={yearTableColumns} // 확장 테이블의 컬럼을 따로 지정
+								dataSource={list.slice(list.length - 5, list.length)} // 마지막 5개 데이터만 테이블로 사용
+								pagination={false}
+								bordered
+								size="small"
+								// style={{ width: "0%" }} // 🔹 테이블 폭 줄이기 (부모와 동일한 폭 유지)
+							/>
+						),
+						// ) : null,
+						rowExpandable: (record) => record.key === list.length - 5
+					}}
 				/>
 			</Flex>
-
 		</Layout>
 	);
 };
