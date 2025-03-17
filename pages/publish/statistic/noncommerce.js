@@ -249,26 +249,27 @@ const NonCommerce = () => {
 							</Flex>
 						</Flex>
 
-            <div style={{ display: "flex", width: "100%", gap: "10px", height: "500px", paddingTop: "20px" }}>
+            <div style={{ display: "flex", width: "100%", gap: "10px", height: "500px", paddingTop: "20px", flexWrap: "wrap" }}>
 
               {/* 차트: 가로 1/3 */}
               <Card 
-                style={{ width: "33%", height: "100%", display: "flex", flexDirection: "column" }}
+                style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%", minWidth: "200px", maxWidth: "33%", height: "100%", display: "flex", flexDirection: "column" }}
                 bodyStyle={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
               >
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
                   <h2>연간 누적 비교 (최근 3년)</h2>
                 </div>
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  <Bar data={yearChartData} options={chartOptions} style={{ height: "100%" }} />
+                  <Bar data={yearChartData} options={chartOptions} style={{ width: "100%", height: "100%" }} />
                 </div>
               </Card>
 
               {/* 빈 영역: 가로 2/3 */}
               <Card 
-                style={{ width: "67%", height: "100%", display: "flex", flexDirection: "column" }}
+                style={{ flexGrow: 2, flexShrink: 1, flexBasis: "0%", minWidth: "300px", maxWidth: "67%", height: "100%", display: "flex", flexDirection: "column" }}
                 bodyStyle={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
               >
+
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
                   <Flex align="start" justify="space-between">
                     <Flex gap="small" align="center">
@@ -303,7 +304,7 @@ const NonCommerce = () => {
                   </Flex>
                 </div>
                 <div style={{ flexGrow: 1, display: "flex" }}>
-                  <Bar data={monthChartData} options={chartOptions} style={{ flexGrow: 1, height: "100%" }} />
+                  <Bar data={monthChartData} options={chartOptions} style={{ width: "100%", height: "100%" }} />
                 </div>
               </Card>
             </div>
