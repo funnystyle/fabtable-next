@@ -9,7 +9,9 @@ import {
     PointElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    LineController,
+    BarController
 } from "chart.js";
 import { Button, Card, ConfigProvider, DatePicker, Flex, Layout, Tag, Typography } from "antd";
 import { LeftOutlined, RightOutlined, SearchOutlined } from "@ant-design/icons";
@@ -22,7 +24,9 @@ ChartJS.register(
     PointElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    LineController,
+    BarController
 );
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
