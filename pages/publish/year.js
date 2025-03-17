@@ -16,6 +16,8 @@ import {
 	SearchOutlined,
 	PieChartOutlined,
 	CloseOutlined,
+	LeftOutlined,
+	RightOutlined,
 } from "@ant-design/icons";
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
@@ -439,6 +441,7 @@ import {
 	BarController,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import dayjs from "dayjs";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -534,6 +537,25 @@ const handleChange = (value) => {
 };
 
 const YearComponent = ({ contentHeight }) => {
+	const [selectedYear, setSelectedYear] = useState(dayjs()); // 현재 연도 기본값
+
+	// 📌 날짜 변경 핸들러
+	const onChange = (date) => {
+			if (date) {
+					setSelectedYear(date);
+			}
+	};
+
+	// 📌 이전 해로 변경
+	const handlePrevYear = () => {
+			setSelectedYear((prev) => prev.subtract(1, "year"));
+	};
+
+	// 📌 다음 해로 변경
+	const handleNextYear = () => {
+			setSelectedYear((prev) => prev.add(1, "year"));
+	};
+	
 	const toggleItem = (index) => {
 		setVisibleItems((prev) =>
 			prev.map((item, i) => (i === index ? !item : item))
@@ -568,26 +590,27 @@ const YearComponent = ({ contentHeight }) => {
 
 						<Flex align="start" justify="space-between">
 							<Flex gap="small" align="center">
+
+								<button onClick={handlePrevYear} className="btn-page">
+									<LeftOutlined />
+								</button>
+							
 								<ConfigProvider locale={koKR}>
 									<DatePicker
+										value={selectedYear}
 										onChange={onChange}
-										picker="month"
-										format="M 월"
+										picker="year"
+										format="YYYY"
 										placeholder="선택"
-										style={{
-											width: 80,
-										}}
+										style={{ width: 80 }}
+										allowClear={false} // X 버튼 제거
+                    // suffixIcon={null} // 아이콘 제거
 									/>
 								</ConfigProvider>
 
-								<Button
-									color="primary"
-									variant="text"
-									size="small"
-									className="this-month"
-								>
-									이번달
-								</Button>
+								<button onClick={handleNextYear} className="btn-page">
+									<RightOutlined />
+								</button>
 							</Flex>
 
 							<Flex gap="small" align="center">
