@@ -8,61 +8,6 @@ import { yearTableColumns } from "@components/calendar/year/data/yearTableColumn
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 
-
-
-const subData = [
-	// 납품완료 내의 하위 데이터들
-	{
-		key: "1",
-		div: "납품완료",
-		month01: 500,
-		month02: 700,
-		month03: 800,
-		month04: 600,
-		month05: 1000,
-		month06: 1200,
-		month07: 1400,
-		month08: 1300,
-		month09: 900,
-		month10: 1100,
-		month11: 1500,
-		month12: 1600,
-	},
-	// 나머지 항목 모두
-	{
-		key: "2",
-		div: "발주대기",
-		month01: 100,
-		month02: 200,
-		month03: 300,
-		month04: 400,
-		month05: 500,
-		month06: 600,
-		month07: 700,
-		month08: 800,
-		month09: 900,
-		month10: 1000,
-		month11: 1100,
-		month12: 1200,
-	},
-	{
-		key: "3",
-		div: "발주완료",
-		month01: 50,
-		month02: 70,
-		month03: 80,
-		month04: 60,
-		month05: 100,
-		month06: 120,
-		month07: 140,
-		month08: 130,
-		month09: 90,
-		month10: 110,
-		month11: 150,
-		month12: 160,
-	},
-];
-
 const { Title: PageTitle } = Typography;
 
 const YearComponent = ({ contentHeight }) => {
@@ -87,6 +32,8 @@ const YearComponent = ({ contentHeight }) => {
 		if (isSuccess && calendarYearResponse?.data?.list?.length > 0) {
 			// 리스트에 index +1 로 key를 넣는다
 			setList(calendarYearResponse.data.list.map((item, index) => { return {key: index+1, ...item} }));
+
+
 		}
 	}, [isSuccess]);
 
@@ -108,7 +55,7 @@ const YearComponent = ({ contentHeight }) => {
 							연간 종합 일정
 						</PageTitle>
 
-						<YearChart />
+						<YearChart list={list}/>
 
 						<YearHeader setYear={setYear} month={month} setMonth={setMonth} />
 					</div>
