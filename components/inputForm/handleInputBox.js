@@ -32,7 +32,7 @@ export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelected
       <div className="info-input-box" key={`input-box-${index}`}>
         {item[0].subDisplayName && (
           <Flex justify="space-between">
-            <Title level={5} className="title-bullet">{item[0].subDisplayName}</Title>
+            <Title level={5}>{item[0].subDisplayName}</Title>
 
             <Button type="text" className="btn-all-reset" onClick={() => handleReset()}>
             초기화
