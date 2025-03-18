@@ -40,7 +40,9 @@ const pageComponents = {
 	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
 	// "/publish/produce": lazy(() => import("@/pages/publish/produce")),
 	// "/publish/qc": lazy(() => import("@/pages/publish/qc")),
-	"/publish/statistic/noncommerce": lazy(() => import("@/pages/publish/statistic/noncommerce")),
+	"/publish/statistic/noncommerce": lazy(() =>
+		import("@/pages/publish/statistic/noncommerce")
+	),
 	// "/publish/cycletime": lazy(() => import("@/pages/publish/cycletime")),
 	// "/publish/spc": lazy(() => import("@/pages/publish/spc")),
 
@@ -254,7 +256,9 @@ const HomePage = ({ children }) => {
 	const [isMobile, setIsMobile] = useState(false);
 	const [contentHeight, setContentHeight] = useState("100vh");
 	const [activeTab, setActiveTab] = useState("1");
-	const [tabs, setTabs] = useState([{ key: "1", label: "대시보드", url: "/publish/dashboard" }]);
+	const [tabs, setTabs] = useState([
+		{ key: "1", label: "대시보드", url: "/publish/dashboard" },
+	]);
 	const [selectedMenuKeys, setSelectedMenuKeys] = useState(["1"]);
 	const [openKeys, setOpenKeys] = useState(["sub1", "sub2", "admin-sub1"]);
 	const router = useRouter();
@@ -265,7 +269,10 @@ const HomePage = ({ children }) => {
 		if (!menuItem || !menuItem.url) return;
 
 		if (!tabs.some((tab) => tab.key === menuItem.key)) {
-				setTabs([...tabs, { key: menuItem.key, label: menuItem.label, url: menuItem.url }]);
+			setTabs([
+				...tabs,
+				{ key: menuItem.key, label: menuItem.label, url: menuItem.url },
+			]);
 		}
 
 		setActiveTab(menuItem.key);
@@ -280,14 +287,14 @@ const HomePage = ({ children }) => {
 
 	// 📌 key 값으로 3-depth까지 메뉴 찾기
 	const findMenuItemByKey = (menuList, key) => {
-    for (const item of menuList) {
+		for (const item of menuList) {
 			if (item.key === key) return item;
 			if (item.children) {
-					const found = findMenuItemByKey(item.children, key);
-					if (found) return found;
+				const found = findMenuItemByKey(item.children, key);
+				if (found) return found;
 			}
-    }
-    return null;
+		}
+		return null;
 	};
 
 	// 📌 url 값으로 3-depth까지 메뉴 찾기
@@ -295,21 +302,21 @@ const HomePage = ({ children }) => {
 		for (const item of menuList) {
 			if (item.url === url) return item;
 			if (item.children) {
-					const found = findMenuItemByUrl(item.children, url);
-					if (found) return found;
+				const found = findMenuItemByUrl(item.children, url);
+				if (found) return found;
 			}
 		}
 		return null;
 	};
-	
+
 	// 📌 클릭한 메뉴의 부모 key 추적
 	const getParentKeys = (key, menuList, parents = []) => {
 		for (const item of menuList) {
-				if (item.key === key) return parents;
-				if (item.children) {
-						const found = getParentKeys(key, item.children, [...parents, item.key]);
-						if (found) return found;
-				}
+			if (item.key === key) return parents;
+			if (item.children) {
+				const found = getParentKeys(key, item.children, [...parents, item.key]);
+				if (found) return found;
+			}
 		}
 		return null;
 	};
@@ -319,9 +326,12 @@ const HomePage = ({ children }) => {
 		setActiveTab(key);
 		const menuItem = findMenuItemByKey([...basicItems, ...adminItems], key);
 		if (menuItem) {
-				setSelectedMenuKeys([menuItem.key]);
-				const parentKeys = getParentKeys(menuItem.key, [...basicItems, ...adminItems]);
-				setOpenKeys(parentKeys ? [...parentKeys] : []);
+			setSelectedMenuKeys([menuItem.key]);
+			const parentKeys = getParentKeys(menuItem.key, [
+				...basicItems,
+				...adminItems,
+			]);
+			setOpenKeys(parentKeys ? [...parentKeys] : []);
 		}
 		router.push(menuItem.url, undefined, { shallow: true });
 	};
@@ -344,7 +354,7 @@ const HomePage = ({ children }) => {
 	const onOpenChange = (keys) => {
 		setOpenKeys(keys);
 	};
-	
+
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
@@ -381,25 +391,30 @@ const HomePage = ({ children }) => {
 
 	// 📌 useEffect 내부에 추가
 	useEffect(() => {
-			if (!router.isReady) return; // 라우터 준비될 때까지 대기
+		if (!router.isReady) return; // 라우터 준비될 때까지 대기
 
-			const { pathname } = router; // 현재 URL 가져오기
+		const { pathname } = router; // 현재 URL 가져오기
 
-			// 📌 해당 URL이 기본 메뉴에서 존재하는지 확인
-			const menuItem = findMenuItemByUrl([...basicItems, ...adminItems], pathname);
-			
-			if (menuItem) {
-					// 🔹 이미 추가된 탭이 아니라면 추가
-					if (!tabs.some((tab) => tab.key === menuItem.key)) {
-							setTabs((prevTabs) => [...prevTabs, { key: menuItem.key, label: menuItem.label, url: menuItem.url }]);
-					}
+		// 📌 해당 URL이 기본 메뉴에서 존재하는지 확인
+		const menuItem = findMenuItemByUrl(
+			[...basicItems, ...adminItems],
+			pathname
+		);
 
-					// 탭 활성화 & GNB 동기화
-					setActiveTab(menuItem.key);
-					setSelectedMenuKeys([menuItem.key]);
+		if (menuItem) {
+			// 🔹 이미 추가된 탭이 아니라면 추가
+			if (!tabs.some((tab) => tab.key === menuItem.key)) {
+				setTabs((prevTabs) => [
+					...prevTabs,
+					{ key: menuItem.key, label: menuItem.label, url: menuItem.url },
+				]);
 			}
-	}, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
 
+			// 탭 활성화 & GNB 동기화
+			setActiveTab(menuItem.key);
+			setSelectedMenuKeys([menuItem.key]);
+		}
+	}, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
 
 	return (
 		<Layout>
@@ -499,7 +514,7 @@ const HomePage = ({ children }) => {
 
 							<Menu
 								mode="inline"
-								items={adminItems} 
+								items={adminItems}
 								selectedKeys={selectedMenuKeys}
 								openKeys={openKeys}
 								onOpenChange={onOpenChange}
