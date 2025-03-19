@@ -753,6 +753,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="usegas1"
 									onChange={handleChange}
 									options={[
@@ -765,7 +766,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue="include1-1"
+								>
 									<Radio value="include1-1">포함</Radio>
 									<Radio value="include1-2">미포함</Radio>
 									<Radio value="include1-3">일치</Radio>
@@ -797,6 +800,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="vendor1"
 									onChange={handleChange}
 									options={[
@@ -809,7 +813,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue={"include2-1"}
+								>
 									<Radio value="include2-1">포함</Radio>
 									<Radio value="include2-2">미포함</Radio>
 									<Radio value="include12-3">일치</Radio>
@@ -851,6 +857,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="oil1"
 									onChange={handleChange}
 									options={[
@@ -863,7 +870,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue={"scope1-1"}
+								>
 									<Radio value="scope1-1">범위</Radio>
 									<Radio value="scope1-2">≤</Radio>
 									<Radio value="scope1-3">≥</Radio>
@@ -910,6 +919,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="oil2"
 									onChange={handleChange}
 									options={[
@@ -922,7 +932,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue={"scope2-1"}
+								>
 									<Radio value="scope2-1">범위</Radio>
 									<Radio value="scope2-2">≤</Radio>
 									<Radio value="scope2-3">≥</Radio>
@@ -1032,6 +1044,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="writer1"
 									onChange={handleChange}
 									options={[
@@ -1044,7 +1057,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue={"include3-1"}
+								>
 									<Radio value="include3-1">포함</Radio>
 									<Radio value="include3-2">미포함</Radio>
 									<Radio value="include3-3">일치</Radio>
@@ -1076,6 +1091,7 @@ const YearComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="fabricate1"
 									onChange={handleChange}
 									options={[
@@ -1088,7 +1104,9 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group>
+								<Radio.Group
+									defaultValue={"include4-1"}
+								>
 									<Radio value="include4-1">포함</Radio>
 									<Radio value="include4-2">미포함</Radio>
 									<Radio value="include4-3">일치</Radio>
@@ -1127,8 +1145,8 @@ const YearComponent = ({ contentHeight }) => {
 			</>
 		);
 	
-			setOpenSearchModal(true);
-		};
+		setOpenSearchModal(true);
+	};
 	
 
 	return (
