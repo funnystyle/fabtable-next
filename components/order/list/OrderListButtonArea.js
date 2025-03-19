@@ -49,6 +49,7 @@ const OrderListButtonArea = ({
 					<OrderListButtonExcel />
 
 					<OrderListButtonPrint
+						selectedRowKeys={selectedRowKeys}
 						setOpenDrawer={setOpenDrawer}
 						setDrawerHeader={setDrawerHeader}
 						setDrawerContent={setDrawerContent}

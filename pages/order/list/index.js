@@ -235,7 +235,8 @@ const OrderComponent = ({ contentHeight }) => {
 															 stateStatusList={stateStatusList} setStateStatusList={setStateStatusList}
 															 selectedRowKeys={selectedRowKeys} handleSearch={handleSearch}
 															 setCopyModalBoxList={setCopyModalBoxList} showCopyModal={showCopyModal} setEditModalBoxList={setEditModalBoxList} showEditModal={showEditModal}
-															 setOpenDrawer={setOpenDrawer} setDrawerHeader={setDrawerHeader} setDrawerContent={setDrawerContent} setDrawerFooter={setDrawerFooter} setDrawerTitle={setDrawerTitle} />
+															 setOpenDrawer={setOpenDrawer} setDrawerHeader={setDrawerHeader}
+															 setDrawerContent={setDrawerContent} setDrawerFooter={setDrawerFooter} setDrawerTitle={setDrawerTitle} />
 				</Space>
 			</div>
 
@@ -263,6 +264,7 @@ const OrderComponent = ({ contentHeight }) => {
 					headerContent={drawerHeader} // 동적으로 헤더 변경
 					content={drawerContent} // 동적으로 본문 변경
 					footer={drawerFooter} // 동적으로 푸터 버튼 변경
+					selectedRowKeys={selectedRowKeys}
 				/>
 			</div>
 
