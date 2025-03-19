@@ -1,5 +1,5 @@
 // pages/year.js
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
 	Layout,
 	Typography,
@@ -10,6 +10,12 @@ import {
 	Input,
 	Flex,
 	Card,
+	Modal,
+	Form,
+	Select,
+	Radio,
+	InputNumber,
+	Pagination,
 } from "antd";
 import {
 	CheckOutlined,
@@ -18,6 +24,12 @@ import {
 	CloseOutlined,
 	LeftOutlined,
 	RightOutlined,
+	RedoOutlined,
+	PlusOutlined,
+	VerticalRightOutlined,
+	VerticalLeftOutlined,
+	SettingOutlined,
+	MinusOutlined,
 } from "@ant-design/icons";
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
@@ -445,6 +457,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 import { height, textAlign } from "@mui/system";
+import Draggable from "react-draggable";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -544,6 +557,90 @@ const YearComponent = ({ contentHeight }) => {
 	const [selectedYears, setSelectedYears] = useState([dayjs(), dayjs()]); // 현재 연도 기본값
 	const [open, setOpen] = useState(false); // 팝업 상태 관리
 
+	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
+	const [modalContent, setModalContent] = useState(null); // Modal 내용
+	const [modal, contextHolder] = Modal.useModal();
+
+	// 모달 닫기
+	const closeModal = () => {
+		setOpenCopyModal(false);
+		setOpenSearchModal(false);
+	};
+
+	//--------------- 조건 검색 모달 관련
+	const [current, setCurrent] = useState(2);
+	const [inputValue, setInputValue] = useState("2");
+	const totalItems = 50;
+	const totalPages = Math.ceil(totalItems / 10);
+	const [disabled, setDisabled] = useState(true);
+	const [bounds, setBounds] = useState({
+		left: 0,
+		top: 0,
+		bottom: 0,
+		right: 0,
+	});
+	const draggleRef = useRef(null);
+
+	const onStart = (_event, uiData) => {
+		const { clientWidth, clientHeight } = window.document.documentElement;
+		const targetRect = draggleRef.current?.getBoundingClientRect();
+		if (!targetRect) {
+			return;
+		}
+		setBounds({
+			left: -targetRect.left + uiData.x,
+			right: clientWidth - (targetRect.right - uiData.x),
+			top: -targetRect.top + uiData.y,
+			bottom: clientHeight - (targetRect.bottom - uiData.y),
+		});
+	};
+
+	// 페이지 변경 핸들러
+	const onPageChange = (page) => {
+		setCurrent(page);
+		setInputValue(page.toString());
+	};
+
+	// Input 핸들러
+	const handleInputChange = (e) => {
+		const value = e.target.value;
+		if (/^\d*$/.test(value)) {
+			setInputValue(value);
+		}
+	};
+
+	// Input 엔터 및 포커스 아웃 핸들러
+	const handleInputConfirm = () => {
+		const pageNumber = Number(inputValue);
+		if (pageNumber >= 1 && pageNumber <= totalPages) {
+			setCurrent(pageNumber);
+		} else {
+			setInputValue(current.toString());
+		}
+	};
+
+	const itemRender = (page, type, originalElement) => {
+		if (type === "prev") {
+			return <LeftOutlined />;
+		}
+		if (type === "next") {
+			return <RightOutlined />;
+		}
+		if (type === "page" && page === current) {
+			return (
+				<Input
+					style={{ width: 50, textAlign: "center" }}
+					value={inputValue}
+					onChange={handleInputChange}
+					onBlur={handleInputConfirm}
+					onPressEnter={handleInputConfirm}
+					size="small"
+				/>
+			);
+		}
+		return originalElement;
+	};
+	
 	// 📌 날짜 변경 핸들러
 	const onChange = (date) => {
 			if (date) {
@@ -566,25 +663,25 @@ const YearComponent = ({ contentHeight }) => {
     ]);
   };
 
-	  // 📌 버튼 핸들러 (올해, 작년, 내년, 최근 3년)
-		const handleYearSelect = (type) => {
-			switch (type) {
-				case "thisYear":
-					setSelectedYears([dayjs(), dayjs()]);
-					break;
-				case "lastYear":
-					setSelectedYears([dayjs().subtract(1, "year"), dayjs().subtract(1, "year")]);
-					break;
-				case "nextYear":
-					setSelectedYears([dayjs().add(1, "year"), dayjs().add(1, "year")]);
-					break;
-				case "last3Years":
-					setSelectedYears([dayjs().subtract(2, "year"), dayjs()]);
-					break;
-				default:
-					break;
-			}
-		};	
+	// 📌 버튼 핸들러 (올해, 작년, 내년, 최근 3년)
+	const handleYearSelect = (type) => {
+		switch (type) {
+			case "thisYear":
+				setSelectedYears([dayjs(), dayjs()]);
+				break;
+			case "lastYear":
+				setSelectedYears([dayjs().subtract(1, "year"), dayjs().subtract(1, "year")]);
+				break;
+			case "nextYear":
+				setSelectedYears([dayjs().add(1, "year"), dayjs().add(1, "year")]);
+				break;
+			case "last3Years":
+				setSelectedYears([dayjs().subtract(2, "year"), dayjs()]);
+				break;
+			default:
+				break;
+		}
+	};	
 	
 	const toggleItem = (index) => {
 		setVisibleItems((prev) =>
@@ -615,6 +712,423 @@ const YearComponent = ({ contentHeight }) => {
 	
 		return false;
 	};
+
+	const onSearch = (value) => {
+		console.log("search:", value);
+	};
+
+	const onOk = (value) => {
+		console.log("onOk: ", value);
+	};
+
+	// 조건검색 모달 열기
+	const showSearchModal = () => {
+		setModalContent(
+			<>
+				<Flex align="center" justify="space-between">
+					<p className="total-txt">
+						검색 카테고리별로 입력필드를 여러 개 추가, 삭제할 수 있습니다.
+					</p>
+
+					<Button type="link" className="btn-reset-txt">
+						전체 초기화
+					</Button>
+				</Flex>
+
+				<div className="layer-scroll">
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">일반</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="usegas1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "usegas1",
+											label: "사용가스",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="include1-1">포함</Radio>
+									<Radio value="include1-2">미포함</Radio>
+									<Radio value="include1-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="vendor1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "vendor1",
+											label: "납품처",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="include2-1">포함</Radio>
+									<Radio value="include2-2">미포함</Radio>
+									<Radio value="include12-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">숫자/수치</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="oil1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "oil1",
+											label: "유량",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="scope1-1">범위</Radio>
+									<Radio value="scope1-2">≤</Radio>
+									<Radio value="scope1-3">≥</Radio>
+									<Radio value="scope1-4">=</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Flex gap={4}>
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+								</Flex>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="oil2"
+									onChange={handleChange}
+									options={[
+										{
+											value: "oil2",
+											label: "유량",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="scope2-1">범위</Radio>
+									<Radio value="scope2-2">≤</Radio>
+									<Radio value="scope2-3">≥</Radio>
+									<Radio value="scope2 -4">=</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Flex gap={4}>
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+								</Flex>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">기간/날짜</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						
+						<Flex
+							gap={8}
+							align="center"
+							justify="space-between"
+							className="year-select-area"
+						>
+							<Form.Item
+								style={{
+									width: "750px",
+								}}
+							>
+								<RangePicker
+									picker="year"
+									style={{
+										width: "100%",
+									}}
+									id={{
+										start: "startInput",
+										end: "endInput",
+									}}
+									onFocus={(_, info) => {
+										console.log("Focus:", info.range);
+									}}
+									onBlur={(_, info) => {
+										console.log("Blur:", info.range);
+									}}
+								/>
+							</Form.Item>
+
+							<Form.Item>
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button size="small">최근 3년</Button>
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">작업자</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="writer1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "writer1",
+											label: "등록자",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="include3-1">포함</Radio>
+									<Radio value="include3-2">미포함</Radio>
+									<Radio value="include3-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									defaultValue="fabricate1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "fabricate1",
+											label: "조립자",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group>
+									<Radio value="include4-1">포함</Radio>
+									<Radio value="include4-2">미포함</Radio>
+									<Radio value="include4-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex
+						gap={8}
+						align="center"
+						justify="center"
+						className="layer-btn-area"
+					>
+						<Button onClick={closeModal}>닫기</Button>
+						<Button type="primary">검색</Button>
+					</Flex>
+
+				</div>
+			</>
+		);
+	
+			setOpenSearchModal(true);
+		};
 	
 
 	return (
@@ -697,7 +1211,7 @@ const YearComponent = ({ contentHeight }) => {
 								</Button> */}
 
 								<Flex gap="small">
-									<Button variant="outlined" icon={<SearchOutlined />}>
+									<Button variant="outlined" icon={<SearchOutlined />} onClick={showSearchModal} >
 										조건 검색
 									</Button>
 								</Flex>
@@ -742,6 +1256,37 @@ const YearComponent = ({ contentHeight }) => {
 					}}
 				/>
 			</Flex>
+
+			{/* ModalComponent 추가 - "조건 검색" 클릭 시 열림 */}
+			<div style={{ display: openSearchModal ? "block" : "none" }}>
+				<Modal
+					title={
+						<div
+							className="modal-title"
+							onMouseOver={() => setDisabled(false)}
+							onMouseOut={() => setDisabled(true)}
+						>
+							조건 검색
+						</div>
+					}
+					open={openSearchModal}
+					onCancel={() => setOpenSearchModal(false)}
+					width={900}
+					footer={null}
+					modalRender={(modal) => (
+						<Draggable
+							disabled={disabled}
+							bounds={bounds}
+							nodeRef={draggleRef}
+							onStart={(event, uiData) => onStart(event, uiData)}
+						>
+							<div ref={draggleRef}>{modal}</div>
+						</Draggable>
+					)}
+				>
+					{modalContent}
+				</Modal>
+			</div>
 		</Layout>
 	);
 };
