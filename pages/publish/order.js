@@ -1,5 +1,5 @@
 // pages/order.js
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
 	Layout,
 	Typography,
@@ -1313,6 +1313,254 @@ const OrderComponent = ({ contentHeight }) => {
 	const [drawerContent, setDrawerContent] = useState(null); // Drawer 본문 내용
 	const [drawerFooter, setDrawerFooter] = useState(null); // Drawer 푸터 버튼
 	const [drawerTitle, setDrawerTitle] = useState(""); // Drawer 제목 상태
+	const [selectedPrint, setSelectedPrint] = useState("label"); // ✅ 선택된 라벨 종류 상태
+	const [selectedLabel, setSelectedLabel] = useState("radio1-1"); // ✅ 선택된 라벨 종류 상태
+
+
+	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
+
+	// 📌 인쇄 구분 선택 핸들러
+	const handlePrintChange = (value) => {
+		setSelectedPrint(value); // 선택된 값 업데이트
+	};
+
+  // 📌 라벨 설정 초기화 핸들러
+  const handleLabelReset = () => {
+		form.resetFields();
+		setSelectedLabel("radio1-1"); // 선택된 값 업데이트
+  };
+
+	// 📌 라벨 종류 선택 핸들러
+	const handleLabelChange = (e) => {
+		setSelectedLabel(e.target.value); // 선택된 값 업데이트
+	};
+
+	// 📌 폼 값 변경 감지 및 상태 업데이트
+  useEffect(() => {
+		setDrawerContent(
+			<>
+				<Form form={form} layout="vertical">
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type no-bullet">인쇄 구분</p>
+					</Flex>
+
+					<Form.Item>
+						<Select
+							defaultValue="label"
+							onChange={handlePrintChange}
+							options={[
+								{
+									value: "label",
+									label: "라벨 인쇄",
+								},
+								{
+									value: "report",
+									label: "성적서 인쇄",
+								},
+							]}
+						/>
+					</Form.Item>
+
+					{selectedPrint === "label" && (
+						<>
+							<Flex align="center" gap={4} className="tit-area">
+								<p className="tit-type no-bullet">라벨 설정</p>
+
+								<Button type="link" className="btn-reset-txt" onClick={handleLabelReset}>
+									설정 초기화
+								</Button>
+							</Flex>
+
+							<Row gutter={8}>
+								<Col span={24}>
+									<Form.Item label="라벨 종류" name="radio1">
+										<Radio.Group
+											onChange={handleLabelChange} // ✅ 라벨 선택 이벤트 핸들러 추가
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												gap: 8,
+											}}
+											defaultValue="radio1-1"
+										>
+											<Radio value="radio1-1">라벨 1 --&gt; 2 --&gt; 3</Radio>
+											<Radio value="radio1-2">라벨 1</Radio>
+											<Radio value="radio1-3">라벨 2</Radio>
+											<Radio value="radio1-4">라벨 3</Radio>
+										</Radio.Group>
+									</Form.Item>
+								</Col>
+							</Row>
+
+							{/* 선택된 라벨에 따라 규격 표시 */}
+							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-2") && (
+								<>
+									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+									
+									<Row gutter={8}>
+										<Flex align="center" gap={4} className="tit-area">
+											<p className="tit-type no-bullet">라벨1 설정</p>
+										</Flex>
+
+										<Col span={24}>
+											<Form.Item label="길이" name="radio2">
+												<Radio.Group
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														gap: 8,
+													}}
+													defaultValue="radio2-1"
+												>
+													<Radio value="radio2-1">54.5mm</Radio>
+													<Radio value="radio2-2">51mm</Radio>
+												</Radio.Group>
+											</Form.Item>
+										</Col>
+									</Row>
+								</>
+							)}
+
+							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-3") && (
+								<>
+									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+
+									<Row gutter={8}>
+										<Flex align="center" gap={4} className="tit-area">
+											<p className="tit-type no-bullet">라벨2 설정</p>
+										</Flex>
+
+										<Col span={24}>
+											<Form.Item label="AS 연락처" name="radio3">
+												<Radio.Group
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														gap: 8,
+													}}
+													defaultValue="radio3-1"
+												>
+													<Radio value="radio3-1">한국(동탄)</Radio>
+													<Radio value="radio3-2">중국(상해)</Radio>
+												</Radio.Group>
+											</Form.Item>
+										</Col>
+
+										<Col span={24}>
+											<Form.Item label="Flow 방향" name="radio4">
+												<Radio.Group
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														gap: 8,
+													}}
+													defaultValue="radio4-1"
+												>
+													<Radio value="radio4-1">정방향(←)</Radio>
+													<Radio value="radio4-2">역방향(→)</Radio>
+												</Radio.Group>
+											</Form.Item>
+										</Col>
+									</Row>
+								</>
+							)}
+
+							{/* 선택된 라벨에 따라 규격 표시 */}
+							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-4") && (
+								<>
+									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+									<Row gutter={8}>
+										<Flex align="center" gap={4} className="tit-area">
+											<p className="tit-type no-bullet">라벨3 설정</p>
+										</Flex>
+
+										<Col span={24}>
+											<Form.Item label="길이" name="radio5">
+												<Radio.Group
+													style={{
+														display: "flex",
+														flexDirection: "column",
+														gap: 8,
+													}}
+													defaultValue="radio5-1"
+												>
+													<Radio value="radio5-1">11.5mm</Radio>
+													<Radio value="radio5-2">14.5mm</Radio>
+													<Radio value="radio5-3">8.5mm</Radio>
+												</Radio.Group>
+											</Form.Item>
+										</Col>
+									</Row>
+								</>
+							)}
+						</>
+					)}
+
+					{selectedPrint === "report" && (
+						<>
+							{/* <Flex align="center" gap={4} className="tit-area">
+								<p className="tit-type no-bullet">성적서 구분</p>
+
+								<Button type="link" className="btn-reset-txt">
+									설정 초기화
+								</Button>
+							</Flex>
+
+							<Row gutter={8}>
+								<Col span={24}>
+									<Form.Item name="radio6">
+										<Radio.Group
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												gap: 8,
+											}}
+										>
+											<Radio value="radio6-1">표준 성적서</Radio>
+										</Radio.Group>
+									</Form.Item>
+								</Col>
+							</Row> */}
+
+							<Flex align="center" gap={4} className="tit-area">
+								<p className="tit-type no-bullet">양식 선택</p>
+
+								<Button type="link" className="btn-reset-txt">
+									설정 초기화
+								</Button>
+							</Flex>
+
+							<Form.Item>
+								<Select
+									defaultValue="select3"
+									onChange={handleChange}
+									options={[
+										{
+											value: "select3",
+											label: "mkp-calibration-ko-A",
+										},
+										{
+											value: "select4",
+											label: "mkp-calibration-ko-B",
+										},
+										{
+											value: "select5",
+											label: "mkp-calibration-ko-C",
+										},
+										{
+											value: "select6",
+											label:
+												"mkp-calibrationcalibrationcalibrationcalibration ...",
+										},
+									]}
+								/>
+							</Form.Item>
+						</>
+					)}
+				</Form>
+			</>
+		);
+  }, [selectedPrint, selectedLabel]); // ✅ selectedLabel 변경 시 자동 반영
 
 	// 드로어 열기
 	const showDrawer = (type) => {
@@ -1330,223 +1578,96 @@ const OrderComponent = ({ contentHeight }) => {
 			</Flex>
 		);
 
-		if (type === "label") {
-			setDrawerContent(
-				<>
-					<Form layout="vertical">
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">인쇄 구분</p>
-						</Flex>
+		setSelectedPrint(type);
 
-						<Form.Item>
-							<Select
-								defaultValue="print1"
-								onChange={handleChange}
-								options={[
-									{
-										value: "print1",
-										label: "라벨 인쇄",
-									},
-									{
-										value: "print2",
-										label: "성적서 인쇄",
-									},
-								]}
-							/>
-						</Form.Item>
+		{drawerContent};
 
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">라벨 설정</p>
+		// if (type === "label") {
+		// 	<>
+		// 		{drawerContent}
+		// 	</>
+		// } else if (type === "report") {
+		// 	setDrawerContent(
+		// 		<>
+		// 			<Form layout="vertical">
+		// 				<Flex align="center" gap={4} className="tit-area">
+		// 					<p className="tit-type no-bullet">인쇄 구분</p>
+		// 				</Flex>
 
-							<Button type="link" className="btn-reset-txt">
-								설정 초기화
-							</Button>
-						</Flex>
+		// 				<Form.Item>
+		// 					<Select
+		// 						defaultValue="report"
+		// 						onChange={handleChange}
+		// 						options={[
+		// 							{
+		// 								value: "label",
+		// 								label: "라벨 인쇄",
+		// 							},
+		// 							{
+		// 								value: "report",
+		// 								label: "성적서 인쇄",
+		// 							},
+		// 						]}
+		// 					/>
+		// 				</Form.Item>
 
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item label="라벨 종류" name="radio1">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio1-1">라벨 1 --&gt; 2 --&gt; 3</Radio>
-										<Radio value="radio1-2">라벨 1</Radio>
-										<Radio value="radio1-3">라벨 2</Radio>
-										<Radio value="radio1-4">라벨 3</Radio>
-										<Radio value="radio1-5">라벨 4</Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
+		// 				<Flex align="center" gap={4} className="tit-area">
+		// 					<p className="tit-type no-bullet">성적서 구분</p>
 
-						<Divider style={{ marginTop: 16, marginBottom: 16 }} />
+		// 					<Button type="link" className="btn-reset-txt">
+		// 						설정 초기화
+		// 					</Button>
+		// 				</Flex>
 
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item label="라벨 1 규격 (mm)" name="radio2">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio2-1">규격 1 (30*70)</Radio>
-										<Radio value="radio2-2">규격 2 (40*70)</Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
+		// 				<Row gutter={8}>
+		// 					<Col span={24}>
+		// 						<Form.Item name="radio6">
+		// 							<Radio.Group
+		// 								style={{
+		// 									display: "flex",
+		// 									flexDirection: "column",
+		// 									gap: 8,
+		// 								}}
+		// 							>
+		// 								<Radio value="radio6-1">표준 성적서</Radio>
+		// 							</Radio.Group>
+		// 						</Form.Item>
+		// 					</Col>
+		// 				</Row>
 
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item label="라벨 2 규격 (mm)" name="radio3">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio3-1">규격 1 (35*70)</Radio>
-										<Radio value="radio3-2">규격 2 (45*70)</Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
+		// 				<Flex align="center" gap={4} className="tit-area">
+		// 					<p className="tit-type no-bullet">양식 선택</p>
+		// 				</Flex>
 
-						<Divider style={{ marginTop: 16, marginBottom: 16 }} />
-
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">기타</p>
-
-							<Button type="link" className="btn-reset-txt">
-								설정 초기화
-							</Button>
-						</Flex>
-
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item label="AS 연락처" name="radio4">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio4-1">한국 본사</Radio>
-										<Radio value="radio4-2">중국 상해법인</Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
-
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item label="장착 방향" name="radio5">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio5-1">정방향 ( &lt;-- ) </Radio>
-										<Radio value="radio5-2">역방향 ( --&gt; ) </Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
-					</Form>
-				</>
-			);
-		} else if (type === "report") {
-			setDrawerContent(
-				<>
-					<Form layout="vertical">
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">인쇄 구분</p>
-						</Flex>
-
-						<Form.Item>
-							<Select
-								defaultValue="select2"
-								onChange={handleChange}
-								options={[
-									{
-										value: "select1",
-										label: "라벨 인쇄",
-									},
-									{
-										value: "select2",
-										label: "성적서 인쇄",
-									},
-								]}
-							/>
-						</Form.Item>
-
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">성적서 구분</p>
-
-							<Button type="link" className="btn-reset-txt">
-								설정 초기화
-							</Button>
-						</Flex>
-
-						<Row gutter={8}>
-							<Col span={24}>
-								<Form.Item name="radio6">
-									<Radio.Group
-										style={{
-											display: "flex",
-											flexDirection: "column",
-											gap: 8,
-										}}
-									>
-										<Radio value="radio6-1">표준 성적서</Radio>
-									</Radio.Group>
-								</Form.Item>
-							</Col>
-						</Row>
-
-						<Flex align="center" gap={4} className="tit-area">
-							<p className="tit-type no-bullet">양식 선택</p>
-						</Flex>
-
-						<Form.Item>
-							<Select
-								defaultValue="select3"
-								onChange={handleChange}
-								options={[
-									{
-										value: "select3",
-										label: "mkp-calibration-ko-A",
-									},
-									{
-										value: "select4",
-										label: "mkp-calibration-ko-B",
-									},
-									{
-										value: "select5",
-										label: "mkp-calibration-ko-C",
-									},
-									{
-										value: "select6",
-										label:
-											"mkp-calibrationcalibrationcalibrationcalibration ...",
-									},
-								]}
-							/>
-						</Form.Item>
-					</Form>
-				</>
-			);
-		}
+		// 				<Form.Item>
+		// 					<Select
+		// 						defaultValue="select3"
+		// 						onChange={handleChange}
+		// 						options={[
+		// 							{
+		// 								value: "select3",
+		// 								label: "mkp-calibration-ko-A",
+		// 							},
+		// 							{
+		// 								value: "select4",
+		// 								label: "mkp-calibration-ko-B",
+		// 							},
+		// 							{
+		// 								value: "select5",
+		// 								label: "mkp-calibration-ko-C",
+		// 							},
+		// 							{
+		// 								value: "select6",
+		// 								label:
+		// 									"mkp-calibrationcalibrationcalibrationcalibration ...",
+		// 							},
+		// 						]}
+		// 					/>
+		// 				</Form.Item>
+		// 			</Form>
+		// 		</>
+		// 	);
+		// }
 
 		setOpenDrawer(true);
 	};
