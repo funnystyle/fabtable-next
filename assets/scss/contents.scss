@@ -1175,6 +1175,64 @@
 	}
 }
 
+/* 조건 검색 팝업 */
+.btn-add-area {
+	width: toRem(52);
+	flex: none !important;
+}
+
+.select-radio-area {
+	width: toRem(163);
+	flex: none !important;
+
+	.ant-radio-wrapper {
+		&:last-child {
+			margin-right: 0 !important;
+		}
+		span.ant-radio {
+			& + * {
+				padding: 0 0 0 toRem(4);
+			}
+		}
+	}
+
+	&.select-radio-area2 {
+		width: toRem(204);
+	}
+}
+
+.modal-input-area {
+	&.ant-form {
+		> .ant-flex {
+			&.year-select-area {
+				.ant-form-item {
+					flex: none !important;
+				}
+			}
+		}
+	}
+}
+
+.layer-btn-area {
+	padding: toRem(20) 0;
+
+	.ant-btn {
+		min-width: toRem(55);
+	}
+}
+
+.search-tb-area {
+	margin: 0 -24px;
+	padding: 12px 24px;
+	border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.layer-scroll {
+	max-height: 70vh;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {

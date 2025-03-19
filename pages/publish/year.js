@@ -602,7 +602,7 @@ const YearComponent = ({ contentHeight }) => {
 										picker="year"
 										format="YYYY"
 										placeholder="선택"
-										style={{ width: 80 }}
+										style={{ width: 80, height: 32 }}
 										allowClear={false} // X 버튼 제거
                     // suffixIcon={null} // 아이콘 제거
 									/>
