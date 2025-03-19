@@ -149,6 +149,7 @@ const chartOptions = {
 
 const NonCommerce = () => {
   const [selectedYear, setSelectedYear] = useState(dayjs()); // 현재 연도 기본값
+  const [open, setOpen] = useState(false); // 팝업 상태 관리
   const [tags, setTags] = useState([
     "2024-01-01 ~ 2025-02-22",
     "MARU",
@@ -294,6 +295,21 @@ const NonCommerce = () => {
                           style={{ width: 80, height: 32 }}
                           allowClear={false} // X 버튼 제거
                           // suffixIcon={null} // 아이콘 제거
+                          open={open}
+                          onOpenChange={setOpen} // 팝업 상태 관리
+                          renderExtraFooter={() => (
+                            <div style={{ textAlign: "center", padding: "8px" }}>
+                              <Button
+                                type="link"
+                                onClick={() => {
+                                  setSelectedYear(dayjs());
+                                  setTimeout(() => setOpen(false), 100); // ✅ 100ms 후 닫기 (딜레이 추가)
+                                }}
+                              >
+                                올해
+                              </Button>
+                            </div>
+                          )}
                         />
                       </ConfigProvider>
 

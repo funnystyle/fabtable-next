@@ -538,6 +538,7 @@ const handleChange = (value) => {
 
 const YearComponent = ({ contentHeight }) => {
 	const [selectedYear, setSelectedYear] = useState(dayjs()); // 현재 연도 기본값
+	const [open, setOpen] = useState(false); // 팝업 상태 관리
 
 	// 📌 날짜 변경 핸들러
 	const onChange = (date) => {
@@ -605,6 +606,21 @@ const YearComponent = ({ contentHeight }) => {
 										style={{ width: 80, height: 32 }}
 										allowClear={false} // X 버튼 제거
                     // suffixIcon={null} // 아이콘 제거
+										open={open}
+										onOpenChange={setOpen} // 팝업 상태 관리
+										renderExtraFooter={() => (
+											<div style={{ textAlign: "center", padding: "8px" }}>
+												<Button
+													type="link"
+													onClick={() => {
+														setSelectedYear(dayjs());
+														setTimeout(() => setOpen(false), 100); // ✅ 100ms 후 닫기 (딜레이 추가)
+													}}
+												>
+													올해
+												</Button>
+											</div>
+										)}
 									/>
 								</ConfigProvider>
 
