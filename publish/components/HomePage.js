@@ -367,8 +367,11 @@ const HomePage = ({ children }) => {
 				const header = document.querySelector(".header")?.offsetHeight || 0;
 				const contentsTop =
 					document.querySelector(".contents-top")?.offsetHeight || 0;
+				const pageNav =
+					document.querySelector(".page-top-nav > .ant-tabs-nav")
+						?.offsetHeight || 0;
 
-				setContentHeight(`calc(${header}px + ${contentsTop}px - 30px)`);
+				setContentHeight(`calc(${contentsTop}px + ${pageNav}px)`);
 			};
 
 			// 페이지 이동 시 높이 업데이트
@@ -569,29 +572,42 @@ const HomePage = ({ children }) => {
 						</div>
 					</Header>
 					{/* 탭 없이 하려면 아래 코드를 적용 */}
-					<Content className="contents">
+					{/* <Content className="contents">
 						{children ? React.cloneElement(children, { contentHeight }) : null}
-					</Content>
+					</Content> */}
 					{/* 탭 적용하려면 아래 코드를 적용 */}
 					{/* Content 영역을 Tabs로 변경 */}
-					{/* <Content className="contents">
-							<Tabs
-								hideAdd
-								size="small"
-								type="editable-card"
-								activeKey={activeTab}
-								onChange={onTabChange}
-								onEdit={(targetKey, action) => action === "remove" && onTabRemove(targetKey)}
-							>
-								{tabs.map((tab) => (
-									<Tabs.TabPane tab={tab.label} key={tab.key} closable={tab.key !== "1"}>
-										<Suspense fallback={<Spin size="large" />}>
-											{pageComponents[tab.url] ? React.createElement(pageComponents[tab.url], { contentHeight }) : <div>페이지 없음</div>}
-										</Suspense>
-									</Tabs.TabPane>
-								))}
-							</Tabs>
-					</Content> */}
+					<Content className="contents">
+						<Tabs
+							hideAdd
+							size="small"
+							type="editable-card"
+							activeKey={activeTab}
+							onChange={onTabChange}
+							onEdit={(targetKey, action) =>
+								action === "remove" && onTabRemove(targetKey)
+							}
+							className="page-top-nav"
+						>
+							{tabs.map((tab) => (
+								<Tabs.TabPane
+									tab={tab.label}
+									key={tab.key}
+									closable={tab.key !== "1"}
+								>
+									<Suspense fallback={<Spin size="large" />}>
+										{pageComponents[tab.url] ? (
+											React.createElement(pageComponents[tab.url], {
+												contentHeight,
+											})
+										) : (
+											<div>페이지 없음</div>
+										)}
+									</Suspense>
+								</Tabs.TabPane>
+							))}
+						</Tabs>
+					</Content>
 				</Layout>
 			</Layout>
 		</Layout>

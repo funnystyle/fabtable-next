@@ -2,7 +2,7 @@
 
 .contents {
 	min-width: toRem(712);
-	padding: toRem(40) toRem(40) toRem(40) toRem(260);
+	padding: toRem(44) 0 toRem(40) toRem(260);
 	background-color: #fff;
 	flex-shrink: 0;
 	transition: padding-left 0.2s ease-in-out;
@@ -13,10 +13,10 @@
 		padding: toRem(40) toRem(40) toRem(12) toRem(300);
 		position: fixed;
 		left: 0;
-		top: toRem(44);
+		top: toRem(86);
 		right: 0;
 		z-index: 10;
-		transition: left 0.2s ease-in-out;
+		transition: padding-left 0.2s ease-in-out;
 
 		.contents-top-scroll {
 			overflow-x: auto;
@@ -26,13 +26,16 @@
 	.contents-scroll {
 		height: 100%;
 		margin-left: toRem(40);
+		padding-right: toRem(40);
 		overflow-y: auto;
 		transition: margin-left 0.2s ease-in-out;
 	}
 
 	.contents-flex {
 		margin-left: toRem(40);
-		transition: padding-left 0.2s ease-in-out;
+		margin-top: toRem(40);
+		padding-right: toRem(40);
+		transition: margin-left 0.2s ease-in-out;
 
 		.contents-left {
 			flex-grow: 1;
@@ -45,6 +48,7 @@
 
 			.contents-scroll {
 				margin-left: 0;
+				padding-right: 0;
 			}
 		}
 
@@ -368,7 +372,7 @@
 
 		.contents-top {
 			padding-left: toRem(104);
-			transition: left 0.2s ease-in-out;
+			transition: padding-left 0.2s ease-in-out;
 		}
 
 		.contents-scroll {
@@ -378,6 +382,13 @@
 
 		.anchor-contents {
 			margin-left: 0;
+		}
+
+		.page-top-nav {
+			> .ant-tabs-nav {
+				padding-left: toRem(74);
+				transition: padding-left 0.2s ease-in-out;
+			}
 		}
 	}
 }

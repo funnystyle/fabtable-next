@@ -534,7 +534,7 @@ const Chart = () => {
 
 	return (
 		<Card style={{ width: "100%", textAlign: "center", marginBottom: "20px" }}>
-			<div style={{ width: "100%", height: "400px" }}>
+			<div style={{ width: "100%", minHeight: "400px", height: "auto" }}>
 				<Bar data={data} options={options} height={80} />
 			</div>
 		</Card>
@@ -640,28 +640,28 @@ const YearComponent = ({ contentHeight }) => {
 		}
 		return originalElement;
 	};
-	
+
 	// 📌 날짜 변경 핸들러
 	const onChange = (date) => {
-			if (date) {
-					setSelectedYear(date);
-			}
+		if (date) {
+			setSelectedYear(date);
+		}
 	};
 
-  // 📌 연도 변경 핸들러 (Prev / Next 버튼)
-  const handlePrevYear = () => {
-    setSelectedYears(([start, end]) => [
-      start.subtract(1, "year"),
-      end.subtract(1, "year")
-    ]);
-  };
+	// 📌 연도 변경 핸들러 (Prev / Next 버튼)
+	const handlePrevYear = () => {
+		setSelectedYears(([start, end]) => [
+			start.subtract(1, "year"),
+			end.subtract(1, "year"),
+		]);
+	};
 
-  const handleNextYear = () => {
-    setSelectedYears(([start, end]) => [
-      start.add(1, "year"),
-      end.add(1, "year")
-    ]);
-  };
+	const handleNextYear = () => {
+		setSelectedYears(([start, end]) => [
+			start.add(1, "year"),
+			end.add(1, "year"),
+		]);
+	};
 
 	// 📌 버튼 핸들러 (올해, 작년, 내년, 최근 3년)
 	const handleYearSelect = (type) => {
@@ -670,7 +670,10 @@ const YearComponent = ({ contentHeight }) => {
 				setSelectedYears([dayjs(), dayjs()]);
 				break;
 			case "lastYear":
-				setSelectedYears([dayjs().subtract(1, "year"), dayjs().subtract(1, "year")]);
+				setSelectedYears([
+					dayjs().subtract(1, "year"),
+					dayjs().subtract(1, "year"),
+				]);
 				break;
 			case "nextYear":
 				setSelectedYears([dayjs().add(1, "year"), dayjs().add(1, "year")]);
@@ -681,8 +684,8 @@ const YearComponent = ({ contentHeight }) => {
 			default:
 				break;
 		}
-	};	
-	
+	};
+
 	const toggleItem = (index) => {
 		setVisibleItems((prev) =>
 			prev.map((item, i) => (i === index ? !item : item))
@@ -701,15 +704,17 @@ const YearComponent = ({ contentHeight }) => {
 
 	const disabled3Years = (current, { from, type }) => {
 		if (from) {
-			const minYear = from.add(-2, 'years');
-			const maxYear = from.add(2, 'years');
-	
+			const minYear = from.add(-2, "years");
+			const maxYear = from.add(2, "years");
+
 			switch (type) {
-				case 'year':
-					return current.year() < minYear.year() || current.year() > maxYear.year();
+				case "year":
+					return (
+						current.year() < minYear.year() || current.year() > maxYear.year()
+					);
 			}
 		}
-	
+
 		return false;
 	};
 
@@ -766,9 +771,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue="include1-1"
-								>
+								<Radio.Group defaultValue="include1-1">
 									<Radio value="include1-1">포함</Radio>
 									<Radio value="include1-2">미포함</Radio>
 									<Radio value="include1-3">일치</Radio>
@@ -813,9 +816,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue={"include2-1"}
-								>
+								<Radio.Group defaultValue={"include2-1"}>
 									<Radio value="include2-1">포함</Radio>
 									<Radio value="include2-2">미포함</Radio>
 									<Radio value="include12-3">일치</Radio>
@@ -870,9 +871,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue={"scope1-1"}
-								>
+								<Radio.Group defaultValue={"scope1-1"}>
 									<Radio value="scope1-1">범위</Radio>
 									<Radio value="scope1-2">≤</Radio>
 									<Radio value="scope1-3">≥</Radio>
@@ -932,9 +931,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue={"scope2-1"}
-								>
+								<Radio.Group defaultValue={"scope2-1"}>
 									<Radio value="scope2-1">범위</Radio>
 									<Radio value="scope2-2">≤</Radio>
 									<Radio value="scope2-3">≥</Radio>
@@ -983,7 +980,6 @@ const YearComponent = ({ contentHeight }) => {
 					</Flex>
 
 					<Form layout="vertical" className="modal-input-area">
-						
 						<Flex
 							gap={8}
 							align="center"
@@ -1057,9 +1053,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue={"include3-1"}
-								>
+								<Radio.Group defaultValue={"include3-1"}>
 									<Radio value="include3-1">포함</Radio>
 									<Radio value="include3-2">미포함</Radio>
 									<Radio value="include3-3">일치</Radio>
@@ -1104,9 +1098,7 @@ const YearComponent = ({ contentHeight }) => {
 							</Form.Item>
 
 							<Form.Item className="select-radio-area">
-								<Radio.Group
-									defaultValue={"include4-1"}
-								>
+								<Radio.Group defaultValue={"include4-1"}>
 									<Radio value="include4-1">포함</Radio>
 									<Radio value="include4-2">미포함</Radio>
 									<Radio value="include4-3">일치</Radio>
@@ -1140,14 +1132,12 @@ const YearComponent = ({ contentHeight }) => {
 						<Button onClick={closeModal}>닫기</Button>
 						<Button type="primary">검색</Button>
 					</Flex>
-
 				</div>
 			</>
 		);
-	
+
 		setOpenSearchModal(true);
 	};
-	
 
 	return (
 		<Layout>
@@ -1167,11 +1157,10 @@ const YearComponent = ({ contentHeight }) => {
 
 						<Flex align="start" justify="space-between">
 							<Flex gap="small" align="center">
-
 								<button onClick={handlePrevYear} className="btn-page">
 									<LeftOutlined />
 								</button>
-							
+
 								<ConfigProvider locale={koKR}>
 									<RangePicker
 										picker="year"
@@ -1186,7 +1175,7 @@ const YearComponent = ({ contentHeight }) => {
 										}}
 										placeholder={["시작 연도", "종료 연도"]}
 										style={{ width: 160, height: 32 }}
-										styles= {{ input: { textAlign: "center" } }}
+										styles={{ input: { textAlign: "center" } }}
 										format="YYYY"
 										disabledDate={disabled3Years}
 									/>
@@ -1197,24 +1186,43 @@ const YearComponent = ({ contentHeight }) => {
 								</button>
 
 								<Flex gap="small" className="btn-spacing-area">
-									<Button variant="outlined" onClick={() => handleYearSelect("thisYear")}>올해</Button>
-									<Button variant="outlined" onClick={() => handleYearSelect("lastYear")}>작년</Button>
-									<Button variant="outlined" onClick={() => handleYearSelect("nextYear")}>내년</Button>
-									<Button variant="outlined" onClick={() => handleYearSelect("last3Years")}>최근 3년</Button>
+									<Button
+										variant="outlined"
+										onClick={() => handleYearSelect("thisYear")}
+									>
+										올해
+									</Button>
+									<Button
+										variant="outlined"
+										onClick={() => handleYearSelect("lastYear")}
+									>
+										작년
+									</Button>
+									<Button
+										variant="outlined"
+										onClick={() => handleYearSelect("nextYear")}
+									>
+										내년
+									</Button>
+									<Button
+										variant="outlined"
+										onClick={() => handleYearSelect("last3Years")}
+									>
+										최근 3년
+									</Button>
 								</Flex>
 
 								<Flex gap="small" align="center">
-								<Button
-									color="primary"
-									variant="text"
-									size="small"
-									className="all-delete-tag"
-									onClick={() => setSelectedYears([dayjs(), dayjs()]) }
-								>
-									초기화
-								</Button>
+									<Button
+										color="primary"
+										variant="text"
+										size="small"
+										className="all-delete-tag"
+										onClick={() => setSelectedYears([dayjs(), dayjs()])}
+									>
+										초기화
+									</Button>
 								</Flex>
-
 							</Flex>
 
 							<Flex gap="small" align="center">
@@ -1229,7 +1237,11 @@ const YearComponent = ({ contentHeight }) => {
 								</Button> */}
 
 								<Flex gap="small">
-									<Button variant="outlined" icon={<SearchOutlined />} onClick={showSearchModal} >
+									<Button
+										variant="outlined"
+										icon={<SearchOutlined />}
+										onClick={showSearchModal}
+									>
 										조건 검색
 									</Button>
 								</Flex>

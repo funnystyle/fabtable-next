@@ -353,6 +353,10 @@ h2 {
 		}
 	}
 
+	.title-page {
+		margin-bottom: 0 !important;
+	}
+
 	.ant-form-item {
 		margin-bottom: 0;
 	}
@@ -954,6 +958,51 @@ h2 {
 .ant-empty-normal {
 	.ant-empty-image {
 		height: toRem(29);
+	}
+}
+
+/* tab nav */
+.page-top-nav {
+	> .ant-tabs-nav {
+		padding-top: toRem(8);
+		padding-left: toRem(270);
+		margin-bottom: 0;
+		background-color: #fafafa;
+		position: fixed;
+		left: 0;
+		right: 0;
+		top: toRem(43);
+		z-index: 4;
+		transition: padding-left 0.2s ease-in-out;
+
+		&::before {
+			border-bottom: 1px solid #d9d9d9;
+		}
+
+		.ant-tabs-tab {
+			padding: toRem(5) toRem(12) !important;
+			background-color: rgba(0, 0, 0, 0.02);
+			border: 1px solid #d9d9d9;
+			border-bottom: 0;
+			font-size: toRem(14) !important;
+
+			&.ant-tabs-tab-active {
+				background-color: #fff;
+				font-weight: 600;
+				position: relative;
+
+				&::after {
+					content: "";
+					width: 100%;
+					height: 2px;
+					background-color: #000;
+					position: absolute;
+					left: 0;
+					bottom: -2px;
+					z-index: 1000;
+				}
+			}
+		}
 	}
 }
 
