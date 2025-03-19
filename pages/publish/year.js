@@ -22,6 +22,8 @@ import {
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
 
+const { RangePicker } = DatePicker;
+
 // ✅ 테이블 컬럼 정의
 const columns = [
 	{
@@ -442,6 +444,7 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
+import { height, textAlign } from "@mui/system";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -538,6 +541,7 @@ const handleChange = (value) => {
 
 const YearComponent = ({ contentHeight }) => {
 	const [selectedYear, setSelectedYear] = useState(dayjs()); // 현재 연도 기본값
+	const [selectedYears, setSelectedYears] = useState([dayjs(), dayjs()]); // 현재 연도 기본값
 	const [open, setOpen] = useState(false); // 팝업 상태 관리
 
 	// 📌 날짜 변경 핸들러
@@ -547,15 +551,40 @@ const YearComponent = ({ contentHeight }) => {
 			}
 	};
 
-	// 📌 이전 해로 변경
-	const handlePrevYear = () => {
-			setSelectedYear((prev) => prev.subtract(1, "year"));
-	};
+  // 📌 연도 변경 핸들러 (Prev / Next 버튼)
+  const handlePrevYear = () => {
+    setSelectedYears(([start, end]) => [
+      start.subtract(1, "year"),
+      end.subtract(1, "year")
+    ]);
+  };
 
-	// 📌 다음 해로 변경
-	const handleNextYear = () => {
-			setSelectedYear((prev) => prev.add(1, "year"));
-	};
+  const handleNextYear = () => {
+    setSelectedYears(([start, end]) => [
+      start.add(1, "year"),
+      end.add(1, "year")
+    ]);
+  };
+
+	  // 📌 버튼 핸들러 (올해, 작년, 내년, 최근 3년)
+		const handleYearSelect = (type) => {
+			switch (type) {
+				case "thisYear":
+					setSelectedYears([dayjs(), dayjs()]);
+					break;
+				case "lastYear":
+					setSelectedYears([dayjs().subtract(1, "year"), dayjs().subtract(1, "year")]);
+					break;
+				case "nextYear":
+					setSelectedYears([dayjs().add(1, "year"), dayjs().add(1, "year")]);
+					break;
+				case "last3Years":
+					setSelectedYears([dayjs().subtract(2, "year"), dayjs()]);
+					break;
+				default:
+					break;
+			}
+		};	
 	
 	const toggleItem = (index) => {
 		setVisibleItems((prev) =>
@@ -572,6 +601,21 @@ const YearComponent = ({ contentHeight }) => {
 	const subTable = () => (
 		<Table columns={columns} dataSource={subData} pagination={false} />
 	);
+
+	const disabled3Years = (current, { from, type }) => {
+		if (from) {
+			const minYear = from.add(-2, 'years');
+			const maxYear = from.add(2, 'years');
+	
+			switch (type) {
+				case 'year':
+					return current.year() < minYear.year() || current.year() > maxYear.year();
+			}
+		}
+	
+		return false;
+	};
+	
 
 	return (
 		<Layout>
@@ -597,40 +641,52 @@ const YearComponent = ({ contentHeight }) => {
 								</button>
 							
 								<ConfigProvider locale={koKR}>
-									<DatePicker
-										value={selectedYear}
-										onChange={onChange}
+									<RangePicker
 										picker="year"
+										value={selectedYears}
+										onChange={(values) => {
+											if (!values) {
+												// 📌 X 버튼 클릭 시 올해~올해로 초기화
+												setSelectedYears([dayjs(), dayjs()]);
+											} else {
+												setSelectedYears(values);
+											}
+										}}
+										placeholder={["시작 연도", "종료 연도"]}
+										style={{ width: 160, height: 32 }}
+										styles= {{ input: { textAlign: "center" } }}
 										format="YYYY"
-										placeholder="선택"
-										style={{ width: 80, height: 32 }}
-										allowClear={false} // X 버튼 제거
-                    // suffixIcon={null} // 아이콘 제거
-										open={open}
-										onOpenChange={setOpen} // 팝업 상태 관리
-										renderExtraFooter={() => (
-											<div style={{ textAlign: "center", padding: "8px" }}>
-												<Button
-													type="link"
-													onClick={() => {
-														setSelectedYear(dayjs());
-														setTimeout(() => setOpen(false), 100); // ✅ 100ms 후 닫기 (딜레이 추가)
-													}}
-												>
-													올해
-												</Button>
-											</div>
-										)}
+										disabledDate={disabled3Years}
 									/>
 								</ConfigProvider>
 
 								<button onClick={handleNextYear} className="btn-page">
 									<RightOutlined />
 								</button>
+
+								<Flex gap="small" className="btn-spacing-area">
+									<Button variant="outlined" onClick={() => handleYearSelect("thisYear")}>올해</Button>
+									<Button variant="outlined" onClick={() => handleYearSelect("lastYear")}>작년</Button>
+									<Button variant="outlined" onClick={() => handleYearSelect("nextYear")}>내년</Button>
+									<Button variant="outlined" onClick={() => handleYearSelect("last3Years")}>최근 3년</Button>
+								</Flex>
+
+								<Flex gap="small" align="center">
+								<Button
+									color="primary"
+									variant="text"
+									size="small"
+									className="all-delete-tag"
+									onClick={() => setSelectedYears([dayjs(), dayjs()]) }
+								>
+									초기화
+								</Button>
+								</Flex>
+
 							</Flex>
 
 							<Flex gap="small" align="center">
-								<Button
+								{/* <Button
 									color="primary"
 									variant="text"
 									size="small"
@@ -638,17 +694,12 @@ const YearComponent = ({ contentHeight }) => {
 									// onClick={handleTagDeleteAll}
 								>
 									조건 초기화
-								</Button>
+								</Button> */}
 
 								<Flex gap="small">
 									<Button variant="outlined" icon={<SearchOutlined />}>
 										조건 검색
 									</Button>
-								</Flex>
-								<Flex gap="small" className="btn-spacing-area">
-									<Button variant="outlined">올해</Button>
-									<Button variant="outlined">작년</Button>
-									<Button variant="outlined">내년</Button>
 								</Flex>
 								<Flex gap="small">
 									<Button variant="outlined">엑셀 다운로드</Button>

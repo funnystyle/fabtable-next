@@ -259,7 +259,7 @@ const NonCommerce = () => {
               {/* 차트: 가로 1/3 */}
               <Card 
                 style={{ flexGrow: 1, flexShrink: 1, flexBasis: "0%", minWidth: "200px", maxWidth: "33%", height: "100%", display: "flex", flexDirection: "column" }}
-                bodyStyle={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+                styles={{ body: { flexGrow: 1, display: "flex", flexDirection: "column" }}}
               >
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
                 <Flex gap="small" align="center" style={{ height: "40px" }}>
@@ -274,7 +274,7 @@ const NonCommerce = () => {
               {/* 빈 영역: 가로 2/3 */}
               <Card 
                 style={{ flexGrow: 2, flexShrink: 1, flexBasis: "0%", minWidth: "300px", maxWidth: "67%", height: "100%", display: "flex", flexDirection: "column" }}
-                bodyStyle={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
+                styles={{ body: { flexGrow: 1, display: "flex", flexDirection: "column" }}}
               >
 
                 <div style={{ fontWeight: "bold", paddingBottom: "16px" }}>
