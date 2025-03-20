@@ -1,0 +1,27 @@
+// pages/year.js
+import React from "react";
+import { Form, Radio, } from "antd";
+import "dayjs/locale/ko";
+
+const SearchModalFormRadio = ({ index, name, valueList, value, setValue }) => {
+
+	const handleChange = (e) => {
+		setValue(e.target.value);
+	}
+
+	return (
+	<Form.Item className="select-radio-area" name={name} initialValue={valueList[0]?.value}>
+		<Radio.Group defaultValue={valueList[0]?.value}
+			onChange={handleChange}>
+			{valueList.map((item, i) => (
+				<Radio key={i} value={item.value}>
+					{item.label}
+				</Radio>
+			))}
+		</Radio.Group>
+	</Form.Item>
+	);
+};
+
+
+export default SearchModalFormRadio;

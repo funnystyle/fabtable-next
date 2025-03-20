@@ -12,9 +12,9 @@ const { Title: PageTitle } = Typography;
 
 const YearComponent = ({ contentHeight }) => {
 
+	// year
 	const today = new Date();
 	const [year, setYear] = useState(today.getFullYear());
-
 	const [list, setList] = useState([]);
 
 	const [queryKey, setQueryKey] = useState(["calendar-year", year, Math.random()]);
@@ -23,15 +23,15 @@ const YearComponent = ({ contentHeight }) => {
 		queryFn: () => getAxios("/user/calendar/year", {year}),
 	});
 
-	const handleReload = () => {
-		setQueryKey(["calendar-year", year, Math.random()]);
-	}
-
 	useEffect(() => {
 		if (isSuccess && calendarYearResponse?.data?.list?.length > 0) {
 			setList(calendarYearResponse.data.list.map((item, index) => { return {key: index+1, ...item} }));
 		}
 	}, [isSuccess]);
+
+	const handleReload = () => {
+		setQueryKey(["calendar-year", year, Math.random()]);
+	}
 
 	useEffect(() => {
 		handleReload();
