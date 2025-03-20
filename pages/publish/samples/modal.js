@@ -211,6 +211,7 @@ const ModalComponent = ({}) => {
 								}
 							>
 								<Select
+									showSearch
 									defaultValue="groupCode1"
 									onChange={handleChange}
 									options={[
@@ -243,6 +244,7 @@ const ModalComponent = ({}) => {
 						<Col span={6}>
 							<Form.Item label="출고종류">
 								<Select
+									showSearch
 									defaultValue="release1"
 									onChange={handleChange}
 									options={[
@@ -499,6 +501,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="usegas1"
 									onChange={handleChange}
 									options={[
@@ -543,6 +546,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="vendor1"
 									onChange={handleChange}
 									options={[
@@ -597,6 +601,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="oil1"
 									onChange={handleChange}
 									options={[
@@ -656,6 +661,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="oil2"
 									onChange={handleChange}
 									options={[
@@ -725,6 +731,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="date1"
 									onChange={handleChange}
 									options={[
@@ -780,6 +787,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="date2"
 									onChange={handleChange}
 									options={[
@@ -887,6 +895,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="writer1"
 									onChange={handleChange}
 									options={[
@@ -931,6 +940,7 @@ const ModalComponent = ({}) => {
 								}}
 							>
 								<Select
+									showSearch
 									defaultValue="fabricate1"
 									onChange={handleChange}
 									options={[
@@ -1005,7 +1015,7 @@ const ModalComponent = ({}) => {
 									simple
 									current={current}
 									total={totalItems}
-									onChange={onChange}
+									// onChange={onChange}
 									itemRender={itemRender}
 								/>
 
