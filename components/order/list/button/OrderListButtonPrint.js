@@ -32,21 +32,22 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 
 	const { mutate: certificate2 } = useMutation({
 		mutationKey: "certificate_id",
-		mutationFn: (values) => postBlobAxios("/admin/certificate/docx/1", values),
-		onSuccess: (fileUrl) => {
-			if (typeof fileUrl !== "string") {
+		mutationFn: (values) => postAxios("/admin/certificate/docx/1", values),
+		onSuccess: (data) => {
+			const url = data?.url;
+			if (typeof url !== "string") {
 					console.error("서버에서 URL을 반환하지 않았습니다.");
 					return;
 			}
 
-			console.log("서버에서 받은 DOCX URL:", fileUrl);
+			console.log("서버에서 받은 DOCX URL:", url);
 
 			setDocxUrlList((prev) => [
 					...prev,
 					{
-							uri: fileUrl,  // 직접 URL 사용
+							uri: url,  // 직접 URL 사용
 							fileType: "docx",
-							name: "다운로드된 문서"
+							name: "generated.docx",
 					}
 			]);
 		},
