@@ -9,13 +9,16 @@ import OrderListPrintReport from "@components/order/list/button/print/OrderListP
 import { useMutation } from "@tanstack/react-query";
 import { postBlobAxios } from "@api/apiClient";
 import usePdfUrlStore from "@store/usePdfUrlStore";
+import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
 
 const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle}) => {
 
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
+	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
 	const [selectedPrint, setSelectedPrint] = useState("label"); // ✅ 선택된 라벨 종류 상태
-	const [urlList, setUrlList] = useState([]); // ✅ PDF URL 목록 상태
+	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]); // ✅ PDF URL 목록 상태
+	const [storedDocxUrlList, setStoredDocxUrlList] = useState([]); // ✅ PDF URL 목록 상태
 
 	const { mutate: certificate } = useMutation({
 		mutationKey: "certificate_id",
@@ -27,13 +30,46 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 		},
 	});
 
+	const { mutate: certificate2 } = useMutation({
+		mutationKey: "certificate_id",
+		mutationFn: (values) => postBlobAxios("/admin/certificate/docx/1", values),
+		onSuccess: (data) => {
+			// 파일 다운로드 처리
+			if (!(data instanceof Blob)) {
+				console.error("받은 데이터가 Blob이 아닙니다.");
+				return;
+			} else {
+				console.log("받은 데이터가 Blob입니다.");
+			}
+			const url = window.URL.createObjectURL(data);
+			console.log("url", url);
+			setDocxUrlList((prev) => [...prev, url]);
+
+			// const file = new File([data], "document.docx", { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+
+			// const url = URL.createObjectURL(file);
+			// console.log("url", url);
+			// setDocxUrlList((prev) => [
+			// 	...prev,
+			// 	{
+			// 		uri: URL.createObjectURL(file), 
+			// 		fileType: "docx",
+			// 		name: "다운로드된 문서"
+			// 	}
+			// ]);
+		},
+	});
+
 	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
 	// 드로어 열기
 	const showDrawer = (type) => {
 		setSelectedPrint(type);
 
 		setPdfUrlList([]); // 초기화
-		certificate({list: selectedRowKeys});
+		// certificate({list: selectedRowKeys});
+
+		setDocxUrlList([]); // 초기화
+		certificate2({list: selectedRowKeys});
 
 		setOpenDrawer(true);
 	};
@@ -47,7 +83,7 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 	// 📌 폼 값 변경 감지 및 상태 업데이트
 	useEffect(() => {
 		setDrawerTitle("인쇄 설정");
-		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={urlList} />);
+		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />);
 
 		setDrawerContent(
 			<>
@@ -68,13 +104,17 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 		)}, [selectedPrint]); // ✅ selectedLabel 변경 시 자동 반영
 
 	useEffect(() => {
-		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={urlList} />);
+		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />);
 
-	}, [urlList]);
+	}, [storedPdfUrlList]);
 
 	useEffect(() => {
-		setUrlList(pdfUrlList);
+		setStoredPdfUrlList(pdfUrlList);
 	}, [pdfUrlList]);
+
+	useEffect(() => {
+		setStoredPdfUrlList(docxUrlList);
+	}, [docxUrlList]);
 
 
 
