@@ -5,6 +5,7 @@ import { SearchOutlined, } from "@ant-design/icons";
 import "dayjs/locale/ko";
 import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownloadButton";
 import YearSelectButton from "@components/calendar/year/YearSelectButton";
+import YearSearchBtn from "@components/calendar/year/YearSearchBtn";
 
 const YearHeaderRight = ({ year, setYear }) => {
 
@@ -14,11 +15,7 @@ const YearHeaderRight = ({ year, setYear }) => {
 				조건 초기화
 			</Button>
 
-			<Flex gap="small">
-				<Button variant="outlined" icon={<SearchOutlined />}>
-					조건 검색
-				</Button>
-			</Flex>
+			<YearSearchBtn year={year} setYear={setYear} />
 
 			<YearSelectButton setYear={setYear} />
 			<YearExcelDownloadButton year={year} />
