@@ -41,22 +41,22 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 			} else {
 				console.log("받은 데이터가 Blob입니다.");
 			}
-			// const url = window.URL.createObjectURL(data);
-			// console.log("url", url);
-			// setDocxUrlList((prev) => [...prev, url]);
-
-			const file = new File([data], "document.docx", { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-
-			const url = URL.createObjectURL(file);
+			const url = window.URL.createObjectURL(data);
 			console.log("url", url);
-			setDocxUrlList((prev) => [
-				...prev,
-				{
-					uri: URL.createObjectURL(file), 
-					fileType: "docx",
-					name: "다운로드된 문서"
-				}
-			]);
+			setDocxUrlList((prev) => [...prev, url]);
+
+			// const file = new File([data], "document.docx", { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
+
+			// const url = URL.createObjectURL(file);
+			// console.log("url", url);
+			// setDocxUrlList((prev) => [
+			// 	...prev,
+			// 	{
+			// 		uri: URL.createObjectURL(file), 
+			// 		fileType: "docx",
+			// 		name: "다운로드된 문서"
+			// 	}
+			// ]);
 		},
 	});
 
