@@ -1277,7 +1277,6 @@ const OrderComponent = ({ contentHeight }) => {
 	const [selectedPrint, setSelectedPrint] = useState("label"); // ✅ 선택된 라벨 종류 상태
 	const [selectedLabel, setSelectedLabel] = useState("radio1-1"); // ✅ 선택된 라벨 종류 상태
 
-
 	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
 
 	// 📌 인쇄 구분 선택 핸들러
@@ -1285,11 +1284,11 @@ const OrderComponent = ({ contentHeight }) => {
 		setSelectedPrint(value); // 선택된 값 업데이트
 	};
 
-  // 📌 라벨 설정 초기화 핸들러
-  const handleLabelReset = () => {
+	// 📌 라벨 설정 초기화 핸들러
+	const handleLabelReset = () => {
 		form.resetFields();
 		setSelectedLabel("radio1-1"); // 선택된 값 업데이트
-  };
+	};
 
 	// 📌 라벨 종류 선택 핸들러
 	const handleLabelChange = (e) => {
@@ -1297,7 +1296,7 @@ const OrderComponent = ({ contentHeight }) => {
 	};
 
 	// 📌 폼 값 변경 감지 및 상태 업데이트
-  useEffect(() => {
+	useEffect(() => {
 		setDrawerContent(
 			<>
 				<Form form={form} layout="vertical">
@@ -1327,7 +1326,11 @@ const OrderComponent = ({ contentHeight }) => {
 							<Flex align="center" gap={4} className="tit-area">
 								<p className="tit-type no-bullet">라벨 설정</p>
 
-								<Button type="link" className="btn-reset-txt" onClick={handleLabelReset}>
+								<Button
+									type="link"
+									className="btn-reset-txt"
+									onClick={handleLabelReset}
+								>
 									설정 초기화
 								</Button>
 							</Flex>
@@ -1354,10 +1357,11 @@ const OrderComponent = ({ contentHeight }) => {
 							</Row>
 
 							{/* 선택된 라벨에 따라 규격 표시 */}
-							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-2") && (
+							{(selectedLabel === "radio1-1" ||
+								selectedLabel === "radio1-2") && (
 								<>
 									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
-									
+
 									<Row gutter={8}>
 										<Flex align="center" gap={4} className="tit-area">
 											<p className="tit-type no-bullet">라벨1 설정</p>
@@ -1382,7 +1386,8 @@ const OrderComponent = ({ contentHeight }) => {
 								</>
 							)}
 
-							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-3") && (
+							{(selectedLabel === "radio1-1" ||
+								selectedLabel === "radio1-3") && (
 								<>
 									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
 
@@ -1427,7 +1432,8 @@ const OrderComponent = ({ contentHeight }) => {
 							)}
 
 							{/* 선택된 라벨에 따라 규격 표시 */}
-							{(selectedLabel === "radio1-1" || selectedLabel === "radio1-4") && (
+							{(selectedLabel === "radio1-1" ||
+								selectedLabel === "radio1-4") && (
 								<>
 									<Divider style={{ marginTop: 16, marginBottom: 16 }} />
 									<Row gutter={8}>
@@ -1521,7 +1527,7 @@ const OrderComponent = ({ contentHeight }) => {
 				</Form>
 			</>
 		);
-  }, [selectedPrint, selectedLabel]); // ✅ selectedLabel 변경 시 자동 반영
+	}, [selectedPrint, selectedLabel]); // ✅ selectedLabel 변경 시 자동 반영
 
 	// 드로어 열기
 	const showDrawer = (type) => {
@@ -1541,7 +1547,9 @@ const OrderComponent = ({ contentHeight }) => {
 
 		setSelectedPrint(type);
 
-		{drawerContent};
+		{
+			drawerContent;
+		}
 
 		// if (type === "label") {
 		// 	<>
@@ -2421,7 +2429,7 @@ const OrderComponent = ({ contentHeight }) => {
 							bordered
 							scroll={{
 								x: "max-content",
-								y: "calc(60vh - 38px)",
+								// y: "calc(60vh - 38px)",
 							}}
 							style={{ tableLayout: "fixed" }}
 						/>
