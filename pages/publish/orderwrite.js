@@ -236,7 +236,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			sorter: (a, b) => stringSorter(a, b, "serialnum"),
 			sortOrder: sortedInfo.columnKey === "serialnum" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			// width: 170,
 		},
 		{
 			title: "제조번호",
@@ -247,28 +247,40 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			sortOrder:
 				sortedInfo.columnKey === "productnum" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			// width: 170,
 		},
 		{
-			title: "C/S 번호",
-			showSorterTooltip: { title: "C/S 번호" },
-			dataIndex: "csnum",
-			key: "csnum",
-			sorter: (a, b) => stringSorter(a, b, "csnum"),
-			sortOrder: sortedInfo.columnKey === "csnum" ? sortedInfo.order : null,
+			title: "제품군",
+			showSorterTooltip: { title: "제품군" },
+			dataIndex: "productgroup",
+			key: "productgroup",
+			sorter: (a, b) => stringSorter(a, b, "productgroup"),
+			sortOrder:
+				sortedInfo.columnKey === "productgroup" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			// width: 170,
 		},
 		{
-			title: "C/S 상태",
-			showSorterTooltip: { title: "C/S 상태" },
-			dataIndex: "csstate",
-			key: "csstate",
-			sorter: (a, b) => stringSorter(a, b, "csstate"),
-			sortOrder: sortedInfo.columnKey === "csstate" ? sortedInfo.order : null,
+			title: "모델",
+			showSorterTooltip: { title: "모델" },
+			dataIndex: "model",
+			key: "model",
+			sorter: (a, b) => stringSorter(a, b, "model"),
+			sortOrder:
+				sortedInfo.columnKey === "model" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 106,
-			align: "center",
+			// width: 170,
+		},
+		{
+			title: "세부모델",
+			showSorterTooltip: { title: "detailmodel" },
+			dataIndex: "detailmodel",
+			key: "detailmodel",
+			sorter: (a, b) => stringSorter(a, b, "detailmodel"),
+			sortOrder:
+				sortedInfo.columnKey === "detailmodel" ? sortedInfo.order : null,
+			ellipsis: true,
+			// width: 170,
 		},
 		{
 			title: "비고",
@@ -277,6 +289,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			key: "etc",
 			ellipsis: true,
 			align: "center",
+			width: 170,
 		},
 	];
 
@@ -286,8 +299,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 1,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: <Tag className="tag-receipt">접수</Tag>,
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",
 			etc: (
 				<>
 					<Flex gap={4}>
@@ -304,8 +318,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 2,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: <Tag className="tag-ing">진행</Tag>,
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",
 			etc: (
 				<>
 					<Flex gap={4}>
@@ -322,8 +337,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 3,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: <Tag className="tag-end">종결</Tag>,
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",
 			etc: (
 				<>
 					<Flex gap={4}>
@@ -340,8 +356,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 4,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: <Tag className="tag-cancel">취소</Tag>,
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",
 			etc: (
 				<>
 					<Flex gap={4}>
@@ -358,8 +375,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 5,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: "-",
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",			
 			etc: (
 				<>
 					<Flex gap={4}>
@@ -376,8 +394,9 @@ const OrderWriteComponent = ({ contentHeight }) => {
 			no: 6,
 			serialnum: "570241202090",
 			productnum: "A2024-00008",
-			csnum: "2024-0004",
-			csstate: "-",
+			productgroup: "MARU",
+			model: "7000s",
+			detailmodel: "7003",			
 			etc: (
 				<>
 					<Flex gap={4}>
