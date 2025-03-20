@@ -1,4 +1,6 @@
 // pages/month.js
+"use client";
+
 import React, { useEffect, useState } from "react";
 import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout } from "antd";
@@ -9,6 +11,19 @@ import { zoomPlugin } from "@react-pdf-viewer/zoom";
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/zoom/lib/styles/index.css";
 import usePdfUrlStore from "@store/usePdfUrlStore";
+import useDocxUrlStore from "@/store/useDocxUrlStore";
+import dynamic from "next/dynamic";
+// import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+
+// 🚀 `react-doc-viewer`를 클라이언트에서만 로드
+const DocViewer = dynamic(() => import("react-doc-viewer"), { ssr: false });
+
+// 🚀 `DocViewerRenderers`도 SSR 방지
+const DocViewerRenderers = dynamic(() =>
+  import("react-doc-viewer").then((mod) => mod.DocViewerRenderers), 
+  { ssr: false }
+);
+
 
 const handleChange = (value) => {
 	console.log(`selected ${value}`);
@@ -24,18 +39,34 @@ const DrawerComponent = ({
  	selectedRowKeys = [1],
 }) => {
 
+	const [renderers, setRenderers] = useState([]);
+
+	useEffect(() => {
+    import("react-doc-viewer").then((mod) => {
+      // ✅ `DocViewerRenderers`가 존재하면 배열로 설정
+      setRenderers(mod.DocViewerRenderers ? [...mod.DocViewerRenderers] : []);
+    });
+  }, []);
+
 	// Zoom 플러그인 추가
 	const zoomPluginInstance = zoomPlugin();
 	const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
 
 	const { pdfUrlList } = usePdfUrlStore();
+	const { docxUrlList } = useDocxUrlStore();
 
-	const [urlList, setUrlList] = useState([]);
+	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]);
+	const [storedDocxUrlList, setStoredDocxUrlList] = useState([]);
 
 	useEffect(() => {
-		setUrlList(pdfUrlList);
+		setStoredPdfUrlList(pdfUrlList);
 	}, [pdfUrlList]);
 
+	useEffect(() => {
+		console.log("storedDocxUrlList", docxUrlList);
+		setStoredDocxUrlList(docxUrlList);
+	}, [docxUrlList]);
+		
 	return (
 		<Layout>
 			<div className="drawer-wrap">
@@ -50,11 +81,21 @@ const DrawerComponent = ({
 						transition: "padding-right 0.2s ease-in-out",
 					}}
 				>
-					{Array.isArray(urlList) && urlList.length > 0 && (urlList.map((pdfUrl, index) => (
+					{Array.isArray(storedPdfUrlList) && storedPdfUrlList.length > 0 && (storedPdfUrlList.map((pdfUrl, index) => (
 						<div className="preview" key={`preview-${index+1}`}>
 							<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
 								<Viewer fileUrl={pdfUrl} plugins={[zoomPluginInstance]} />
 							</Worker>
+						</div>
+					)))}
+
+					{Array.isArray(storedDocxUrlList) && storedDocxUrlList.length > 0 && (storedDocxUrlList.map((docxUrl, index) => (
+						<div className="preview" key={`preview-${index+1}`}>
+							<DocViewer
+								documents={[{ uri: docxUrl, fileType: "docx" }]}
+								pluginRenderers={renderers}
+								style={{ height: "80vh", width: "100%" }}
+							/>
 						</div>
 					)))}
 
