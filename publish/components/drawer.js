@@ -89,7 +89,7 @@ const DrawerComponent = ({
 						</div>
 					)))}
 
-					{Array.isArray(storedDocxUrlList) && storedDocxUrlList.length > 0 && (storedDocxUrlList.map((docxUrl, index) => (
+					{/* {Array.isArray(storedDocxUrlList) && storedDocxUrlList.length > 0 && (storedDocxUrlList.map((docxUrl, index) => (
 						<div className="preview" key={`preview-${index+1}`}>
 							<DocViewer
 								documents={[{ uri: docxUrl, fileType: "docx" }]}
@@ -97,7 +97,17 @@ const DrawerComponent = ({
 								style={{ height: "80vh", width: "100%" }}
 							/>
 						</div>
-					)))}
+					)))} */}
+
+					{docxUrlList.length > 0 && (
+						<div className="preview">
+							<DocViewer
+								documents={docxUrlList}
+								pluginRenderers={renderers}
+								style={{ height: "80vh", width: "100%" }}
+							/>
+						</div>
+					)}
 
 					<div
 						className="zoom-r-btn"
