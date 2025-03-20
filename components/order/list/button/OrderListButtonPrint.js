@@ -7,7 +7,7 @@ import OrderListPrintSelect from "@components/order/list/button/print/OrderListP
 import OrderListPrintTitle from "@components/order/list/button/print/OrderListPrintTitle";
 import OrderListPrintReport from "@components/order/list/button/print/OrderListPrintReport";
 import { useMutation } from "@tanstack/react-query";
-import { postBlobAxios } from "@api/apiClient";
+import { postAxios, postBlobAxios } from "@api/apiClient";
 import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
