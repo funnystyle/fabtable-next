@@ -34,7 +34,7 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 		mutationKey: "certificate_id",
 		mutationFn: (values) => postAxios("/admin/certificate/docx/1", values),
 		onSuccess: (data) => {
-			const url = data?.url;
+			let url = data?.url;
 			if (typeof url !== "string") {
 					console.error("서버에서 URL을 반환하지 않았습니다.");
 					return;
@@ -42,14 +42,7 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 
 			console.log("서버에서 받은 DOCX URL:", url);
 
-			setDocxUrlList((prev) => [
-					...prev,
-					{
-							uri: url,  // 직접 URL 사용
-							fileType: "docx",
-							name: "generated.docx",
-					}
-			]);
+			setDocxUrlList((prev) => [...prev, url]);
 		},
 	});
 
@@ -71,7 +64,6 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 	const closeDrawer = () => {
 		setOpenDrawer(false);
 	};
-
 
 	// 📌 폼 값 변경 감지 및 상태 업데이트
 	useEffect(() => {

@@ -19,10 +19,10 @@ import dynamic from "next/dynamic";
 const DocViewer = dynamic(() => import("react-doc-viewer"), { ssr: false });
 
 // 🚀 `DocViewerRenderers`도 SSR 방지
-const DocViewerRenderers = dynamic(() =>
-  import("react-doc-viewer").then((mod) => mod.DocViewerRenderers), 
-  { ssr: false }
-);
+// const DocViewerRenderers = dynamic(() =>
+//   import("react-doc-viewer").then((mod) => mod.DocViewerRenderers), 
+//   { ssr: false }
+// );
 
 
 const handleChange = (value) => {
@@ -41,12 +41,6 @@ const DrawerComponent = ({
 
 	const [renderers, setRenderers] = useState([]);
 
-	useEffect(() => {
-    import("react-doc-viewer").then((mod) => {
-      // ✅ `DocViewerRenderers`가 존재하면 배열로 설정
-      setRenderers(mod.DocViewerRenderers ? [...mod.DocViewerRenderers] : []);
-    });
-  }, []);
 
 	// Zoom 플러그인 추가
 	const zoomPluginInstance = zoomPlugin();
@@ -66,7 +60,14 @@ const DrawerComponent = ({
 		console.log("storedDocxUrlList", docxUrlList);
 		setStoredDocxUrlList(docxUrlList);
 	}, [docxUrlList]);
-		
+
+	useEffect(() => {
+		import("react-doc-viewer").then((mod) => {
+				// 🚀 DocViewerRenderers 동적 로드 (SSR 방지)
+				setRenderers(mod.DocViewerRenderers ? [...mod.DocViewerRenderers] : []);
+		});
+	}, []);
+
 	return (
 		<Layout>
 			<div className="drawer-wrap">
@@ -89,7 +90,9 @@ const DrawerComponent = ({
 						</div>
 					)))}
 
-					{/* {Array.isArray(storedDocxUrlList) && storedDocxUrlList.length > 0 && (storedDocxUrlList.map((docxUrl, index) => (
+					{Array.isArray(storedDocxUrlList) && storedDocxUrlList.length > 0 && (storedDocxUrlList.map((docxUrl, index) => {
+						console.log("url: ", docxUrl);
+						return (
 						<div className="preview" key={`preview-${index+1}`}>
 							<DocViewer
 								documents={[{ uri: docxUrl, fileType: "docx" }]}
@@ -97,17 +100,7 @@ const DrawerComponent = ({
 								style={{ height: "80vh", width: "100%" }}
 							/>
 						</div>
-					)))} */}
-
-					{docxUrlList.length > 0 && (
-						<div className="preview">
-							<DocViewer
-								documents={docxUrlList}
-								pluginRenderers={renderers}
-								style={{ height: "80vh", width: "100%" }}
-							/>
-						</div>
-					)}
+					)}))}
 
 					<div
 						className="zoom-r-btn"
