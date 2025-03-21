@@ -7,17 +7,12 @@ import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownload
 import YearSelectButton from "@components/calendar/year/YearSelectButton";
 import YearSearchBtn from "@components/calendar/year/YearSearchBtn";
 
-const YearHeaderRight = ({ year, setYear }) => {
+const YearHeaderRight = ({ year, setYear, handleListUpdate }) => {
 
 	return (
 		<Flex gap="small" align="center">
-			<Button color="primary" variant="text" size="small" className="all-delete-tag">
-				조건 초기화
-			</Button>
+			<YearSearchBtn year={year} setYear={setYear} handleListUpdate={handleListUpdate} />
 
-			<YearSearchBtn year={year} setYear={setYear} />
-
-			<YearSelectButton setYear={setYear} />
 			<YearExcelDownloadButton year={year} />
 		</Flex>
 	);

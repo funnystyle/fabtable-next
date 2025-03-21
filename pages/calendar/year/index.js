@@ -4,8 +4,8 @@ import { Flex, Layout, Typography, } from "antd";
 import "dayjs/locale/ko";
 import { YearChart } from "@components/calendar/year/YearChart";
 import YearHeader from "@components/calendar/year/YearHeader";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import {getAxios, postAxios} from "@api/apiClient";
 import { YearTable } from "@components/calendar/year/YearTable";
 
 const { Title: PageTitle } = Typography;
@@ -14,23 +14,23 @@ const YearComponent = ({ contentHeight }) => {
 
 	// year
 	const today = new Date();
-	const [year, setYear] = useState(today.getFullYear());
+	const [year, setYear] = useState([today.getFullYear(), today.getFullYear()]);
 	const [list, setList] = useState([]);
 
-	const [queryKey, setQueryKey] = useState(["calendar-year", year, Math.random()]);
-	const { data:calendarYearResponse, isSuccess} = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/calendar/year", {year}),
+	const { mutate: getYear } = useMutation({
+		mutationKey: "getYear",
+		mutationFn: (values) => postAxios("/user/calendar/year", values),
+		onSuccess: (response) => {
+			handleListUpdate(response.data.list);
+		}
 	});
 
-	useEffect(() => {
-		if (isSuccess && calendarYearResponse?.data?.list?.length > 0) {
-			setList(calendarYearResponse.data.list.map((item, index) => { return {key: index+1, ...item} }));
-		}
-	}, [isSuccess]);
+	const handleListUpdate = (list) => {
+		setList(list.map((item, index) => { return {key: index+1, ...item} }));
+	}
 
 	const handleReload = () => {
-		setQueryKey(["calendar-year", year, Math.random()]);
+		getYear({year: year});
 	}
 
 	useEffect(() => {
@@ -48,7 +48,7 @@ const YearComponent = ({ contentHeight }) => {
 
 						<YearChart list={list}/>
 
-						<YearHeader year={year} setYear={setYear} />
+						<YearHeader year={year} setYear={setYear} handleListUpdate={handleListUpdate} />
 					</div>
 				</div>
 			</Flex>

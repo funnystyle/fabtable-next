@@ -9,23 +9,14 @@ import Draggable from "react-draggable";
 import SearchModal from "@components/calendar/year/searchModal/SearchModal";
 import YearSearchModal from "@components/calendar/year/YearSearchModal";
 
-const YearSearchBtn = ({ year, setYear }) => {
+const YearSearchBtn = ({ year, setYear, handleListUpdate }) => {
 
 	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
-	const [modalContent, setModalContent] = useState(null); // Modal 내용
-
-	// 모달 닫기
-	const closeModal = () => {
-		setOpenSearchModal(false);
-	};
 
 	const showSearchModal = () => {
-		setModalContent(
-			<SearchModal closeModal={closeModal} searchLocation={"year"} />
-		);
-
 		setOpenSearchModal(true);
 	}
+
 	return (
 		<>
 			<Flex gap="small">
@@ -38,9 +29,11 @@ const YearSearchBtn = ({ year, setYear }) => {
 
 			{/* ModalComponent 추가 - "조건 검색" 클릭 시 열림 */}
 			<YearSearchModal
+				year={year}
+				setYear={setYear}
+				handleListUpdate={handleListUpdate}
 				openSearchModal={openSearchModal}
 				setOpenSearchModal={setOpenSearchModal}
-				modalContent={modalContent}
 			/>
 		</>
 	);

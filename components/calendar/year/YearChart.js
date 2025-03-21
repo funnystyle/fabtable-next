@@ -85,6 +85,7 @@ export const YearChart = ({ list }) => {
 	// 차트 옵션 설정
 	const options = {
 		responsive: true,
+		maintainAspectRatio: false,
 		plugins: {
 			legend: {
 				position: "top",
@@ -99,7 +100,9 @@ export const YearChart = ({ list }) => {
 
 	return (
 		<Card style={{ width: "100%", textAlign: "center", marginBottom: "20px" }}>
-			<Bar data={data} options={options} height={80}/>
+			<div style={{ width: "100%", minHeight: "400px", height: "auto" }}>
+				<Bar data={data} options={options} height={80}/>
+			</div>
 		</Card>
 	);
 };

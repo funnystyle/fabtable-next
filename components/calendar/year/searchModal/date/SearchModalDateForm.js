@@ -5,7 +5,7 @@ import "dayjs/locale/ko";
 import SearchModalDateFormInput from "@components/calendar/year/searchModal/date/SearchModalDateFormInput";
 import SearchModalFormDateButtonArea from "@components/calendar/year/searchModal/date/SearchModalFormDateButtonArea";
 
-const SearchModalDateForm = ({form, order, index, searchLocation, searchDiv}) => {
+const SearchModalDateForm = ({form, order, index, searchLocation, searchDiv, year, setYear}) => {
 
 	const [inputName, setInputName] = useState(`search-${order}-${index}-input`);
 
@@ -15,7 +15,7 @@ const SearchModalDateForm = ({form, order, index, searchLocation, searchDiv}) =>
 
 	return (
 		<Flex gap={8} align="center" justify="space-between" className="year-select-area">
-			<SearchModalDateFormInput name={inputName} />
+			<SearchModalDateFormInput name={inputName} year={year} setYear={setYear} />
 
 			<SearchModalFormDateButtonArea handleReset={handleReset} />
 		</Flex>

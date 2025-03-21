@@ -8,13 +8,13 @@ import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownload
 import YearHeaderLeft from "@components/calendar/year/YearHeaderLeft";
 import YearHeaderRight from "@components/calendar/year/YearHeaderRight";
 
-const YearHeader = ({ year, setYear }) => {
+const YearHeader = ({ year, setYear, handleListUpdate }) => {
 
 	return (
 		<Flex align="start" justify="space-between">
 			<YearHeaderLeft year={year} setYear={setYear} />
 
-			<YearHeaderRight year={year} setYear={setYear} />
+			<YearHeaderRight year={year} setYear={setYear} handleListUpdate={handleListUpdate} />
 		</Flex>
 	);
 };

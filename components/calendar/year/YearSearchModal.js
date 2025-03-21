@@ -8,7 +8,7 @@ import YearSelectButton from "@components/calendar/year/YearSelectButton";
 import Draggable from "react-draggable";
 import SearchModal from "@components/calendar/year/searchModal/SearchModal";
 
-const YearSearchBtn = ({ openSearchModal, setOpenSearchModal, modalContent }) => {
+const YearSearchModal = ({ year, setYear, handleListUpdate, openSearchModal, setOpenSearchModal }) => {
 
 	const [disabled, setDisabled] = useState(true);
 	const [bounds, setBounds] = useState({
@@ -31,6 +31,11 @@ const YearSearchBtn = ({ openSearchModal, setOpenSearchModal, modalContent }) =>
 			top: -targetRect.top + uiData.y,
 			bottom: clientHeight - (targetRect.bottom - uiData.y),
 		});
+	};
+
+	// 모달 닫기
+	const closeModal = () => {
+		setOpenSearchModal(false);
 	};
 
 	return (
@@ -60,10 +65,15 @@ const YearSearchBtn = ({ openSearchModal, setOpenSearchModal, modalContent }) =>
 					</Draggable>
 				)}
 			>
-				{modalContent}
+				<SearchModal
+					year={year}
+					setYear={setYear}
+					closeModal={closeModal}
+					searchLocation={"year"}
+					handleListUpdate={handleListUpdate} />
 			</Modal>
 		</div>
 	);
 };
 
-export default YearSearchBtn;
+export default YearSearchModal;

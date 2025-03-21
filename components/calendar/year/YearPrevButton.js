@@ -6,7 +6,7 @@ import "dayjs/locale/ko";
 const YearPrevButton = ({ year, setYear }) => {
 
 	const handlePrevYear = () => {
-		setYear(year - 1);
+		setYear([year[0] - 1, year[1] - 1]);
 	}
 
 	return (

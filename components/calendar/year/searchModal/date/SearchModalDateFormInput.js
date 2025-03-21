@@ -1,35 +1,14 @@
 // pages/year.js
 import React from "react";
-import { DatePicker, Form, } from "antd";
+import {Form,} from "antd";
 import "dayjs/locale/ko";
+import YearDateFormRangePicker from "@components/calendar/year/searchModal/date/YearDateFormRangePicker";
 
-const SearchModalDateFormInput = ({name}) => {
-
-	const { RangePicker } = DatePicker;
+const SearchModalDateFormInput = ({name, year, setYear}) => {
 
 	return (
-		<Form.Item
-			style={{
-				width: "750px",
-			}}
-			name={name}
-		>
-			<RangePicker
-				picker="year"
-				style={{
-					width: "100%",
-				}}
-				id={{
-					start: "startInput",
-					end: "endInput",
-				}}
-				onFocus={(_, info) => {
-					console.log("Focus:", info.range);
-				}}
-				onBlur={(_, info) => {
-					console.log("Blur:", info.range);
-				}}
-			/>
+		<Form.Item style={{width: "750px",}}>
+			<YearDateFormRangePicker year={year} setYear={setYear} style={{ width: "100%", }} />
 		</Form.Item>
 	);
 };
