@@ -34,7 +34,7 @@ const { Header, Sider, Content } = Layout;
 // 🔹 동적으로 페이지 로딩
 const pageComponents = {
 	// "/publish/dashboard": lazy(() => import("@/pages/publish/dashboard")),
-	"/calendar/year": lazy(() => import("@/pages/calendar/year")),
+	"/publish/year": lazy(() => import("@/pages/publish/year")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
 	"/publish/order": lazy(() => import("@/pages/publish/order")),
 	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
@@ -74,7 +74,7 @@ const basicItems = [
 			{
 				key: "sub1-1",
 				label: "연간 종합 일정",
-				url: "/calendar/year",
+				url: "/publish/year",
 			},
 			{
 				key: "sub1-2",
@@ -577,37 +577,37 @@ const HomePage = ({ children }) => {
 					</Content>
 					{/* 탭 적용하려면 아래 코드를 적용 */}
 					{/* Content 영역을 Tabs로 변경 */}
-					{/*<Content className="contents">*/}
-					{/*	<Tabs*/}
-					{/*		hideAdd*/}
-					{/*		size="small"*/}
-					{/*		type="editable-card"*/}
-					{/*		activeKey={activeTab}*/}
-					{/*		onChange={onTabChange}*/}
-					{/*		onEdit={(targetKey, action) =>*/}
-					{/*			action === "remove" && onTabRemove(targetKey)*/}
-					{/*		}*/}
-					{/*		className="page-top-nav"*/}
-					{/*	>*/}
-					{/*		{tabs.map((tab) => (*/}
-					{/*			<Tabs.TabPane*/}
-					{/*				tab={tab.label}*/}
-					{/*				key={tab.key}*/}
-					{/*				closable={tab.key !== "1"}*/}
-					{/*			>*/}
-					{/*				<Suspense fallback={<Spin size="large" />}>*/}
-					{/*					{pageComponents[tab.url] ? (*/}
-					{/*						React.createElement(pageComponents[tab.url], {*/}
-					{/*							contentHeight,*/}
-					{/*						})*/}
-					{/*					) : (*/}
-					{/*						<div>페이지 없음</div>*/}
-					{/*					)}*/}
-					{/*				</Suspense>*/}
-					{/*			</Tabs.TabPane>*/}
-					{/*		))}*/}
-					{/*	</Tabs>*/}
-					{/*</Content>*/}
+					{/* <Content className="contents">
+						<Tabs
+							hideAdd
+							size="small"
+							type="editable-card"
+							activeKey={activeTab}
+							onChange={onTabChange}
+							onEdit={(targetKey, action) =>
+								action === "remove" && onTabRemove(targetKey)
+							}
+							className="page-top-nav"
+						>
+							{tabs.map((tab) => (
+								<Tabs.TabPane
+									tab={tab.label}
+									key={tab.key}
+									closable={tab.key !== "1"}
+								>
+									<Suspense fallback={<Spin size="large" />}>
+										{pageComponents[tab.url] ? (
+											React.createElement(pageComponents[tab.url], {
+												contentHeight,
+											})
+										) : (
+											<div>페이지 없음</div>
+										)}
+									</Suspense>
+								</Tabs.TabPane>
+							))}
+						</Tabs>
+					</Content> */}
 				</Layout>
 			</Layout>
 		</Layout>

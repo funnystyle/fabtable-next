@@ -41,6 +41,11 @@ import {
 	RightOutlined,
 	CalendarOutlined,
 	ExclamationCircleFilled,
+	CheckOutlined,
+	SearchOutlined,
+	PieChartOutlined,
+	PlusOutlined,
+	MinusOutlined,
 } from "@ant-design/icons";
 
 import DrawerComponent from "@publish/components/drawer";
@@ -50,6 +55,11 @@ import { useRouter } from "next/router";
 
 const { useToken } = theme;
 const { Title } = Typography;
+const { RangePicker } = DatePicker;
+
+const onOk = (value) => {
+	console.log("onOk: ", value);
+};
 
 const onChange = (e) => {
 	console.log(`checked = ${e.target.checked}`);
@@ -865,7 +875,7 @@ const OrderComponent = ({ contentHeight }) => {
 							renderItem(item.title, item.date)
 						),
 					},
-			  ]
+				]
 			: [];
 
 	const [current, setCurrent] = useState(2);
@@ -2172,6 +2182,496 @@ const OrderComponent = ({ contentHeight }) => {
 	} = theme.useToken();
 	// --------- 우클릭 관련
 
+
+	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
+	
+	// 조건검색 모달 열기
+	const showSearchModal = () => {
+		setModalContent(
+			<>
+				<Flex align="center" justify="space-between">
+					<p className="total-txt">
+						검색 카테고리별로 입력필드를 여러 개 추가, 삭제할 수 있습니다.
+					</p>
+
+					<Button type="link" className="btn-reset-txt">
+						전체 초기화
+					</Button>
+				</Flex>
+
+				<div className="layer-scroll">
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">일반</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="usegas1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "usegas1",
+											label: "사용가스",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue="include1-1">
+									<Radio value="include1-1">포함</Radio>
+									<Radio value="include1-2">미포함</Radio>
+									<Radio value="include1-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="vendor1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "vendor1",
+											label: "납품처",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue={"include2-1"}>
+									<Radio value="include2-1">포함</Radio>
+									<Radio value="include2-2">미포함</Radio>
+									<Radio value="include12-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">숫자/수치</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="oil1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "oil1",
+											label: "유량",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue={"scope1-1"}>
+									<Radio value="scope1-1">범위</Radio>
+									<Radio value="scope1-2">≤</Radio>
+									<Radio value="scope1-3">≥</Radio>
+									<Radio value="scope1-4">=</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Flex gap={4}>
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+								</Flex>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="oil2"
+									onChange={handleChange}
+									options={[
+										{
+											value: "oil2",
+											label: "유량",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue={"scope2-1"}>
+									<Radio value="scope2-1">범위</Radio>
+									<Radio value="scope2-2">≤</Radio>
+									<Radio value="scope2-3">≥</Radio>
+									<Radio value="scope2 -4">=</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Flex gap={4}>
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+
+									<InputNumber
+										min={1}
+										max={10000}
+										defaultValue={1000}
+										onChange={onChange}
+									/>
+								</Flex>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">기간/날짜</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="date1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "date1",
+											label: "납품계획일",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area select-radio-area2">
+								<Radio.Group
+									defaultValue={"period1-1"}
+								>
+									<Radio value="period1-1">기간</Radio>
+									<Radio value="period1-2">이전</Radio>
+									<Radio value="period1-3">이후</Radio>
+									<Radio value="period1-4">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<RangePicker
+									showTime={{
+										format: "HH:mm",
+									}}
+									format="YYYY-MM-DD HH:mm"
+									onChange={(value, dateString) => {
+										console.log("Selected Time: ", value);
+										console.log("Formatted Selected Time: ", dateString);
+									}}
+									onOk={onOk}
+								/>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="date2"
+									onChange={handleChange}
+									options={[
+										{
+											value: "date2",
+											label: "등록일",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area select-radio-area2">
+								<Radio.Group
+									defaultValue={"period2-1"}
+								>
+									<Radio value="period2-1">기간</Radio>
+									<Radio value="period2-2">이전</Radio>
+									<Radio value="period2-3">이후</Radio>
+									<Radio value="period2-4">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<DatePicker
+									showTime
+									onChange={(value, dateString) => {
+										console.log("Selected Time: ", value);
+										console.log("Formatted Selected Time: ", dateString);
+									}}
+									onOk={onOk}
+									style={{
+										width: "100%",
+									}}
+								/>
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex align="center" gap={4} className="tit-area">
+						<p className="tit-type">작업자</p>
+
+						<Button type="link" className="btn-reset-txt">
+							초기화
+						</Button>
+					</Flex>
+
+					<Form layout="vertical" className="modal-input-area">
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="writer1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "writer1",
+											label: "등록자",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue={"include3-1"}>
+									<Radio value="include3-1">포함</Radio>
+									<Radio value="include3-2">미포함</Radio>
+									<Radio value="include3-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<PlusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+
+						<Flex gap={8} align="center">
+							<Form.Item
+								style={{
+									width: "160px",
+									flex: "none",
+								}}
+							>
+								<Select
+									showSearch
+									defaultValue="fabricate1"
+									onChange={handleChange}
+									options={[
+										{
+											value: "fabricate1",
+											label: "조립자",
+										},
+									]}
+								/>
+							</Form.Item>
+
+							<Form.Item className="select-radio-area">
+								<Radio.Group defaultValue={"include4-1"}>
+									<Radio value="include4-1">포함</Radio>
+									<Radio value="include4-2">미포함</Radio>
+									<Radio value="include4-3">일치</Radio>
+								</Radio.Group>
+							</Form.Item>
+
+							<Form.Item>
+								<Input placeholder="-" />
+							</Form.Item>
+
+							<Form.Item className="btn-add-area">
+								<Flex gap={4}>
+									<Button
+										icon={<RedoOutlined />}
+										size="small"
+										className="icon-redo"
+									/>
+
+									<Button icon={<MinusOutlined />} size="small" />
+								</Flex>
+							</Form.Item>
+						</Flex>
+					</Form>
+
+					<Flex
+						gap={8}
+						align="center"
+						justify="center"
+						className="layer-btn-area"
+					>
+						<Button onClick={closeModal}>닫기</Button>
+						<Button type="primary">검색</Button>
+					</Flex>
+				</div>
+			</>
+		);
+
+		setOpenSearchModal(true);
+	};
+
 	return (
 		<Layout>
 			<div className="contents-top">
@@ -2201,6 +2701,7 @@ const OrderComponent = ({ contentHeight }) => {
 							icon={<FilterOutlined />}
 							iconPosition={position}
 							size="large"
+							onClick={showSearchModal}
 						>
 							조건 검색
 						</Button>
@@ -2510,6 +3011,37 @@ const OrderComponent = ({ contentHeight }) => {
 						overflowX: "hidden", // ✅ x축 스크롤 제거
 						padding: "5px", // ✅ 가독성을 위한 패딩 추가
 					}}
+					modalRender={(modal) => (
+						<Draggable
+							disabled={disabled}
+							bounds={bounds}
+							nodeRef={draggleRef}
+							onStart={(event, uiData) => onStart(event, uiData)}
+						>
+							<div ref={draggleRef}>{modal}</div>
+						</Draggable>
+					)}
+				>
+					{modalContent}
+				</Modal>
+			</div>
+
+			{/* ModalComponent 추가 - "조건 검색" 클릭 시 열림 */}
+			<div style={{ display: openSearchModal ? "block" : "none" }}>
+				<Modal
+					title={
+						<div
+							className="modal-title"
+							onMouseOver={() => setDisabled(false)}
+							onMouseOut={() => setDisabled(true)}
+						>
+							조건 검색
+						</div>
+					}
+					open={openSearchModal}
+					onCancel={() => setOpenSearchModal(false)}
+					width={900}
+					footer={null}
 					modalRender={(modal) => (
 						<Draggable
 							disabled={disabled}
