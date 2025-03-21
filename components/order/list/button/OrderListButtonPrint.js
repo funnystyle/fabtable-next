@@ -7,7 +7,7 @@ import OrderListPrintSelect from "@components/order/list/button/print/OrderListP
 import OrderListPrintTitle from "@components/order/list/button/print/OrderListPrintTitle";
 import OrderListPrintReport from "@components/order/list/button/print/OrderListPrintReport";
 import { useMutation } from "@tanstack/react-query";
-import { postBlobAxios } from "@api/apiClient";
+import { postAxios, postBlobAxios } from "@api/apiClient";
 import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
@@ -32,31 +32,17 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 
 	const { mutate: certificate2 } = useMutation({
 		mutationKey: "certificate_id",
-		mutationFn: (values) => postBlobAxios("/admin/certificate/docx/1", values),
+		mutationFn: (values) => postAxios("/admin/certificate/docx/1", values),
 		onSuccess: (data) => {
-			// 파일 다운로드 처리
-			if (!(data instanceof Blob)) {
-				console.error("받은 데이터가 Blob이 아닙니다.");
-				return;
-			} else {
-				console.log("받은 데이터가 Blob입니다.");
+			let url = data?.url;
+			if (typeof url !== "string") {
+					console.error("서버에서 URL을 반환하지 않았습니다.");
+					return;
 			}
-			const url = window.URL.createObjectURL(data);
-			console.log("url", url);
+
+			console.log("서버에서 받은 DOCX URL:", url);
+
 			setDocxUrlList((prev) => [...prev, url]);
-
-			// const file = new File([data], "document.docx", { type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document" });
-
-			// const url = URL.createObjectURL(file);
-			// console.log("url", url);
-			// setDocxUrlList((prev) => [
-			// 	...prev,
-			// 	{
-			// 		uri: URL.createObjectURL(file), 
-			// 		fileType: "docx",
-			// 		name: "다운로드된 문서"
-			// 	}
-			// ]);
 		},
 	});
 
@@ -78,7 +64,6 @@ const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader,
 	const closeDrawer = () => {
 		setOpenDrawer(false);
 	};
-
 
 	// 📌 폼 값 변경 감지 및 상태 업데이트
 	useEffect(() => {
