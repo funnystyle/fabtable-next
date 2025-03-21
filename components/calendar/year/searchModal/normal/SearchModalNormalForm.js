@@ -12,6 +12,7 @@ const SearchModalNormalForm = ({form, order, index, searchLocation, searchDiv, s
 	const [selectName, setSelectName] = useState(`search-${order}-${index}-select`);
 	const [radioName, setRadioName] = useState(`search-${order}-${index}-radio`);
 	const [inputName, setInputName] = useState(`search-${order}-${index}-input`);
+	const [value, setValue] = useState("like");
 
 	const handleReset = () => {
 		form.resetFields([selectName, radioName, inputName]);
@@ -25,7 +26,7 @@ const SearchModalNormalForm = ({form, order, index, searchLocation, searchDiv, s
 				{label:"포함", value:"like"}
 				, {label:"미포함", value:"except"}
 				, {label:"일치", value:"equal"}
-				]} />
+				]} value={value} setValue={setValue} />
 
 			<SearchModalNormalFormInput name={inputName} />
 

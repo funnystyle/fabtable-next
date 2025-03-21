@@ -15,7 +15,7 @@ const SearchModalDate = ({ form, title, order, searchLocation, searchDiv }) => {
 
 			<Form form={form} layout="vertical" className="modal-input-area">
 				{Array.from({ length: searchCount }, (_, i) => (
-					<SearchModalDateForm key={i} form={form} order={order} searchLocation={searchLocation} searchDiv={searchDiv} index={i}  />
+					<SearchModalDateForm key={i} form={form} order={order} searchLocation={searchLocation} searchDiv={searchDiv} index={i + 1}  />
 				))}
 			</Form>
 		</>
