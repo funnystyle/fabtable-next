@@ -5,11 +5,11 @@ import "dayjs/locale/ko";
 import SearchModalHead from "@components/calendar/year/searchModal/SearchModalHead";
 import SearchModalNormal from "@components/calendar/year/searchModal/normal/SearchModalNormal";
 import SearchModalNumber from "@components/calendar/year/searchModal/number/SearchModalNumber";
-import SearchModalDate from "@components/calendar/year/searchModal/date/SearchModalDate";
+import SearchModalYear from "@components/calendar/year/searchModal/year/SearchModalYear";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAxios, postAxios } from "@api/apiClient";
 
-const SearchModal = ({ year, setYear, closeModal, searchLocation, handleListUpdate }) => {
+const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, handleListUpdate }) => {
 
 	const [form] = Form.useForm();
 
@@ -73,7 +73,7 @@ const SearchModal = ({ year, setYear, closeModal, searchLocation, handleListUpda
 			<div className="layer-scroll">
 				<SearchModalNormal form={form} title={"일반"} order={1} searchLocation={searchLocation} searchDiv={"NORMAL"} />
 				<SearchModalNumber form={form} title={"숫자/수치"} order={2} searchLocation={searchLocation} searchDiv={"NUMBER"} />
-				<SearchModalDate form={form} title={"연도"} order={3} searchLocation={searchLocation} searchDiv={"DATE"}
+				<SearchModalYear form={form} title={"연도"} order={3} searchLocation={searchLocation} searchDiv={"DATE"}
 					year={year} setYear={setYear}
 				/>
 				<SearchModalNormal form={form} title={"작업자"} order={4} searchLocation={searchLocation} searchDiv={"WORKER"} />
@@ -95,4 +95,4 @@ const SearchModal = ({ year, setYear, closeModal, searchLocation, handleListUpda
 };
 
 
-export default SearchModal;
+export default YearSearchModalContent;

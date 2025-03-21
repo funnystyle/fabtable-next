@@ -3,7 +3,7 @@ import React from "react";
 import {ConfigProvider,} from "antd";
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
-import YearDateFormRangePicker from "@components/calendar/year/searchModal/date/YearDateFormRangePicker";
+import YearDateFormRangePicker from "@components/calendar/year/searchModal/year/YearDateFormRangePicker";
 
 const YearPicker = ({ year, setYear }) => {
 

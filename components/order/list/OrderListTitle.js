@@ -1,13 +1,8 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
-import { AutoComplete, Button, Flex, Form, Input, Layout, Typography, } from "antd";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
-import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
-import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
-import OrderCreateTab from "@components/order/create/OrderCreateTab";
-import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
+import React, {useState} from "react";
+import {AutoComplete, Button, Flex, Input, Typography,} from "antd";
+import {CloseOutlined} from "@ant-design/icons";
+import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
 
 const { Title } = Typography;
 
@@ -104,13 +99,7 @@ const OrderListTitle = ({ title, setSearchKeyword }) => {
 					/>
 				</AutoComplete>
 
-				<Button
-					icon={<FilterOutlined />}
-					iconPosition={"end"}
-					size="large"
-				>
-					조건 검색
-				</Button>
+				<OrderListButtonSearch />
 			</Flex>
 		</Flex>
 	);

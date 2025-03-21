@@ -1,14 +1,11 @@
 // pages/year.js
-import React, { useRef, useState } from "react";
-import { Button, Flex, Modal, } from "antd";
-import { SearchOutlined, } from "@ant-design/icons";
+import React, {useRef, useState} from "react";
+import {Modal,} from "antd";
 import "dayjs/locale/ko";
-import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownloadButton";
-import YearSelectButton from "@components/calendar/year/YearSelectButton";
 import Draggable from "react-draggable";
-import YearSearchModalContent from "@components/calendar/year/searchModal/YearSearchModalContent";
+import SearchModalContent from "@components/searchModal/SearchModalContent";
 
-const YearSearchModal = ({ year, setYear, handleListUpdate, openSearchModal, setOpenSearchModal }) => {
+const SearchModal = ({ handleListUpdate, openSearchModal, setOpenSearchModal }) => {
 
 	const [disabled, setDisabled] = useState(true);
 	const [bounds, setBounds] = useState({
@@ -65,15 +62,13 @@ const YearSearchModal = ({ year, setYear, handleListUpdate, openSearchModal, set
 					</Draggable>
 				)}
 			>
-				<YearSearchModalContent
-					year={year}
-					setYear={setYear}
+				<SearchModalContent
 					closeModal={closeModal}
-					searchLocation={"year"}
+					searchLocation={"order"}
 					handleListUpdate={handleListUpdate} />
 			</Modal>
 		</div>
 	);
 };
 
-export default YearSearchModal;
+export default SearchModal;

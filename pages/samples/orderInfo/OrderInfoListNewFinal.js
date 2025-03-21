@@ -168,7 +168,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	const onTabChange = (key) => {
 		if (key === "1") {
-			router.push("/publish/order");
+			router.push("/order/list");
 		} else if (key === "2") {
 			router.push("/publish/orderwrite");
 		}

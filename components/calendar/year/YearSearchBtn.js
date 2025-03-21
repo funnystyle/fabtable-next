@@ -6,7 +6,6 @@ import "dayjs/locale/ko";
 import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownloadButton";
 import YearSelectButton from "@components/calendar/year/YearSelectButton";
 import Draggable from "react-draggable";
-import SearchModal from "@components/calendar/year/searchModal/SearchModal";
 import YearSearchModal from "@components/calendar/year/YearSearchModal";
 
 const YearSearchBtn = ({ year, setYear, handleListUpdate }) => {

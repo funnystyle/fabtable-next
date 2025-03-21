@@ -3,14 +3,14 @@ import React from "react";
 import { Form, Radio, } from "antd";
 import "dayjs/locale/ko";
 
-const SearchModalFormRadio = ({ index, name, valueList, value, setValue }) => {
+const SearchModalFormRadio = ({ index, name, valueList, value, setValue, wide=false }) => {
 
 	const handleChange = (e) => {
 		setValue(e.target.value);
 	}
 
 	return (
-	<Form.Item className="select-radio-area" name={name} initialValue={valueList[0]?.value}>
+	<Form.Item className={`select-radio-area${wide ? " select-radio-area2" : ''}`} name={name} initialValue={valueList[0]?.value}>
 		<Radio.Group defaultValue={valueList[0]?.value}
 			onChange={handleChange}>
 			{valueList.map((item, i) => (

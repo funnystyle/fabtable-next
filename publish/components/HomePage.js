@@ -36,7 +36,7 @@ const pageComponents = {
 	// "/publish/dashboard": lazy(() => import("@/pages/publish/dashboard")),
 	"/publish/year": lazy(() => import("@/pages/publish/year")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
-	"/publish/order": lazy(() => import("@/pages/publish/order")),
+	"/order/list": lazy(() => import("@/pages/order/list")),
 	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
 	// "/publish/produce": lazy(() => import("@/pages/publish/produce")),
 	// "/publish/qc": lazy(() => import("@/pages/publish/qc")),
@@ -86,7 +86,7 @@ const basicItems = [
 	{
 		key: "2",
 		label: "영업 관리",
-		url: "/publish/order",
+		url: "/order/list",
 		icon: <EditFilled />,
 	},
 	{
