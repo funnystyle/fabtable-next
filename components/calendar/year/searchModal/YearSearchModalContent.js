@@ -1,28 +1,15 @@
 // pages/year.js
-import React, { useState } from "react";
-import { Button, Flex, Form, } from "antd";
+import React from "react";
+import {Button, Flex, Form,} from "antd";
 import "dayjs/locale/ko";
 import SearchModalHead from "@components/calendar/year/searchModal/SearchModalHead";
 import SearchModalNormal from "@components/calendar/year/searchModal/normal/SearchModalNormal";
 import SearchModalNumber from "@components/calendar/year/searchModal/number/SearchModalNumber";
 import SearchModalYear from "@components/calendar/year/searchModal/year/SearchModalYear";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAxios, postAxios } from "@api/apiClient";
 
-const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, handleListUpdate }) => {
+const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, setSearchData }) => {
 
 	const [form] = Form.useForm();
-
-
-	const { mutate: getYear } = useMutation({
-		mutationKey: "getYear",
-		mutationFn: (values) => postAxios("/user/calendar/year", values),
-		onSuccess: (response) => {
-			handleListUpdate(response.data.list);
-			closeModal();
-		}
-	});
-
 
 	const handleSubmit = () => {
 
@@ -59,9 +46,9 @@ const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, han
 				}
 			}
 		});
-		console.log(JSON.stringify({year:year, searchData:groupedData}));
 
-		getYear({year:year, searchData:groupedData});
+		setSearchData(groupedData);
+		closeModal();
 	}
 
 

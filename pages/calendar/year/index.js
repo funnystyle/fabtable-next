@@ -16,6 +16,7 @@ const YearComponent = ({ contentHeight }) => {
 	const today = new Date();
 	const [year, setYear] = useState([today.getFullYear(), today.getFullYear()]);
 	const [list, setList] = useState([]);
+	const [searchData, setSearchData] = useState({});
 
 	const { mutate: getYear } = useMutation({
 		mutationKey: "getYear",
@@ -30,12 +31,12 @@ const YearComponent = ({ contentHeight }) => {
 	}
 
 	const handleReload = () => {
-		getYear({year: year});
+		getYear({year: year, searchData: searchData});
 	}
 
 	useEffect(() => {
 		handleReload();
-	}, [year]);
+	}, [year, searchData]);
 
 	return (
 		<Layout>
@@ -48,7 +49,7 @@ const YearComponent = ({ contentHeight }) => {
 
 						<YearChart list={list}/>
 
-						<YearHeader year={year} setYear={setYear} handleListUpdate={handleListUpdate} />
+						<YearHeader year={year} setYear={setYear} setSearchData={setSearchData} />
 					</div>
 				</div>
 			</Flex>

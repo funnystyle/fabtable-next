@@ -1,14 +1,11 @@
 // pages/year.js
-import React, { useRef, useState } from "react";
-import { Button, Flex, Modal, } from "antd";
-import { SearchOutlined, } from "@ant-design/icons";
+import React, {useState} from "react";
+import {Button, Flex,} from "antd";
+import {SearchOutlined,} from "@ant-design/icons";
 import "dayjs/locale/ko";
-import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownloadButton";
-import YearSelectButton from "@components/calendar/year/YearSelectButton";
-import Draggable from "react-draggable";
 import YearSearchModal from "@components/calendar/year/YearSearchModal";
 
-const YearSearchBtn = ({ year, setYear, handleListUpdate }) => {
+const YearSearchBtn = ({ year, setYear, setSearchData }) => {
 
 	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
 
@@ -30,7 +27,7 @@ const YearSearchBtn = ({ year, setYear, handleListUpdate }) => {
 			<YearSearchModal
 				year={year}
 				setYear={setYear}
-				handleListUpdate={handleListUpdate}
+				setSearchData={setSearchData}
 				openSearchModal={openSearchModal}
 				setOpenSearchModal={setOpenSearchModal}
 			/>

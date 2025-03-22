@@ -6,6 +6,7 @@ import YearPicker from "@components/calendar/year/YearPicker";
 import YearPrevButton from "@components/calendar/year/YearPrevButton";
 import YearNextButton from "@components/calendar/year/YearNextButton";
 import YearSelectButton from "@components/calendar/year/YearSelectButton";
+import dayjs from "dayjs";
 
 const YearHeaderLeft = ({ year, setYear }) => {
 
@@ -19,7 +20,9 @@ const YearHeaderLeft = ({ year, setYear }) => {
 
 			<YearSelectButton setYear={setYear} />
 
-			<Button color="primary" variant="text" size="small" className="all-delete-tag">
+			<Button color="primary" variant="text" size="small" className="all-delete-tag"
+				onClick={() => setYear([dayjs().year(), dayjs().year()])}
+			>
 				초기화
 			</Button>
 		</Flex>

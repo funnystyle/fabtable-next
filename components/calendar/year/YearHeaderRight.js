@@ -7,11 +7,11 @@ import YearExcelDownloadButton from "@components/calendar/year/YearExcelDownload
 import YearSelectButton from "@components/calendar/year/YearSelectButton";
 import YearSearchBtn from "@components/calendar/year/YearSearchBtn";
 
-const YearHeaderRight = ({ year, setYear, handleListUpdate }) => {
+const YearHeaderRight = ({ year, setYear, setSearchData }) => {
 
 	return (
 		<Flex gap="small" align="center">
-			<YearSearchBtn year={year} setYear={setYear} handleListUpdate={handleListUpdate} />
+			<YearSearchBtn year={year} setYear={setYear} setSearchData={setSearchData} />
 
 			<YearExcelDownloadButton year={year} />
 		</Flex>
