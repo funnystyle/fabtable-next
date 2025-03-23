@@ -3,10 +3,13 @@ import React, {useState} from "react";
 import {AutoComplete, Button, Flex, Input, Typography,} from "antd";
 import {CloseOutlined} from "@ant-design/icons";
 import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
 const { Title } = Typography;
 
-const OrderListTitle = ({ title, setSearchKeyword }) => {
+const OrderListTitle = ({ title }) => {
+
+	const { setSearchKeyword } = useOrderListQueryStore();
 
 	const [searchItems, setSearchItems] = useState([
 		{ title: "검색어1", date: "02.04" },
@@ -94,7 +97,6 @@ const OrderListTitle = ({ title, setSearchKeyword }) => {
 						placeholder="검색어를 입력하세요"
 						allowClear
 						className="input-search"
-						// onChange={(e) => setSearchKeyword(e.target.value)}
 						onSearch={(value) => setSearchKeyword(value)}
 					/>
 				</AutoComplete>

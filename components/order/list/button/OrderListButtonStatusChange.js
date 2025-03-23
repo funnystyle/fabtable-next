@@ -1,22 +1,26 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Space, } from "antd";
-import { DownOutlined, RedoOutlined } from "@ant-design/icons";
-import { useMutation } from "@tanstack/react-query";
-import { putAxios } from "@api/apiClient";
+import {Button, Dropdown, Space,} from "antd";
+import {DownOutlined} from "@ant-design/icons";
+import {useMutation} from "@tanstack/react-query";
+import {putAxios} from "@api/apiClient";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListButtonStatusChange = ({ statusList, stateStatusList, selectedRowKeys, handleSearch }) => {
+const OrderListButtonStatusChange = ({ statusList, selectedRowKeys }) => {
+
+	const stateStatusList = statusList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`}));
 
 	const { mutate: nowStateChange } = useMutation({
 		mutationKey: "nowStateChange",
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
+	const { handleReload } = useOrderListQueryStore();
 	const handleStatusChange = async (e) => {
 		if (selectedRowKeys.length > 0) {
 			await nowStateChange({ ids: selectedRowKeys, nowState: statusList[e.key] });
 			setTimeout(() => {
-				handleSearch();
+				handleReload();
 			}, 100);
 		}
 	}

@@ -1,32 +1,7 @@
 // pages/modal.js
-import React, { useState, useRef } from "react";
-import {
-	Layout,
-	Button,
-	Modal,
-	Flex,
-	Form,
-	Input,
-	Select,
-	Row,
-	Col,
-	InputNumber,
-	DatePicker,
-	Radio,
-	Pagination,
-	Table,
-	Tag,
-} from "antd";
-import {
-	RedoOutlined,
-	PlusOutlined,
-	VerticalRightOutlined,
-	VerticalLeftOutlined,
-	SettingOutlined,
-	LeftOutlined,
-	RightOutlined,
-	CheckOutlined,
-} from "@ant-design/icons";
+import React, {useRef, useState} from "react";
+import {Button, Col, DatePicker, Flex, Form, Input, InputNumber, Layout, Modal, Pagination, Radio, Row, Select, Table, Tag,} from "antd";
+import {CheckOutlined, LeftOutlined, PlusOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined,} from "@ant-design/icons";
 import Link from "next/link";
 import Draggable from "react-draggable";
 
@@ -154,7 +129,7 @@ const data = [
 	},
 ];
 
-const ModalComponent = ({}) => {
+const SampleModalComponent = ({}) => {
 	const handleChange = (pagination, filters, sorter = {}) => {
 		console.log("Various parameters", pagination, filters, sorter);
 		// setSortedInfo(sorter.columnKey ? sorter : {});
@@ -1176,7 +1151,7 @@ const ModalComponent = ({}) => {
 				조건 검색
 			</Button>
 
-			{/* ModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
+			{/* SampleModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
 			<div style={{ display: openCopyModal ? "block" : "none" }}>
 				<Modal
 					title={
@@ -1209,7 +1184,7 @@ const ModalComponent = ({}) => {
 				</Modal>
 			</div>
 
-			{/* ModalComponent 추가 - "조건 검색" 클릭 시 열림 */}
+			{/* SampleModalComponent 추가 - "조건 검색" 클릭 시 열림 */}
 			<div style={{ display: openSearchModal ? "block" : "none" }}>
 				<Modal
 					title={
@@ -1246,4 +1221,4 @@ const ModalComponent = ({}) => {
 	);
 };
 
-export default ModalComponent;
+export default SampleModalComponent;

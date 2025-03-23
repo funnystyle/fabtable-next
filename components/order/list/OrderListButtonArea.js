@@ -1,6 +1,6 @@
 // pages/order/create/index.js
-import React, { useState } from "react";
-import { Button, Flex, Tag, } from "antd";
+import React from "react";
+import {Button, Flex,} from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
 import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
@@ -11,13 +11,8 @@ import OrderListButtonExcel from "@components/order/list/button/OrderListButtonE
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 
 const OrderListButtonArea = ({
-	statusList, setStatusList,
-	searchStatusList, setSearchStatusList,
-	stateStatusList, setStateStatusList,
-	selectedRowKeys, handleSearch,
-	setCopyModalBoxList, showCopyModal,
-	setEditModalBoxList, showEditModal,
-	setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle,
+	selectedRowKeys, statusList,
+ setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle,
 }) => {
 
 	return (
@@ -28,19 +23,15 @@ const OrderListButtonArea = ({
 				<Flex gap="small" className="btn-spacing-area">
 					<OrderListButtonTotalInfo />
 
-					<OrderListButtonStatusSelect
-						statusList={statusList} setStatusList={setStatusList}
-						searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList}
-						setStateStatusList={setStateStatusList}
-					/>
+					<OrderListButtonStatusSelect statusList={statusList} />
 
-					<OrderListButtonStatusChange statusList={statusList} stateStatusList={stateStatusList} selectedRowKeys={selectedRowKeys} handleSearch={handleSearch} />
+					<OrderListButtonStatusChange statusList={statusList} selectedRowKeys={selectedRowKeys} />
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonCopy setCopyModalBoxList={setCopyModalBoxList} showCopyModal={showCopyModal} />
+					<OrderListButtonCopy selectedRowKeys={selectedRowKeys} />
 
-					<OrderListButtonEdit setEditModalBoxList={setEditModalBoxList} showEditModal={showEditModal} />
+					<OrderListButtonEdit selectedRowKeys={selectedRowKeys} />
 				</Flex>
 
 				<Flex gap="small">

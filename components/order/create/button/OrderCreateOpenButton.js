@@ -2,10 +2,9 @@
 import React, {useState} from "react";
 import {Button,} from "antd";
 import {FilterOutlined} from "@ant-design/icons";
-import YearSearchModal from "@components/calendar/year/YearSearchModal";
 import SearchModal from "@components/searchModal/SearchModal";
 
-const OrderListButtonSearch = () => {
+const OrderCreateOpenButton = () => {
 
 	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
 
@@ -18,15 +17,18 @@ const OrderListButtonSearch = () => {
 		setOpenSearchModal(true);
 	}
 
+
 	return (
 		<>
 			<Button
 				icon={<FilterOutlined />}
 				iconPosition={"end"}
+				color="primary"
+				variant="outlined"
 				size="large"
 				onClick={showSearchModal}
 			>
-				조건 검색
+				수주 불러오기
 			</Button>
 
 			<SearchModal
@@ -39,4 +41,4 @@ const OrderListButtonSearch = () => {
 	);
 };
 
-export default OrderListButtonSearch;
+export default OrderCreateOpenButton;

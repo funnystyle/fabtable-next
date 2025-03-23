@@ -4,10 +4,13 @@ import { Button, Checkbox, Divider, Dropdown, Space, theme, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
 const { useToken } = theme;
 
-const OrderListButtonStatusSelect = ({ statusList, setStatusList, searchStatusList, setSearchStatusList, setStateStatusList }) => {
+const OrderListButtonStatusSelect = ({ statusList }) => {
+
+	const { searchStatusList, setSearchStatusList } = useOrderListQueryStore();
 
 	const { token } = useToken();
 	const contentStyle = {
@@ -60,21 +63,6 @@ const OrderListButtonStatusSelect = ({ statusList, setStatusList, searchStatusLi
 
 		setAllChecked(updated.every(Boolean));
 	};
-
-	const [queryKey3, setQueryKey3] = useState(["status-list", Math.random()]);
-	const { data:statusListResponse, isSuccess:isSuccess3 } = useQuery({
-		queryKey: queryKey3,
-		queryFn: () => getAxios("/user/code", {groupName: "현재상태"}),
-	});
-	useEffect(() => {
-		if (isSuccess3) {
-			const stList = statusListResponse.data.list.map((item) => item.codeName);
-			setStatusList(stList);
-			setSearchStatusList(stList);
-
-			setStateStatusList(stList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`})));
-		}
-	}, [isSuccess3]);
 
 	return (
 		<Dropdown

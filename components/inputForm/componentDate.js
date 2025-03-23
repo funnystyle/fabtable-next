@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 export const componentDate = (form, recordColumn, index = -1) => {
   const handleSetToday = (e, fieldName) => {
     e.preventDefault(); // 기본 동작 방지
-    console.log("fieldName", fieldName);
     form.setFieldValue(fieldName, dayjs()); // 오늘 날짜로 설정
   };
 

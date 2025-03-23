@@ -1,26 +1,26 @@
 // pages/order/create/index.js
 import React, { useEffect, useState } from "react";
-import { Button, } from "antd";
+import {Button, Form,} from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import { handleCopyModal } from "@components/list/handleCopyModal";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
+import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
 
-const OrderListButtonCopy = ({setCopyModalBoxList, showCopyModal}) => {
+const OrderListButtonCopy = ({ selectedRowKeys }) => {
 
-	const [queryKey4, setQueryKey4] = useState(["input-box-list", "recordListCopyModal", Math.random()]);
-	const { data:copyModalBoxResponse, isSuccess:isSuccess4 } = useQuery({
-		queryKey: queryKey4,
-		queryFn: () => getAxios("/user/input-box", {type:"recordListCopyModal"}),
-	});
-	useEffect(() => {
-		if (isSuccess4) {
-			setCopyModalBoxList(copyModalBoxResponse.data.list);
-		}
-	}, [isSuccess4]);
+	const [form] = Form.useForm();
+
+	const [openModal, setOpenModal] = useState(false);
+	const showModal = () => {
+		setOpenModal(true);
+	};
 
 	return (
-		<Button onClick={showCopyModal}>수주 복제하기</Button>
+		<>
+			<Button onClick={showModal}>수주 복제하기</Button>
+			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} selectedRowKeys={selectedRowKeys} />
+		</>
 	);
 };
 
