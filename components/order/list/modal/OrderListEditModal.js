@@ -9,7 +9,7 @@ import {ExclamationCircleFilled} from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListEditModal = ({ form, openModal, setOpenModal, selectedRowKeys }) => {
+const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 
 	const [modal, contextHolder] = Modal.useModal();
 
@@ -18,7 +18,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, selectedRowKeys }) 
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useOrderListQueryStore();
+	const { handleReload, selectedRowKeys } = useOrderListQueryStore();
 	const handleEditSubmit = async (e) => {
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;

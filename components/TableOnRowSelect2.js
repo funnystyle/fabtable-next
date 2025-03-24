@@ -5,8 +5,12 @@ import { Button, Dropdown, Flex, message, Pagination, Space, Table } from "antd"
 import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@components/AntdTableEvent";
 import { RedoOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, selectedRowKeys, setSelectedRowKeys }) => {
+const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
+
+  const {selectedRowKeys, setSelectedRowKeys} = useOrderListQueryStore();
+
   const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
   const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치
   const [isDragging, setIsDragging] = useState(false);

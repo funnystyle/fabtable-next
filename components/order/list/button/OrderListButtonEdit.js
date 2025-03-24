@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import {Button, Form,} from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
 
-const OrderListButtonEdit = ({ selectedRowKeys }) => {
+const OrderListButtonEdit = () => {
 
 	const [form] = Form.useForm();
 
@@ -15,7 +15,7 @@ const OrderListButtonEdit = ({ selectedRowKeys }) => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 일괄수정</Button>
-			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} selectedRowKeys={selectedRowKeys} />
+			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
 		</>
 	);
 };

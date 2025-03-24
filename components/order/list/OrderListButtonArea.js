@@ -11,7 +11,7 @@ import OrderListButtonExcel from "@components/order/list/button/OrderListButtonE
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 
 const OrderListButtonArea = ({
-	selectedRowKeys, statusList,
+	statusList,
  setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle,
 }) => {
 
@@ -25,13 +25,13 @@ const OrderListButtonArea = ({
 
 					<OrderListButtonStatusSelect statusList={statusList} />
 
-					<OrderListButtonStatusChange statusList={statusList} selectedRowKeys={selectedRowKeys} />
+					<OrderListButtonStatusChange statusList={statusList} />
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonCopy selectedRowKeys={selectedRowKeys} />
+					<OrderListButtonCopy />
 
-					<OrderListButtonEdit selectedRowKeys={selectedRowKeys} />
+					<OrderListButtonEdit  />
 				</Flex>
 
 				<Flex gap="small">
@@ -40,7 +40,6 @@ const OrderListButtonArea = ({
 					<OrderListButtonExcel />
 
 					<OrderListButtonPrint
-						selectedRowKeys={selectedRowKeys}
 						setOpenDrawer={setOpenDrawer}
 						setDrawerHeader={setDrawerHeader}
 						setDrawerContent={setDrawerContent}

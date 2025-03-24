@@ -13,6 +13,7 @@ import "@react-pdf-viewer/zoom/lib/styles/index.css";
 import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@/store/useDocxUrlStore";
 import dynamic from "next/dynamic";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 // import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 // 🚀 `react-doc-viewer`를 클라이언트에서만 로드
@@ -36,7 +37,6 @@ const DrawerComponent = ({
 	headerContent,
 	content,
 	footer,
- 	selectedRowKeys = [1],
 }) => {
 
 	const [renderers, setRenderers] = useState([]);
@@ -46,6 +46,7 @@ const DrawerComponent = ({
 	const zoomPluginInstance = zoomPlugin();
 	const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
 
+	const {selectedRowKeys} = useOrderListQueryStore();
 	const { pdfUrlList } = usePdfUrlStore();
 	const { docxUrlList } = useDocxUrlStore();
 

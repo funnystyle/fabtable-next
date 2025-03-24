@@ -8,14 +8,14 @@ import {postAxios} from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListCopyModal = ({ form, openModal, setOpenModal, selectedRowKeys }) => {
+const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 
 	const { mutate: orderInfoCopy } = useMutation({
 		mutationKey: "orderInfoCopy",
 		mutationFn: (values) => postAxios("/user/record/copy", values),
 	});
 
-	const { handleReload } = useOrderListQueryStore();
+	const { handleReload, selectedRowKeys } = useOrderListQueryStore();
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;

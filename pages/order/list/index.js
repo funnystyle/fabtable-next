@@ -1,10 +1,10 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
-import {Layout, Space,} from "antd";
+import React, { useEffect, useState } from "react";
+import { Layout, Space, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
+import { useQuery } from "@tanstack/react-query";
+import { getAxios } from "@api/apiClient";
 import OrderListTitle from "@components/order/list/OrderListTitle";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import OrderListSearchTags from "@components/order/list/OrderListSearchTags";
@@ -26,10 +26,8 @@ const OrderComponent = ({ contentHeight }) => {
 	};
 	// --------- 드로어 관련
 
-	const [selectedRowKeys, setSelectedRowKeys] = useState([]); // 선택된 행
-
 	// --------- 상태 리스트 상수
-	const {setSearchStatusList} = useOrderListQueryStore();
+	const {setSearchStatusList, selectedRowKeys} = useOrderListQueryStore();
 	const [statusList, setStatusList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
@@ -57,14 +55,14 @@ const OrderComponent = ({ contentHeight }) => {
 					<OrderListSearchTags />
 
 					{/* 상단 버튼 */}
-					<OrderListButtonArea selectedRowKeys={selectedRowKeys} statusList={statusList}
+					<OrderListButtonArea statusList={statusList}
 															 setOpenDrawer={setOpenDrawer} setDrawerHeader={setDrawerHeader}
 															 setDrawerContent={setDrawerContent} setDrawerFooter={setDrawerFooter} setDrawerTitle={setDrawerTitle} />
 				</Space>
 			</div>
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListTable contentHeight={contentHeight} selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys} />
+			<OrderListTable contentHeight={contentHeight} />
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
@@ -75,7 +73,6 @@ const OrderComponent = ({ contentHeight }) => {
 					headerContent={drawerHeader} // 동적으로 헤더 변경
 					content={drawerContent} // 동적으로 본문 변경
 					footer={drawerFooter} // 동적으로 푸터 버튼 변경
-					selectedRowKeys={selectedRowKeys}
 				/>
 			</div>
 		</Layout>

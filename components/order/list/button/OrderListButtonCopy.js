@@ -7,7 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
 
-const OrderListButtonCopy = ({ selectedRowKeys }) => {
+const OrderListButtonCopy = () => {
 
 	const [form] = Form.useForm();
 
@@ -19,7 +19,7 @@ const OrderListButtonCopy = ({ selectedRowKeys }) => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 복제하기</Button>
-			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} selectedRowKeys={selectedRowKeys} />
+			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
 		</>
 	);
 };

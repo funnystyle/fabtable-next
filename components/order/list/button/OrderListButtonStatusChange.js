@@ -6,7 +6,7 @@ import {useMutation} from "@tanstack/react-query";
 import {putAxios} from "@api/apiClient";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListButtonStatusChange = ({ statusList, selectedRowKeys }) => {
+const OrderListButtonStatusChange = ({ statusList }) => {
 
 	const stateStatusList = statusList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`}));
 
@@ -15,7 +15,7 @@ const OrderListButtonStatusChange = ({ statusList, selectedRowKeys }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useOrderListQueryStore();
+	const { handleReload, selectedRowKeys } = useOrderListQueryStore();
 	const handleStatusChange = async (e) => {
 		if (selectedRowKeys.length > 0) {
 			await nowStateChange({ ids: selectedRowKeys, nowState: statusList[e.key] });

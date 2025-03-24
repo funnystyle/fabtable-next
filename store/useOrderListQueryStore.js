@@ -5,6 +5,8 @@ const useOrderListQueryStore = create((set) => ({
   page: 1,
   searchKeyword: "",
   searchStatusList: [],
+  selectedRowKeys: [],
+  setSelectedRowKeys: (selectedRowKeys) => set({ selectedRowKeys }),
   queryKey: ["record-list", "", 10, [], 1, Math.random()],
   handleReload: () => set((state) => ({
     queryKey: ["record-list", state.searchKeyword, state.size, state.searchStatusList, state.page, Math.random()],

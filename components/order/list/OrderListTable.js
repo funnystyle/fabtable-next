@@ -8,7 +8,7 @@ import {orderListRightItem} from "@components/order/list/data/orderListRightItem
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListTable = ({ contentHeight, selectedRowKeys, setSelectedRowKeys }) => {
+const OrderListTable = ({ contentHeight }) => {
 
 	const [sortedInfo, setSortedInfo] = useState({});
 
@@ -78,7 +78,7 @@ const OrderListTable = ({ contentHeight, selectedRowKeys, setSelectedRowKeys }) 
 			>
 				<div style={{ marginTop: contentHeight }} className="contents-scroll">
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} selectedRowKeys={selectedRowKeys} setSelectedRowKeys={setSelectedRowKeys} />
+					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} />
 				</div>
 			</Dropdown>
 		</>

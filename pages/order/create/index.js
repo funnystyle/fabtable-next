@@ -8,6 +8,7 @@ import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew"
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import OrderCreateTitle from "@components/order/create/OrderCreateTitle";
+import SearchModal from "@components/searchModal/SearchModal";
 
 const OrderInfoCreate = ({ contentHeight }) => {
 
@@ -50,6 +51,9 @@ const OrderInfoCreate = ({ contentHeight }) => {
 				</div>
 				<OrderCreateAnchor contentHeight={contentHeight} list={inputBoxList} />
 			</Flex>
+
+			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
+			<SearchModal searchLocation={"order"} />
 		</Layout>
 	);
 };

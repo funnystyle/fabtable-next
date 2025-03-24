@@ -11,9 +11,11 @@ import { postAxios, postBlobAxios } from "@api/apiClient";
 import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
+import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
-const OrderListButtonPrint = ({ selectedRowKeys, setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle}) => {
+const OrderListButtonPrint = ({ setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle}) => {
 
+	const {selectedRowKeys} = useOrderListQueryStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
 	const [selectedPrint, setSelectedPrint] = useState("label"); // ✅ 선택된 라벨 종류 상태
