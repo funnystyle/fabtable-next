@@ -11,23 +11,16 @@ import OrderListSearchTags from "@components/order/list/OrderListSearchTags";
 import OrderListButtonArea from "@components/order/list/OrderListButtonArea";
 import OrderListTable from "@components/order/list/OrderListTable";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useDrawerStore from "@store/useDrawerStore";
 
 const OrderComponent = ({ contentHeight }) => {
 
 	// --------- 드로어 관련
-	const [openDrawer, setOpenDrawer] = useState(false); // Drawer 열림 상태
-	const [drawerHeader, setDrawerHeader] = useState(null); // Drawer 헤더
-	const [drawerContent, setDrawerContent] = useState(null); // Drawer 본문 내용
-	const [drawerFooter, setDrawerFooter] = useState(null); // Drawer 푸터 버튼
-	const [drawerTitle, setDrawerTitle] = useState(""); // Drawer 제목 상태
-
-	const closeDrawer = () => {
-		setOpenDrawer(false);
-	};
+	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
 
 	// --------- 상태 리스트 상수
-	const {setSearchStatusList, selectedRowKeys} = useOrderListQueryStore();
+	const { setSearchStatusList } = useOrderListQueryStore();
 	const [statusList, setStatusList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
@@ -55,9 +48,7 @@ const OrderComponent = ({ contentHeight }) => {
 					<OrderListSearchTags />
 
 					{/* 상단 버튼 */}
-					<OrderListButtonArea statusList={statusList}
-															 setOpenDrawer={setOpenDrawer} setDrawerHeader={setDrawerHeader}
-															 setDrawerContent={setDrawerContent} setDrawerFooter={setDrawerFooter} setDrawerTitle={setDrawerTitle} />
+					<OrderListButtonArea statusList={statusList} />
 				</Space>
 			</div>
 
@@ -66,14 +57,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent
-					open={openDrawer}
-					onClose={closeDrawer}
-					title={drawerTitle}
-					headerContent={drawerHeader} // 동적으로 헤더 변경
-					content={drawerContent} // 동적으로 본문 변경
-					footer={drawerFooter} // 동적으로 푸터 버튼 변경
-				/>
+				<DrawerComponent />
 			</div>
 		</Layout>
 	);

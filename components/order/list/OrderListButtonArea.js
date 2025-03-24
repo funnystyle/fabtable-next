@@ -10,10 +10,7 @@ import OrderListButtonEdit from "@components/order/list/button/OrderListButtonEd
 import OrderListButtonExcel from "@components/order/list/button/OrderListButtonExcel";
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 
-const OrderListButtonArea = ({
-	statusList,
- setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle,
-}) => {
+const OrderListButtonArea = ({ statusList }) => {
 
 	return (
 		<div className="contents-top-scroll">
@@ -39,13 +36,7 @@ const OrderListButtonArea = ({
 
 					<OrderListButtonExcel />
 
-					<OrderListButtonPrint
-						setOpenDrawer={setOpenDrawer}
-						setDrawerHeader={setDrawerHeader}
-						setDrawerContent={setDrawerContent}
-						setDrawerFooter={setDrawerFooter}
-						setDrawerTitle={setDrawerTitle}
-					/>
+					<OrderListButtonPrint />
 				</Flex>
 			</Flex>
 		</div>

@@ -4,8 +4,6 @@
 import React, { useEffect, useState } from "react";
 import { ZoomInOutlined, ZoomOutOutlined } from "@ant-design/icons";
 import { Button, Drawer, Layout } from "antd";
-import { useMutation } from "@tanstack/react-query";
-import { postBlobAxios } from "@api/apiClient";
 import { Viewer, Worker } from "@react-pdf-viewer/core";
 import { zoomPlugin } from "@react-pdf-viewer/zoom";
 import "@react-pdf-viewer/core/lib/styles/index.css";
@@ -14,6 +12,7 @@ import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@/store/useDocxUrlStore";
 import dynamic from "next/dynamic";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useDrawerStore from "@store/useDrawerStore";
 // import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 // 🚀 `react-doc-viewer`를 클라이언트에서만 로드
@@ -30,14 +29,9 @@ const handleChange = (value) => {
 	console.log(`selected ${value}`);
 };
 
-const DrawerComponent = ({
-	open,
-	onClose,
-	title,
-	headerContent,
-	content,
-	footer,
-}) => {
+const DrawerComponent = () => {
+
+	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose } = useDrawerStore();
 
 	const [renderers, setRenderers] = useState([]);
 
