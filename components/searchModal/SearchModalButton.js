@@ -8,7 +8,7 @@ import useModalStore from "@store/useModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const { setList, setData, setOpenSearchModal, size } = useModalStore();
+	const { setList, setData, setOpenSearchModal, size, page } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
@@ -49,7 +49,7 @@ const SearchModalButton = ({ form }) => {
 		});
 
 		console.log(JSON.stringify(groupedData, null, 2));
-		getRecords({searchData: groupedData, size:size});
+		getRecords({searchData: groupedData, size:size, page:page});
 	}
 
 	return (

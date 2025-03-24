@@ -49,12 +49,6 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 
 	const { data, size, setSize } = useModalStore();
 
-	console.log("setSize", setSize);
-
-	useEffect(() => {
-		console.log("order table list", data);
-	}, [data]);
-
 	return (
 		<>
 			{/* 태그 없음, 헤더 관련 정리 event */}

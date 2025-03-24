@@ -9,6 +9,8 @@ const useModalStore = create((set) => ({
   setList: (list) => set({ list }),
   size: 10,
   setSize: (size) => set({ size }),
+  page: 1,
+  setPage: (page) => set({ page }),
   openSearchModal: false,
   setOpenSearchModal: (openSearchModal) => set({ openSearchModal }),
 }));
