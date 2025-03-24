@@ -1,16 +1,16 @@
 "use client"; // Next.js 클라이언트 컴포넌트
 
-import React, { useState, useRef, useEffect } from "react";
-import { Button, Dropdown, Flex, message, Pagination, Space, Table } from "antd";
-import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@components/AntdTableEvent";
-import { RedoOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
+import React, { useEffect, useRef, useState } from "react";
+import { Button, Dropdown, Flex, Space, Table } from "antd";
+import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd } from "@components/AntdTableEvent";
+import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
 import '@styles/globals.css';
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
 
-  const {selectedRowKeys, setSelectedRowKeys} = useOrderListQueryStore();
+  const {selectedRowKeys, setSelectedRowKeys} = useTableSelectKeysStore();
 
   const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
   const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치

@@ -13,6 +13,7 @@ import useDocxUrlStore from "@/store/useDocxUrlStore";
 import dynamic from "next/dynamic";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 import useDrawerStore from "@store/useDrawerStore";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 // import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 // 🚀 `react-doc-viewer`를 클라이언트에서만 로드
@@ -40,7 +41,7 @@ const DrawerComponent = () => {
 	const zoomPluginInstance = zoomPlugin();
 	const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
 
-	const {selectedRowKeys} = useOrderListQueryStore();
+	const {selectedRowKeys} = useTableSelectKeysStore();
 	const { pdfUrlList } = usePdfUrlStore();
 	const { docxUrlList } = useDocxUrlStore();
 

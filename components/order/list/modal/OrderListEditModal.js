@@ -8,6 +8,7 @@ import {putAxios} from "@api/apiClient";
 import {ExclamationCircleFilled} from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 
@@ -18,7 +19,9 @@ const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload, selectedRowKeys } = useOrderListQueryStore();
+	const { handleReload } = useOrderListQueryStore();
+	const { selectedRowKeys } = useTableSelectKeysStore();
+
 	const handleEditSubmit = async (e) => {
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;

@@ -7,6 +7,7 @@ import {useMutation} from "@tanstack/react-query";
 import {postAxios} from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 
@@ -15,7 +16,9 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 		mutationFn: (values) => postAxios("/user/record/copy", values),
 	});
 
-	const { handleReload, selectedRowKeys } = useOrderListQueryStore();
+	const { handleReload } = useOrderListQueryStore();
+	const { selectedRowKeys } = useTableSelectKeysStore();
+
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;
