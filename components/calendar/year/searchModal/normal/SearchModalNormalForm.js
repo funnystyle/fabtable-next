@@ -6,6 +6,7 @@ import SearchModalNormalFormInput from "@components/calendar/year/searchModal/no
 import SearchModalFormSelect from "@components/calendar/year/searchModal/SearchModalFormSelect";
 import SearchModalFormRadio from "@components/calendar/year/searchModal/SearchModalFormRadio";
 import SearchModalFormButtonArea from "@components/calendar/year/searchModal/SearchModalFormButtonArea";
+import useModalStore from "@store/useModalStore";
 
 const SearchModalNormalForm = ({form, order, index, searchLocation, searchDiv, searchCount, setSearchCount}) => {
 

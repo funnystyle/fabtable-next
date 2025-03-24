@@ -1,5 +1,5 @@
 // pages/year.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
 import { useMutation } from "@tanstack/react-query";
@@ -8,7 +8,7 @@ import useModalStore from "@store/useModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const { setList, setData, setOpenSearchModal, size, page } = useModalStore();
+	const { setList, setData, setOpenSearchModal, size, page, setFormData, deleteTagKeyName } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
@@ -25,6 +25,7 @@ const SearchModalButton = ({ form }) => {
 		console.log(JSON.stringify(rawData, null, 2));
 
 		Object.entries(rawData).forEach(([key, value]) => {
+
 			const match = key.match(/search-(\d+)-(\d+)-(.+)/);
 			if (match) {
 				const [, group, index, field] = match;
@@ -49,8 +50,14 @@ const SearchModalButton = ({ form }) => {
 		});
 
 		console.log(JSON.stringify(groupedData, null, 2));
+		setFormData(rawData);
 		getRecords({searchData: groupedData, size:size, page:page});
 	}
+
+	useEffect(() => {
+		form.resetFields([`${deleteTagKeyName}-input`, `${deleteTagKeyName}-input2`]);
+		handleSubmit();
+	}, [deleteTagKeyName]);
 
 	return (
 		<Flex

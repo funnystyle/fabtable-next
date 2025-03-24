@@ -13,6 +13,10 @@ const useModalStore = create((set) => ({
   setPage: (page) => set({ page }),
   openSearchModal: false,
   setOpenSearchModal: (openSearchModal) => set({ openSearchModal }),
+  formData: {},
+  setFormData: (formData) => set({ formData }),
+  deleteTagKeyName: "",
+  setDeleteTagKeyName: (deleteTagKeyName) => set({ deleteTagKeyName }),
 }));
 
 export default useModalStore;
