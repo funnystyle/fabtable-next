@@ -19,35 +19,57 @@ const OrderListSearchTags = () => {
   };
 
   function parseSearchInputs(data) {
-    const result = [];
+    const grouped = {};
 
-    // 키들을 순회
+    // Step 1: search-X-Y 그룹별로 묶기
     for (const key in data) {
-      // radio나 select 항목은 제외
-      if (key.includes('radio') || key.includes('select')) continue;
-
-      // 키에서 search 위치 추출 (ex: search-1-1-input → search-1-1)
-      const match = key.match(/(search-\d+-\d+)-input?$/);
+      const match = key.match(/(search-\d+-\d+)-(.+)/); // ex) search-1-2-input
       if (!match) continue;
 
-      const baseKey = match[1];      // search-1-1
-      const isSecond = !!match[2];   // input2 여부
+      const baseKey = match[1]; // search-1-2
+      const suffix = match[2];  // input, radio, select 등
 
-      if (!data[key]) continue;
-      // 값 병합 처리
-      if (Array.isArray(data[key])) {
-        // 날짜 범위
-        const [start, end] = data[key].map(date =>
+      if (!grouped[baseKey]) {
+        grouped[baseKey] = {};
+      }
+
+      grouped[baseKey][suffix] = data[key];
+    }
+
+    // Step 2: 정렬된 순서로 key 처리
+    const sortedKeys = Object.keys(grouped).sort((a, b) => {
+      const [_, a1, a2] = a.match(/search-(\d+)-(\d+)/).map(Number);
+      const [__, b1, b2] = b.match(/search-(\d+)-(\d+)/).map(Number);
+      return a1 - b1 || a2 - b2;
+    });
+
+    // Step 3: 결과 생성
+    const result = [];
+
+    for (const baseKey of sortedKeys) {
+      const item = grouped[baseKey];
+      if (!item.input && !item.input2) {
+        continue;
+      } // 값이 없는 경우 제외
+
+      let label = '';
+
+      if (Array.isArray(item.input)) {
+        // 날짜 범위 (ex. DatePicker)
+        const [start, end] = item.input.map(date =>
           date.format('YYYY-MM-DD HH:mm')
         );
-        result.push({ key: baseKey, label: `${start} ~ ${end}` });
-      } else if (data[key + 2]) {
-        // input2 처리 (기존 값이 존재할 때만)
-        result.push({ key: baseKey, label: ` ${data[key]} ~ ${data[key + 2]}` });
-      } else {
-        // input 처리
-        result.push({ key: baseKey, label: data[key] });
+        label = `${start} ~ ${end}`;
+      } else if (item.input && item.input2) {
+        label = `${item.input} ~ ${item.input2}`;
+      } else if (item.input) {
+        label = item.input;
       }
+
+      result.push({
+        key: baseKey,
+        label: label
+      });
     }
 
     return result;
@@ -64,7 +86,10 @@ const OrderListSearchTags = () => {
           <strong className="tit-search-result">검색결과 :</strong>
 
           {tags.map((tag, index) => (
-            <Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+            <Tag key={index} closeIcon onClose={(e) => {
+              e.preventDefault();
+              handleTagClose(tag);
+            }}>
               {tag.label}
             </Tag>
           ))}
