@@ -2,3 +2,12 @@
   z-index: -1!important;
   pointer-events: none!important; /* Allow clicks to pass through non-modal areas */
 }
+
+.ant-table-selection-column {
+  padding: 0 !important;
+  border-inline-end: 0px !important;
+}
+
+.ant-checkbox-wrapper {
+  display: none !important;
+}

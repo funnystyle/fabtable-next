@@ -1,11 +1,11 @@
 // pages/year.js
 import React from "react";
-import {Form,} from "antd";
+import { Form, } from "antd";
 import "dayjs/locale/ko";
 import SearchModalHead from "@components/calendar/year/searchModal/SearchModalHead";
 import SearchModalButton from "@components/searchModal/SearchModalButton";
 import SearchModalBody from "@components/searchModal/SearchModalBody";
-import OrderOpenModalRecordList from "@components/order/create/OrderOpenModalRecordList";
+import OrderCreateModalTable from "@components/order/create/OrderCreateModalTable";
 
 const SearchModalContent = ({ searchLocation }) => {
 
@@ -21,7 +21,7 @@ const SearchModalContent = ({ searchLocation }) => {
 
 				<SearchModalButton form={form} />
 
-				{pathname === "/order/create" && (<OrderOpenModalRecordList />)}
+				{pathname === "/order/create" && (<OrderCreateModalTable contentHeight={0} />)}
 			</div>
 		</>
 	);

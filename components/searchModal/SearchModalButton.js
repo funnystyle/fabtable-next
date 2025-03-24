@@ -8,13 +8,14 @@ import useModalStore from "@store/useModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const { setList, setOpenSearchModal } = useModalStore();
+	const { setList, setData, setOpenSearchModal, size } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
 		mutationFn: (values) => postAxios("/user/record/search", values),
 		onSuccess: (response) => {
 			setList(response.data.list);
+			setData(response.data);
 		}
 	});
 
@@ -48,7 +49,7 @@ const SearchModalButton = ({ form }) => {
 		});
 
 		console.log(JSON.stringify(groupedData, null, 2));
-		getRecords({searchData: groupedData});
+		getRecords({searchData: groupedData, size:size});
 	}
 
 	return (

@@ -6,6 +6,7 @@ import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd
 import { RedoOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import '@styles/globals.css';
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
 
@@ -129,9 +130,13 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
       </Flex>
 
       <Table
-        rowSelection={{ selectedRowKeys, type: "checkbox", fixed: true }}
+        rowSelection={{ selectedRowKeys, type: "checkbox", fixed: true
+      , columnWidth: 0
+          , renderCell: () => null
+
+      }}
         // columns={generateColumns(header)}
-        columns={header}
+        columns={data.length > 0 ? header : []}
         rowKey={(record) => record.key}
         dataSource={data}
         pagination={{
