@@ -1,12 +1,12 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
-import {Dropdown, Tag,} from "antd";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
+import React, { useEffect, useState } from "react";
+import { Dropdown, Tag, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
+import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useModalStore from "@store/useModalStore";
+import { useMutation } from "@tanstack/react-query";
+import { postAxios } from "@api/apiClient";
 
 const OrderListTable = ({ contentHeight }) => {
 
@@ -23,6 +23,14 @@ const OrderListTable = ({ contentHeight }) => {
 	const [headerList, setHeaderList] = useState([]);
 
 	function transformTagData(data) {
+
+		// data == {} 일때 에러 발생
+		if (data === undefined || data === null || data.list === undefined || data.list === null) {
+			return [];
+		}
+
+
+
 		const tagInfoMap = new Map();
 
 		// tagInfoList에서 모든 태그 코드 매핑 생성
@@ -47,22 +55,21 @@ const OrderListTable = ({ contentHeight }) => {
 		});
 	}
 
-	const [recordList, setRecordList] = useState([]);
-	const [size, setSize] = useState(10);
-	const { queryKey, searchKeyword, searchStatusList } = useOrderListQueryStore();
-	const { data:recordResponse, isLoading, isSuccess, isError } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/record", {searchKeyword,
-			size,
-			statusList: searchStatusList,
-		}),
+	const { data, setData, searchKeyword, searchStatusList, size, page, setSize } = useModalStore();
+
+	const { mutate: getRecords } = useMutation({
+		mutationKey: "getRecords",
+		mutationFn: (values) => postAxios("/user/record/search", values),
+		onSuccess: (response) => {
+			console.log("response", response);
+			setData(response.data);
+		}
 	});
 
 	useEffect(() => {
-		if (isSuccess) {
-			setRecordList(transformTagData(recordResponse.data));
-		}
-	}, [isSuccess]);
+		console.log("searchStatusList", searchStatusList);
+		getRecords({ size, page, searchKeyword, searchStatusList });
+	}, [searchStatusList]);
 
 	return (
 		<>
@@ -78,7 +85,7 @@ const OrderListTable = ({ contentHeight }) => {
 			>
 				<div style={{ marginTop: contentHeight }} className="contents-scroll">
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={recordList} size={size} setSize={setSize} />
+					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} />
 				</div>
 			</Dropdown>
 		</>

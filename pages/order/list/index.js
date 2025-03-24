@@ -12,6 +12,7 @@ import OrderListButtonArea from "@components/order/list/OrderListButtonArea";
 import OrderListTable from "@components/order/list/OrderListTable";
 import useOrderListQueryStore from "@store/useOrderListQueryStore";
 import useDrawerStore from "@store/useDrawerStore";
+import useModalStore from "@store/useModalStore";
 
 const OrderComponent = ({ contentHeight }) => {
 
@@ -20,7 +21,7 @@ const OrderComponent = ({ contentHeight }) => {
 	// --------- 드로어 관련
 
 	// --------- 상태 리스트 상수
-	const { setSearchStatusList } = useOrderListQueryStore();
+	const { setSearchStatusList } = useModalStore();
 	const [statusList, setStatusList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({

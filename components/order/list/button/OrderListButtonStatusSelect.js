@@ -1,16 +1,14 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Divider, Dropdown, Space, theme, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useModalStore from "@store/useModalStore";
 
 const { useToken } = theme;
 
 const OrderListButtonStatusSelect = ({ statusList }) => {
 
-	const { searchStatusList, setSearchStatusList } = useOrderListQueryStore();
+	const { searchStatusList, setSearchStatusList } = useModalStore();
 
 	const { token } = useToken();
 	const contentStyle = {

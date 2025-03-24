@@ -1,15 +1,15 @@
 // pages/order/create/index.js
-import React, {useState} from "react";
-import {AutoComplete, Button, Flex, Input, Typography,} from "antd";
-import {CloseOutlined} from "@ant-design/icons";
+import React, { useState } from "react";
+import { AutoComplete, Button, Flex, Input, Typography, } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
+import useModalStore from "@store/useModalStore";
 
 const { Title } = Typography;
 
 const OrderListTitle = ({ title }) => {
 
-	const { setSearchKeyword } = useOrderListQueryStore();
+	const { setSearchKeyword } = useModalStore();
 
 	const [searchItems, setSearchItems] = useState([
 		{ title: "검색어1", date: "02.04" },

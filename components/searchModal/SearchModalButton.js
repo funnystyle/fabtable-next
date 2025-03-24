@@ -8,7 +8,9 @@ import useModalStore from "@store/useModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const { setList, setData, setOpenSearchModal, size, page, setFormData, deleteTagKeyName } = useModalStore();
+	const {
+		searchKeyword, searchStatusList,
+		setList, setData, setOpenSearchModal, size, page, setFormData, deleteTagKeyName } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
@@ -51,10 +53,13 @@ const SearchModalButton = ({ form }) => {
 
 		console.log(JSON.stringify(groupedData, null, 2));
 		setFormData(rawData);
-		getRecords({searchData: groupedData, size:size, page:page});
+		getRecords({searchData: groupedData, size, page, searchKeyword, searchStatusList});
 	}
 
 	useEffect(() => {
+		if (deleteTagKeyName === "") {
+			return;
+		}
 		form.resetFields([`${deleteTagKeyName}-input`, `${deleteTagKeyName}-input2`]);
 		handleSubmit();
 	}, [deleteTagKeyName]);
