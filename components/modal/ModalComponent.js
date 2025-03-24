@@ -1,19 +1,19 @@
-import React from "react";
-import {componentDisabled} from "@components/inputForm/componentDisabled";
-import {componentNumberInput} from "@components/inputForm/componentNumberInput";
-import {componentStringInput} from "@components/inputForm/componentStringInput";
-import {componentStringTextarea} from "@components/inputForm/componentStringTextarea";
-import {componentDate} from "@components/inputForm/componentDate";
-import {componentCodeSelect} from "@components/inputForm/componentCodeSelect";
-import {componentCodeRadio} from "@components/inputForm/componentCodeRadio";
-import {componentCodeCheckbox} from "@components/inputForm/componentCodeCheckbox";
+import { componentDisabled } from "@components/inputForm/componentDisabled";
+import { componentNumberInput } from "@components/inputForm/componentNumberInput";
+import { componentStringInput } from "@components/inputForm/componentStringInput";
+import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
+import { componentDate } from "@components/inputForm/componentDate";
+import { componentCodeSelect } from "@components/inputForm/componentCodeSelect";
+import { componentCodeRadio } from "@components/inputForm/componentCodeRadio";
+import { componentCodeCheckbox } from "@components/inputForm/componentCodeCheckbox";
 
 const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes, component}) => {
 
   const recordColumn = component.recordColumn;
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
-    return componentDisabled(recordColumn);
+    return componentStringInput(recordColumn);
+    // return componentDisabled(recordColumn);
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'NUMBER') {

@@ -4,10 +4,9 @@ import {Modal,} from "antd";
 import "dayjs/locale/ko";
 import YearSearchModalContent from "@components/calendar/year/searchModal/YearSearchModalContent";
 import ModalDraggable from "@components/drag/ModalDraggable";
+import ModalTitle from "@components/modal/ModalTitle";
 
 const YearSearchModal = ({ year, setYear, setSearchData, openSearchModal, setOpenSearchModal }) => {
-
-	const [disabled, setDisabled] = useState(true);
 
 	// 모달 닫기
 	const closeModal = () => {
@@ -17,21 +16,13 @@ const YearSearchModal = ({ year, setYear, setSearchData, openSearchModal, setOpe
 	return (
 		<div style={{ display: openSearchModal ? "block" : "none" }}>
 			<Modal
-				title={
-					<div
-						className="modal-title"
-						onMouseOver={() => setDisabled(false)}
-						onMouseOut={() => setDisabled(true)}
-					>
-						조건 검색
-					</div>
-				}
+				title={<ModalTitle title="조건 검색" />}
 				open={openSearchModal}
 				onCancel={() => setOpenSearchModal(false)}
 				width={900}
 				footer={null}
 				modalRender={(modal) => (
-					<ModalDraggable modal={modal} disabled={disabled} />
+					<ModalDraggable modal={modal} />
 				)}
 			>
 				<YearSearchModalContent

@@ -10,8 +10,6 @@ import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
 const OrderListCopyModal = ({ form, openModal, setOpenModal, selectedRowKeys }) => {
 
-	const [disabled, setDisabled] = useState(true);
-
 	const { mutate: orderInfoCopy } = useMutation({
 		mutationKey: "orderInfoCopy",
 		mutationFn: (values) => postAxios("/user/record/copy", values),
@@ -37,14 +35,14 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal, selectedRowKeys }) 
 			{/* ModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
 			<div style={{ display: openModal ? "block" : "none" }}>
 				<Modal
-					title={<ModalTitle title="수주 복제하기" setDisabled={setDisabled} />}
+					title={<ModalTitle title="수주 복제하기" />}
 					open={openModal}
 					onCancel={() => setOpenModal(false)}
 					onOk={handleSubmit}
 					okText="복제"
 					cancelText="취소"
 					width={640}
-					modalRender={(modal) => (<ModalDraggable modal={modal} disabled={disabled} />)}
+					modalRender={(modal) => (<ModalDraggable modal={modal} />)}
 				>
 					<OrderListCopyModalContent form={form} selectKeysLength={selectedRowKeys.length} />
 				</Modal>

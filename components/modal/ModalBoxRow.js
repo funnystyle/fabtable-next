@@ -1,4 +1,4 @@
-import {Flex, Form} from "antd";
+import { Flex, Form } from "antd";
 import React from "react";
 import ModalBox from "@components/modal/ModalBox";
 

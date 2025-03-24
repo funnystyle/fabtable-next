@@ -7,7 +7,7 @@ import SearchModalButton from "@components/searchModal/SearchModalButton";
 import SearchModalBody from "@components/searchModal/SearchModalBody";
 import OrderOpenModalRecordList from "@components/order/create/OrderOpenModalRecordList";
 
-const SearchModalContent = ({ closeModal, searchLocation, handleListUpdate }) => {
+const SearchModalContent = ({ searchLocation }) => {
 
 	const pathname = window.location.pathname;
 	const [form] = Form.useForm();
@@ -19,7 +19,7 @@ const SearchModalContent = ({ closeModal, searchLocation, handleListUpdate }) =>
 			<div className="layer-scroll">
 				<SearchModalBody form={form} searchLocation={searchLocation} />
 
-				<SearchModalButton form={form} handleListUpdate={handleListUpdate} closeModal={closeModal} />
+				<SearchModalButton form={form} />
 
 				{pathname === "/order/create" && (<OrderOpenModalRecordList />)}
 			</div>

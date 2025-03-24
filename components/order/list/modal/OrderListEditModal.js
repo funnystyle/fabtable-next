@@ -11,8 +11,6 @@ import useOrderListQueryStore from "@store/useOrderListQueryStore";
 
 const OrderListEditModal = ({ form, openModal, setOpenModal, selectedRowKeys }) => {
 
-
-	const [disabled, setDisabled] = useState(true);
 	const [modal, contextHolder] = Modal.useModal();
 
 	const { mutate: nowStateChange } = useMutation({
@@ -60,7 +58,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, selectedRowKeys }) 
 			{/* ModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
 			<div style={{ display: openModal ? "block" : "none" }}>
 				<Modal
-					title={<ModalTitle title="수주 정보 일괄수정" setDisabled={setDisabled} />}
+					title={<ModalTitle title="수주 정보 일괄수정" />}
 					open={openModal}
 					onCancel={() => setOpenModal(false)}
 					onOk={() => {
@@ -71,7 +69,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, selectedRowKeys }) 
 					okText="수정"
 					cancelText="취소"
 					width={780}
-					modalRender={(modal) => (<ModalDraggable modal={modal} disabled={disabled} />)}
+					modalRender={(modal) => (<ModalDraggable modal={modal} />)}
 				>
 					<OrderListEditModalContent form={form} selectKeysLength={selectedRowKeys.length} />
 				</Modal>

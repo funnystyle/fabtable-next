@@ -1,7 +1,9 @@
 import React from "react";
-import ModalComponentRow from "@components/modal/ModalComponentRow";
+import useModalStore from "@store/useModalStore";
 
-const ModalTitle = ({title, setDisabled}) => {
+const ModalTitle = ({ title }) => {
+  const { setDisabled } = useModalStore();
+
   return (
     <div
       className="modal-title"

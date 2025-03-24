@@ -1,21 +1,21 @@
 // pages/order/create/index.js
-import React, {useState} from "react";
-import {Button,} from "antd";
-import {FilterOutlined} from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { Button, } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
 import SearchModal from "@components/searchModal/SearchModal";
+import useModalStore from "@store/useModalStore";
 
 const OrderCreateOpenButton = () => {
 
-	const [openSearchModal, setOpenSearchModal] = useState(false); // Modal 열림 상태
-
-	const handleListUpdate = (list) => {
-		console.log("handleListUpdate");
-		console.log(list);
-	}
+	const { setOpenSearchModal, list } = useModalStore();
 
 	const showSearchModal = () => {
 		setOpenSearchModal(true);
 	}
+
+	useEffect(() => {
+			console.log("list", list);
+	}, [list]);
 
 
 	return (
@@ -32,9 +32,6 @@ const OrderCreateOpenButton = () => {
 			</Button>
 
 			<SearchModal
-				handleListUpdate={handleListUpdate}
-				openSearchModal={openSearchModal}
-				setOpenSearchModal={setOpenSearchModal}
 				searchLocation={"order"}
 			/>
 		</>

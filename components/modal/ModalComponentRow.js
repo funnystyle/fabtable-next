@@ -1,4 +1,4 @@
-import {Flex} from "antd";
+import { Flex } from "antd";
 import ModalComponent from "@components/modal/ModalComponent";
 
 const ModalComponentRow = ({form, codeRelationSet, selectedCodes, setSelectedCodes, components}) => {

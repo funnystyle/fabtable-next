@@ -1,24 +1,27 @@
 // pages/year.js
 import React from "react";
-import {Button, Flex,} from "antd";
+import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
-import {useMutation} from "@tanstack/react-query";
-import {postAxios} from "@api/apiClient";
+import { useMutation } from "@tanstack/react-query";
+import { postAxios } from "@api/apiClient";
+import useModalStore from "@store/useModalStore";
 
-const SearchModalButton = ({ form, closeModal, handleListUpdate }) => {
+const SearchModalButton = ({ form }) => {
+
+	const { setList, setOpenSearchModal } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
 		mutationFn: (values) => postAxios("/user/record/search", values),
 		onSuccess: (response) => {
-			handleListUpdate(response.data.list);
-			closeModal();
+			setList(response.data.list);
 		}
 	});
 
 	const handleSubmit = () => {
 		const groupedData = {};
 		const rawData = form.getFieldsValue();
+		console.log(JSON.stringify(rawData, null, 2));
 
 		Object.entries(rawData).forEach(([key, value]) => {
 			const match = key.match(/search-(\d+)-(\d+)-(.+)/);
@@ -39,6 +42,8 @@ const SearchModalButton = ({ form, closeModal, handleListUpdate }) => {
 
 				// 🔥 값 설정
 				groupedData[groupKey][itemIndex][field] = value;
+			} else {
+				groupedData[key] = value;
 			}
 		});
 
@@ -53,7 +58,7 @@ const SearchModalButton = ({ form, closeModal, handleListUpdate }) => {
 			justify="center"
 			className="layer-btn-area"
 		>
-			<Button onClick={closeModal}>닫기</Button>
+			<Button onClick={() => setOpenSearchModal(false)}>닫기</Button>
 			<Button type="primary"
 				onClick={handleSubmit}
 			>검색</Button>
