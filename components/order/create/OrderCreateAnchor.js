@@ -24,7 +24,6 @@ const OrderCreateAnchor = ({ contentHeight, list }) => {
 		}
 	};
 	/* //Anchor 스크롤 이동 */
-	console.log(list.map((item) => (item[0][0])));
 
 	const [items, setItems] = useState([]);
 

@@ -1,11 +1,11 @@
-import { componentDisabled } from "@components/inputForm/componentDisabled";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import { componentStringInput } from "@components/inputForm/componentStringInput";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentDate } from "@components/inputForm/componentDate";
-import { componentCodeSelect } from "@components/inputForm/componentCodeSelect";
-import { componentCodeRadio } from "@components/inputForm/componentCodeRadio";
+import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
+import ComponentCodeRadio, { componentCodeRadio } from "@components/inputForm/componentCodeRadio";
 import { componentCodeCheckbox } from "@components/inputForm/componentCodeCheckbox";
+import React from "react";
 
 const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes, component}) => {
 
@@ -34,11 +34,15 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
 
   // 'CODE' 타입 처리
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'SELECT') {
-    return componentCodeSelect(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component);
+    return (
+      <ComponentCodeSelect form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+    );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'RADIO') {
-    return componentCodeRadio(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component);
+    return (
+      <ComponentCodeRadio form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+    );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'CHECKBOX') {

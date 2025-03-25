@@ -8,7 +8,7 @@ import { lineItems } from "@data/lineItems";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true }) => {
 
   const {selectedRowKeys, setSelectedRowKeys} = useTableSelectKeysStore();
 
@@ -130,11 +130,17 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
       </Flex>
 
       <Table
-        rowSelection={{ selectedRowKeys, type: "checkbox", fixed: true
-      , columnWidth: 0
-          , renderCell: () => null
-
-      }}
+        rowSelection={
+          rowSelect
+            ? {
+              selectedRowKeys,
+              type: "checkbox",
+              fixed: true,
+              columnWidth: 0,
+              renderCell: () => null,
+            }
+            : undefined
+      }
         // columns={generateColumns(header)}
         columns={data.length > 0 ? header : []}
         rowKey={(record) => record.key}
@@ -153,7 +159,12 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize }) => {
           }
         }}
         onRow={(record) => ({
-          onClick: (event) => handleRowClickAntd(event, record, handleAntdTableEventData()),
+          onClick: (event) => {
+            handleRowClickAntd(event, record, handleAntdTableEventData());
+
+            const fullRecord = data.find(item => item.key === record.key);
+            if (onRowClick) onRowClick(fullRecord); // ✅ 상위 컴포넌트에서 전달된 함수 실행
+          },
           onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
           onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
         })}

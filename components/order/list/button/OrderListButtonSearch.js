@@ -10,8 +10,7 @@ const OrderListButtonSearch = () => {
 	const {  setOpenSearchModal, list } = useModalStore();
 
 	useEffect(() => {
-			console.log("list", list);
-			setOpenSearchModal(false);
+		setOpenSearchModal(false);
 	}, [list]);
 
 	return (

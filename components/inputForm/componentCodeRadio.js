@@ -1,20 +1,28 @@
-import { DatePicker, Form, Input, Radio, Select } from "antd";
-import React, { useEffect } from "react";
+import { Form, Radio } from "antd";
+import React, { useEffect, useState } from "react";
 import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
+import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 
-export const componentCodeRadio = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index = -1) => {
-  const codeList = handleCodeListFilter(selectedCodes, recordColumn);
+const ComponentCodeRadio = ({form, codeRelationSet, recordColumn, component, index = -1 }) => {
+
+  const [codeList, setCodeList] = useState([]);
   const name = handleComponentInputName(recordColumn, index);
 
   codeRelationSet.add({ codeGroupId: recordColumn.codeGroupId, name: recordColumn.name });
 
-  if (codeList.length === 0) {
-    form.resetFields([recordColumn.name]);
-  }
+  const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
+
+  useEffect(() => {
+    setCodeList(handleCodeListFilter(selectedCodes, recordColumn));
+  }, [selectedCodes]);
+
+  useEffect(() => {
+    if (codeList.length === 0) {
+      form.resetFields([name]);
+    }
+  }, [codeList]);
 
   return (
     <Form.Item
@@ -66,3 +74,5 @@ export const componentCodeRadio = (form, selectedCodes, setSelectedCodes, codeRe
     </Form.Item>
   );
 }
+
+export default ComponentCodeRadio;
