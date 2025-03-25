@@ -20,6 +20,8 @@ const useModalStore = create((set) => ({
   setSearchKeyword: (searchKeyword) => set({ searchKeyword }),
   searchStatusList: [],
   setSearchStatusList: (searchStatusList) => set({ searchStatusList }),
+  searchData: {},
+  setSearchData: (searchData) => set({ searchData }),
 
   // modal open
   openSearchModal: false,

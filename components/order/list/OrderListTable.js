@@ -23,13 +23,10 @@ const OrderListTable = ({ contentHeight }) => {
 	const [headerList, setHeaderList] = useState([]);
 
 	function transformTagData(data) {
-
 		// data == {} 일때 에러 발생
 		if (data === undefined || data === null || data.list === undefined || data.list === null) {
 			return [];
 		}
-
-
 
 		const tagInfoMap = new Map();
 
@@ -55,21 +52,30 @@ const OrderListTable = ({ contentHeight }) => {
 		});
 	}
 
-	const { data, setData, searchKeyword, searchStatusList, size, page, setSize } = useModalStore();
+	const {
+		page
+		, size
+		, searchKeyword
+		, searchStatusList
+		, searchData
+		, data
+		, setData
+		, setList
+		, setSize } = useModalStore();
 
 	const { mutate: getRecords } = useMutation({
 		mutationKey: "getRecords",
 		mutationFn: (values) => postAxios("/user/record/search", values),
 		onSuccess: (response) => {
-			console.log("response", response);
 			setData(response.data);
+			setList(response.data.list);
 		}
 	});
 
 	useEffect(() => {
 		console.log("searchStatusList", searchStatusList);
-		getRecords({ size, page, searchKeyword, searchStatusList });
-	}, [searchStatusList]);
+		getRecords({ page, size, searchKeyword, searchStatusList, searchData });
+	}, [page, size, searchKeyword, searchStatusList, searchData]);
 
 	return (
 		<>

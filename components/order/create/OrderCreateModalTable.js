@@ -1,8 +1,8 @@
 // pages/order.js
 import React, {useEffect, useState} from "react";
 import {Dropdown, Tag,} from "antd";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAxios, postAxios } from "@api/apiClient";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
@@ -47,7 +47,30 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 		});
 	}
 
-	const { data, size, setSize } = useModalStore();
+	const {
+		page
+		, size
+		, searchKeyword
+		, searchStatusList
+		, searchData
+		, data
+		, setData
+		, setList
+		, setSize } = useModalStore();
+
+	const { mutate: getRecords } = useMutation({
+		mutationKey: "getRecords",
+		mutationFn: (values) => postAxios("/user/record/search", values),
+		onSuccess: (response) => {
+			setData(response.data);
+			setList(response.data.list);
+		}
+	});
+
+	useEffect(() => {
+		console.log("searchStatusList", searchStatusList);
+		getRecords({ page, size, searchKeyword, searchStatusList, searchData });
+	}, [page, size, searchKeyword, searchStatusList, searchData]);
 
 	return (
 		<>
