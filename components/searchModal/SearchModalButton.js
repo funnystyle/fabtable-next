@@ -8,11 +8,7 @@ import useModalStore from "@store/useModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const {
-		setSearchData
-		, setOpenSearchModal
-		, setFormData
-		, deleteTagKeyName } = useModalStore();
+	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useModalStore();
 
 	const handleSubmit = () => {
 		const groupedData = {};

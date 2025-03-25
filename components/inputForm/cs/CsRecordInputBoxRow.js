@@ -41,7 +41,12 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       setRecordKeys([...recordKeys, record.id]);
       if (openDiv === "defect") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
-          const newKey = `${key}-${recordIndex}`;
+          let newKey;
+          if (key === "oldSerialNumber") {
+            newKey = `defectMfcSN-${recordIndex}`;
+          }else {
+            newKey = `${key}-${recordIndex}`;
+          }
           acc[newKey] = record[key];
           return acc;
         }, {});

@@ -11,6 +11,7 @@ import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
 import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
 import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
+import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 
 const { Title } = Typography;
 
@@ -96,40 +97,7 @@ const CsCreate = ({ contentHeight }) => {
 
 				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
 
-				<div className="top-btn-area">
-					{/* 신규 수주 등록시 */}
-					<Flex align="center" justify="space-between">
-						<Flex align="center">
-							<Tag className="tag-new">신규</Tag>
-
-							<p className="cs-num">
-								C/S No. <span>--------</span>
-							</p>
-						</Flex>
-
-						<Flex align="center" gap={8}>
-							<Flex className="btn-space-area">
-								<Button type="text" className="btn-all-reset">
-									전체 초기화
-								</Button>
-							</Flex>
-
-							<Flex gap={8}>
-								<Button icon={<CloseOutlined />} iconPosition={position}>
-									취소
-								</Button>
-								<Button
-									type="primary"
-									icon={<EditFilled />}
-									iconPosition={position}
-								>
-									등록
-								</Button>
-							</Flex>
-						</Flex>
-					</Flex>
-					{/* //신규 수주 등록시 */}
-				</div>
+				<CsCreateHeader form={form} />
 			</div>
 
 			<Flex gap={32}>

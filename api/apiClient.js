@@ -145,11 +145,15 @@ export const getAxios = async (url, data) => {
  * @returns {Promise<any>} API 호출 결과를 반환합니다.
  */
 export const postAxios = async (url, data, fileYn) => {
-  let config = {};
+  let config = {
+    headers: {} // headers 속성 미리 추가
+  };
   if (fileYn) {
     config.headers["Content-Type"] = "multipart/form-data";
   }
 
+
+  console.log("postAxios", url, data, config)
   try {
     const response = await apiClient.post(url, data, config);
     return response.data;
@@ -166,6 +170,7 @@ export const postAxios = async (url, data, fileYn) => {
  */
 export const postBlobAxios = async (url, data, fileYn) => {
   let config = {
+    headers: {},
     responseType: "blob", // 응답을 Blob으로 받도록 설정
   };
 
