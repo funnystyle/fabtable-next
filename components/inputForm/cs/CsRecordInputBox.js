@@ -4,13 +4,14 @@ import React from "react";
 import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import useModalStore from "@store/useModalStore";
 
 const { Title } = Typography;
 
-const CsRecordInputBox = ({ form, codeRelationSet, item, index, index2 }) => {
+const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
-
+  const { setOpenSearchModal, setIndex, setOpenDiv } = useModalStore();
 
   const handleDeleteCsRecord = (index) => {
     const newRecordKeys = recordKeys.filter((_, idx) => idx !== index);
@@ -47,21 +48,27 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index, index2 }) => {
     }
 
     return (
-      <div className="info-input-box" key={`cs-record-${index}-${index2}`}>
+      <div className="info-input-box">
         {item[0].subDisplayName && (
           <Flex align="center" justify="space-between">
             <Flex align="center" gap={12} className="title-area">
-              <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>{`제품 ${index + 1}`}</Title>
+              <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>{`제품 ${index}`}</Title>
 
-              <Checkbox
-                checked={checkedKeySet.has(index)}
-                onChange={(e) => handleCheckboxChange(e, index)}
-              />
+              <Checkbox checked={checkedKeySet.has(index)} onChange={(e) => handleCheckboxChange(e, index)} />
 
               <Flex gap={4} className="tit-side-area">
-                <Button color="primary" variant="outlined" size="small">
-                  수주 종합정보
-                </Button>
+                <Button type="primary" size="small" onClick={() => {
+                  setIndex(1);
+                  setOpenDiv("defect");
+                  setOpenSearchModal(true);
+                }}>불량제품 불러오기</Button>
+                <Button type="primary" size="small" onClick={() => {
+                  setIndex(1);
+                  setOpenDiv("substitute");
+                  setOpenSearchModal(true);
+                }}>대체제품 불러오기</Button>
+
+                <Button color="primary" variant="outlined" size="small">수주 종합정보</Button>
 
                 <Button icon={<DeleteOutlined />} size="small"
                   onClick={() => handleDeleteCsRecord(index)}
@@ -69,11 +76,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index, index2 }) => {
               </Flex>
             </Flex>
 
-            <Button type="text" className="btn-all-reset"
-            onClick={() => handleReset()}
-            >
-            초기화
-            </Button>
+            <Button type="text" className="btn-all-reset" onClick={() => handleReset()}>초기화</Button>
           </Flex>
         )}
 
@@ -109,7 +112,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index, index2 }) => {
     }
 
     return (
-      <div className="row-2" key={`cs-record-${index}-${index2}`}>
+      <div className="row-2">
         {item.map((box, index) => handleInputBox(box, index))}
       </div>
     );

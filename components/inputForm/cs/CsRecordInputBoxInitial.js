@@ -1,5 +1,5 @@
 import { Button, Flex, Form, Typography } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import CsRecordInputComponentRowInitial from "@components/inputForm/cs/CsRecordInputComponentRowInitial";
 import { PlusOutlined } from "@ant-design/icons";
 import useModalStore from "@store/useModalStore";
@@ -8,9 +8,13 @@ const { Title } = Typography;
 
 const CsRecordInputBoxInitial = ({ item }) => {
 
-  const { setOpenSearchModal, list } = useModalStore();
+  const { setOpenSearchModal, index, setIndex, setOpenDiv } = useModalStore();
 
   const componentsList = item[0].components;
+
+  useEffect(() => {
+    console.log("index", index );
+  }, [index]);
   
   return (
     <div className="info-input-box">
@@ -19,7 +23,11 @@ const CsRecordInputBoxInitial = ({ item }) => {
           <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>{`제품 1`}</Title>
 
           <Flex gap={4} className="tit-side-area">
-            <Button type="primary" onClick={() => setOpenSearchModal(true)}>제품 불러오기</Button>
+            <Button type="primary" size="small" onClick={() => {
+              setIndex(1);
+              setOpenDiv("defect");
+              setOpenSearchModal(true);
+            }}>불량제품 불러오기</Button>
           </Flex>
         </Flex>
       </Flex>

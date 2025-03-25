@@ -1,15 +1,20 @@
 import { Button, Flex, InputNumber, Typography } from "antd";
 import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
+import useRecordDataStore from "@store/useRecordDataStore";
+import useModalStore from "@store/useModalStore";
 
 const { Title } = Typography;
 
 const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index }) => {
 
   const { recordKeys, setRecordKeys, checkedKeySet } = useCsCreateConstantStore();
+  const { record } = useRecordDataStore();
+  const { index:recordIndex, openDiv } = useModalStore();
+
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
@@ -30,6 +35,20 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
     const newRecordKeys = recordKeys.filter((_, idx) => !checkedKeySet.has(idx));
     setRecordKeys(newRecordKeys);
   }
+
+  useEffect(() => {
+    if (record?.id) {
+      setRecordKeys([...recordKeys, record.id]);
+      if (openDiv === "defect") {
+        const recordObject = Object.keys(record).reduce((acc, key) => {
+          const newKey = `${key}-${recordIndex}`;
+          acc[newKey] = record[key];
+          return acc;
+        }, {});
+        form.setFieldsValue(recordObject);
+      }
+    }
+  }, [record]);
 
   // 복사 버튼 클릭 시
   return (
@@ -90,9 +109,9 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
         {/*비어있을때는 빈 폼을 보여준다.*/}
         {recordKeys.length === 0 &&
           <Flex gap={20} className="info-input-col2" >
-            {itemList.map((item, index2) =>
+            {itemList.map((item, i) =>
               <CsRecordInputBoxInitial
-                key={`cs-record-input-box-${index}-${index2}`}
+                key={`cs-record-input-box-${index}-${i}`}
                 item={item}
               />
             )}
@@ -104,14 +123,13 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
           <React.Fragment key={`record-fragment-${key}-${index}`}>
             {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
             <Flex gap={20} className="info-input-col2" key={`record-${key}`}>
-              {itemList.map((item, index2) =>
+              {itemList.map((item, i) =>
                 <CsRecordInputBox
-                  key={`cs-record-input-box-${index}-${index2}`}
+                  key={`cs-record-input-box-${index}-${i}`}
                   form={form} 
                   codeRelationSet={codeRelationSet} 
                   item={item}
-                  index={index} 
-                  index2={index2} 
+                  index={index + 1}
                 />
                 )}
             </Flex>

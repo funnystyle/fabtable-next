@@ -51,7 +51,6 @@ const ComponentCodeRadio = ({form, codeRelationSet, recordColumn, component, ind
               codeRelationSet,
               selectedCodes,
               setSelectedCodes,
-              selectedOption.codeName, // ✅ 선택된 값
               option // ✅ 선택된 객체 자체를 전달
             );
           }}

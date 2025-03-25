@@ -31,6 +31,12 @@ const useModalStore = create((set) => ({
   openEditModal: false,
   setOpenEditModal: (openEditModal) => set({ openEditModal }),
 
+  // modal open constant
+  index: 0,
+  setIndex: (index) => set({ index }),
+  openDiv: "",
+  setOpenDiv: (openDiv) => set({ openDiv }),
+
   // form event
   formData: {},
   setFormData: (formData) => set({ formData }),

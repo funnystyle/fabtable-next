@@ -8,6 +8,6 @@
   border-inline-end: 0px !important;
 }
 
-.ant-checkbox-wrapper {
+.ant-table-cell .ant-checkbox-wrapper {
   display: none !important;
 }
