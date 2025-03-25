@@ -1,15 +1,22 @@
 // pages/order.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useModalStore from "@store/useModalStore";
 import { transformTagData } from "@components/order/table/transformTagData";
+import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderCreateModalTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { size, data, setSize } = useModalStore();
+
+	const { handleReload } = useGetRecords();
+
+	useEffect(() => {
+		handleReload();
+	}, []);
 
 	return (
 		<>
