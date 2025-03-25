@@ -38,6 +38,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
   useEffect(() => {
     if (record?.id) {
+      console.log("record", record);
       setRecordKeys([...recordKeys, record.id]);
       if (openDiv === "defect") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
@@ -46,6 +47,18 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
             newKey = `defectMfcSN-${recordIndex}`;
           }else {
             newKey = `${key}-${recordIndex}`;
+          }
+          acc[newKey] = record[key];
+          return acc;
+        }, {});
+        form.setFieldsValue(recordObject);
+      } else if (openDiv === "substitute") {
+        const recordObject = Object.keys(record).reduce((acc, key) => {
+          let newKey;
+          if (key === "oldSerialNumber") {
+            newKey = `substituteMfcSN-${recordIndex}`;
+          } else if (key === "nowState") {
+            newKey = `substituteNowState-${recordIndex}`;
           }
           acc[newKey] = record[key];
           return acc;

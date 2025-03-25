@@ -18,6 +18,7 @@ const CsCreateHeader = ({ form }) => {
 
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
+		// console.log("values: ", values);
 
 		const formData = new FormData();
 		formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));

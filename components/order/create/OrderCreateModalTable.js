@@ -32,6 +32,7 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 			okText: "확인",
 			cancelText: "취소",
 			onOk() {
+				record.nowState = record.nowState.props.children
 				setRecord(record);
 				setOpenSearchModal(false);
 			},
