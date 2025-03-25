@@ -1,14 +1,16 @@
 import { Button, Checkbox, Flex, Form, Typography } from "antd";
-import { handleInputComponent } from "@components/inputForm/handleInputComponent";
-import { DeleteOutlined, SettingOutlined } from "@ant-design/icons";
+import { DeleteOutlined } from "@ant-design/icons";
 import React from "react";
-import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
-import { handleCsRecordInputComponentRow } from "@components/inputForm/cs/handleCsRecordInputComponentRow";
-import {handleComponentInputName} from "@components/inputForm/handleComponentInputName";
+import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
+import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
-export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, setSelectedCodes, item, index, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, index2) => {
+const CsRecordInputBox = ({ form, codeRelationSet, item, index, index2 }) => {
+
+  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
+
 
   const handleDeleteCsRecord = (index) => {
     const newRecordKeys = recordKeys.filter((_, idx) => idx !== index);
@@ -16,15 +18,13 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
   }
 
   const handleCheckboxChange = (e, currentIndex) => {
-    setCheckedKeySet((prevSet) => {
-      const newSet = new Set(prevSet); // 기존 Set을 복사하여 새로운 Set 생성
-      if (e.target.checked) {
-        newSet.add(currentIndex);
-      } else {
-        newSet.delete(currentIndex);
-      }
-      return newSet; // 새로운 Set 객체로 업데이트해야 React가 상태 변경을 감지함
-    });
+    const newSet = new Set(checkedKeySet); // 기존 Set을 복사하여 새로운 Set 생성
+    if (e.target.checked) {
+      newSet.add(currentIndex);
+    } else {
+      newSet.delete(currentIndex);
+    }
+    setCheckedKeySet(newSet);
   };
 
   // item.subDisplayName이 있을 경우 타이틀 표시
@@ -78,7 +78,7 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
         )}
 
         <Form form={form} layout="vertical" className="info-input-area">
-          {componentsList.map((components, index3) => handleCsRecordInputComponentRow(form, codeRelationSet, selectedCodes, setSelectedCodes, components, index, index3))}
+          {componentsList.map((components, i) => <CsRecordInputComponentRow key={`cs-record-input-component-${i}`} form={form} codeRelationSet={codeRelationSet} components={components} index={index} />)}
         </Form>
       </div>
     );
@@ -101,7 +101,7 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
             )}
 
             <Form form={form} layout="vertical" className="info-input-area">
-            {componentsList.map((components, index3) => handleCsRecordInputComponentRow(form, codeRelationSet, selectedCodes, setSelectedCodes, components, index, index3))}
+              {componentsList.map((components, i) => <CsRecordInputComponentRow key={`cs-record-input-component-${i}`} form={form} codeRelationSet={codeRelationSet} components={components} index={index} />)}
             </Form>
           </div>
         </>
@@ -115,3 +115,5 @@ export const handleCsRecordInputBox = (form, codeRelationSet, selectedCodes, set
     );
   }
 }
+
+export default CsRecordInputBox;

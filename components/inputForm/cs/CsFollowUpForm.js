@@ -1,16 +1,18 @@
-import {Button, DatePicker, Flex, Form, Input, Radio, Tooltip, Typography} from "antd";
-import {InfoCircleOutlined} from "@ant-design/icons";
+import { Button, DatePicker, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const {Title} = Typography;
 
-export const handleCsFollowUpForm = (form, keys, setKeys, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index) => {
+export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index }) => {
+
+  const { recordKeys:keys } = useCsCreateConstantStore();
 
   const handleSetToday = (e, fieldName) => {
     e.preventDefault(); // 기본 동작 방지
-    console.log("fieldName", fieldName);
     form.setFieldValue(fieldName, dayjs()); // 오늘 날짜로 설정
   };
 

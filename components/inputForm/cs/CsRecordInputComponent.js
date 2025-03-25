@@ -8,7 +8,7 @@ import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 
-export const handleCsRecordInputComponent = (form, codeRelationSet, selectedCodes, setSelectedCodes, component, index) => {
+const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => {
 
   const recordColumn = component.recordColumn;
 
@@ -35,23 +35,23 @@ export const handleCsRecordInputComponent = (form, codeRelationSet, selectedCode
   // 'CODE' 타입 처리
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'SELECT') {
     return (
-      <ComponentCodeSelect form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+      <ComponentCodeSelect form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
     );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'RADIO') {
     return (
-      <ComponentCodeRadio form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+      <ComponentCodeRadio form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
     );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'CHECKBOX') {
     return (
-      <ComponentCodeCheckbox form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+      <ComponentCodeCheckbox form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
     );
   }
 
-
-
   return null;
 }
+
+export default CsRecordInputComponent;

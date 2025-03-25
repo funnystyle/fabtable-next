@@ -7,7 +7,7 @@ import ModalDraggable from "@components/drag/ModalDraggable";
 import ModalTitle from "@components/modal/ModalTitle";
 import useModalStore from "@store/useModalStore";
 
-const SearchModal = ({ searchLocation }) => {
+const SearchModal = ({ searchLocation, searchType }) => {
 
 	const { openSearchModal, setOpenSearchModal } = useModalStore();
 
@@ -22,7 +22,9 @@ const SearchModal = ({ searchLocation }) => {
 				modalRender={(modal) => (<ModalDraggable modal={modal} />)}
 			>
 				<SearchModalContent
-					searchLocation={searchLocation} />
+					searchLocation={searchLocation}
+					searchType={searchType}
+				/>
 			</Modal>
 		</div>
 	);

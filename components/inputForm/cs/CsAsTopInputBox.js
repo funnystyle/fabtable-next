@@ -3,7 +3,7 @@ import { handleInputComponent } from "@components/inputForm/handleInputComponent
 import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UploadOutlined } from "@ant-design/icons";
 import React from "react";
 import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
-import { handleCsRecordInputComponentRow } from "@components/inputForm/cs/handleCsRecordInputComponentRow";
+import { CsRecordInputComponentRow } from "@components/inputForm/cs/CsRecordInputComponentRow";
 import Link from "next/link";
 
 const { Title } = Typography;

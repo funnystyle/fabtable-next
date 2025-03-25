@@ -24,9 +24,7 @@ const OrderListButtonSearch = () => {
 				조건 검색
 			</Button>
 
-			<SearchModal
-				searchLocation={"order"}
-			/>
+			<SearchModal searchLocation={"order"} searchType={"LIST"} />
 		</>
 	);
 };

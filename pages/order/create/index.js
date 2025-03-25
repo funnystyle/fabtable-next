@@ -150,7 +150,7 @@ const OrderInfoCreate = ({ contentHeight }) => {
 			</Flex>
 
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
-			<SearchModal searchLocation={"order"} />
+			<SearchModal searchLocation={"order"} searchType={"OPEN"}/>
 		</Layout>
 	);
 };

@@ -1,10 +1,14 @@
-import {Button, Flex, Form, Input, Radio, Tooltip, Typography} from "antd";
-import {InfoCircleOutlined} from "@ant-design/icons";
+import { Button, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import React from "react";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
-export const handleCsAsDetailForm = (form, keys, setKeys, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index) => {
+const CsAsDetailForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index }) => {
+
+  const { recordKeys:keys } = useCsCreateConstantStore();
+
 
   const handleReset = () => {
     form.resetFields([
@@ -114,3 +118,5 @@ export const handleCsAsDetailForm = (form, keys, setKeys, checkedKeySet, setChec
     </div>
   );
 }
+
+export default CsAsDetailForm;

@@ -1,21 +1,29 @@
 import { Button, Flex, InputNumber, Typography } from "antd";
 import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
-import React, { useState } from "react";
-import { handleInputBox } from "@components/inputForm/handleInputBox";
-import { handleCsRecordInputBox } from "@components/inputForm/cs/handleCsRecordInputBox";
+import React from "react";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
+import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 
 const { Title } = Typography;
 
-export const handleCsRecordInputBoxRow = (form, codeRelationSet, selectedCodes, setSelectedCodes, itemList, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, copyCountRef, index) => {
+const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index }) => {
+
+  const { recordKeys, setRecordKeys, checkedKeySet } = useCsCreateConstantStore();
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
 
+    const newRecordKeys = [];
     for (let i = 0; i < copyCount; i++) {
       const copyRecordKeys = Array.from(checkedKeySet).map((key) => recordKeys[key]);
 
-      setRecordKeys((prevKeys) => [...prevKeys, ...copyRecordKeys]);
+      copyRecordKeys.forEach((recordKey) => {
+        newRecordKeys.push(recordKey);
+      });
     }
+
+    setRecordKeys([...recordKeys, ...newRecordKeys]);
   };
 
   const handleDelete = () => {
@@ -79,11 +87,33 @@ export const handleCsRecordInputBoxRow = (form, codeRelationSet, selectedCodes, 
           </Flex>
         </Flex>
 
+        {/*비어있을때는 빈 폼을 보여준다.*/}
+        {recordKeys.length === 0 &&
+          <Flex gap={20} className="info-input-col2" >
+            {itemList.map((item, index2) =>
+              <CsRecordInputBoxInitial
+                key={`cs-record-input-box-${index}-${index2}`}
+                item={item}
+              />
+            )}
+          </Flex>
+        }
+
+        {/*비어있지않을때는 리스트를 보여준다.*/}
         {recordKeys.map((key, index) => (
           <React.Fragment key={`record-fragment-${key}-${index}`}>
             {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
             <Flex gap={20} className="info-input-col2" key={`record-${key}`}>
-              {itemList.map((item, index2) => handleCsRecordInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, index2))}
+              {itemList.map((item, index2) =>
+                <CsRecordInputBox
+                  key={`cs-record-input-box-${index}-${index2}`}
+                  form={form} 
+                  codeRelationSet={codeRelationSet} 
+                  item={item}
+                  index={index} 
+                  index2={index2} 
+                />
+                )}
             </Flex>
           </React.Fragment>
         ))}
@@ -92,3 +122,5 @@ export const handleCsRecordInputBoxRow = (form, codeRelationSet, selectedCodes, 
     </div>
   );
 }
+
+export default CsRecordInputBoxRow;

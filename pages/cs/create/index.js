@@ -1,17 +1,16 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
-import React, { useEffect, useRef, useState } from "react";
-import { Anchor, Button, Checkbox, DatePicker, Flex, Form, Input, InputNumber, Layout, message, Select, Tabs, Tag, Typography, } from "antd";
+import React, { useEffect, useState } from "react";
+import { Anchor, Button, Flex, Form, Layout, Tabs, Tag, Typography, } from "antd";
 import { useRouter } from "next/router";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import {getAxios, postAxios} from "@api/apiClient";
-import { handleInputBox } from "@components/inputForm/handleInputBox";
+import { useQuery } from "@tanstack/react-query";
+import { getAxios } from "@api/apiClient";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
-import { CloseOutlined, DeleteOutlined, EditFilled, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { handleCsRecordInputBoxRow } from "@components/inputForm/cs/handleCsRecordInputBoxRow";
+import { CloseOutlined, EditFilled } from "@ant-design/icons";
 import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
-import {handleCsAsDetailInputBox} from "@components/inputForm/cs/handleCsAsDetailInputBox";
-import {handleCsFollowUplInputBox} from "@components/inputForm/cs/handleCsFollowUplInputBox";
+import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
+import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
+import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
+import SearchModal from "@components/searchModal/SearchModal";
 
 const { Title } = Typography;
 
@@ -73,40 +72,9 @@ const CsCreate = ({ contentHeight }) => {
 		}
 	}, [isSuccess]);
 
-	const [csRecordInputBoxList, setCsRecordInputBoxList] = useState([]);
-	const [queryKey2, setQueryKey2] = useState(["cs-record-input-box-list", Math.random()]);
-	const { data:csRecordInputBoxResponse, isSuccess:csRecordInputBoxSuccess } = useQuery({
-		queryKey:queryKey2,
-		queryFn: () => getAxios("/user/input-box", {type:"csCreateRecord"}),
-	});
-	useEffect(() => {
-		if (csRecordInputBoxSuccess) {
-			setCsRecordInputBoxList(csRecordInputBoxResponse.data.list);
-		}
-	}, [csRecordInputBoxSuccess]);
-
-	const { mutate: orderInfoCreate } = useMutation({
-		mutationKey: "orderInfoCreate",
-		mutationFn: (values) => postAxios("/user/record", values),
-	});
-
-
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 	const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
-	const copyCountRef = useRef(3);
-
-	const handleReset = () => {
-		form.resetFields();
-	};
-
-	const handleSubmit = async (event) => {
-		const values = await form.validateFields();
-		console.log("Success:", values);
-
-		await orderInfoCreate(values);
-		message.success('수주 등록이 완료되었습니다!');
-	}
 
 	const [recordKeys, setRecordKeys] = useState([1, 2]);
 	const [checkedKeySet, setCheckedKeySet] = useState(new Set());
@@ -172,13 +140,13 @@ const CsCreate = ({ contentHeight }) => {
 					>
 						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
 
-						{csRecordInputBoxList.map((item, index) => handleCsRecordInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, copyCountRef, index))}
+						<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} />
 
 						{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
+						
+						<CsAsDetailInputBox form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isAsDetailCommon} setIsCommon={setIsAsDetailCommon} />
 
-						{handleCsAsDetailInputBox(form, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, isAsDetailCommon, setIsAsDetailCommon)}
-
-						{handleCsFollowUplInputBox(form, recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, isFollowUpCommon, setIsFollowUpCommon)}
+						<CsFollowUplInputBox form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isFollowUpCommon} setIsCommon={setIsFollowUpCommon} />
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>
@@ -205,6 +173,8 @@ const CsCreate = ({ contentHeight }) => {
 					/>
 				</div>
 			</Flex>
+
+			<SearchModal searchLocation={"order"} searchType={"OPEN"}/>
 		</Layout>
 	);
 };

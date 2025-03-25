@@ -7,9 +7,8 @@ import SearchModalButton from "@components/searchModal/SearchModalButton";
 import SearchModalBody from "@components/searchModal/SearchModalBody";
 import OrderCreateModalTable from "@components/order/create/OrderCreateModalTable";
 
-const SearchModalContent = ({ searchLocation }) => {
+const SearchModalContent = ({ searchLocation, searchType }) => {
 
-	const pathname = window.location.pathname;
 	const [form] = Form.useForm();
 
 	return (
@@ -17,11 +16,11 @@ const SearchModalContent = ({ searchLocation }) => {
 			<SearchModalHead form={form} />
 
 			<div className="layer-scroll">
-				<SearchModalBody form={form} searchLocation={searchLocation} />
+				<SearchModalBody form={form} searchLocation={searchLocation} searchType={searchType} />
 
 				<SearchModalButton form={form} />
 
-				{pathname === "/order/create" && (<OrderCreateModalTable contentHeight={0} />)}
+				{(searchLocation === "order" || searchType === "OPEN") && (<OrderCreateModalTable contentHeight={0} />)}
 			</div>
 		</>
 	);

@@ -6,11 +6,7 @@ import useModalStore from "@store/useModalStore";
 
 const OrderCreateOpenButton = () => {
 
-	const { setOpenSearchModal, list } = useModalStore();
-
-	useEffect(() => {
-			console.log("list", list);
-	}, [list]);
+	const { setOpenSearchModal } = useModalStore();
 
 	return (
 		<>
