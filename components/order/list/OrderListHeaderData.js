@@ -9,7 +9,9 @@ import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
 
-const OrderListHeaderData = ({ setHeaderList, sortedInfo }) => {
+const OrderListHeaderData = ({ setHeaderList }) => {
+
+	const [sortedInfo, setSortedInfo] = useState({});
 
 	const stringSorter = (a, b, key) => {
 		const textA = a[key]?.toString() || "";

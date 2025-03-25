@@ -26,6 +26,10 @@ const useModalStore = create((set) => ({
   // modal open
   openSearchModal: false,
   setOpenSearchModal: (openSearchModal) => set({ openSearchModal }),
+  openCopyModal: false,
+  setOpenCopyModal: (openCopyModal) => set({ openCopyModal }),
+  openEditModal: false,
+  setOpenEditModal: (openEditModal) => set({ openEditModal }),
 
   // form event
   formData: {},

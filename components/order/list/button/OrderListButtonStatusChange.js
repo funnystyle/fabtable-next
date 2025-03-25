@@ -4,8 +4,8 @@ import { Button, Dropdown, Space, } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { putAxios } from "@api/apiClient";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderListButtonStatusChange = ({ statusList }) => {
 
@@ -16,7 +16,7 @@ const OrderListButtonStatusChange = ({ statusList }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useOrderListQueryStore();
+	const { handleReload } = useGetRecords();
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleStatusChange = async (e) => {

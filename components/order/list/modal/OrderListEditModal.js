@@ -1,14 +1,14 @@
 // pages/order/create/index.js
-import React, {useState} from "react";
-import {Modal,} from "antd";
+import React from "react";
+import { Modal, } from "antd";
 import ModalTitle from "@components/modal/ModalTitle";
 import ModalDraggable from "@components/drag/ModalDraggable";
-import {useMutation} from "@tanstack/react-query";
-import {putAxios} from "@api/apiClient";
-import {ExclamationCircleFilled} from "@ant-design/icons";
+import { useMutation } from "@tanstack/react-query";
+import { putAxios } from "@api/apiClient";
+import { ExclamationCircleFilled } from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
-import useOrderListQueryStore from "@store/useOrderListQueryStore";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 
@@ -19,7 +19,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useOrderListQueryStore();
+	const { handleReload } = useGetRecords();
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleEditSubmit = async (e) => {
