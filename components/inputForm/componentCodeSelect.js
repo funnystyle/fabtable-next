@@ -1,11 +1,8 @@
-import { DatePicker, Form, Input, Radio, Select } from "antd";
+import { Form, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
-import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 
 const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, index = -1 }) => {

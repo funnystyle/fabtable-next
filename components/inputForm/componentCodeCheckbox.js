@@ -1,15 +1,17 @@
-import { Checkbox, DatePicker, Flex, Form, Input, Radio, Select } from "antd";
-import React, { useEffect } from "react";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
+import { Checkbox, Flex, Form, Input } from "antd";
+import React, { useEffect, useState } from "react";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
-export const componentCodeCheckbox = (form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index = -1) => {
-  const codeList = recordColumn.codeList;
+const ComponentCodeCheckbox = ({ form, codeRelationSet, recordColumn, component, index = -1 }) => {
+  const [codeList, setCodeList] = useState([]);
   const hasEtc = codeList.some(option => option.codeName === "기타" || option.codeName === "etc");
+
   const name = handleComponentInputName(recordColumn, index);
+
+  useEffect(() => {
+    setCodeList(recordColumn.codeList);
+  }, []);
+
   return (
     <Form.Item
       label={recordColumn.displayName}
@@ -45,3 +47,5 @@ export const componentCodeCheckbox = (form, selectedCodes, setSelectedCodes, cod
     </Form.Item>
   );
 }
+
+export default ComponentCodeCheckbox;

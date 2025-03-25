@@ -3,8 +3,8 @@ import { componentStringInput } from "@components/inputForm/componentStringInput
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentDate } from "@components/inputForm/componentDate";
 import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
-import ComponentCodeRadio, { componentCodeRadio } from "@components/inputForm/componentCodeRadio";
-import { componentCodeCheckbox } from "@components/inputForm/componentCodeCheckbox";
+import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
+import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import React from "react";
 
 const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes, component}) => {
@@ -46,7 +46,9 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'CHECKBOX') {
-    return componentCodeCheckbox(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component);
+    return (
+      <ComponentCodeCheckbox form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+    );
   }
 
   return null;

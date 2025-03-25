@@ -1,15 +1,10 @@
-import { DatePicker, Form, Input, Radio, Select } from "antd";
-import React, { useEffect } from "react";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
+import React from "react";
 import { componentDisabled } from "@components/inputForm/componentDisabled";
 import { componentStringInput } from "@components/inputForm/componentStringInput";
 import { componentDate } from "@components/inputForm/componentDate";
-import { componentCodeSelect } from "@components/inputForm/componentCodeSelect";
-import { componentCodeRadio } from "@components/inputForm/componentCodeRadio";
-import { componentCodeCheckbox } from "@components/inputForm/componentCodeCheckbox";
+import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
+import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
+import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 
@@ -39,15 +34,21 @@ export const handleCsRecordInputComponent = (form, codeRelationSet, selectedCode
 
   // 'CODE' 타입 처리
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'SELECT') {
-    return componentCodeSelect(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index);
+    return (
+      <ComponentCodeSelect form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+    );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'RADIO') {
-    return componentCodeRadio(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index);
+    return (
+      <ComponentCodeRadio form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+    );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'CHECKBOX') {
-    return componentCodeCheckbox(form, selectedCodes, setSelectedCodes, codeRelationSet, recordColumn, component, index);
+    return (
+      <ComponentCodeCheckbox form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} index={index} />
+    );
   }
 
 
