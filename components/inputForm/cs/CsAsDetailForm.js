@@ -5,22 +5,21 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
-const CsAsDetailForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index }) => {
+const CsAsDetailForm = ({ form, index }) => {
 
-  const { recordKeys:keys } = useCsCreateConstantStore();
-
+  const { recordKeys:keys, isAsDetailCommon:isCommon} = useCsCreateConstantStore();
 
   const handleReset = () => {
     form.resetFields([
-      `poorSN1-${index+1}`,
-      `inout1-${index+1}`,
-      `actionContents1-${index+1}`,
-      `day-${index+1}`,
-      `step-${index+1}`,
-      `flow-${index+1}`,
-      `usePress-${index+1}`,
-      `customerSpec-${index+1}`,
-      `productSpec-${index+1}`,
+      `defectMfcSN-${index}`,
+      `warranty-${index}`,
+      `actionSummary-${index}`,
+      `responsePeriod-${index}`,
+      `processStep-${index}`,
+      `flowSequence-${index}`,
+      `usePressure-${index}`,
+      `customerSpec-${index}`,
+      `manufactureSpec-${index}`,
     ]);
   }
 
@@ -40,7 +39,7 @@ const CsAsDetailForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIs
               marginBottom: "0",
             }}
           >
-            {isCommon ? "공통" : `제품 ${index + 1}`}
+            {isCommon ? "공통" : `제품 ${index}`}
           </Title>
 
           {isCommon && (
@@ -67,7 +66,7 @@ const CsAsDetailForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIs
         <Flex gap={4}>
           <Form.Item
             label="불량제품 S/N"
-            name={`poorSN1-${index+1}`}
+            name={`defectMfcSN-${index}`}
             style={{
               width: "180px",
             }}
@@ -75,42 +74,42 @@ const CsAsDetailForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIs
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="Warranty" name={`inout1-${index+1}`}>
+          <Form.Item label="Warranty" name={`warranty-${index}`}>
             <Radio.Group>
               <Radio value="in">IN</Radio>
               <Radio value="out">OUT</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="조치내용 (요약)" name={`actionContents1-${index+1}`}>
+          <Form.Item label="조치내용 (요약)" name={`actionSummary-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
         </Flex>
       </Form>
 
-      <Form layout="vertical" className="info-input-area">
+      <Form form={form} layout="vertical" className="info-input-area">
         <Flex gap={4}>
-          <Form.Item label="대응기간(Day)" name={`day-${index+1}`}>
+          <Form.Item label="대응기간(Day)" name={`responsePeriod-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="공정 Step/Recipe" name={`step-${index+1}`}>
+          <Form.Item label="공정 Step/Recipe" name={`processStep-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="Flow Sequence" name={`flow-${index+1}`}>
+          <Form.Item label="Flow Sequence" name={`flowSequence-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="사용압력" name={`usePress-${index+1}`}>
+          <Form.Item label="사용압력" name={`usePressure-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="고객사 Spec" name={`customerSpec-${index+1}`}>
+          <Form.Item label="고객사 Spec" name={`customerSpec-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
 
-          <Form.Item label="제조 Spec" name={`productSpec-${index+1}`}>
+          <Form.Item label="제조 Spec" name={`manufactureSpec-${index}`}>
             <Input placeholder="-" />
           </Form.Item>
         </Flex>

@@ -1,20 +1,20 @@
 import React from "react";
-import { CsAsDetailTitle } from "@components/inputForm/cs/CsAsDetailTitle";
+import {CsAsDetailTitle} from "@components/inputForm/cs/CsAsDetailTitle";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsAsDetailForm from "@components/inputForm/cs/CsAsDetailForm";
 
-const CsAsDetailInputBox = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon }) => {
+const CsAsDetailInputBox = ({ form }) => {
 
-  const { recordKeys:keys } = useCsCreateConstantStore();
+  const { recordKeys:keys, isAsDetailCommon:isCommon, setIsAsDetailCommon:setIsCommon} = useCsCreateConstantStore();
 
   return (
     <div id="cs4" className="info-wrap">
-      <CsAsDetailTitle isCommon={isCommon} setIsCommon={setIsCommon} />
+      <CsAsDetailTitle title={"출장 내역"} isCommon={isCommon} setIsCommon={setIsCommon} />
 
       {isCommon ? (
-        <CsAsDetailForm form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isCommon} setIsCommon={setIsCommon} index={0} />
+        <CsAsDetailForm form={form} index={0} />
       ) : keys.map((key, index) =>
-        <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isCommon} setIsCommon={setIsCommon} index={index} />
+        <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} index={index+1} />
       )}
     </div>
   );

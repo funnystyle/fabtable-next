@@ -77,14 +77,8 @@ const CsCreate = ({ contentHeight }) => {
 	const codeRelationSet = new Set();
 	const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
 
-	const [recordKeys, setRecordKeys] = useState([1, 2]);
-	const [checkedKeySet, setCheckedKeySet] = useState(new Set());
-
 	const [asKeys, setAsKeys] = useState([0]);
 	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
-
-	const [isAsDetailCommon, setIsAsDetailCommon] = useState(true);
-	const [isFollowUpCommon, setIsFollowUpCommon] = useState(true);
 
 	return (
 		<Layout>
@@ -112,9 +106,9 @@ const CsCreate = ({ contentHeight }) => {
 
 						{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
 						
-						<CsAsDetailInputBox form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isAsDetailCommon} setIsCommon={setIsAsDetailCommon} />
+						<CsAsDetailInputBox form={form} />
 
-						<CsFollowUplInputBox form={form} checkedKeySet={checkedKeySet} setCheckedKeySet={setCheckedKeySet} isCommon={isFollowUpCommon} setIsCommon={setIsFollowUpCommon} />
+						<CsFollowUplInputBox form={form} />
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>

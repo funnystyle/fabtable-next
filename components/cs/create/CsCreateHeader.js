@@ -4,8 +4,12 @@ import { Button, Flex, message, Tag, } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const CsCreateHeader = ({ form }) => {
+
+	const { isAsDetailCommon, isFollowUpCommon } = useCsCreateConstantStore();
+
 
 	const { mutate: csCreate } = useMutation({
 		mutationKey: "csCreate",
@@ -19,9 +23,12 @@ const CsCreateHeader = ({ form }) => {
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
 		// console.log("values: ", values);
+		values["isAsDetailCommon"] = isAsDetailCommon;
+		values["isFollowUpCommon"] = isFollowUpCommon;
 
 		const formData = new FormData();
 		formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));
+
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
 	}

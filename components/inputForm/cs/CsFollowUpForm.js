@@ -7,9 +7,10 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const {Title} = Typography;
 
-export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon, setIsCommon, index }) => {
+export const CsFollowUpForm = ({ form, index }) => {
 
-  const { recordKeys:keys } = useCsCreateConstantStore();
+  const { recordKeys:keys, isFollowUpCommon:isCommon } = useCsCreateConstantStore();
+
 
   const handleSetToday = (e, fieldName) => {
     e.preventDefault(); // 기본 동작 방지
@@ -18,13 +19,13 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
 
   const handleReset = () => {
     form.resetFields([
-      `ox1-${index + 1}`,
-      `ox2-${index + 1}`,
-      `analyzeDate-${index + 1}`,
-      `analyzeDate2-${index + 1}`,
-      `analyzeDate3-${index + 1}`,
-      `tat-${index + 1}`,
-      `etc2-${index + 1}`
+      `causeAnalysisRequest-${index}`,
+      `urgent-${index}`,
+      `analysisRequestDate-${index}`,
+      `analysisDueDate-${index}`,
+      `analysisCompleteDate-${index}`,
+      `tat-${index}`,
+      `etc-${index}`
     ]);
   }
 
@@ -46,7 +47,7 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
               marginBottom: "0",
             }}
           >
-            {isCommon ? "공통" : `제품 ${index + 1}`}
+            {isCommon ? "공통" : `제품 ${index}`}
           </Title>
 
           {isCommon && (
@@ -71,14 +72,14 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
 
       <Form form={form} layout="vertical" className="info-input-area flex-w-none">
         <Flex gap={4}>
-          <Form.Item label="원인분석 요청" name={`ox1-${index + 1}`}>
+          <Form.Item label="원인분석 요청" name={`causeAnalysisRequest-${index}`}>
             <Radio.Group>
               <Radio value="o1">O</Radio>
               <Radio value="x1">X</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="긴급" name={`ox2-${index + 1}`}>
+          <Form.Item label="긴급" name={`urgent-${index}`}>
             <Radio.Group>
               <Radio value="o2">O</Radio>
               <Radio value="x2">X</Radio>
@@ -88,11 +89,9 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
           <Flex gap={4} align="center" className="action-info">
             <Form.Item
               label={
-                <Link href={"/"} onClick={(e) => handleSetToday(e, `analyzeDate-${index + 1}`)}>
-                  분석 요청일
-                </Link>
+                <Link href={"/"} onClick={(e) => handleSetToday(e, `analysisRequestDate-${index}`)}>분석 요청일</Link>
               }
-              name={`analyzeDate-${index + 1}`}
+              name={`analyzeDate-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"
@@ -100,8 +99,8 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
             </Form.Item>
 
             <Form.Item
-              label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analyzeDate2-${index + 1}`)}>분석 납기일</Link>}
-              name={`analyzeDate2-${index + 1}`}
+              label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analysisDueDate-${index}`)}>분석 납기일</Link>}
+              name={`analyzeDate2-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"
@@ -109,8 +108,8 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
             </Form.Item>
 
             <Form.Item
-              label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analyzeDate3-${index + 1}`)}>분석 완료일</Link>}
-              name={`analyzeDate3-${index + 1}`}
+              label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analysisCompleteDate-${index}`)}>분석 완료일</Link>}
+              name={`analyzeDate3-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"
@@ -119,7 +118,7 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
 
             <Form.Item
               label="TAT"
-              name={`tat-${index + 1}`}
+              name={`tat-${index}`}
               tooltip={
                 <span>
 														경과일 자동 계산 <br/>
@@ -130,7 +129,7 @@ export const CsFollowUpForm = ({ form, checkedKeySet, setCheckedKeySet, isCommon
               <Input placeholder="-"/>
             </Form.Item>
 
-            <Form.Item label="기타" name={`etc2-${index + 1}`}>
+            <Form.Item label="기타" name={`etc-${index}`}>
               <Input placeholder="-"/>
             </Form.Item>
           </Flex>
