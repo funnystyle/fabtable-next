@@ -6,10 +6,11 @@ import DrawerComponent from "@publish/components/drawer";
 import {useQuery} from "@tanstack/react-query";
 import {getAxios} from "@api/apiClient";
 import useDrawerStore from "@store/useDrawerStore";
-import useModalStore from "@store/useModalStore";
 import CsListTitle from "@components/cs/list/CsListTitle";
 import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsListTable from "@components/cs/list/CsListTable";
+import useCsSearchModalStore from "@store/useCsSearchModalStore";
+import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 
 const OrderComponent = ({ contentHeight }) => {
 
@@ -18,7 +19,7 @@ const OrderComponent = ({ contentHeight }) => {
 	// --------- 드로어 관련
 
 	// --------- 상태 리스트 상수
-	const { setSearchStatusList } = useModalStore();
+	const { setSearchStatusList } = useCsSearchModalStore();
 	const [statusList, setStatusList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
@@ -43,7 +44,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 				<Space direction="vertical" size={12} style={{ width: "100%" }}>
 					{/*  검색결과 */}
-					{/*<OrderListSearchTags />*/}
+					<CsListSearchTags />
 
 					{/* 상단 버튼 */}
 					{/*<OrderListButtonArea statusList={statusList} />*/}

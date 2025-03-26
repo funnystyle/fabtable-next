@@ -13,6 +13,9 @@ import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
+import CsSearchModal from "@components/searchModal/CsSearchModal";
+import useCsDataStore from "@store/useCsDataStore";
+import dayjs from "dayjs";
 
 const CsCreate = ({ contentHeight }) => {
 
@@ -63,6 +66,47 @@ const CsCreate = ({ contentHeight }) => {
 	useEffect(() => {
 		setConstantAsKeys(asKeys);
 	}, [asKeys]);
+
+	const { cs } = useCsDataStore();
+
+	const convertToDayjs = (obj, dateFields) => {
+		const newObj = { ...obj };
+		dateFields.forEach(field => {
+			if (obj[field]) {
+				newObj[field] = dayjs(obj[field]);
+			}
+		});
+		return newObj;
+	};
+
+	function extractDateFieldNames(data, type) {
+		const result = [];
+
+		data?.list?.forEach(outerList => {
+			outerList.forEach(middleList => {
+				middleList.forEach(inputBox => {
+					inputBox?.components?.forEach(componentRow => {
+						componentRow.forEach(component => {
+							const column = component?.recordColumn;
+							if (column?.dataType === type) {
+								result.push(column.name);
+							}
+						});
+					});
+				});
+			});
+		});
+
+		return result;
+	}
+
+	useEffect(() => {
+		if (cs?.id) {
+			const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
+			const processedCs = convertToDayjs(cs, dateFields);
+			form.setFieldsValue(processedCs);
+		}
+	}, [cs]);
 
 	return (
 		<Layout>
@@ -125,6 +169,8 @@ const CsCreate = ({ contentHeight }) => {
 					/>
 				</div>
 			</Flex>
+
+			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"}/>
 
 			<SearchModal searchLocation={"order"} searchType={"OPEN"}/>
 		</Layout>

@@ -31,7 +31,7 @@ const CsCreateHeader = ({ form }) => {
 
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
-		// console.log("values: ", values);
+		console.log("values: ", values);
 		values["isAsDetailCommon"] = isAsDetailCommon;
 		values["isFollowUpCommon"] = isFollowUpCommon;
 		values["asWorkLength"] = asKeys.length;

@@ -1,12 +1,11 @@
 // pages/year.js
-import React, { useState } from "react";
-import { Flex, } from "antd";
+import React, {useState} from "react";
+import {Flex,} from "antd";
 import "dayjs/locale/ko";
 import SearchModalNormalFormInput from "@components/calendar/year/searchModal/normal/SearchModalNormalFormInput";
 import SearchModalFormSelect from "@components/calendar/year/searchModal/SearchModalFormSelect";
 import SearchModalFormRadio from "@components/calendar/year/searchModal/SearchModalFormRadio";
 import SearchModalFormButtonArea from "@components/calendar/year/searchModal/SearchModalFormButtonArea";
-import useModalStore from "@store/useModalStore";
 
 const SearchModalNormalForm = ({form, order, index, searchLocation, searchDiv, searchCount, setSearchCount}) => {
 

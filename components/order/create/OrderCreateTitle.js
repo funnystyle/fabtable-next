@@ -13,7 +13,7 @@ const OrderCreateTitle = ({ title }) => {
 				{title}
 			</Title>
 
-			<OrderCreateOpenButton />
+			<OrderCreateOpenButton title={"수주 불러오기"} />
 		</Flex>
 	);
 };

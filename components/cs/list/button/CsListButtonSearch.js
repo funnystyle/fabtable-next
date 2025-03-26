@@ -1,13 +1,13 @@
 // pages/order/create/index.js
-import React, { useEffect } from "react";
-import { Button, } from "antd";
-import { FilterOutlined } from "@ant-design/icons";
-import SearchModal from "@components/searchModal/SearchModal";
-import useModalStore from "@store/useModalStore";
+import React, {useEffect} from "react";
+import {Button,} from "antd";
+import {FilterOutlined} from "@ant-design/icons";
+import useCsSearchModalStore from "@store/useCsSearchModalStore";
+import CsSearchModal from "@components/searchModal/CsSearchModal";
 
 const CsListButtonSearch = () => {
 
-	const { setOpenSearchModal, list } = useModalStore();
+	const { setOpenSearchModal, list } = useCsSearchModalStore();
 
 	useEffect(() => {
 		setOpenSearchModal(false);
@@ -24,7 +24,7 @@ const CsListButtonSearch = () => {
 				조건 검색
 			</Button>
 
-			<SearchModal searchLocation={"cs"} searchType={"LIST"} />
+			<CsSearchModal searchLocation={"cs"} searchType={"LIST"} />
 		</>
 	);
 };

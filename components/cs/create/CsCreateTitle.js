@@ -1,6 +1,7 @@
 // pages/order/create/index.js
 import React from "react";
 import {Flex, Typography,} from "antd";
+import CsCreateOpenButton from "@components/cs/create/button/CsCreateOpenButton";
 
 const { Title } = Typography;
 
@@ -11,6 +12,8 @@ const CsCreateTitle = ({ title }) => {
 			<Title level={2} className="title-page">
 				{title}
 			</Title>
+
+			<CsCreateOpenButton title={"CS 불러오기"} />
 		</Flex>
 	);
 };

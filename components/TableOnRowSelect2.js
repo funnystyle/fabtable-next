@@ -94,7 +94,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
     }, 0);
   }
 
-
   return (
     <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
       {/* ✅ 상단 컨트롤 영역 (우측 상단 버튼 추가) */}

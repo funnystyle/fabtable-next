@@ -4,7 +4,7 @@ import { Button, } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import useModalStore from "@store/useModalStore";
 
-const OrderCreateOpenButton = () => {
+const OrderCreateOpenButton = ({title}) => {
 
 	const { setOpenSearchModal } = useModalStore();
 
@@ -18,7 +18,7 @@ const OrderCreateOpenButton = () => {
 				size="large"
 				onClick={() => setOpenSearchModal(true)}
 			>
-				수주 불러오기
+				{title}
 			</Button>
 		</>
 	);

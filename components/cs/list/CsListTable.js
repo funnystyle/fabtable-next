@@ -4,15 +4,15 @@ import {Dropdown,} from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useModalStore from "@store/useModalStore";
 import {transformTagData} from "@components/order/table/transformTagData";
 import {useGetCsList} from "@components/api/useGetCsList";
+import useCsSearchModalStore from "@store/useCsSearchModalStore";
 
 const CsListTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { size, data, setSize, setOpenCopyModal, setOpenEditModal } = useModalStore();
+	const { size, data, setSize, setOpenCopyModal, setOpenEditModal } = useCsSearchModalStore();
 	const handleContextMenuClick = (e) => {
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);

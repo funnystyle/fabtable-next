@@ -1,14 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
-import { postAxios } from "@api/apiClient";
-import useModalStore from "@store/useModalStore";
-import { useEffect } from "react";
+import {useMutation} from "@tanstack/react-query";
+import {postAxios} from "@api/apiClient";
+import {useEffect} from "react";
+import useCsSearchModalStore from "@store/useCsSearchModalStore";
 
 export const useGetCsList = () => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
     setData,
     setList,
-  } = useModalStore();
+  } = useCsSearchModalStore();
 
   const { mutate: getCsList, isPending, isError, error } = useMutation({
     mutationKey: ["getCsList"],
