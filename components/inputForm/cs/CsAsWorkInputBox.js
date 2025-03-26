@@ -1,9 +1,12 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {CsAsWorkFileInputBox} from "@components/inputForm/cs/CsAsWorkFileInputBox";
 import {CsAsWorkForm} from "@components/inputForm/cs/CsAsWorkForm";
 import {CsAsWorkTitle} from "@components/inputForm/cs/CsAsWorkTitle";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet}) => {
+
+  const { files:formFiles, setFiles:setFormFiles } = useCsCreateConstantStore();
 
   const [fileList, setFileList] = useState([]);
 
@@ -16,6 +19,12 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
       `actionText2-${index+1}`
     ]);
   }
+
+  useEffect(() => {
+    let newFiles = {...formFiles};
+    newFiles[index+""] = fileList;
+    setFormFiles(newFiles);
+  }, [fileList]);
 
   return (
     <React.Fragment key={`cs-as-work-${index}`}>

@@ -7,15 +7,15 @@ export const handleCsAsInputBox = (form, keys, setKeys, asCheckedKeySet, setAsCh
 
   return (
     <div id="cs3" className="info-wrap">
-      <CsAsTitle keys={keys} setKeys={setKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet} />
+      <CsAsTitle form={form} keys={keys} setKeys={setKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet} />
 
-      <CsAsTopInputBox />
+      <CsAsTopInputBox form={form} />
 
       {(keys || []).map((key, index) => (
         <CsAsWorkInputBox
           key = {`cs-as-work-${index}`}
           form={form}
-          index={index}
+          index={index+1}
           keys={keys}
           setKeys={setKeys}
           asCheckedKeySet={asCheckedKeySet}

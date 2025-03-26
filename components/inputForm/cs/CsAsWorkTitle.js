@@ -41,7 +41,7 @@ export const CsAsWorkTitle = ({ form, index, keys, setKeys, asCheckedKeySet, set
   return (
     <Flex align="center" justify="space-between" className="title-area">
       <Flex align="center" gap={12}>
-        <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>출장업무 내용 {index + 1}</Title>
+        <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>출장업무 내용 {index}</Title>
 
         <Checkbox
           checked={asCheckedKeySet.has(index)}
@@ -50,17 +50,17 @@ export const CsAsWorkTitle = ({ form, index, keys, setKeys, asCheckedKeySet, set
 
         <Form form={form}>
           <Flex gap={4} className="tit-side-area">
-            <Form.Item label="조치 담당자(부)" name={`csUsername-${index+1}`} className="charge-input">
+            <Form.Item label="조치 담당자(부)" name={`responsiblePerson-${index}`} className="charge-input">
               <Input placeholder="-" style={{ width: "110px", }} />
             </Form.Item>
 
             <Form.Item
               label={
-                <Link href={"/"} onClick={(e) => handleSetToday(e, `responseDate-${index+1}`)}>
+                <Link href={"/"} onClick={(e) => handleSetToday(e, `responseDate-${index}`)}>
                   대응일
                 </Link>
               }
-              name={`responseDate-${index+1}`}>
+              name={`responseDate-${index}`}>
               <DatePicker placeholder="날짜 선택" style={{ width: "160px", height: "32px", }} />
             </Form.Item>
 

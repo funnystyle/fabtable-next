@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const { Title } = Typography;
 
-export const CsAsTopInputBox = () => {
+export const CsAsTopInputBox = ({ form }) => {
 
   return (
     <div className="info-input-box">
@@ -16,11 +16,11 @@ export const CsAsTopInputBox = () => {
         현상 내용
       </Title>
 
-      <Form layout="vertical" className="info-input-area">
+      <Form form={form} layout="vertical" className="info-input-area">
         <Flex gap={4}>
           <Form.Item
             label="접수 시 현상 및 내용(상세)"
-            name="symptomText1"
+            name="receiptContent"
           >
             <Input.TextArea
               style={{
@@ -31,7 +31,7 @@ export const CsAsTopInputBox = () => {
 
           <Form.Item
             label="현장 방문 후 확인 현상"
-            name="symptomText2"
+            name="visitContent"
           >
             <Input.TextArea
               style={{

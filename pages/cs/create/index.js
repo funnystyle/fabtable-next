@@ -12,6 +12,7 @@ import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
 import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
 import CsCreateHeader from "@components/cs/create/CsCreateHeader";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
@@ -79,6 +80,13 @@ const CsCreate = ({ contentHeight }) => {
 
 	const [asKeys, setAsKeys] = useState([0]);
 	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
+
+	const { setAsKeys:setConstantAsKeys } = useCsCreateConstantStore();
+
+
+	useEffect(() => {
+		setConstantAsKeys(asKeys);
+	}, [asKeys]);
 
 	return (
 		<Layout>

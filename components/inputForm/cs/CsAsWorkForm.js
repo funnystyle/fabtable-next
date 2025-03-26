@@ -16,7 +16,7 @@ export const CsAsWorkForm = ({form, index}) => {
   return (
       <Form form={form} layout="vertical" className="info-input-area">
         <Flex gap={4}>
-          <Form.Item label="조치내용 (상세)" name={`actionText1-${index+1}`}>
+          <Form.Item label="조치내용 (상세)" name={`responseContent-${index}`}>
             <Input.TextArea
               style={{
                 height: "90px",
@@ -24,7 +24,7 @@ export const CsAsWorkForm = ({form, index}) => {
             />
           </Form.Item>
 
-          <Form.Item label="조치결과" name={`actionText2-${index+1}`}>
+          <Form.Item label="조치결과" name={`responseResult-${index}`}>
             <Input.TextArea
               style={{
                 height: "90px",

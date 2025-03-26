@@ -1,8 +1,8 @@
 import {Button, Flex, Image, Upload} from "antd";
-import {PlusOutlined, UploadOutlined} from "@ant-design/icons";
-import React, {useEffect, useRef, useState} from "react";
+import {UploadOutlined} from "@ant-design/icons";
+import React, {useRef, useState} from "react";
 
-export const CsAsWorkFileInputBox = ({fileList, setFileList}) => {
+export const CsAsWorkFileInputBox = ({index, fileList, setFileList}) => {
 
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -34,6 +34,7 @@ export const CsAsWorkFileInputBox = ({fileList, setFileList}) => {
           (f) => !fileList.some((item) => item.uid === f.uid)
         ),
       ]);
+
     } else {
       setFileList(newFileList); // 삭제된 경우 리스트 갱신
     }
@@ -49,6 +50,7 @@ export const CsAsWorkFileInputBox = ({fileList, setFileList}) => {
     if (files.length <= 0) return;
 
     for (let i = 0; i < files.length; i++) {
+      console.log("files[i]: ", files[i])
       const newFile = {
         uid: `${Date.now()}-${i+1}`, // 고유 ID 생성
         name: files[i].name,

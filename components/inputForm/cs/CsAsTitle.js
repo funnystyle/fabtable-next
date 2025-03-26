@@ -4,7 +4,7 @@ import React from "react";
 
 const { Title } = Typography;
 
-export const CsAsTitle = ({ keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }) => {
+export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }) => {
 
   const handleDelete = () => {
     const newKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
@@ -23,9 +23,11 @@ export const CsAsTitle = ({ keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }
           <Title level={3} className="title-bullet">출장업무 내용</Title>
 
           <Flex align="center" gap={4} className="tit-side-area">
-            <Form.Item label="조치 담당자(정)" name="username" className="charge-input">
-              <Input placeholder="-" style={{ width: "110px", }} />
-            </Form.Item>
+            <Form form={form}>
+              <Form.Item label="조치 담당자(정)" name="chargePerson" className="charge-input">
+                <Input placeholder="-" style={{ width: "110px", }} />
+              </Form.Item>
+            </Form>
 
             <Button type="primary" icon={<PlusOutlined />} iconPosition={"end"}
                     onClick={() => handleAdd()}

@@ -1,5 +1,5 @@
 // pages/order/create/index.js
-import React from "react";
+import React, {useEffect} from "react";
 import { Button, Flex, message, Tag, } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
@@ -8,8 +8,11 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const CsCreateHeader = ({ form }) => {
 
-	const { isAsDetailCommon, isFollowUpCommon } = useCsCreateConstantStore();
+	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
 
+	useEffect(() => {
+		console.log("CsCreateHeader files: ", files);
+	},[files]);
 
 	const { mutate: csCreate } = useMutation({
 		mutationKey: "csCreate",
@@ -20,14 +23,42 @@ const CsCreateHeader = ({ form }) => {
 		form.resetFields();
 	};
 
+	const convertBlobUrlToFile = async (blobUrl, fileName, mimeType) => {
+		const res = await fetch(blobUrl);
+		const blob = await res.blob(); // Blob 객체로 변환
+		return new File([blob], fileName, { type: mimeType }); // File 객체로 반환
+	};
+
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
 		// console.log("values: ", values);
 		values["isAsDetailCommon"] = isAsDetailCommon;
 		values["isFollowUpCommon"] = isFollowUpCommon;
+		values["asWorkLength"] = asKeys.length;
 
 		const formData = new FormData();
 		formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));
+
+		if (files) {
+			let fileLength = {};
+			for (const [index, fileArray] of Object.entries(files)) {
+				console.log("index: ", index);
+				console.log("files: ", fileArray);
+				for (const file of fileArray) {
+					const fileName = file.name;
+					const mimeType = file.type;
+
+					// Blob URL을 실제 File 객체로 변환
+					const actualFile = await convertBlobUrlToFile(file.url, fileName, mimeType);
+
+					console.log("actualFile: ", actualFile);
+					formData.append("files", actualFile);
+				}
+				// index별로 files.length를 fileMeta로 formData에 추가
+				fileLength[index] = fileArray.length;
+			}
+			formData.append(`fileMeta`, new Blob([JSON.stringify({fileLength:fileLength})], { type: "application/json" }));
+		}
 
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
