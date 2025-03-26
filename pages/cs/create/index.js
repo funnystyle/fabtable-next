@@ -1,44 +1,20 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
-import React, { useEffect, useState } from "react";
-import { Anchor, Button, Flex, Form, Layout, Tabs, Tag, Typography, } from "antd";
-import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
-import { CloseOutlined, EditFilled } from "@ant-design/icons";
-import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
+import React, {useEffect, useState} from "react";
+import {Anchor, Flex, Form, Layout,} from "antd";
+import {useQuery} from "@tanstack/react-query";
+import {getAxios} from "@api/apiClient";
+import {handleInputBoxRow} from "@components/inputForm/handleInputBoxRow";
+import {handleCsAsInputBox} from "@components/inputForm/cs/handleCsAsInputBox";
 import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
 import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
 import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
 import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
-
-const { Title } = Typography;
-
-
-const TabItems = [
-	{
-		key: "1",
-		label: "수주 현황 목록",
-	},
-	{
-		key: "2",
-		label: "수주 등록 · 상세",
-	},
-];
+import CsCreateTab from "@components/cs/create/CsCreateTab";
+import CsCreateTitle from "@components/cs/create/CsCreateTitle";
 
 const CsCreate = ({ contentHeight }) => {
-	const [position, setPosition] = useState("end");
-	const router = useRouter();
-
-	const onTabChange = (key) => {
-		if (key === "1") {
-			router.push("/order");
-		} else if (key === "2") {
-			router.push("/orderwrite");
-		}
-	};
 
 	/* Anchor 스크롤 이동 */
 	const handleAnchorClick = (e, link) => {
@@ -91,13 +67,9 @@ const CsCreate = ({ contentHeight }) => {
 	return (
 		<Layout>
 			<div className="contents-top">
-				<Flex align="center" justify="space-between" className="title-area">
-					<Title level={2} className="title-page">
-						영업 관리
-					</Title>
-				</Flex>
+				<CsCreateTitle title="C/S 관리" />
 
-				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
+				<CsCreateTab activeKey={2} />
 
 				<CsCreateHeader form={form} />
 			</div>
@@ -125,19 +97,29 @@ const CsCreate = ({ contentHeight }) => {
 						onClick={handleAnchorClick}
 						items={[
 							{
-								key: "basic",
-								href: "#basic",
-								title: "기본정보",
+								key: "cs1",
+								href: "#cs1",
+								title: "접수 내용",
 							},
 							{
-								key: "customer",
-								href: "#customer",
-								title: "고객정보",
+								key: "cs2",
+								href: "#cs2",
+								title: "제품 내역",
 							},
 							{
-								key: "product",
-								href: "#product",
-								title: "제품정보",
+								key: "cs3",
+								href: "#cs3",
+								title: "출장업무 내용",
+							},
+							{
+								key: "cs4",
+								href: "#cs4",
+								title: "출장 내역",
+							},
+							{
+								key: "cs5",
+								href: "#cs5",
+								title: "후속 조치",
 							},
 						]}
 					/>

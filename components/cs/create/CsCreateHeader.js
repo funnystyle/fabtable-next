@@ -68,7 +68,13 @@ const CsCreateHeader = ({ form }) => {
 		<div className="top-btn-area">
 			{/* 신규 수주 등록시 */}
 			<Flex align="center" justify="space-between">
-				<Tag className="CurrentStatus001">발주기입</Tag>
+				<Flex align="center">
+					<Tag className="tag-new">신규</Tag>
+
+					<p className="cs-num">
+						C/S No. <span>--------</span>
+					</p>
+				</Flex>
 
 				<Flex align="center" gap={8}>
 					<Flex className="btn-space-area">
