@@ -420,7 +420,7 @@ const HomePage = ({ children }) => {
 	}, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
 
 	return (
-		<Layout>
+		<Layout style={{ height: '100vh' }}>
 			<Layout>
 				{/* GNB (왼쪽 메뉴) */}
 				<Sider
@@ -572,7 +572,7 @@ const HomePage = ({ children }) => {
 						</div>
 					</Header>
 					{/* 탭 없이 하려면 아래 코드를 적용 */}
-					<Content className="contents">
+					<Content className="contents" style={{ overflowY: "auto"}}>
 						{children ? React.cloneElement(children, { contentHeight }) : null}
 					</Content>
 					{/* 탭 적용하려면 아래 코드를 적용 */}
@@ -588,12 +588,14 @@ const HomePage = ({ children }) => {
 								action === "remove" && onTabRemove(targetKey)
 							}
 							className="page-top-nav"
+							// style={{ height: "100%"}}
 						>
 							{tabs.map((tab) => (
 								<Tabs.TabPane
 									tab={tab.label}
 									key={tab.key}
 									closable={tab.key !== "1"}
+									style={{ height: "100%"}}
 								>
 									<Suspense fallback={<Spin size="large" />}>
 										{pageComponents[tab.url] ? (

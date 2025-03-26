@@ -25,7 +25,7 @@
 	background-color: #fff;
 	border-bottom: 1px solid #f0f0f0;
 	line-height: toRem(44);
-	position: fixed;
+	// position: fixed;
 	left: toRem(260);
 	top: 0;
 	right: 0;
@@ -131,7 +131,7 @@
 	padding: toRem(12);
 	background-color: #fafafa;
 	border-right: 1px solid #f0f0f0;
-	position: fixed;
+	// position: fixed;
 	left: 0;
 	top: 0;
 	z-index: 13;
@@ -929,10 +929,13 @@ h2 {
 
 /* Anchor */
 .contents {
+	height: calc(100vh - toRem(44));
+	overflow-y: auto;
+	overflow: hidden;
 	.anchor-contents {
 		margin-right: toRem(160);
 		margin-left: toRem(40);
-		flex: 1;
+		// flex: 1;
 		overflow: auto;
 
 		.contents-scroll {
@@ -941,6 +944,15 @@ h2 {
 		}
 	}
 }
+
+.ant-tabs-content-holder {
+	// flex: 1;
+	// height: calc(100vh - toRem(85));
+	height: 100%;
+	overflow-y: auto;
+}
+
+
 
 .anchor-area {
 	width: toRem(128);
@@ -963,15 +975,20 @@ h2 {
 
 /* tab nav */
 .page-top-nav {
+	height: calc(100vh - toRem(44));
+}
+
+.page-top-nav {
 	> .ant-tabs-nav {
 		padding-top: toRem(8);
-		padding-left: toRem(270);
+		padding-left: toRem(10);
+		// height: calc(100vh - toRem(44));
 		margin-bottom: 0;
 		background-color: #fafafa;
-		position: fixed;
+		// position: fixed;
 		left: 0;
 		right: 0;
-		top: toRem(43);
+		// top: toRem(43);
 		z-index: 4;
 		transition: padding-left 0.2s ease-in-out;
 
