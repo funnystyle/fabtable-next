@@ -8,6 +8,7 @@ import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew"
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
+import {getCsColumns} from "@components/cs/list/data/getCsColumns";
 
 const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 
@@ -64,8 +65,8 @@ const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 	});
 	useEffect(() => {
 		if (isSuccess) {
-			setHeaderList(transformColumns(headerResponse.data.list, sortedInfo));
-
+			// setHeaderList(transformColumns(headerResponse.data.list, sortedInfo));
+			setHeaderList(getCsColumns(sortedInfo, dateSorter));
 		}
 	}, [isSuccess]);
 
