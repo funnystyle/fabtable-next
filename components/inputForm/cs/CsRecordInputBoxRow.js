@@ -15,13 +15,14 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useModalStore();
 
-
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
 
+    const recordKeysLength = recordKeys.length;
     const newRecordKeys = [];
+    const checkedKeys = Array.from(checkedKeySet);
+    const copyRecordKeys = Array.from(checkedKeySet).map((key) => recordKeys[key-1]);
     for (let i = 0; i < copyCount; i++) {
-      const copyRecordKeys = Array.from(checkedKeySet).map((key) => recordKeys[key]);
 
       copyRecordKeys.forEach((recordKey) => {
         newRecordKeys.push(recordKey);
@@ -29,6 +30,49 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
     }
 
     setRecordKeys([...recordKeys, ...newRecordKeys]);
+
+    setTimeout(() => {
+
+      let count = 0;
+      for (let i = 0; i < copyCount; i++) {
+        checkedKeys.forEach((key) => {
+
+          const prev = key;
+          const next = count + recordKeysLength + 1;
+
+          const list = ["defectMfcSN"
+          , "substituteMfcSN"
+          , "productCategory"
+          , "subModelName"
+          , "fluid"
+          , "flowrate"
+          , "customerCode"
+          , "productionDepartment"
+          , "defectClassification"
+          , "phenomenonClassification"
+          , "nowState"
+          , "substituteNowState"
+          , "actionClassification"
+          , "severity"
+          , "defectMfcWithdrawalDate"
+          , "actionCompletionDate"
+          , "productCertificationDate"
+          , "deliverDatetime"
+          , "certificationDateUsageDays"
+          , "deliveryDateUsageDays"]
+
+          list.forEach((field) => {
+            const prevValue = form.getFieldValue(`${field}-${prev}`);
+
+            // Select 값이 객체일 경우 처리
+            form.setFieldValue(`${field}-${next}`, prevValue);
+          });
+
+          count++;
+        });
+      }
+
+    }, 100);
   };
 
   const handleDelete = () => {
@@ -39,7 +83,12 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   useEffect(() => {
     if (record?.id) {
       console.log("record", record);
-      setRecordKeys([...recordKeys, record.id]);
+      if (recordKeys.length === 0) {
+        setRecordKeys([...recordKeys, record.id]);
+      } else {
+        recordKeys[recordIndex - 1] = record.id;
+        setRecordKeys([...recordKeys]);
+      }
       if (openDiv === "defect") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;

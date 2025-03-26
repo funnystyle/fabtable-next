@@ -58,12 +58,12 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
               <Flex gap={4} className="tit-side-area">
                 <Button type="primary" size="small" onClick={() => {
-                  setIndex(1);
+                  setIndex(index);
                   setOpenDiv("defect");
                   setOpenSearchModal(true);
                 }}>불량제품 불러오기</Button>
                 <Button type="primary" size="small" onClick={() => {
-                  setIndex(1);
+                  setIndex(index);
                   setOpenDiv("substitute");
                   setOpenSearchModal(true);
                 }}>대체제품 불러오기</Button>

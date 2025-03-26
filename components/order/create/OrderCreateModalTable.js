@@ -42,9 +42,7 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 		});
 	};
 
-
 	const onRowClick = (record) => {
-		console.log(record);
 		handleConfirmEdit(record);
 	}
 

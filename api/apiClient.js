@@ -152,8 +152,6 @@ export const postAxios = async (url, data, fileYn) => {
     config.headers["Content-Type"] = "multipart/form-data";
   }
 
-
-  console.log("postAxios", url, data, config)
   try {
     const response = await apiClient.post(url, data, config);
     return response.data;

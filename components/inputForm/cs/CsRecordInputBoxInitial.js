@@ -8,13 +8,9 @@ const { Title } = Typography;
 
 const CsRecordInputBoxInitial = ({ item }) => {
 
-  const { setOpenSearchModal, index, setIndex, setOpenDiv } = useModalStore();
+  const { setOpenSearchModal, setIndex, setOpenDiv } = useModalStore();
 
   const componentsList = item[0].components;
-
-  useEffect(() => {
-    console.log("index", index );
-  }, [index]);
   
   return (
     <div className="info-input-box">
