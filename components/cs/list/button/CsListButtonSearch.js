@@ -5,7 +5,7 @@ import { FilterOutlined } from "@ant-design/icons";
 import SearchModal from "@components/searchModal/SearchModal";
 import useModalStore from "@store/useModalStore";
 
-const OrderListButtonSearch = () => {
+const CsListButtonSearch = () => {
 
 	const { setOpenSearchModal, list } = useModalStore();
 
@@ -24,9 +24,9 @@ const OrderListButtonSearch = () => {
 				조건 검색
 			</Button>
 
-			<SearchModal searchLocation={"order"} searchType={"LIST"} />
+			<SearchModal searchLocation={"cs"} searchType={"LIST"} />
 		</>
 	);
 };
 
-export default OrderListButtonSearch;
+export default CsListButtonSearch;

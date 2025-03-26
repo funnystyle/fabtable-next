@@ -1,14 +1,14 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
-import { Dropdown, } from "antd";
+import React, {useEffect, useState} from "react";
+import {Dropdown,} from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
+import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useModalStore from "@store/useModalStore";
-import { transformTagData } from "@components/order/table/transformTagData";
-import { useGetRecords } from "@components/api/useGetRecords";
+import {transformTagData} from "@components/order/table/transformTagData";
+import {useGetCsList} from "@components/api/useGetCsList";
 
-const OrderListTable = ({ contentHeight }) => {
+const CsListTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
@@ -21,7 +21,7 @@ const OrderListTable = ({ contentHeight }) => {
 		}
 	};
 
-	const { handleReload } = useGetRecords();
+	const { handleReload } = useGetCsList();
 
 	useEffect(() => {
 		handleReload();
@@ -30,7 +30,7 @@ const OrderListTable = ({ contentHeight }) => {
 	return (
 		<>
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"} />
+			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown
 				menu={{
 					items: orderListRightItem,
@@ -48,4 +48,4 @@ const OrderListTable = ({ contentHeight }) => {
 	);
 };
 
-export default OrderListTable;
+export default CsListTable;

@@ -4,10 +4,11 @@ import {Flex, Typography,} from "antd";
 import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
 import useModalStore from "@store/useModalStore";
 import SearchAutoComplete from "@components/autoComplete/SearchAutoComplete";
+import CsListButtonSearch from "@components/cs/list/button/CsListButtonSearch";
 
 const { Title } = Typography;
 
-const OrderListTitle = ({ title }) => {
+const CsListTitle = ({ title }) => {
 
 	const { setSearchKeyword } = useModalStore();
 
@@ -20,10 +21,10 @@ const OrderListTitle = ({ title }) => {
 			<Flex gap="small">
 				<SearchAutoComplete setSearchKeyword={setSearchKeyword} />
 
-				<OrderListButtonSearch />
+				<CsListButtonSearch />
 			</Flex>
 		</Flex>
 	);
 };
 
-export default OrderListTitle;
+export default CsListTitle;

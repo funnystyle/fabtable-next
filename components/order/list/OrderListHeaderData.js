@@ -9,7 +9,7 @@ import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
 
-const OrderListHeaderData = ({ setHeaderList }) => {
+const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 
 	const [sortedInfo, setSortedInfo] = useState({});
 
@@ -60,7 +60,7 @@ const OrderListHeaderData = ({ setHeaderList }) => {
 	const [queryKey, setQueryKey] = useState(["columns", Math.random()]);
 	const { data:headerResponse, isSuccess:isSuccess } = useQuery({
 		queryKey,
-		queryFn: () => getAxios("/user/header", {headerDiv: "SALES"}),
+		queryFn: () => getAxios("/user/header", {headerDiv}),
 	});
 	useEffect(() => {
 		if (isSuccess) {

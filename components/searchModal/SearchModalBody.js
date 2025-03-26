@@ -8,8 +8,6 @@ import OrderOpenModalContent from "@components/modal/OrderOpenModalContent";
 
 const SearchModalBody = ({ form, searchLocation, searchType }) => {
 
-	const pathname = window.location.pathname;
-
 	return (
 		<>
 				{(searchLocation === "order" || searchType === "OPEN") && (<OrderOpenModalContent form={form} searchLocation={searchLocation} />)}

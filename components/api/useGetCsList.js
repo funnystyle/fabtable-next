@@ -3,17 +3,16 @@ import { postAxios } from "@api/apiClient";
 import useModalStore from "@store/useModalStore";
 import { useEffect } from "react";
 
-export const useGetRecords = () => {
+export const useGetCsList = () => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
-
     setData,
     setList,
   } = useModalStore();
 
-  const { mutate: getRecords, isPending, isError, error } = useMutation({
-    mutationKey: ["getRecords"],
-    mutationFn: (values) => postAxios("/user/record/search", values),
+  const { mutate: getCsList, isPending, isError, error } = useMutation({
+    mutationKey: ["getCsList"],
+    mutationFn: (values) => postAxios("/user/cs/search", values),
     onSuccess: (response) => {
       setData(response.data);
       setList(response.data.list);
@@ -23,7 +22,7 @@ export const useGetRecords = () => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
-    getRecords({ page, size, searchKeyword, searchStatusList, searchData });
+    getCsList({ page, size, searchKeyword, searchStatusList, searchData });
   };
 
   useEffect(() => {
@@ -31,7 +30,7 @@ export const useGetRecords = () => {
   }, [page, size, searchKeyword, searchStatusList, searchData]);
 
   return {
-    getRecords,
+    getCsList,
     handleReload,
     isPending,
     isError,

@@ -49,7 +49,7 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 	return (
 		<>
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListHeaderData setHeaderList={setHeaderList} />
+			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"}/>
 			<div style={{ marginTop: contentHeight }} className="contents-scroll">
 				{/* 테이블 */}
 				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
