@@ -1,5 +1,5 @@
 // pages/cswrite.js
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
 	Anchor,
 	Layout,
@@ -1268,9 +1268,19 @@ const CSWriteComponent = ({ contentHeight }) => {
 		setOpenSearchModal(true);
 	};
 
+	const [anchorContainer, setAnchorContainer] = useState(null);
+
+	useEffect(() => {
+		const container = document.querySelector(".ant-anchor-wrapper");
+		if (container) {
+			setAnchorContainer(container);
+		}
+	}, []);
+
+
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<Flex align="center" justify="space-between" className="title-area">
 					<Title level={2} className="title-page">
 						C/S 관리
@@ -1325,7 +1335,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 					{/* //신규 수주 등록시 */}
 
 					{/* 수주 수정시 */}
-					<Flex
+					{/* <Flex
 						align="center"
 						justify="space-between"
 						className="detail-top-area"
@@ -1389,14 +1399,14 @@ const CSWriteComponent = ({ contentHeight }) => {
 								</Button>
 							</Flex>
 						</Flex>
-					</Flex>
+					</Flex> */}
 					{/* //수주 수정시 */}
 				</div>
 			</div>
 
-			<Flex gap={32}>
+			<Flex style={{ height: 'calc(100vh - 297px)', overflowY: 'auto' }} className="ant-anchor-wrapper">
 				<div className="anchor-contents">
-					<div style={{ paddingTop: contentHeight }}>
+					<div>
 						{/* 접수 내용 */}
 						<div id="cs1">
 							<div className="info-area">
@@ -1423,7 +1433,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								<Flex gap={16} className="info-input-col2">
 									<div className="info-input-box">
 										<Flex justify="space-between">
-											<Title level={4} className="title-bullet">
+											<Title level={5}>
 												기본 정보
 											</Title>
 
@@ -1690,7 +1700,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 									<div className="row-2">
 										<div className="info-input-box">
 											<Flex justify="space-between">
-												<Title level={4} className="title-bullet">
+												<Title level={5}>
 													요청자 정보
 												</Title>
 
@@ -1725,7 +1735,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 										<div className="info-input-box">
 											<Flex justify="space-between">
 												<Flex gap={12} align="center">
-													<Title level={4} className="title-bullet">
+													<Title level={5}>
 														내방 정보
 													</Title>
 
@@ -1838,8 +1848,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								<Flex align="center" justify="space-between">
 									<Flex align="center" gap={12} className="title-area">
 										<Title
-											level={4}
-											className="title-bullet"
+											level={5}
 											style={{
 												marginBottom: "0",
 											}}
@@ -2081,7 +2090,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 							</Flex>
 
 							<div className="info-input-box">
-								<Title level={4} className="title-bullet">
+								<Title level={5}>
 									현상 내용
 								</Title>
 
@@ -2120,8 +2129,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								>
 									<Flex align="center" gap={12}>
 										<Title
-											level={4}
-											className="title-bullet"
+											level={5}
 											style={{
 												marginBottom: "0",
 											}}
@@ -2288,8 +2296,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								>
 									<Flex align="center" gap={4}>
 										<Title
-											level={4}
-											className="title-bullet"
+											level={5}
 											style={{
 												marginBottom: "0",
 											}}
@@ -2373,8 +2380,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 									className="title-area"
 								>
 									<Title
-										level={4}
-										className="title-bullet"
+										level={5}
 										style={{
 											marginBottom: "0",
 										}}
@@ -2444,7 +2450,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 						{/* //출장 내역 */}
 
 						{/* 후속 조치 */}
-						<div id="cs5" className="info-wrap">
+						<div id="cs5" className="info-wrap info-wrap-last">
 							<Flex
 								align="center"
 								justify="space-between"
@@ -2483,8 +2489,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								>
 									<Flex align="center" gap={4}>
 										<Title
-											level={4}
-											className="title-bullet"
+											level={5}
 											style={{
 												marginBottom: "0",
 											}}
@@ -2583,8 +2588,7 @@ const CSWriteComponent = ({ contentHeight }) => {
 								>
 									<Flex align="center" gap={4}>
 										<Title
-											level={4}
-											className="title-bullet"
+											level={5}
 											style={{
 												marginBottom: "0",
 											}}
@@ -2677,38 +2681,41 @@ const CSWriteComponent = ({ contentHeight }) => {
 						{/* //후속 조치 */}
 					</div>
 				</div>
-				<div className="anchor-area" style={{ top: contentHeight }}>
-					<Anchor
-						affix={false}
-						onClick={handleAnchorClick}
-						items={[
-							{
-								key: "cs1",
-								href: "#cs1",
-								title: "접수 내용",
-							},
-							{
-								key: "cs2",
-								href: "#cs2",
-								title: "제품 내역",
-							},
-							{
-								key: "cs3",
-								href: "#cs3",
-								title: "출장업무 내용",
-							},
-							{
-								key: "cs4",
-								href: "#cs4",
-								title: "출장 내역",
-							},
-							{
-								key: "cs5",
-								href: "#cs5",
-								title: "후속 조치",
-							},
-						]}
-					/>
+				<div className="anchor-area">
+					{anchorContainer && (
+						<Anchor
+							affix={false}
+							getContainer={() => anchorContainer}
+							// onClick={handleAnchorClick}
+							items={[
+								{
+									key: "cs1",
+									href: "#cs1",
+									title: "접수 내용",
+								},
+								{
+									key: "cs2",
+									href: "#cs2",
+									title: "제품 내역",
+								},
+								{
+									key: "cs3",
+									href: "#cs3",
+									title: "출장업무 내용",
+								},
+								{
+									key: "cs4",
+									href: "#cs4",
+									title: "출장 내역",
+								},
+								{
+									key: "cs5",
+									href: "#cs5",
+									title: "후속 조치",
+								},
+							]}
+						/>
+					)}
 				</div>
 			</Flex>
 

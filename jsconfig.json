@@ -15,6 +15,7 @@
 			"@assets/scss/*": ["./assets/scss/*"],
 			"@assets/images/*": ["./assets/images/*"],
 			"@publish/*": ["./publish/*"],
+			"@context/*": ["./context/*"],
 		}
 	}
 }

@@ -386,7 +386,7 @@
 		}
 
 		.anchor-contents {
-			margin-left: 0;
+			// margin-left: 0;
 		}
 
 		.page-top-nav {
@@ -551,8 +551,8 @@
 
 .search-result-area {
 	flex-wrap: wrap;
-	margin-top: toRem(8);
-	margin-bottom: toRem(8);
+	// margin-top: toRem(8);
+	// margin-bottom: toRem(8);
 
 	.ant-tag {
 		margin-top: toRem(4);
@@ -700,6 +700,10 @@
 	margin-top: toRem(44);
 }
 
+.info-wrap-last {
+	padding-bottom: toRem(44);
+}
+
 .info-input-wrap {
 	gap: toRem(20);
 
@@ -727,7 +731,8 @@
 }
 
 .top-btn-area {
-	padding-right: toRem(160);
+	// padding-right: toRem(160);
+	padding-bottom: toRem(8);
 }
 
 .detail-top-area {

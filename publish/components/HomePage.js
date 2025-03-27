@@ -1,6 +1,6 @@
 // pages/index.js
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { Layout, Menu, Button, Tag, Tabs, Spin } from "antd";
+import { Layout, Menu, Button, Tag, Tabs, Spin, Skeleton } from "antd";
 import { useRouter } from "next/router";
 // import dynamic from "next/dynamic";
 import {
@@ -29,6 +29,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import DateHeader from "./DateHeader";
+import { TabContext } from "@/context/TabContext";
 
 const { Header, Sider, Content } = Layout;
 
@@ -38,7 +39,9 @@ const pageComponents = {
 	"/publish/year": lazy(() => import("@/pages/publish/year")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
 	"/publish/order": lazy(() => import("@/pages/publish/order")),
+	"/publish/orderwrite": lazy(() => import("@/pages/publish/orderwrite")),
 	"/publish/cs": lazy(() => import("@/pages/publish/cs")),
+	"/publish/cswrite": lazy(() => import("@/pages/publish/cswrite")),
 	// "/publish/produce": lazy(() => import("@/pages/publish/produce")),
 	// "/publish/qc": lazy(() => import("@/pages/publish/qc")),
 	"/publish/statistic/noncommerce": lazy(() =>
@@ -68,63 +71,87 @@ const basicItems = [
 		icon: <GoldFilled />,
 	},
 	{
-		key: "sub1",
+		key: "2",
 		label: "일정 관리",
 		icon: <CalendarFilled />,
 		children: [
 			{
-				key: "sub1-1",
+				key: "2-1",
 				label: "연간 종합 일정",
 				url: "/publish/year",
 			},
 			{
-				key: "sub1-2",
+				key: "2-2",
 				label: "월간 종합 일정",
 				url: "/publish/month",
 			},
 		],
 	},
 	{
-		key: "2",
-		label: "영업 관리",
-		url: "/publish/order",
-		icon: <EditFilled />,
-	},
-	{
 		key: "3",
-		label: "CS 관리",
-		url: "/publish/cs",
-		icon: <AudioFilled />,
+		label: "영업 관리",
+		// url: "/publish/order",
+		icon: <EditFilled />,
+		children: [
+			{
+				key: "3-1",
+				label: "수주 현황 목록",
+				url: "/publish/order",
+			},
+			{
+				key: "3-2",
+				label: "수주 등록 · 상세",
+				url: "/publish/orderwrite",
+			},
+		],
 	},
 	{
 		key: "4",
+		label: "CS 관리",
+		url: "/publish/cs",
+		icon: <AudioFilled />,
+		children: [
+			{
+				key: "4-1",
+				label: "C/S 현황 목록",
+				url: "/publish/cs",
+			},
+			{
+				key: "4-2",
+				label: "C/S 등록 · 상세",
+				url: "/publish/cswrite",
+			},
+		],
+	},
+	{
+		key: "5",
 		label: "생산 관리",
 		url: "/publish/produce",
 		icon: <ToolFilled />,
 	},
 	{
-		key: "5",
+		key: "6",
 		label: "품질 관리",
 		url: "/publish/qc",
 		icon: <TrademarkCircleFilled />,
 	},
 	{
-		key: "sub2",
+		key: "7",
 		label: "통계 관리",
 		icon: <AreaChartOutlined />,
 		children: [
 			{
-				key: "sub2-1",
+				key: "7-1",
 				label: "불량률 현황",
 				url: "/publish/statistic/noncommerce",
 			},
 			{
-				key: "sub2-2",
+				key: "7-2",
 				label: "사이클 타임",
 				url: "/publish/statistic/cycletime",
 			},
 			{
-				key: "sub3",
+				key: "7-3",
 				label: "SPC 현황",
 				url: "/publish/statistic/spc",
 			},
@@ -140,36 +167,36 @@ const adminItems = [
 		icon: <FontColorsOutlined />,
 	},
 	{
-		key: "admin-sub1",
+		key: "admin-2",
 		label: "기준 정보 관리",
 		icon: <DatabaseOutlined />,
 		children: [
 			{
-				key: "admin-sub1-1",
+				key: "admin-2-1",
 				label: "제품 관리",
 				url: "/publish/admin/product",
 			},
 			{
-				key: "admin-sub1-2",
+				key: "admin-2-2",
 				label: "부서별 현황 관리",
 				url: "/publish/admin/product",
 			},
 			{
-				key: "admin-sub1-3",
+				key: "admin-2-3",
 				label: "부서별 상세 화면 관리",
 				url: "/publish/admin/detail",
 			},
 			{
-				key: "admin-sub1-4",
+				key: "admin-2-4",
 				label: "부적합 관리",
 				children: [
 					{
-						key: "admin-sub1-4-1",
+						key: "admin-2-4-1",
 						label: "부적합 종류 관리",
 						url: "/publish/admin/noncommerce/type",
 					},
 					{
-						key: "admin-sub1-4-3",
+						key: "admin-2-4-3",
 						label: "등록 및 조치사항 설정",
 						url: "/publish/admin/noncommerce/config",
 					},
@@ -178,25 +205,25 @@ const adminItems = [
 		],
 	},
 	{
-		key: "admin-2",
+		key: "admin-3",
 		label: "양식 및 파일 관리",
 		url: "/publish/admin/file",
 		icon: <FolderOpenFilled />,
 	},
 	{
-		key: "admin-3",
+		key: "admin-4",
 		label: "부서 및 직급 관리",
 		url: "/publish/admin/depart",
 		icon: <IdcardFilled />,
 	},
 	{
-		key: "admin-4",
+		key: "admin-5",
 		label: "사용자 등록 관리",
 		url: "/publish/admin/user",
 		icon: <UserAddOutlined />,
 	},
 	{
-		key: "admin-5",
+		key: "admin-6",
 		label: "공정 작업자 관리",
 		url: "/publish/admin/worker",
 		icon: <TeamOutlined />,
@@ -261,7 +288,7 @@ const HomePage = ({ children }) => {
 		{ key: "1", label: "대시보드", url: "/publish/dashboard" },
 	]);
 	const [selectedMenuKeys, setSelectedMenuKeys] = useState(["1"]);
-	const [openKeys, setOpenKeys] = useState(["sub1", "sub2", "admin-sub1"]);
+	const [openKeys, setOpenKeys] = useState(["2", "3", "4", "7", "admin-2"]);
 	const router = useRouter();
 
 	// 📌 메뉴 클릭 시 탭 추가 및 GNB 활성화
@@ -356,6 +383,17 @@ const HomePage = ({ children }) => {
 		setOpenKeys(keys);
 	};
 
+	const addTab = (menuItem) => {
+    if (!tabs.some((tab) => tab.key === menuItem.key)) {
+      setTabs((prev) => [
+        ...prev,
+        { key: menuItem.key, label: menuItem.label, url: menuItem.url },
+      ]);
+    }
+    setActiveTab(menuItem.key);
+    router.push(menuItem.url, undefined, { shallow: true });
+  };
+
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			const handleResize = () => {
@@ -421,91 +459,69 @@ const HomePage = ({ children }) => {
 	}, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
 
 	return (
-		<Layout style={{ height: '100vh' }}>
-			<Layout>
-				{/* GNB (왼쪽 메뉴) */}
-				<Sider
-					className="lnb-area"
-					trigger={null}
-					collapsible
-					collapsed={collapsed}
-					breakpoint="lg"
-					width={260}
-					collapsedWidth={64}
-				>
-					<div className="lnb-top">
-						{/* 로고 */}
-						<div
-							className="logo"
-							style={{
-								opacity: collapsed ? 0 : 1,
-								display: collapsed ? "none" : "block",
-							}}
-						>
-							<img src={"/images/logo.svg"} />
-							FabTable
+		<TabContext.Provider value={{ tabs, activeTab, addTab }}>
+			<Layout style={{ height: '100vh' }}>
+				<Layout>
+					{/* GNB (왼쪽 메뉴) */}
+					<Sider
+						className="lnb-area"
+						trigger={null}
+						collapsible
+						collapsed={collapsed}
+						breakpoint="lg"
+						width={260}
+						collapsedWidth={64}
+					>
+						<div className="lnb-top">
+							{/* 로고 */}
+							<div
+								className="logo"
+								style={{
+									opacity: collapsed ? 0 : 1,
+									display: collapsed ? "none" : "block",
+								}}
+							>
+								<img src={"/images/logo.svg"} />
+								FabTable
+							</div>
+
+							{/* 햄버거 버튼 */}
+							<Button
+								type="text"
+								icon={<MenuFoldOutlined />}
+								onClick={() =>
+									isMobile ? setDrawerVisible(true) : setCollapsed(!collapsed)
+								}
+								style={{
+									marginRight: collapsed || isMobile ? "0" : "8px",
+								}}
+								className="btn-menu"
+							/>
 						</div>
 
-						{/* 햄버거 버튼 */}
-						<Button
-							type="text"
-							icon={<MenuFoldOutlined />}
-							onClick={() =>
-								isMobile ? setDrawerVisible(true) : setCollapsed(!collapsed)
-							}
-							style={{
-								marginRight: collapsed || isMobile ? "0" : "8px",
-							}}
-							className="btn-menu"
-						/>
-					</div>
-
-					<div
-						className="user-info"
-						style={{
-							opacity: collapsed ? 0 : 1,
-							display: collapsed ? "none" : "block",
-						}}
-					>
-						<Tag className="blue">품질팀</Tag>
-
-						{/*
-							<Tag className="pink">영업팀</Tag>
-							<Tag className="orange">생산팀</Tag>
-							<Tag className="purple">부서4</Tag>
-							<Tag className="red">부서5</Tag>
-							<Tag className="green">부서6</Tag>
-							*/}
-
-						<span className="name">
-							<Link href={"/publish/"}>홍길동 님</Link>
-						</span>
-					</div>
-
-					<div className="lnb-scroll">
-						<p
-							className="tit-menu"
+						<div
+							className="user-info"
 							style={{
 								opacity: collapsed ? 0 : 1,
 								display: collapsed ? "none" : "block",
 							}}
 						>
-							일반 업무
-						</p>
+							<Tag className="blue">품질팀</Tag>
 
-						<Menu
-							defaultSelectedKeys={["1"]}
-							defaultOpenKeys={["sub1", "sub2"]}
-							mode="inline"
-							items={basicItems}
-							selectedKeys={selectedMenuKeys}
-							openKeys={openKeys}
-							onOpenChange={onOpenChange}
-							inlineIndent="10"
-							onClick={handleMenuClick}
-						/>
+							{/*
+								<Tag className="pink">영업팀</Tag>
+								<Tag className="orange">생산팀</Tag>
+								<Tag className="purple">부서4</Tag>
+								<Tag className="red">부서5</Tag>
+								<Tag className="green">부서6</Tag>
+								*/}
 
-						<div className="set-menu-area">
+							<span className="name">
+								<Link href={"/publish/"}>홍길동 님</Link>
+							</span>
+						</div>
+
+						<div className="lnb-scroll">
 							<p
 								className="tit-menu"
 								style={{
@@ -513,103 +529,133 @@ const HomePage = ({ children }) => {
 									display: collapsed ? "none" : "block",
 								}}
 							>
-								관리 및 설정
+								일반 업무
 							</p>
 
 							<Menu
+								defaultSelectedKeys={["1"]}
+								defaultOpenKeys={["sub1", "sub2"]}
 								mode="inline"
-								items={adminItems}
+								items={basicItems}
 								selectedKeys={selectedMenuKeys}
 								openKeys={openKeys}
 								onOpenChange={onOpenChange}
 								inlineIndent="10"
 								onClick={handleMenuClick}
 							/>
-						</div>
-					</div>
 
-					<Button
-						icon={<QuestionCircleFilled />}
-						type="text"
-						className="btn-help"
-					>
-						<span
-							style={{
-								opacity: collapsed ? 0 : 1,
-								display: collapsed ? "none" : "inline",
-							}}
-						>
-							도움말
-						</span>
-					</Button>
-				</Sider>
-
-				{/* 오른쪽 본문 컨텐츠 */}
-				<Layout
-					style={{
-						transition: "margin-left 0.2s ease-in-out",
-					}}
-					className={`${collapsed ? "collapsed-mode" : "expanded-mode"}`}
-				>
-					<Header className="header">
-						<div
-							className="header-wrap"
-							style={{
-								transition: "margin-left 0.2s ease-in-out",
-							}}
-						>
-							<DateHeader />
-
-							<p className="time">
-								<ClockCircleOutlined />
-								00:00:00
-							</p>
-
-							<Menu mode="horizontal" items={topItems} className="top-menu" />
-						</div>
-					</Header>
-					{/* 탭 없이 하려면 아래 코드를 적용 */}
-					{/* <Content className="contents" style={{ overflowY: "auto"}}>
-						{children ? React.cloneElement(children, { contentHeight }) : null}
-					</Content> */}
-					{/* 탭 적용하려면 아래 코드를 적용 */}
-					{/* Content 영역을 Tabs로 변경 */}
-					<Content className="contents">
-						<Tabs
-							hideAdd
-							size="small"
-							type="editable-card"
-							activeKey={activeTab}
-							onChange={onTabChange}
-							onEdit={(targetKey, action) =>
-								action === "remove" && onTabRemove(targetKey)
-							}
-							className="page-top-nav"
-							// style={{ height: "100%"}}
-						>
-							{tabs.map((tab) => (
-								<Tabs.TabPane
-									tab={tab.label}
-									key={tab.key}
-									closable={tab.key !== "1"}
-									style={{ height: "100%"}}
+							<div className="set-menu-area">
+								<p
+									className="tit-menu"
+									style={{
+										opacity: collapsed ? 0 : 1,
+										display: collapsed ? "none" : "block",
+									}}
 								>
-									<Suspense fallback={<Spin size="large" />}>
-										{pageComponents[tab.url] ? (
-											React.createElement(pageComponents[tab.url], {
-												contentHeight,
-											})
-										) : (
-											<div>페이지 없음</div>
-										)}
-									</Suspense>
-								</Tabs.TabPane>
-							))}
-						</Tabs>
-					</Content>
+									관리 및 설정
+								</p>
+
+								<Menu
+									mode="inline"
+									items={adminItems}
+									selectedKeys={selectedMenuKeys}
+									openKeys={openKeys}
+									onOpenChange={onOpenChange}
+									inlineIndent="10"
+									onClick={handleMenuClick}
+								/>
+							</div>
+						</div>
+
+						<Button
+							icon={<QuestionCircleFilled />}
+							type="text"
+							className="btn-help"
+						>
+							<span
+								style={{
+									opacity: collapsed ? 0 : 1,
+									display: collapsed ? "none" : "inline",
+								}}
+							>
+								도움말
+							</span>
+						</Button>
+					</Sider>
+
+					{/* 오른쪽 본문 컨텐츠 */}
+					<Layout
+						style={{
+							transition: "margin-left 0.2s ease-in-out",
+						}}
+						className={`${collapsed ? "collapsed-mode" : "expanded-mode"}`}
+					>
+						<Header className="header">
+							<div
+								className="header-wrap"
+								style={{
+									transition: "margin-left 0.2s ease-in-out",
+								}}
+							>
+								<DateHeader />
+
+								<p className="time">
+									<ClockCircleOutlined />
+									00:00:00
+								</p>
+
+								<Menu mode="horizontal" items={topItems} className="top-menu" />
+							</div>
+						</Header>
+						{/* 탭 없이 하려면 아래 코드를 적용 */}
+						{/* <Content className="contents" style={{ overflowY: "auto"}}>
+							{children ? React.cloneElement(children, { contentHeight }) : null}
+						</Content> */}
+						{/* 탭 적용하려면 아래 코드를 적용 */}
+						{/* Content 영역을 Tabs로 변경 */}
+						<Content className="contents">
+							<Tabs
+								hideAdd
+								size="small"
+								type="editable-card"
+								activeKey={activeTab}
+								onChange={onTabChange}
+								onEdit={(targetKey, action) =>
+									action === "remove" && onTabRemove(targetKey)
+								}
+								className="page-top-nav"
+								// style={{ height: "100%"}}
+							>
+								{tabs.map((tab) => (
+									<Tabs.TabPane
+										tab={tab.label}
+										key={tab.key}
+										closable={tab.key !== "1"}
+										style={{ height: "100%"}}
+									>
+										<Suspense
+											fallback={
+												<div style={{ padding: 24 }}>
+													<Skeleton active paragraph={{ rows: 10 }} />
+												</div>
+											}
+										>
+											{pageComponents[tab.url] ? (
+												React.createElement(pageComponents[tab.url], {
+													contentHeight,
+												})
+											) : (
+												<div>페이지 없음</div>
+											)}
+										</Suspense>
+									</Tabs.TabPane>
+								))}
+							</Tabs>
+						</Content>
+					</Layout>
 				</Layout>
 			</Layout>
-		</Layout>
+		</TabContext.Provider>
 	);
 };
 

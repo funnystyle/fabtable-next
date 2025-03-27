@@ -52,6 +52,7 @@ import DrawerComponent from "@publish/components/drawer";
 import Draggable from "react-draggable";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTab } from "@/context/TabContext";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -67,12 +68,14 @@ const onChange = (e) => {
 
 const TabItems = [
 	{
-		key: "1",
+		key: "sub2-1",
 		label: "수주 현황 목록",
+		url: "/publish/order",
 	},
 	{
-		key: "2",
+		key: "sub2-2",
 		label: "수주 등록 · 상세",
+		url: "/publish/orderwrite",
 	},
 ];
 
@@ -750,13 +753,19 @@ const OrderComponent = ({ contentHeight }) => {
 	const [checkedItems, setCheckedItems] = useState(Array(16).fill(true));
 	const [position, setPosition] = useState("end");
 	const router = useRouter();
+	const { addTab } = useTab();
 
 	const onTabChange = (key) => {
-		if (key === "1") {
-			router.push("/publish/order");
-		} else if (key === "2") {
-			router.push("/publish/orderwrite");
-		}
+		// if (key === "1") {
+		// 	router.push("/publish/order");
+		// } else if (key === "2") {
+		// 	router.push("/publish/orderwrite");
+		// }
+		const item = TabItems.find((t) => t.key === key);
+    if (item) {
+      addTab({ key: item.key, label: item.label, url: item.url }); // ✅ 탭 추가
+    }
+
 	};
 
 	const contentStyle = {
@@ -2747,7 +2756,7 @@ const OrderComponent = ({ contentHeight }) => {
 					</Flex>
 				</Flex>
 
-				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
+				{/* <Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} /> */}
 
 				{/* <div style={{ marginBottom: "12px" }}> */}
 					{/*  검색결과 */}
@@ -2780,7 +2789,7 @@ const OrderComponent = ({ contentHeight }) => {
 								top: "0",
 								zIndex: "10",
 								paddingBottom: "12px",
-								paddingTop: "16px",
+								paddingTop: "8px",
 								backgroundColor: "#FFF",
 							}}>
 							<Button
@@ -2967,7 +2976,7 @@ const OrderComponent = ({ contentHeight }) => {
 					trigger={["contextMenu"]}
 				>
 					{/* 테이블 */}
-					<div className="tb-container" style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+					<div className="tb-container" style={{ paddingTop: "8px", paddingBottom: "40px" }}>
 						<Table
 							columns={columns}
 							dataSource={data}
@@ -2978,7 +2987,7 @@ const OrderComponent = ({ contentHeight }) => {
 							bordered
 							scroll={{
 								x: "max-content",
-								y: "calc(100vh - 240px)",
+								y: "calc(100vh - 256px)",
 							}}
 							style={{ tableLayout: "fixed" }}
 						/>

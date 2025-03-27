@@ -12343,7 +12343,7 @@ const CSComponent = ({ contentHeight }) => {
 								top: "0",
 								zIndex: "10",
 								paddingBottom: "12px",
-								paddingTop: "16px",
+								paddingTop: "8px",
 								backgroundColor: "#FFF",
 							}}>
 							<Button
@@ -12477,7 +12477,7 @@ const CSComponent = ({ contentHeight }) => {
 			>
 				{/* <div className="contents-scroll"> */}
 					{/* 테이블 */}
-					<div className="tb-container" style={{ paddingTop: "12px", paddingBottom: "12px" }}>
+					<div className="tb-container" style={{ paddingTop: "8px", paddingBottom: "40px" }}>
 						<Table
 							columns={columns}
 							dataSource={data}
@@ -12488,7 +12488,7 @@ const CSComponent = ({ contentHeight }) => {
 							bordered
 							scroll={{
 								x: "max-content",
-								y: "calc(100vh - 315px)",
+								y: "calc(100vh - 330px)",
 							}}
 							style={{ tableLayout: "fixed" }}
 						/>
