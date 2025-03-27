@@ -22,8 +22,6 @@ const SearchModalContent = ({ searchLocation, searchType }) => {
 				<SearchModalButton form={form} />
 
 				{(searchLocation === "order" && searchType === "OPEN") && (<OrderCreateModalTable contentHeight={0} />)}
-
-				{(searchLocation === "cs" && searchType === "OPEN") && (<CsCreateModalTable contentHeight={0} />)}
 			</div>
 		</>
 	);

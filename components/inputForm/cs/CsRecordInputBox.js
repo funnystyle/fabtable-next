@@ -1,10 +1,11 @@
 import { Button, Checkbox, Flex, Form, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import React from "react";
+import React, { useEffect } from "react";
 import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import useModalStore from "@store/useModalStore";
+import dayjs from "dayjs";
 
 const { Title } = Typography;
 
@@ -27,6 +28,17 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
     }
     setCheckedKeySet(newSet);
   };
+
+  const values = Form.useWatch([], form); // 폼 전체 값을 watch
+  useEffect(() => {
+    const certificateDate = form.getFieldValue(`productCertificationDate-${index}`);
+    if (!certificateDate) return;
+    const today = dayjs().startOf('day');
+    const certificate = dayjs(certificateDate).startOf('day');
+    const diffInDays = today.diff(certificate, 'day');
+    form.setFieldValue(`certificationDateUsageDays-${index}`, diffInDays);
+
+  }, [values]);
 
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {

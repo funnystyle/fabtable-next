@@ -74,15 +74,15 @@ export const CsFollowUpForm = ({ form, index }) => {
         <Flex gap={4}>
           <Form.Item label="원인분석 요청" name={`causeAnalysisRequest-${index}`}>
             <Radio.Group>
-              <Radio value="o1">O</Radio>
-              <Radio value="x1">X</Radio>
+              <Radio value="O">O</Radio>
+              <Radio value="X">X</Radio>
             </Radio.Group>
           </Form.Item>
 
           <Form.Item label="긴급" name={`urgent-${index}`}>
             <Radio.Group>
-              <Radio value="o2">O</Radio>
-              <Radio value="x2">X</Radio>
+              <Radio value="O">O</Radio>
+              <Radio value="X">X</Radio>
             </Radio.Group>
           </Form.Item>
 
@@ -91,7 +91,7 @@ export const CsFollowUpForm = ({ form, index }) => {
               label={
                 <Link href={"/"} onClick={(e) => handleSetToday(e, `analysisRequestDate-${index}`)}>분석 요청일</Link>
               }
-              name={`analyzeDate-${index}`}
+              name={`analysisRequestDate-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"
@@ -100,7 +100,7 @@ export const CsFollowUpForm = ({ form, index }) => {
 
             <Form.Item
               label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analysisDueDate-${index}`)}>분석 납기일</Link>}
-              name={`analyzeDate2-${index}`}
+              name={`analysisDueDate-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"
@@ -109,7 +109,7 @@ export const CsFollowUpForm = ({ form, index }) => {
 
             <Form.Item
               label={<Link href={"/"} onClick={(e) => handleSetToday(e, `analysisCompleteDate-${index}`)}>분석 완료일</Link>}
-              name={`analyzeDate3-${index}`}
+              name={`analysisCompleteDate-${index}`}
             >
               <DatePicker
                 placeholder="날짜 선택"

@@ -38,7 +38,12 @@ const ComponentCodeCheckbox = ({ form, codeRelationSet, recordColumn, component,
                 <Checkbox value="기타" style={{ lineHeight: "22px" }}>
                   기타
                 </Checkbox>
+                <Form.Item
+                  name={name+"Etc"}
+                  key={name+"Etc"}
+                >
                 <Input placeholder="직접 입력" style={{ flex: "1" }} />
+                </Form.Item>
               </Flex>
             )}
           </Flex>

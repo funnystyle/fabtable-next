@@ -6,6 +6,7 @@ import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useModalStore from "@store/useModalStore";
+import dayjs from "dayjs";
 
 const { Title } = Typography;
 
@@ -101,6 +102,12 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
           return acc;
         }, {});
         form.setFieldsValue(recordObject);
+
+        const today = dayjs().startOf('day');
+        const deliverDate = dayjs(record.deliverDatetime).startOf('day');
+        const diffInDays = today.diff(deliverDate, 'day');
+        console.log("diffInDays", diffInDays);
+        form.setFieldValue(`deliveryDateUsageDays-${recordIndex}`, diffInDays );
       } else if (openDiv === "substitute") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;
@@ -116,6 +123,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       }
     }
   }, [record]);
+
 
   // 복사 버튼 클릭 시
   return (

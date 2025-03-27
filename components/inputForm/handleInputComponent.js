@@ -7,6 +7,7 @@ import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
 import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
+import { componentReadOnly } from "@components/inputForm/componentReadOnly";
 
 export const handleInputComponent = (form, codeRelationSet, selectedCodes, setSelectedCodes, component, index) => {
 
@@ -14,6 +15,10 @@ export const handleInputComponent = (form, codeRelationSet, selectedCodes, setSe
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
     return componentDisabled(recordColumn);
+  }
+
+  if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'READONLY') {
+    return componentReadOnly(recordColumn);
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'NUMBER') {
