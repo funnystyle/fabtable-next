@@ -35,7 +35,7 @@ const { Header, Sider, Content } = Layout;
 
 // 🔹 동적으로 페이지 로딩
 const pageComponents = {
-	// "/publish/dashboard": lazy(() => import("@/pages/publish/dashboard")),
+	"/dashboard": lazy(() => import("@/pages/dashboard")),
 	"/publish/year": lazy(() => import("@/pages/publish/year")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
 	"/publish/order": lazy(() => import("@/pages/publish/order")),
@@ -71,7 +71,7 @@ const basicItems = [
 	{
 		key: "1",
 		label: "대시보드",
-		url: "/publish/dashboard",
+		url: "/dashboard",
 		icon: <GoldFilled />,
 	},
 	{
@@ -325,7 +325,7 @@ const HomePage = ({ children }) => {
 	const [contentHeight, setContentHeight] = useState("100vh");
 	const [activeTab, setActiveTab] = useState("1");
 	const [tabs, setTabs] = useState([
-		{ key: "1", label: "대시보드", url: "/publish/dashboard" },
+		{ key: "1", label: "대시보드", url: "/dashboard" },
 	]);
 	const [selectedMenuKeys, setSelectedMenuKeys] = useState(["1"]);
 	const [openKeys, setOpenKeys] = useState(["2", "3", "33", "4", "44", "7", "admin-2"]);
@@ -407,16 +407,24 @@ const HomePage = ({ children }) => {
 	// 📌 탭 닫기
 	const onTabRemove = (targetKey) => {
 		let newActiveKey = activeTab;
+		let newActiveUrl = "";
 		const newTabs = tabs.filter((tab) => tab.key !== targetKey);
 
 		if (targetKey === activeTab && newTabs.length) {
 			newActiveKey = newTabs[newTabs.length - 1].key;
+			newActiveUrl = newTabs[newTabs.length - 1].url;
 		}
 
 		setTabs(newTabs);
 		setActiveTab(newActiveKey);
-		router.push(newActiveKey, undefined, { shallow: true });
-	};
+		router.push(newActiveUrl, undefined, { shallow: true });
+		setSelectedMenuKeys([newActiveKey]);
+		const parentKeys = getParentKeys(newActiveKey, [
+			...basicItems,
+			...adminItems,
+		]);
+		setOpenKeys(parentKeys ? [...parentKeys] : []);
+};
 
 	// 📌 GNB 서브메뉴 상태 변경
 	const onOpenChange = (keys) => {
