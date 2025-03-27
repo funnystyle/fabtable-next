@@ -28,6 +28,7 @@ import {
 
 import Link from "next/link";
 import Image from "next/image";
+import DateHeader from "./DateHeader";
 
 const { Header, Sider, Content } = Layout;
 
@@ -557,11 +558,7 @@ const HomePage = ({ children }) => {
 								transition: "margin-left 0.2s ease-in-out",
 							}}
 						>
-							<div className="h-txt-area">
-								<strong>활기찬 월요일!</strong>
-
-								<span className="date">2024년 9월 2일</span>
-							</div>
+							<DateHeader />
 
 							<p className="time">
 								<ClockCircleOutlined />
@@ -572,12 +569,12 @@ const HomePage = ({ children }) => {
 						</div>
 					</Header>
 					{/* 탭 없이 하려면 아래 코드를 적용 */}
-					<Content className="contents" style={{ overflowY: "auto"}}>
+					{/* <Content className="contents" style={{ overflowY: "auto"}}>
 						{children ? React.cloneElement(children, { contentHeight }) : null}
-					</Content>
+					</Content> */}
 					{/* 탭 적용하려면 아래 코드를 적용 */}
 					{/* Content 영역을 Tabs로 변경 */}
-					{/* <Content className="contents">
+					<Content className="contents">
 						<Tabs
 							hideAdd
 							size="small"
@@ -609,7 +606,7 @@ const HomePage = ({ children }) => {
 								</Tabs.TabPane>
 							))}
 						</Tabs>
-					</Content> */}
+					</Content>
 				</Layout>
 			</Layout>
 		</Layout>

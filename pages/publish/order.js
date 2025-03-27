@@ -2713,7 +2713,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<Flex align="center" justify="space-between" className="title-area">
 					<Title level={2} className="title-page">
 						영업 관리
@@ -2749,9 +2749,9 @@ const OrderComponent = ({ contentHeight }) => {
 
 				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
 
-				<Space direction="vertical" size={12} style={{ width: "100%" }}>
+				{/* <Space direction="vertical" size={12} style={{ width: "100%" }}> */}
 					{/* 상단 버튼 */}
-					<div className="contents-top-scroll">
+					<div className="contents-top-scroll" style={{ marginBottom: "12px" }}>
 						<Flex gap="small" align="center" className="btn-big">
 							<Button
 								variant="outlined"
@@ -2869,8 +2869,31 @@ const OrderComponent = ({ contentHeight }) => {
 						</Flex>
 					</div>
 
+					<div style={{ marginBottom: "12px" }}>
+					{/*  검색결과 */}
+					<Flex align="center" className="search-result-area">
+						<strong className="tit-search-result">검색결과 :</strong>
+
+						{tags.map((tag, index) => (
+							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+								{tag}
+							</Tag>
+						))}
+
+						<Button
+							color="primary"
+							variant="text"
+							size="small"
+							className="all-delete-tag"
+							onClick={handleTagDeleteAll}
+						>
+							모두 삭제
+						</Button>
+					</Flex>
+				</div>
+
 					{/* 갯수, 페이징, 버튼 영역 */}
-					<Flex align="center" justify="space-between">
+					<Flex align="center" justify="space-between"  style={{ marginBottom: "12px" }}>
 						<Flex gap="small" align="center">
 							<Flex gap="small" className="list-num">
 								총 <span>73589</span>
@@ -2924,32 +2947,11 @@ const OrderComponent = ({ contentHeight }) => {
 							</Dropdown>
 						</Flex>
 					</Flex>
-				</Space>
-			</div>
+				{/* </Space> */}
+			{/* </div> */}
 
-			<div style={{ marginTop: contentHeight }} className="contents-scroll">
-				<div style={{ marginBottom: "12px" }}>
-					{/*  검색결과 */}
-					<Flex align="center" className="search-result-area">
-						<strong className="tit-search-result">검색결과 :</strong>
-
-						{tags.map((tag, index) => (
-							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
-								{tag}
-							</Tag>
-						))}
-
-						<Button
-							color="primary"
-							variant="text"
-							size="small"
-							className="all-delete-tag"
-							onClick={handleTagDeleteAll}
-						>
-							모두 삭제
-						</Button>
-					</Flex>
-				</div>
+			{/* <div className="contents-scroll"> */}
+				
 
 				<Dropdown
 					menu={{
