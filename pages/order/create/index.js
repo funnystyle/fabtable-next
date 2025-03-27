@@ -10,11 +10,9 @@ import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import OrderCreateTitle from "@components/order/create/OrderCreateTitle";
 import SearchModal from "@components/searchModal/SearchModal";
 import useRecordDataStore from "@store/useRecordDataStore";
-import dayjs from "dayjs";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
 import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderUpdate";
+import { loadFormValues } from "@components/inputForm/loadFormValues";
 
 const OrderInfoCreate = ({ contentHeight }) => {
 
@@ -26,118 +24,21 @@ const OrderInfoCreate = ({ contentHeight }) => {
 		queryFn: () => getAxios("/user/input-box", {type:"recordCreate"}),
 	});
 
-
-// 함수: "Date" 타입 컬럼의 name만 추출
-	function extractDateFieldNames(data, type) {
-		const result = [];
-
-		data?.list?.forEach(outerList => {
-			outerList.forEach(middleList => {
-				middleList.forEach(inputBox => {
-					inputBox?.components?.forEach(componentRow => {
-						componentRow.forEach(component => {
-							const column = component?.recordColumn;
-							if (column?.dataType === type) {
-								result.push(column.name);
-							}
-						});
-					});
-				});
-			});
-		});
-
-		return result;
-	}
-
 	useEffect(() => {
 		if (isSuccess) {
 			setInputBoxList(inputBoxResponse.data.list);
 		}
 	}, [isSuccess]);
 
-
-
 	// 저장값
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 
 	const { record } = useRecordDataStore();
-
-	const convertToDayjs = (obj, dateFields) => {
-		const newObj = { ...obj };
-		dateFields.forEach(field => {
-			if (obj[field]) {
-				newObj[field] = dayjs(obj[field]);
-			}
-		});
-		return newObj;
-	};
-
-	// useEffect(() => {
-	// 	if (record) {
-	// 		const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
-	// 		const processedRecord = convertToDayjs(record, dateFields);
-	// 		form.setFieldsValue(processedRecord);
-	// 	}
-	// }, [record]);
-
-
-	// 함수: "Date" 타입 컬럼의 name만 추출
-	function extractCodeFieldRecordColumns(data) {
-		const result = [];
-
-		data?.list?.forEach(outerList => {
-			outerList.forEach(middleList => {
-				middleList.forEach(inputBox => {
-					inputBox?.components?.forEach(componentRow => {
-						componentRow.forEach(component => {
-							const column = component?.recordColumn;
-							if (column?.connectionDiv === "CODE") {
-								result.push(column);
-							}
-						});
-					});
-				});
-			});
-		});
-
-		return result;
-	}
-
-	//setCodeList(handleCodeListFilter(selectedCodes, recordColumn));
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
-		console.log(record?.id);
-
-		if (!record) return;
-
-		const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
-		const processedRecord = convertToDayjs(record, dateFields);
-		form.setFieldsValue(processedRecord);
-
-		const newSelectedCodes = [];
-		const recordColumns = extractCodeFieldRecordColumns(inputBoxResponse?.data);
-		recordColumns.forEach((recordColumn, i) => {
-			const codeList = handleCodeListFilter(selectedCodes, recordColumn);
-			if (codeList.length > 0) {
-				const selectedOption = (() => {
-					const code = codeList.find(code => code.codeName === record[recordColumn.name]);
-					return code ? {
-						value: code.codeName,
-						codeGroupId: recordColumn.codeGroupId,
-						commonCodeId: code.id,
-						childRelations: code.childRelations
-					} : null;
-				})();
-				if (selectedOption) {
-					newSelectedCodes.push(selectedOption);
-				}
-			}
-		});
-
-		console.log("newSelectedCodes: ", newSelectedCodes);
-		setSelectedCodes(newSelectedCodes);
+		loadFormValues( record, inputBoxResponse?.data, form, selectedCodes, setSelectedCodes)
 	}, [record]);
 
 	useEffect(() => {
