@@ -992,6 +992,7 @@ const SampleModalComponent = ({}) => {
 									total={totalItems}
 									// onChange={onChange}
 									itemRender={itemRender}
+									showSizeChanger={false}
 								/>
 
 								{/* 맨 뒤로 */}

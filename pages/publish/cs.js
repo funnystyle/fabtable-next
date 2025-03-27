@@ -12439,6 +12439,7 @@ const CSComponent = ({ contentHeight }) => {
 								pageSize={pageSize}
 								onChange={onChange}
 								itemRender={itemRender}
+								showSizeChanger={false}
 							/>
 
 							{/* 맨 뒤로 */}
