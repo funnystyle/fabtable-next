@@ -13,22 +13,12 @@ import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderUpdate";
 import { loadFormValues } from "@components/inputForm/loadFormValues";
+import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 
 const OrderInfoCreate = ({ contentHeight }) => {
 
 	// 입력 박스 리스트 호출
-	const [inputBoxList, setInputBoxList] = useState([]);
-	const [queryKey, setQueryKey] = useState(["input-box-list", Math.random()]);
-	const { data:inputBoxResponse, isLoading, isSuccess, isError } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/input-box", {type:"recordCreate"}),
-	});
-
-	useEffect(() => {
-		if (isSuccess) {
-			setInputBoxList(inputBoxResponse.data.list);
-		}
-	}, [isSuccess]);
+	const { data, list } = useGetInputBoxList("recordCreate");
 
 	// 저장값
 	const [form] = Form.useForm();
@@ -38,14 +28,8 @@ const OrderInfoCreate = ({ contentHeight }) => {
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
-		loadFormValues( record, inputBoxResponse?.data, form, selectedCodes, setSelectedCodes)
+		loadFormValues( record, data, form, selectedCodes, setSelectedCodes)
 	}, [record]);
-
-	useEffect(() => {
-		console.log("selectedCodes: ", selectedCodes);
-	}, [selectedCodes]);
-
-
 
 	return (
 		<Layout>
@@ -64,10 +48,10 @@ const OrderInfoCreate = ({ contentHeight }) => {
 						style={{ paddingTop: contentHeight }}
 						className="contents-scroll"
 					>
-						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
+						{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
 					</div>
 				</div>
-				<OrderCreateAnchor contentHeight={contentHeight} list={inputBoxList} />
+				<OrderCreateAnchor contentHeight={contentHeight} list={list} />
 			</Flex>
 
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}

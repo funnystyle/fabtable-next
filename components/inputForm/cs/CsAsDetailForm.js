@@ -71,7 +71,7 @@ const CsAsDetailForm = ({ form, index }) => {
               width: "180px",
             }}
           >
-            <Input placeholder="-" />
+            <Input placeholder="-" readOnly={index !== 0}/>
           </Form.Item>
 
           <Form.Item label="Warranty" name={`warranty-${index}`}>

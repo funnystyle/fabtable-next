@@ -72,8 +72,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       }
     });
 
-    console.log("keptValues", keptValues);
-
     // 2. form 값들을 위에서부터 다시 세팅
     csRecordInputs.forEach((field) => {
       keptValues[field].forEach((val, idx) => {
