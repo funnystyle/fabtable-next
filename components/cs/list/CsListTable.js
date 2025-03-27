@@ -43,10 +43,10 @@ const CsListTable = ({ contentHeight }) => {
 				}}
 				trigger={["contextMenu"]}
 			>
-				<div className="tb-container">
+				{/* <div className="tb-container" style={{ paddingTop: "8px", paddingBottom: "40px" }}> */}
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} />
-				</div>
+					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}/>
+				{/* </div> */}
 			</Dropdown>
 		</>
 	);

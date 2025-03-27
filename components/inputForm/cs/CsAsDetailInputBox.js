@@ -8,14 +8,16 @@ const CsAsDetailInputBox = ({ form }) => {
   const { recordKeys:keys, isAsDetailCommon:isCommon, setIsAsDetailCommon:setIsCommon} = useCsCreateConstantStore();
 
   return (
-    <div id="cs4" className="info-wrap">
-      <CsAsDetailTitle title={"출장 내역"} isCommon={isCommon} setIsCommon={setIsCommon} />
+    <div>
+      <div id="cs-anchror-cs4" className="info-wrap">
+        <CsAsDetailTitle title={"출장 내역"} isCommon={isCommon} setIsCommon={setIsCommon} />
 
-      {isCommon ? (
-        <CsAsDetailForm form={form} index={0} />
-      ) : keys.map((key, index) =>
-        <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} index={index+1} />
-      )}
+        {isCommon ? (
+          <CsAsDetailForm form={form} index={0} />
+        ) : keys.map((key, index) =>
+          <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} index={index+1} />
+        )}
+      </div>
     </div>
   );
 }

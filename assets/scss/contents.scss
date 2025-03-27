@@ -14,8 +14,8 @@
 		background-color: #fff;
 		// padding: toRem(40) toRem(40) toRem(12) toRem(300);
 		// position: fixed;
-		margin-left: toRem(40);
-		padding-right: toRem(40);
+		// margin-left: toRem(40);
+		// padding-right: toRem(40);
 		padding-bottom: toRem(12);
 		left: 0;
 		// top: toRem(86);
@@ -367,16 +367,16 @@
 	}
 
 	.contents {
-		padding-left: toRem(104);
+		// padding-left: toRem(104);
 		transition: padding-left 0.2s ease-in-out;
 
 		.contents-flex {
-			margin-left: toRem(0);
+			margin-left: toRem(40);
 			transition: padding-left 0.2s ease-in-out;
 		}
 
 		.contents-top {
-			padding-left: toRem(104);
+			// padding-left: toRem(104);
 			transition: padding-left 0.2s ease-in-out;
 		}
 
@@ -386,12 +386,12 @@
 		}
 
 		.anchor-contents {
-			margin-left: 0;
+			// margin-left: 0;
 		}
 
 		.page-top-nav {
 			> .ant-tabs-nav {
-				padding-left: toRem(74);
+				// padding-left: toRem(74);
 				transition: padding-left 0.2s ease-in-out;
 			}
 		}
@@ -551,6 +551,8 @@
 
 .search-result-area {
 	flex-wrap: wrap;
+	// margin-top: toRem(8);
+	margin-bottom: toRem(8);
 
 	.ant-tag {
 		margin-top: toRem(4);
@@ -702,6 +704,10 @@
 	margin-top: toRem(16);
 }
 
+.info-wrap-last {
+	padding-bottom: toRem(44);
+}
+
 .info-input-wrap {
 	gap: toRem(20);
 
@@ -729,7 +735,8 @@
 }
 
 .top-btn-area {
-	padding-right: toRem(160);
+	// padding-right: toRem(160);
+	padding-bottom: toRem(8);
 }
 
 .detail-top-area {

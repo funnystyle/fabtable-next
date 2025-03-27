@@ -38,22 +38,22 @@ const OrderComponent = ({ contentHeight }) => {
 
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<OrderListTitle title="영업 관리" />
 
-				<OrderCreateTab activeKey={1} />
+				{/* <OrderCreateTab activeKey={1} /> */}
 
-				<Space direction="vertical" size={12} style={{ width: "100%" }}>
+				{/* <Space direction="vertical" size={12} style={{ width: "100%" }}> */}
 					{/*  검색결과 */}
 					<OrderListSearchTags />
 
 					{/* 상단 버튼 */}
 					<OrderListButtonArea statusList={statusList} />
-				</Space>
-			</div>
+				{/* </Space> */}
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListTable contentHeight={contentHeight} />
+			<OrderListTable />
+			</div>
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>

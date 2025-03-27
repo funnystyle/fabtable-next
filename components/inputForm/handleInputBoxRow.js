@@ -9,7 +9,7 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
 
   return (
     <div key={`input-box-row-${index}`}>
-      <div id={itemList[0][0].name}>
+      <div id={`cs-anchror-${itemList[0][0].name}`}>
         <div className="info-area">
           <Flex
             align="center"
@@ -28,7 +28,7 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
           </Flex>
         </div>
       </div>
-      <div className="info-wrap" />
+      <div className="info-wrap-last" />
     </div>
   );
 }

@@ -11,6 +11,7 @@ import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsListTable from "@components/cs/list/CsListTable";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
+import OrderListButtonArea from "@/components/order/list/OrderListButtonArea";
 
 const OrderComponent = ({ contentHeight }) => {
 
@@ -37,7 +38,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<CsListTitle title="C/S 관리" />
 
 				<CsCreateTab activeKey={1} />
@@ -46,7 +47,7 @@ const OrderComponent = ({ contentHeight }) => {
 				<CsListSearchTags />
 
 				{/* 상단 버튼 */}
-				{/*<OrderListButtonArea statusList={statusList} />*/}
+				<OrderListButtonArea statusList={statusList} />
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
 				<CsListTable contentHeight={contentHeight} />

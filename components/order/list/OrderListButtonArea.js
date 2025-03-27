@@ -13,8 +13,15 @@ import OrderListButtonPrint from "@components/order/list/button/OrderListButtonP
 const OrderListButtonArea = ({ statusList }) => {
 
 	return (
-		<div className="contents-top-scroll">
-			<Flex gap="small" align="center" className="btn-big">
+		// <div className="contents-top-scroll">
+			<Flex gap="small" align="center" className="btn-big" style={{
+				position: "sticky",
+				top: "0",
+				zIndex: "10",
+				marginBottom: "12px",
+				// paddingTop: "8px",
+				backgroundColor: "#FFF",
+			}}>
 				<OrderListButtonAllList />
 
 				<Flex gap="small" className="btn-spacing-area">
@@ -39,7 +46,7 @@ const OrderListButtonArea = ({ statusList }) => {
 					<OrderListButtonPrint />
 				</Flex>
 			</Flex>
-		</div>
+		// </div>
 	);
 };
 

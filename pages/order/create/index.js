@@ -31,27 +31,38 @@ const OrderInfoCreate = ({ contentHeight }) => {
 		loadFormValues( record, data, form, selectedCodes, setSelectedCodes)
 	}, [record]);
 
+	const [anchorContainer, setAnchorContainer] = useState(null);
+
+	useEffect(() => {
+		const container = document.querySelector(".order-anchor-wrapper");
+		if (container) {
+			setAnchorContainer(container);
+		}
+	}, []);
+
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<OrderCreateTitle title="영업 관리" />
 
-				<OrderCreateTab activeKey={2} />
+				{/* <OrderCreateTab activeKey={2} /> */}
 
 				{ !record?.id ? <OrderCreateHeaderNew form={form} />
 				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 
-			<Flex gap={32}>
+			<Flex style={{ height: 'calc(100vh - 228px)', overflowY: 'auto' }} className="order-anchor-wrapper">
 				<div className="anchor-contents">
 					<div
-						style={{ paddingTop: contentHeight }}
-						className="contents-scroll"
+						// style={{ paddingTop: contentHeight }}
+						// className="contents-scroll"
 					>
 						{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
 					</div>
 				</div>
-				<OrderCreateAnchor contentHeight={contentHeight} list={list} />
+				{anchorContainer && (
+					<OrderCreateAnchor list={list} anchorContainer={anchorContainer}/>
+				)}
 			</Flex>
 
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
