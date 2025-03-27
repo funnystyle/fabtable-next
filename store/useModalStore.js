@@ -10,6 +10,12 @@ const useModalStore = create((set) => ({
   setData: (data) => set({ data }),
   list: [],
   setList: (list) => set({ list }),
+  total: 0,
+  setTotal: (total) => set((state) => ({
+    total,
+    totalPage: Math.ceil(total / state.size),
+  })),
+  totalPages: 0,
 
   // request
   size: 10,

@@ -11,7 +11,6 @@ import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsListTable from "@components/cs/list/CsListTable";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
-import CsListPagingArea from "@components/cs/create/CsListPagingArea";
 
 const OrderComponent = ({ contentHeight }) => {
 

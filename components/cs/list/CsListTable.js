@@ -7,12 +7,14 @@ import { transformTagData } from "@components/order/table/transformTagData";
 import { useGetCsList } from "@components/api/useGetCsList";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
+import PagingArea from "@components/list/PagingArea";
 
 const CsListTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { size, data, setSize, setOpenCopyModal, setOpenEditModal } = useCsSearchModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useCsSearchModalStore();
+
 	const handleContextMenuClick = (e) => {
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);
@@ -27,8 +29,10 @@ const CsListTable = ({ contentHeight }) => {
 		handleReload();
 	}, []);
 
+
 	return (
 		<>
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown

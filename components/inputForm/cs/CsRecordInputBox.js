@@ -6,6 +6,7 @@ import { handleComponentInputName } from "@components/inputForm/handleComponentI
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import useModalStore from "@store/useModalStore";
 import dayjs from "dayjs";
+import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 
 const { Title } = Typography;
 
@@ -15,6 +16,12 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
   const { setOpenSearchModal, setIndex, setOpenDiv } = useModalStore();
 
   const handleDeleteCsRecord = (index) => {
+    csRecordInputs.forEach((field) => {
+      for (let i = index + 1; i <= recordKeys.length; i++) {
+        form.setFieldValue(`${field}-${i - 1}`, form.getFieldValue(`${field}-${i}`));
+      }
+    });
+
     const newRecordKeys = recordKeys.filter((_, idx) => idx !== index);
     setRecordKeys(newRecordKeys);
   }

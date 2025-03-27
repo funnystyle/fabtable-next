@@ -1,20 +1,15 @@
 "use client"; // Next.js 클라이언트 컴포넌트
 
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Dropdown, Flex, Space, Table } from "antd";
+import { Table } from "antd";
 import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd } from "@components/AntdTableEvent";
-import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
-import { lineItems } from "@data/lineItems";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import CsListPagingArea from "@components/cs/create/CsListPagingArea";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true }) => {
 
-  const {selectedRowKeys, setSelectedRowKeys} = useTableSelectKeysStore();
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
-  const [anchorRowKey, setAnchorRowKey] = useState(null); // 기준 행
-  const [cursorRowKey, setCursorRowKey] = useState(null); // 현재 커서 위치
   const [isDragging, setIsDragging] = useState(false);
   const [ctrlDragging, setCtrlDragging] = useState(false);
   const [shiftDragging, setShiftDragging] = useState(false);
@@ -97,13 +92,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
 
   return (
     <>
-      <CsListPagingArea
-        setSelectedRowKeys={setSelectedRowKeys}
-        setCursorRowKey={setCursorRowKey}
-        setAnchorRowKey={setAnchorRowKey}
-        selectedRowKeys={selectedRowKeys}
-        />
-
       <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
         <Table
           rowSelection={

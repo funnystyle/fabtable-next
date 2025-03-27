@@ -8,12 +8,15 @@ import { useGetRecords } from "@components/api/useGetRecords";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import { Modal } from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
+import PagingArea from "@components/list/PagingArea";
 
 const OrderCreateModalTable = ({ contentHeight }) => {
 
+
+	console.log("OrderCreateModalTable");
 	const [headerList, setHeaderList] = useState([]);
 
-	const { size, data, setSize, setOpenSearchModal } = useModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useModalStore();
 
 	const { handleReload } = useGetRecords();
 
@@ -46,11 +49,15 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 		handleConfirmEdit(record);
 	}
 
+	console.log(page, size, total, totalPages, data);
+
 	return (
 		<>
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"}/>
-			<div style={{ marginTop: contentHeight }} className="contents-scroll">
+			<div className="contents-scroll">
 				{/* 테이블 */}
 				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
 			</div>

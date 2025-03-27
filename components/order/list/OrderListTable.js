@@ -7,12 +7,14 @@ import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useModalStore from "@store/useModalStore";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { useGetRecords } from "@components/api/useGetRecords";
+import PagingArea from "@components/list/PagingArea";
 
 const OrderListTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { size, data, setSize, setOpenCopyModal, setOpenEditModal } = useModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useModalStore();
+
 	const handleContextMenuClick = (e) => {
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);
@@ -29,6 +31,8 @@ const OrderListTable = ({ contentHeight }) => {
 
 	return (
 		<>
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"} />
 			<Dropdown

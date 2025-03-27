@@ -1,16 +1,13 @@
 // pages/order/create/index.js
-import React, {useEffect, useState} from "react";
-import { Button, Dropdown, Flex, Input, Pagination, Space, Tag, } from "antd";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
+import React, { useState } from "react";
+import { Button, Dropdown, Flex, Input, Pagination, Space, } from "antd";
 import { LeftOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const CsListPagingArea = ({ setSelectedRowKeys, setCursorRowKey, setAnchorRowKey, selectedRowKeys }) => {
+const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
 
-  const {
-    page, size, total, totalPages,
-    setPage, setSize,
-  } = useCsSearchModalStore();
+  const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
   const [inputValue, setInputValue] = useState(page);
 
@@ -128,4 +125,4 @@ const CsListPagingArea = ({ setSelectedRowKeys, setCursorRowKey, setAnchorRowKey
   );
 };
 
-export default CsListPagingArea;
+export default PagingArea;

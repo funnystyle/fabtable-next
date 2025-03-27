@@ -6,9 +6,7 @@ import { useEffect } from "react";
 export const useGetRecords = () => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
-
-    setData,
-    setList,
+    setData, setList, setTotal,
   } = useModalStore();
 
   const { mutate: getRecords, isPending, isError, error } = useMutation({
@@ -17,6 +15,7 @@ export const useGetRecords = () => {
     onSuccess: (response) => {
       setData(response.data);
       setList(response.data.list);
+      setTotal(response.data.total);
       console.log("response.data", response.data)
     },
   });

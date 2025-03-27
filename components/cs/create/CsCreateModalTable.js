@@ -8,12 +8,13 @@ import { useGetCsList } from "@components/api/useGetCsList";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
+import PagingArea from "@components/list/PagingArea";
 
 const CsCreateModalTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { size, data, setSize, setOpenSearchModal } = useCsSearchModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useCsSearchModalStore();
 
 	const { handleReload } = useGetCsList();
 
@@ -48,6 +49,8 @@ const CsCreateModalTable = ({ contentHeight }) => {
 
 	return (
 		<>
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"}/>
 			<div style={{ marginTop: contentHeight }} className="contents-scroll">

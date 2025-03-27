@@ -12,6 +12,9 @@ const SearchModalContent = ({ searchLocation, searchType }) => {
 
 	const [form] = Form.useForm();
 
+	console.log("SearchModalContent", searchLocation, searchType);
+	console.log((searchLocation === "order" && searchType === "OPEN"));
+
 	return (
 		<>
 			<SearchModalHead form={form} />
@@ -21,7 +24,7 @@ const SearchModalContent = ({ searchLocation, searchType }) => {
 
 				<SearchModalButton form={form} />
 
-				{(searchLocation === "order" && searchType === "OPEN") && (<OrderCreateModalTable contentHeight={0} />)}
+				{(searchLocation === "order" && searchType === "OPEN") && (<OrderCreateModalTable />)}
 			</div>
 		</>
 	);

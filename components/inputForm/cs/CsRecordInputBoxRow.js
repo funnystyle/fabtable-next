@@ -7,12 +7,13 @@ import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxIn
 import useRecordDataStore from "@store/useRecordDataStore";
 import useModalStore from "@store/useModalStore";
 import dayjs from "dayjs";
+import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 
 const { Title } = Typography;
 
 const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index }) => {
 
-  const { recordKeys, setRecordKeys, checkedKeySet } = useCsCreateConstantStore();
+  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useModalStore();
 
@@ -41,28 +42,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
           const prev = key;
           const next = count + recordKeysLength + 1;
 
-          const list = ["defectMfcSN"
-          , "substituteMfcSN"
-          , "productModel"
-          , "subModelName"
-          , "fluid"
-          , "flowrate"
-          , "customerCode"
-          , "productionDepartment"
-          , "defectClassification"
-          , "phenomenonClassification"
-          , "nowState"
-          , "substituteNowState"
-          , "actionClassification"
-          , "severity"
-          , "defectMfcWithdrawalDate"
-          , "actionCompletionDate"
-          , "productCertificationDate"
-          , "deliverDatetime"
-          , "certificationDateUsageDays"
-          , "deliveryDateUsageDays"]
-
-          list.forEach((field) => {
+          csRecordInputs.forEach((field) => {
             const prevValue = form.getFieldValue(`${field}-${prev}`);
 
             // Select 값이 객체일 경우 처리
@@ -73,12 +53,39 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
         });
       }
 
+      setCheckedKeySet(new Set());
     }, 100);
   };
 
   const handleDelete = () => {
+
+    const keptValues = {}; // 삭제되지 않은 값들을 모아둘 객체
+
+    // 1. 삭제 대상이 아닌 값들만 추출
+    recordKeys.forEach((_, idx) => {
+      if (!checkedKeySet.has(idx + 1)) {
+        csRecordInputs.forEach((field) => {
+          const key = `${field}-${idx + 1}`;
+          keptValues[field] = keptValues[field] || [];
+          keptValues[field].push(form.getFieldValue(key));
+        });
+      }
+    });
+
+    console.log("keptValues", keptValues);
+
+    // 2. form 값들을 위에서부터 다시 세팅
+    csRecordInputs.forEach((field) => {
+      keptValues[field].forEach((val, idx) => {
+        form.setFieldValue(`${field}-${idx + 1}`, val);
+      });
+    });
+
+
     const newRecordKeys = recordKeys.filter((_, idx) => !checkedKeySet.has(idx));
     setRecordKeys(newRecordKeys);
+
+    setCheckedKeySet(new Set());
   }
 
   useEffect(() => {
