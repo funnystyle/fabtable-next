@@ -865,13 +865,13 @@ h2 {
 	}
 
 	.preview {
-		width: toRem(664);
+		width: toRem(720);
 		//height: toRem(664);
-		background-color: #ffdfdf;
-		border: 3px solid #ff5050;
+		// background-color: #ffdfdf;
+		// border: 3px solid #ff5050;
 		font-size: 32px;
-		color: #fc5555;
-		line-height: toRem(664);
+		// color: #fc5555;
+		line-height: toRem(720);
 		text-align: center;
 
 		& + .preview {

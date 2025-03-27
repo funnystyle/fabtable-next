@@ -93,6 +93,13 @@ const DrawerComponent = () => {
 								documents={[{ uri: docxUrl, fileType: "docx" }]}
 								pluginRenderers={renderers}
 								style={{ height: "80vh", width: "100%" }}
+								config={{
+									header: {
+										disableHeader: true,
+										disableFileName: false,
+										retainURLParams: false
+									}
+								}}
 							/>
 						</div>
 					)}))}
