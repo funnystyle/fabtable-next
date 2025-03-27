@@ -9,7 +9,7 @@ import { componentStringTextarea } from "@components/inputForm/componentStringTe
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import { componentReadOnly } from "@components/inputForm/componentReadOnly";
 
-export const handleInputComponent = (form, codeRelationSet, selectedCodes, setSelectedCodes, component, index) => {
+export const handleInputComponent = (form, codeRelationSet, component, index) => {
 
   const recordColumn = component.recordColumn;
 
@@ -40,19 +40,19 @@ export const handleInputComponent = (form, codeRelationSet, selectedCodes, setSe
   // 'CODE' 타입 처리
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'SELECT') {
     return (
-      <ComponentCodeSelect form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+      <ComponentCodeSelect form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
     );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'RADIO') {
     return (
-      <ComponentCodeRadio form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+      <ComponentCodeRadio form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
     );
   }
 
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'CHECKBOX') {
     return (
-      <ComponentCodeCheckbox form={form} selectedCodes={selectedCodes} setSelectedCodes={setSelectedCodes} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
+      <ComponentCodeCheckbox form={form} codeRelationSet={codeRelationSet} recordColumn={recordColumn} component={component} />
     );
   }
 

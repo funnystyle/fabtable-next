@@ -20,6 +20,13 @@ export const handleSelectChange = (form, codeRelationSet, selectedCodes, setSele
     newSelectedCodes.push({ codeGroupId, commonCodeId: codeId, childRelations });
   }
 
+  // if (codeGroupId === 32 || codeGroupId === 34) {
+  //   console.log("codeGroupId: ", codeGroupId);
+  //   console.log("codeId: ", codeId);
+  //   console.log("selectedCodes: ", selectedCodes);
+    console.log("newSelectedCodes: ", newSelectedCodes);
+  // }
+
   setSelectedCodes(newSelectedCodes);
 
   const formValues = form.getFieldsValue(); // 현재 폼의 모든 필드 값 가져오기

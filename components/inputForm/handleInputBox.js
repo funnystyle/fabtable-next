@@ -7,7 +7,7 @@ import {handleComponentInputName} from "@components/inputForm/handleComponentInp
 
 const { Title } = Typography;
 
-export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelectedCodes, item, index) => {
+export const handleInputBox = (form, codeRelationSet, item, index) => {
 
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {
@@ -41,7 +41,7 @@ export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelected
         )}
 
         <Form form={form} layout="vertical" className="info-input-area">
-          {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, selectedCodes, setSelectedCodes, components, index))}
+          {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, components, index))}
         </Form>
       </div>
     );
@@ -79,7 +79,7 @@ export const handleInputBox = (form, codeRelationSet, selectedCodes, setSelected
             )}
 
             <Form form={form} layout="vertical" className="info-input-area">
-            {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, selectedCodes, setSelectedCodes, components, index))}
+            {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, components, index))}
             </Form>
           </div>
         </React.Fragment>

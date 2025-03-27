@@ -14,6 +14,7 @@ import dayjs from "dayjs";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
+import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderUpdate";
 
 const OrderInfoCreate = ({ contentHeight }) => {
 
@@ -72,13 +73,13 @@ const OrderInfoCreate = ({ contentHeight }) => {
 		return newObj;
 	};
 
-	useEffect(() => {
-		if (record) {
-			const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
-			const processedRecord = convertToDayjs(record, dateFields);
-			form.setFieldsValue(processedRecord);
-		}
-	}, [record]);
+	// useEffect(() => {
+	// 	if (record) {
+	// 		const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
+	// 		const processedRecord = convertToDayjs(record, dateFields);
+	// 		form.setFieldsValue(processedRecord);
+	// 	}
+	// }, [record]);
 
 
 	// 함수: "Date" 타입 컬럼의 name만 추출
@@ -105,26 +106,44 @@ const OrderInfoCreate = ({ contentHeight }) => {
 
 	//setCodeList(handleCodeListFilter(selectedCodes, recordColumn));
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
+
 	useEffect(() => {
+		console.log(record?.id);
+
+		if (!record) return;
+
+		const dateFields = extractDateFieldNames(inputBoxResponse?.data, "Date");
+		const processedRecord = convertToDayjs(record, dateFields);
+		form.setFieldsValue(processedRecord);
+
+		const newSelectedCodes = [];
 		const recordColumns = extractCodeFieldRecordColumns(inputBoxResponse?.data);
 		recordColumns.forEach((recordColumn, i) => {
 			const codeList = handleCodeListFilter(selectedCodes, recordColumn);
 			if (codeList.length > 0) {
-				const optionList = codeList.map(option => ({
-					value: option.codeName,
-					label: option.codeName,
-					'data-codegroup-id': recordColumn.codeGroupId,
-					'data-id': option.id,
-					'data-child-relations': JSON.stringify(option.childRelations),
-				}));
-				optionList.forEach(option => {
-					if (record[recordColumn.name] === option.value) {
-						handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)
-					}
-				});
+				const selectedOption = (() => {
+					const code = codeList.find(code => code.codeName === record[recordColumn.name]);
+					return code ? {
+						value: code.codeName,
+						codeGroupId: recordColumn.codeGroupId,
+						commonCodeId: code.id,
+						childRelations: code.childRelations
+					} : null;
+				})();
+				if (selectedOption) {
+					newSelectedCodes.push(selectedOption);
+				}
 			}
 		});
+
+		console.log("newSelectedCodes: ", newSelectedCodes);
+		setSelectedCodes(newSelectedCodes);
 	}, [record]);
+
+	useEffect(() => {
+		console.log("selectedCodes: ", selectedCodes);
+	}, [selectedCodes]);
+
 
 
 	return (
@@ -134,7 +153,8 @@ const OrderInfoCreate = ({ contentHeight }) => {
 
 				<OrderCreateTab activeKey={2} />
 
-				<OrderCreateHeaderNew form={form} />
+				{ !record?.id ? <OrderCreateHeaderNew form={form} />
+				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 
 			<Flex gap={32}>
@@ -143,7 +163,7 @@ const OrderInfoCreate = ({ contentHeight }) => {
 						style={{ paddingTop: contentHeight }}
 						className="contents-scroll"
 					>
-						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
+						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
 					</div>
 				</div>
 				<OrderCreateAnchor contentHeight={contentHeight} list={inputBoxList} />

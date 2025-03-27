@@ -1,10 +1,10 @@
 import { Flex } from "antd";
 import { handleInputComponent } from "@components/inputForm/handleInputComponent";
 
-export const handleInputComponentRow = (form, codeRelationSet, selectedCodes, setSelectedCodes, components, index) => {
+export const handleInputComponentRow = (form, codeRelationSet, components, index) => {
   return (
     <Flex gap={16} key={`input-component-row-${index}`}>
-      {components.map((component, index) => handleInputComponent(form, codeRelationSet, selectedCodes, setSelectedCodes, component, index))}
+      {components.map((component, index) => handleInputComponent(form, codeRelationSet, component, index))}
     </Flex>
   );
 }

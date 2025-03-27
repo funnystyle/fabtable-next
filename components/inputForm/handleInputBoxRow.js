@@ -5,7 +5,7 @@ import { handleInputBox } from "@components/inputForm/handleInputBox";
 
 const { Title } = Typography;
 
-export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelectedCodes, itemList, index) => {
+export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
 
   return (
     <div key={`input-box-row-${index}`}>
@@ -24,7 +24,7 @@ export const handleInputBoxRow = (form, codeRelationSet, selectedCodes, setSelec
           </Flex>
 
           <Flex gap={20} className="info-input-wrap">
-            {itemList.map((item, index) => handleInputBox(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
+            {itemList.map((item, index) => handleInputBox(form, codeRelationSet, item, index))}
           </Flex>
         </div>
       </div>

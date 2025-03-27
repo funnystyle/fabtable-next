@@ -1,6 +1,6 @@
-import { getAxios } from '@components/AxiosCall';
 import { useQuery } from '@tanstack/react-query';
 import i18next from 'i18next';
+import { getAxios } from "@api/apiClient";
 
 const useTranslations = (locale) => {
   // 번역 데이터가 로드된 후 강제로 언어를 변경하여 적용
@@ -12,7 +12,7 @@ const useTranslations = (locale) => {
 
   const { data, isLoading, isSuccess, isError } = useQuery({
     queryKey: ["translations", locale], // 쿼리 키
-    queryFn: () => getAxios(`/api/v1/translations?locale=${locale}`, {}), // 데이터 fetch 함수
+    queryFn: () => getAxios(`/translations?locale=${locale}`, {}), // 데이터 fetch 함수
     enabled: !!locale, // locale이 있을 때만 실행
     onSuccess: (data) => {
       if (data && data.length > 0) {

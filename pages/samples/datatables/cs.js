@@ -2,8 +2,7 @@ import DataTables from "@components/DataTables";
 import { useEffect, useState } from "react";
 import { getPage } from "@components/StringUtil";
 import { useQuery } from "@tanstack/react-query";
-import apiClient from "@api/apiClient";
-import { getAxios } from "@components/AxiosCall";
+import { getAxios } from "@api/apiClient";
 
 const defaultHeader = [
   [
@@ -44,7 +43,7 @@ const DataTablePage = () => {
   const [queryKey, setQueryKey] = useState(["csHeader", Math.random()]); // 변경된 부분
   const { data:csHeader, isLoading, isSuccess, isError } = useQuery({
     queryKey,
-    queryFn: () => getAxios("/api/v1/cs/header", {}),
+    queryFn: () => getAxios("/cs/header", {}),
   });
 
   useEffect(() => {

@@ -3,21 +3,31 @@ import { DeleteOutlined } from "@ant-design/icons";
 import React from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { csAsWorkInputs } from "@components/inputForm/cs/data/csAsWorkInputs";
 
 const { Title } = Typography;
 
 export const CsAsWorkTitle = ({ form, index, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet, handleReset }) => {
 
   const handleDelete = (index) => {
+    // 현재 index를 삭제 하고, index보다 큰 index들을 1씩 줄여줌
+    csAsWorkInputs.forEach((field) => {
+      for (let i = index + 1; i <= keys.length; i++) {
+        form.setFieldValue(`${field}-${i - 1}`, form.getFieldValue(`${field}-${i}`));
+      }
+    });
+
+
+
     const newKeys = keys.filter((_, idx) => idx !== index);
     setKeys(newKeys);
 
-    // 현재 index를 삭제 하고, index보다 큰 index들을 1씩 줄여줌
     setAsCheckedKeySet((prevSet) => {
       const newSet = new Set(prevSet);
       newSet.delete(index);
       return new Set([...newSet].map((key) => key > index ? key - 1 : key));
     });
+
   }
 
   const handleCheckboxChange = (e, currentIndex) => {

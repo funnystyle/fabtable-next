@@ -12,8 +12,6 @@ import PagingArea from "@components/list/PagingArea";
 
 const OrderCreateModalTable = ({ contentHeight }) => {
 
-
-	console.log("OrderCreateModalTable");
 	const [headerList, setHeaderList] = useState([]);
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useModalStore();
@@ -48,8 +46,6 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 	const onRowClick = (record) => {
 		handleConfirmEdit(record);
 	}
-
-	console.log(page, size, total, totalPages, data);
 
 	return (
 		<>
