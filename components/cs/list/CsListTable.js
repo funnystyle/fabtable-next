@@ -8,6 +8,7 @@ import { useGetCsList } from "@components/api/useGetCsList";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
+import { csListRightItem } from "./data/csListRightItem";
 
 const CsListTable = ({ contentHeight }) => {
 
@@ -38,7 +39,7 @@ const CsListTable = ({ contentHeight }) => {
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown
 				menu={{
-					items: orderListRightItem,
+					items: csListRightItem,
 					onClick: handleContextMenuClick,
 
 				}}
