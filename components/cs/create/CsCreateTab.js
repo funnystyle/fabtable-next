@@ -5,11 +5,11 @@ import {useRouter} from "next/router";
 
 const TabItems = [
 	{
-		key: "1",
+		key: 1,
 		label: "C/S 현황 목록",
 	},
 	{
-		key: "2",
+		key: 2,
 		label: "C/S 등록 · 상세",
 	},
 ];
