@@ -71,7 +71,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
         {item[0].subDisplayName && (
           <Flex align="center" justify="space-between">
             <Flex align="center" gap={12} className="title-area">
-              <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>{`제품 ${index}`}</Title>
+              <Title level={5} style={{ marginBottom: "0", }}>{`제품 ${index}`}</Title>
 
               <Checkbox checked={checkedKeySet.has(index)} onChange={(e) => handleCheckboxChange(e, index)} />
 
