@@ -2749,10 +2749,40 @@ const OrderComponent = ({ contentHeight }) => {
 
 				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
 
+				{/* <div style={{ marginBottom: "12px" }}> */}
+					{/*  검색결과 */}
+					<Flex align="center" className="search-result-area">
+						<strong className="tit-search-result">검색결과 :</strong>
+
+						{tags.map((tag, index) => (
+							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+								{tag}
+							</Tag>
+						))}
+
+						<Button
+							color="primary"
+							variant="text"
+							size="small"
+							className="all-delete-tag"
+							onClick={handleTagDeleteAll}
+						>
+							모두 삭제
+						</Button>
+					</Flex>
+				{/* </div> */}
+				
 				{/* <Space direction="vertical" size={12} style={{ width: "100%" }}> */}
 					{/* 상단 버튼 */}
-					<div className="contents-top-scroll" style={{ marginBottom: "12px" }}>
-						<Flex gap="small" align="center" className="btn-big">
+					{/* <div className="contents-top-scroll" style={{ marginBottom: "12px" }}> */}
+						<Flex gap="small" align="center" className="btn-big" style={{
+								position: "sticky",
+								top: "0",
+								zIndex: "10",
+								paddingBottom: "12px",
+								paddingTop: "16px",
+								backgroundColor: "#FFF",
+							}}>
 							<Button
 								variant="outlined"
 								icon={<RedoOutlined />}
@@ -2867,33 +2897,10 @@ const OrderComponent = ({ contentHeight }) => {
 								</Dropdown>
 							</Flex>
 						</Flex>
-					</div>
-
-					<div style={{ marginBottom: "12px" }}>
-					{/*  검색결과 */}
-					<Flex align="center" className="search-result-area">
-						<strong className="tit-search-result">검색결과 :</strong>
-
-						{tags.map((tag, index) => (
-							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
-								{tag}
-							</Tag>
-						))}
-
-						<Button
-							color="primary"
-							variant="text"
-							size="small"
-							className="all-delete-tag"
-							onClick={handleTagDeleteAll}
-						>
-							모두 삭제
-						</Button>
-					</Flex>
-				</div>
+					{/* </div> */}
 
 					{/* 갯수, 페이징, 버튼 영역 */}
-					<Flex align="center" justify="space-between"  style={{ marginBottom: "12px" }}>
+					<Flex align="center" justify="space-between">
 						<Flex gap="small" align="center">
 							<Flex gap="small" className="list-num">
 								총 <span>73589</span>
@@ -2960,7 +2967,7 @@ const OrderComponent = ({ contentHeight }) => {
 					trigger={["contextMenu"]}
 				>
 					{/* 테이블 */}
-					<div className="tb-container">
+					<div className="tb-container" style={{ paddingTop: "12px", paddingBottom: "12px" }}>
 						<Table
 							columns={columns}
 							dataSource={data}
@@ -2971,7 +2978,7 @@ const OrderComponent = ({ contentHeight }) => {
 							bordered
 							scroll={{
 								x: "max-content",
-								// y: "calc(60vh - 38px)",
+								y: "calc(100vh - 240px)",
 							}}
 							style={{ tableLayout: "fixed" }}
 						/>
