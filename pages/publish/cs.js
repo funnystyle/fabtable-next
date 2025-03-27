@@ -2636,14 +2636,7 @@ const CSComponent = ({ contentHeight }) => {
 
 					{/* 상단 버튼 */}
 					{/* <div className="contents-top-scroll"> */}
-						<Flex gap="small" align="center" className="btn-big" style={{
-								position: "sticky",
-								top: "0",
-								zIndex: "10",
-								paddingBottom: "5px",
-								paddingTop: "5px",
-								backgroundColor: "#FFF",
-							}}>
+						<Flex gap="small" align="center" className="btn-big" style={{ position: "sticky", top: "0", zIndex: "10", paddingBottom: "5px", paddingTop: "5px", backgroundColor: "#FFF", }}>
 							<Button
 								variant="outlined"
 								icon={<RedoOutlined />}

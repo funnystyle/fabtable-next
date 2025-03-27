@@ -6,8 +6,7 @@ import useCsSearchModalStore from "@store/useCsSearchModalStore";
 export const useGetCsList = () => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
-    setData,
-    setList,
+    setData, setList, setTotal,
   } = useCsSearchModalStore();
 
   const { mutate: getCsList, isPending, isError, error } = useMutation({
@@ -16,6 +15,7 @@ export const useGetCsList = () => {
     onSuccess: (response) => {
       setData(response.data);
       setList(response.data.list);
+      setTotal(response.data.total);
       console.log("response.data", response.data)
     },
   });

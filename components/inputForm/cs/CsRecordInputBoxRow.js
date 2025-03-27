@@ -43,7 +43,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
           const list = ["defectMfcSN"
           , "substituteMfcSN"
-          , "productCategory"
+          , "productModel"
           , "subModelName"
           , "fluid"
           , "flowrate"

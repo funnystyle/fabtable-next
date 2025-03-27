@@ -1,16 +1,17 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
-import {Layout, Space,} from "antd";
+import React, { useEffect, useState } from "react";
+import { Layout, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
+import { useQuery } from "@tanstack/react-query";
+import { getAxios } from "@api/apiClient";
 import useDrawerStore from "@store/useDrawerStore";
 import CsListTitle from "@components/cs/list/CsListTitle";
 import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsListTable from "@components/cs/list/CsListTable";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
+import CsListPagingArea from "@components/cs/create/CsListPagingArea";
 
 const OrderComponent = ({ contentHeight }) => {
 
@@ -42,21 +43,19 @@ const OrderComponent = ({ contentHeight }) => {
 
 				<CsCreateTab activeKey={1} />
 
-				<Space direction="vertical" size={12} style={{ width: "100%" }}>
-					{/*  검색결과 */}
-					<CsListSearchTags />
+				{/*  검색결과 */}
+				<CsListSearchTags />
 
-					{/* 상단 버튼 */}
-					{/*<OrderListButtonArea statusList={statusList} />*/}
-				</Space>
-			</div>
+				{/* 상단 버튼 */}
+				{/*<OrderListButtonArea statusList={statusList} />*/}
 
-			{/* 태그 없음, 헤더 관련 정리 event */}
-			<CsListTable contentHeight={contentHeight} />
+				{/* 태그 없음, 헤더 관련 정리 event */}
+				<CsListTable contentHeight={contentHeight} />
 
-			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
-			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent />
+				{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
+				<div style={{ display: openDrawer ? "block" : "none" }}>
+					<DrawerComponent />
+				</div>
 			</div>
 		</Layout>
 	);

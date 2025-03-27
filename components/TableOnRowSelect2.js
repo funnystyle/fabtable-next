@@ -7,6 +7,7 @@ import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import CsListPagingArea from "@components/cs/create/CsListPagingArea";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true }) => {
 
@@ -25,9 +26,9 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   // ✅ 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
 
-  const data = serverData != undefined ? serverData.map(item => ({
+  const data = serverData != undefined ? serverData.map((item, index) => ({
     ...item,
-    key: item.id // key 값을 item.id로 설정
+    key: index // key 값을 item.id로 설정
   })) : [];
 
 
@@ -95,88 +96,53 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   }
 
   return (
-    <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
-      {/* ✅ 상단 컨트롤 영역 (우측 상단 버튼 추가) */}
+    <>
+      <CsListPagingArea
+        setSelectedRowKeys={setSelectedRowKeys}
+        setCursorRowKey={setCursorRowKey}
+        setAnchorRowKey={setAnchorRowKey}
+        selectedRowKeys={selectedRowKeys}
+        />
 
-      {/* 갯수, 페이징, 버튼 영역 */}
-      <Flex align="center" justify="space-between">
-        <Flex gap="small" align="center">
-          <Flex gap="small" className="list-num">
-            총 <span>{data.length}</span>
-          </Flex>
+      <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
+        <Table
+          rowSelection={
+            rowSelect
+              ? {
+                selectedRowKeys,
+                type: "checkbox",
+                fixed: true,
+                columnWidth: 0,
+                renderCell: () => null,
+              }
+              : undefined
+        }
+          // columns={generateColumns(header)}
+          columns={data.length > 0 ? header : []}
+          rowKey={(record) => record.key}
+          dataSource={data}
+          pagination={false}
+          onRow={(record) => ({
+            onClick: (event) => {
+              handleRowClickAntd(event, record, handleAntdTableEventData());
 
-          <Flex gap="small" className="list-num">
-            <strong>{selectedRowKeys.length}</strong> 건 선택
-          </Flex>
-        </Flex>
-
-        <Flex gap="small" align="center">
-          <Button
-            icon={<RedoOutlined />}
-            target="_blank"
-            className="icon-redo"
-            onClick={handleReset}
-          />
-
-          <Dropdown menu={{ items: lineItems, onClick: handleMenuClick }}>
-            <Button>
-              <Space>
-                <SettingOutlined />
-              </Space>
-            </Button>
-          </Dropdown>
-        </Flex>
-      </Flex>
-
-      <Table
-        rowSelection={
-          rowSelect
-            ? {
-              selectedRowKeys,
-              type: "checkbox",
-              fixed: true,
-              columnWidth: 0,
-              renderCell: () => null,
-            }
-            : undefined
-      }
-        // columns={generateColumns(header)}
-        columns={data.length > 0 ? header : []}
-        rowKey={(record) => record.key}
-        dataSource={data}
-        pagination={{
-          simple: true,
-          position: ["topCenter"],
-          pageSize: size,
-          current: currentPage,
-          onChange: (page) => {
-            setCurrentPage(page);
-            // ✅ 페이지 이동 시, 선택된 행 초기화
-            setSelectedRowKeys([]);
-            setCursorRowKey(null);
-            setAnchorRowKey(null);
-          }
-        }}
-        onRow={(record) => ({
-          onClick: (event) => {
-            handleRowClickAntd(event, record, handleAntdTableEventData());
-
-            const fullRecord = data.find(item => item.key === record.key);
-            if (onRowClick) onRowClick(fullRecord); // ✅ 상위 컴포넌트에서 전달된 함수 실행
-          },
-          onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
-          onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
-        })}
-        size="small"
-        className="ellipsis-column basic-tb"
-        bordered
-        scroll={{
-          x: "max-content",
-          y: "calc(60vh - 38px)",
-        }}
-        style={{ tableLayout: "fixed" }}
-      />
-    </div>
+              const fullRecord = data.find(item => item.key === record.key);
+              if (onRowClick) onRowClick(fullRecord); // ✅ 상위 컴포넌트에서 전달된 함수 실행
+            },
+            onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
+            onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
+          })}
+          size="small"
+          className="ellipsis-column basic-tb"
+          bordered
+          scroll={{
+            x: "max-content",
+            y: "calc(60vh - 38px)",
+          }}
+          style={{ tableLayout: "fixed" }}
+        />
+      </div>
+    </>
   );
 };
 
