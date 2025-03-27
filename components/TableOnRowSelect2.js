@@ -91,7 +91,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   }
 
   return (
-    <>
       <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none", paddingTop: "8px", paddingBottom: "40px" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
         <Table
           rowSelection={
@@ -130,7 +129,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
           style={{ tableLayout: "fixed" }}
         />
       </div>
-    </>
   );
 };
 

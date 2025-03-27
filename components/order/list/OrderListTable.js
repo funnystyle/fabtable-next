@@ -43,10 +43,10 @@ const OrderListTable = ({ contentHeight }) => {
 				}}
 				trigger={["contextMenu"]}
 			>
-				{/* <div style={{ marginTop: contentHeight }} className="contents-scroll"> */}
+				<div>
 					{/* 테이블 */}
 					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}/>
-				{/* </div> */}
+				</div>
 			</Dropdown>
 		</>
 	);
