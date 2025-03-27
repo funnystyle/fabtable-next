@@ -19,6 +19,7 @@ import { loadFormValues } from "@components/inputForm/loadFormValues";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import { useGetCsDetail } from "@components/api/useGetCsDetail";
+import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
 
 const CsCreate = ({ contentHeight }) => {
 
@@ -115,7 +116,8 @@ const CsCreate = ({ contentHeight }) => {
 
 				<CsCreateTab activeKey={2} />
 
-				<CsCreateHeader form={form} />
+				{!cs?.id ? <CsCreateHeader form={form} />
+				: <CsCreateHeaderUpdate form={form} /> }
 			</div>
 
 			<Flex gap={32}>
