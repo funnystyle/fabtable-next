@@ -37,6 +37,7 @@ const { Header, Sider, Content } = Layout;
 const pageComponents = {
 	// "/publish/dashboard": lazy(() => import("@/pages/publish/dashboard")),
 	"/publish/year": lazy(() => import("@/pages/publish/year")),
+	"/publish/year3": lazy(() => import("@/pages/publish/year3")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
 	"/publish/order": lazy(() => import("@/pages/publish/order")),
 	"/publish/orderwrite": lazy(() => import("@/pages/publish/orderwrite")),
@@ -81,7 +82,12 @@ const basicItems = [
 				url: "/publish/year",
 			},
 			{
-				key: "2-2",
+				key: "2-3",
+				label: "연간 종합 일정(3개년)",
+				url: "/publish/year3",
+			},
+			{
+				key: "2-3",
 				label: "월간 종합 일정",
 				url: "/publish/month",
 			},
