@@ -14,6 +14,10 @@ const OrderListPrintSelect = ({ selectedPrint, setSelectedPrint }) => {
 	return (
 		<Form.Item>
 			<Select
+				showSearch
+				filterOption={(input, option) =>
+					(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+				}
 				onChange={handlePrintChange}
 				value={selectedPrint}
 				options={[

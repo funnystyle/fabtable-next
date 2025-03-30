@@ -66,6 +66,10 @@ export const handleCopyModalComponent = (form, component, index) => {
             <Select placeholder="선택할 옵션이 없습니다." disabled={true}/>
           ) : (
             <Select
+              showSearch
+              filterOption={(input, option) =>
+                (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+              }
               placeholder="선택하세요"
               defaultValue={
                 codeList.length === 1 ? codeList[0].codeName : undefined
