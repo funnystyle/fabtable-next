@@ -846,7 +846,7 @@ const ProducePop2Component = () => {
 									/>
 								</div>
 							</Splitter.Panel>
-							<Splitter.Panel min={90}>
+							<Splitter.Panel defaultSize="35%" min={90}>
 								<Flex vertical style={{ height: "100%" }}>
 									<Flex
 										align="center"
