@@ -82,7 +82,7 @@ const basicItems = [
 				url: "/publish/year",
 			},
 			{
-				key: "2-3",
+				key: "2-2",
 				label: "연간 종합 일정(3개년)",
 				url: "/publish/year3",
 			},
