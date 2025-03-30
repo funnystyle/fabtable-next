@@ -68,6 +68,9 @@ const MonthHeader = ({visibleItems, setVisibleItems, currentYear, setCurrentYear
 				<Flex gap="small" align="center">
 					<Select
 						showSearch
+						filterOption={(input, option) =>
+							(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+						}	
 						value={currentYear}
 						defaultValue={currentYear}
 						style={{
