@@ -911,6 +911,7 @@ const ProducePop2Component = () => {
 												showTime={{
 													defaultValue: dayjs("00:00:00", "HH:mm:ss"),
 												}}
+												placeholder="날짜, 시간 자동 입력"
 											/>
 										</Form.Item>
 									</Flex>
