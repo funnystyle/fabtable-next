@@ -276,7 +276,7 @@ const ProducePop2Component = () => {
 							<Flex align="center" className="order-info-area">
 								<p className="title-order-info">싸이즈/씰</p>
 
-								<p className="txt-order-info">1.125"W</p>
+								<p className="txt-order-info">1.125&ldquo;W</p>
 							</Flex>
 
 							<Flex align="center" className="order-info-area">
