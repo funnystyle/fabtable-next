@@ -67,6 +67,7 @@ const MonthHeader = ({visibleItems, setVisibleItems, currentYear, setCurrentYear
 			<Flex align="start" justify="space-between">
 				<Flex gap="small" align="center">
 					<Select
+						showSearch
 						value={currentYear}
 						defaultValue={currentYear}
 						style={{
