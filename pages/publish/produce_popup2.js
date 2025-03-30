@@ -556,6 +556,7 @@ const ProducePop2Component = () => {
 	];
 	const data = [
 		{
+			key: "1",
 			code: "조립공정0001",
 			level: "필수",
 			name: "보빈 시리얼",
@@ -567,6 +568,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "2",
 			code: "조립공정0002",
 			level: "필수",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -574,6 +576,7 @@ const ProducePop2Component = () => {
 			input: <div className="data-input-area not">해당없음</div>,
 		},
 		{
+			key: "3",
 			code: "조립공정0003",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -593,6 +596,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "4",
 			code: "조립공정0003",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -613,6 +617,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "5",
 			code: "조립공정0003",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -633,6 +638,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "6",
 			code: "조립공정0003",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -656,6 +662,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "7",
 			code: "조립공정0004",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
@@ -669,6 +676,7 @@ const ProducePop2Component = () => {
 			),
 		},
 		{
+			key: "8",
 			code: "조립공정0004",
 			level: "샘플링검사",
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
