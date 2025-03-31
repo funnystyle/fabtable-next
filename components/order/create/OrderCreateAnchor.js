@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { Anchor, } from "antd";
 
-const OrderCreateAnchor = ({ contentHeight, list }) => {
+const OrderCreateAnchor = ({ list, anchorContainer }) => {
 	/* Anchor 스크롤 이동 */
 	const handleAnchorClick = (e, link) => {
 		e.preventDefault(); // 기본 이동 방지
@@ -32,10 +32,11 @@ const OrderCreateAnchor = ({ contentHeight, list }) => {
 	}, [list]);
 
 	return (
-		<div className="anchor-area" style={{ top: contentHeight }}>
+		<div className="anchor-area">
 			<Anchor
 				affix={false}
-				onClick={handleAnchorClick}
+				// onClick={handleAnchorClick}
+				getContainer={() => anchorContainer}
 				items={items}
 			/>
 		</div>

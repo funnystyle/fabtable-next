@@ -109,9 +109,18 @@ const CsCreate = ({ contentHeight }) => {
 		}
 	}, [csDetail]);
 
+	const [anchorContainer, setAnchorContainer] = useState(null);
+
+	useEffect(() => {
+		const container = document.querySelector(".cs-anchor-wrapper");
+		if (container) {
+			setAnchorContainer(container);
+		}
+	}, []);
+
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<CsCreateTitle title="C/S 관리" />
 
 				<CsCreateTab activeKey={2} />
@@ -120,11 +129,11 @@ const CsCreate = ({ contentHeight }) => {
 				: <CsCreateHeaderUpdate form={form} /> }
 			</div>
 
-			<Flex gap={32}>
+			<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="cs-anchor-wrapper">
 				<div className="anchor-contents">
 					<div
-						style={{ paddingTop: contentHeight }}
-						className="contents-scroll"
+						// style={{ paddingTop: contentHeight }}
+						// className="contents-scroll"
 					>
 						{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
 
@@ -137,7 +146,9 @@ const CsCreate = ({ contentHeight }) => {
 						<CsFollowUplInputBox form={form} />
 					</div>
 				</div>
-				<CsCreateAnchor contentHeight={contentHeight} />
+				{anchorContainer && (
+					<CsCreateAnchor list={list} anchorContainer={anchorContainer}/>
+				)}
 			</Flex>
 
 			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"}/>

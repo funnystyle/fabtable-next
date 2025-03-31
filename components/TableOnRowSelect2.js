@@ -6,7 +6,7 @@ import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAnt
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true }) => {
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY }) => {
 
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
@@ -91,8 +91,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   }
 
   return (
-    <>
-      <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
+      <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none", paddingTop: "8px", paddingBottom: "40px" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
         <Table
           rowSelection={
             rowSelect
@@ -125,12 +124,11 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
           bordered
           scroll={{
             x: "max-content",
-            y: "calc(60vh - 38px)",
+            y: scrollY || "calc(60vh - 38px)",
           }}
           style={{ tableLayout: "fixed" }}
         />
       </div>
-    </>
   );
 };
 

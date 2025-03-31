@@ -16,6 +16,7 @@
 			"@assets/images/*": ["./assets/images/*"],
 			"@publish/*": ["./publish/*"],
 			"@assets/*": ["./assets/*"],
+			"@context/*": ["./context/*"]
 		}
 	}
 }

@@ -125,8 +125,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 		if (targetElement) {
 			// 기본정보(#basic)는 top 0으로 이동, 나머지는 -100px 조정
 			const yOffset = -319;
-			const y =
-				targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
+			const y = targetElement.getBoundingClientRect().top + window.scrollY + yOffset;
 
 			console.log(`Scrolling to ${targetId}:`, y);
 
@@ -1069,6 +1068,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 									total={totalItems}
 									onChange={onChange}
 									itemRender={itemRender}
+									showSizeChanger={false}
 								/>
 
 								{/* 맨 뒤로 */}
@@ -1118,9 +1118,18 @@ const OrderWriteComponent = ({ contentHeight }) => {
 		setOpenSearchModal(true);
 	};
 
+	const [anchorContainer, setAnchorContainer] = useState(null);
+
+	useEffect(() => {
+		const container = document.querySelector(".order-anchor-wrapper");
+		if (container) {
+			setAnchorContainer(container);
+		}
+	}, []);
+
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<Flex align="center" justify="space-between" className="title-area">
 					<Title level={2} className="title-page">
 						영업 관리
@@ -1138,8 +1147,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 					</Button>
 				</Flex>
 
-				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
-
+				{/* <Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} /> */}
 				<div className="top-btn-area">
 					{/* 신규 수주 등록시 */}
 					<Flex align="center" justify="space-between">
@@ -1169,7 +1177,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 					{/* //신규 수주 등록시 */}
 
 					{/* 기 등록된 수주 내용 수정시 */}
-					<Flex justify="space-between" className="detail-top-area">
+					{/* <Flex justify="space-between" className="detail-top-area">
 						<Flex gap={12}>
 							<Tag className="CurrentStatus007">Rework</Tag>
 
@@ -1223,16 +1231,19 @@ const OrderWriteComponent = ({ contentHeight }) => {
 								</Button>
 							</Flex>
 						</Flex>
-					</Flex>
+					</Flex> */}
 					{/* //기 등록된 수주 내용 수정시 */}
 				</div>
 			</div>
 
-			<Flex gap={32}>
-				<div className="anchor-contents">
+			<Flex style={{ height: 'calc(100vh - 224px)', overflowY: 'auto' }} className="order-anchor-wrapper">
+				
+				<div  className="anchor-contents">
+
+
 					<div
-						style={{ paddingTop: contentHeight }}
-						className="contents-scroll"
+						// style={{ paddingTop: contentHeight }}
+						// className="contents-scroll"
 					>
 						<div id="basic">
 							<div className="info-area">
@@ -1462,7 +1473,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 								</Form>
 							</div>
 						</div>
-						<div id="product" className="info-wrap">
+						<div id="product" className="info-wrap info-wrap-last">
 							<Flex
 								align="center"
 								justify="space-between"
@@ -2000,28 +2011,18 @@ const OrderWriteComponent = ({ contentHeight }) => {
 						</div>
 					</div>
 				</div>
-				<div className="anchor-area" style={{ top: contentHeight }}>
-					<Anchor
-						affix={false}
-						onClick={handleAnchorClick}
-						items={[
-							{
-								key: "basic",
-								href: "#basic",
-								title: "기본정보",
-							},
-							{
-								key: "customer",
-								href: "#customer",
-								title: "고객정보",
-							},
-							{
-								key: "product",
-								href: "#product",
-								title: "제품정보",
-							},
-						]}
-					/>
+				<div className="anchor-area">
+					{anchorContainer && (
+						<Anchor
+							affix={false}
+							getContainer={() => anchorContainer}
+							items={[
+								{ key: "basic", href: "#basic", title: "기본정보" },
+								{ key: "customer", href: "#customer", title: "고객정보" },
+								{ key: "product", href: "#product", title: "제품정보" },
+							]}
+						/>
+					)}
 				</div>
 			</Flex>
 

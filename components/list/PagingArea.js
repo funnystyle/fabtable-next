@@ -94,6 +94,7 @@ const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
           pageSize={size}
           onChange={onChange}
           itemRender={itemRender}
+          showSizeChanger={false}
         />
 
         {/* 맨 뒤로 */}

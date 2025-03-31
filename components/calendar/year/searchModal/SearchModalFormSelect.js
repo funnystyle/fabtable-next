@@ -44,6 +44,9 @@ const SearchModalFormSelect = ({ form, name, searchLocation, searchDiv }) => {
 		>
 			<Select
 				showSearch
+				filterOption={(input, option) =>
+					(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+				}
 				defaultValue={defaultValue}
 				value={value}
 				onChange={(value) => setValue(value)}

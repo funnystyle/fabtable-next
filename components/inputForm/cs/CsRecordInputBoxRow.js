@@ -133,7 +133,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   // 복사 버튼 클릭 시
   return (
     <div key={`cs-record-input-box-${index}`}>
-      <div id={itemList[0][0].name}>
+      <div id={`cs-anchror-${itemList[0][0].name}`}>
         <Flex
           align="center"
           justify="space-between"

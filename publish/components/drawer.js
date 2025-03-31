@@ -104,7 +104,7 @@ const DrawerComponent = () => {
 						</div>
 					)}))}
 
-					<div
+					{/* <div
 						className="zoom-r-btn"
 						style={{
 							right: open ? "440px" : "40px",
@@ -114,7 +114,7 @@ const DrawerComponent = () => {
 						<Button size="large" icon={<ZoomInOutlined />} shape="round" />
 
 						<Button size="large" icon={<ZoomOutOutlined />} shape="round" />
-					</div>
+					</div> */}
 				</div>
 			</div>
 

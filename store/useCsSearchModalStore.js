@@ -18,7 +18,7 @@ const useCsSearchModalStore = create((set) => ({
   totalPages: 0,
 
   // request
-  size: 10,
+  size: 500,
   setSize: (size) => set({ size }),
   page: 1,
   setPage: (page) => set({ page }),

@@ -27,6 +27,10 @@ const OrderListPrintReport = ({form}) => {
 
 			<Form.Item>
 				<Select
+					showSearch
+					filterOption={(input, option) =>
+						(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+					}
 					value={selectedOption}
 					onChange={(value) => setSelectedOption(value)}
 					options={[

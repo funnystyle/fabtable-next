@@ -8,6 +8,7 @@ import { useGetCsList } from "@components/api/useGetCsList";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
+import { csListRightItem } from "./data/csListRightItem";
 
 const CsListTable = ({ contentHeight }) => {
 
@@ -16,6 +17,7 @@ const CsListTable = ({ contentHeight }) => {
 	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useCsSearchModalStore();
 
 	const handleContextMenuClick = (e) => {
+		alert("click", e);
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);
 		} else if (parseInt(e.key) === 2) {
@@ -37,15 +39,15 @@ const CsListTable = ({ contentHeight }) => {
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown
 				menu={{
-					items: orderListRightItem,
+					items: csListRightItem,
 					onClick: handleContextMenuClick,
 
 				}}
 				trigger={["contextMenu"]}
 			>
-				<div className="tb-container">
+				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} />
+					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}/>
 				</div>
 			</Dropdown>
 		</>

@@ -33,8 +33,7 @@ const CsAsDetailForm = ({ form, index }) => {
       >
         <Flex align="center" gap={4}>
           <Title
-            level={4}
-            className="title-bullet"
+            level={5}
             style={{
               marginBottom: "0",
             }}

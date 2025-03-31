@@ -39,6 +39,10 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
         <Select placeholder="선택할 옵션이 없습니다." disabled={true} />
       ) : (
         <Select
+          showSearch
+          filterOption={(input, option) =>
+            (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+          }
           placeholder="선택하세요"
           onChange={(value, option) =>
             handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)

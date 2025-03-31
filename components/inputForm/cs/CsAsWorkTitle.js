@@ -51,7 +51,7 @@ export const CsAsWorkTitle = ({ form, index, keys, setKeys, asCheckedKeySet, set
   return (
     <Flex align="center" justify="space-between" className="title-area">
       <Flex align="center" gap={12}>
-        <Title level={4} className="title-bullet" style={{ marginBottom: "0", }}>출장업무 내용 {index}</Title>
+        <Title level={5} style={{ marginBottom: "0", }}>출장업무 내용 {index}</Title>
 
         <Checkbox
           checked={asCheckedKeySet.has(index)}

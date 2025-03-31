@@ -52,6 +52,7 @@ import DrawerComponent from "@publish/components/drawer";
 import Draggable from "react-draggable";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useTab } from "@/context/TabContext";
 
 const { useToken } = theme;
 const { Title } = Typography;
@@ -67,12 +68,14 @@ const onChange = (e) => {
 
 const TabItems = [
 	{
-		key: "1",
+		key: "sub2-1",
 		label: "수주 현황 목록",
+		url: "/publish/order",
 	},
 	{
-		key: "2",
+		key: "sub2-2",
 		label: "수주 등록 · 상세",
+		url: "/publish/orderwrite",
 	},
 ];
 
@@ -750,13 +753,19 @@ const OrderComponent = ({ contentHeight }) => {
 	const [checkedItems, setCheckedItems] = useState(Array(16).fill(true));
 	const [position, setPosition] = useState("end");
 	const router = useRouter();
+	const { addTab } = useTab();
 
 	const onTabChange = (key) => {
-		if (key === "1") {
-			router.push("/publish/order");
-		} else if (key === "2") {
-			router.push("/publish/orderwrite");
-		}
+		// if (key === "1") {
+		// 	router.push("/publish/order");
+		// } else if (key === "2") {
+		// 	router.push("/publish/orderwrite");
+		// }
+		const item = TabItems.find((t) => t.key === key);
+    if (item) {
+      addTab({ key: item.key, label: item.label, url: item.url }); // ✅ 탭 추가
+    }
+
 	};
 
 	const contentStyle = {
@@ -2674,7 +2683,7 @@ const OrderComponent = ({ contentHeight }) => {
 
 	return (
 		<Layout>
-			<div className="contents-top">
+			<div className="contents-flex">
 				<Flex align="center" justify="space-between" className="title-area">
 					<Title level={2} className="title-page">
 						영업 관리
@@ -2708,12 +2717,42 @@ const OrderComponent = ({ contentHeight }) => {
 					</Flex>
 				</Flex>
 
-				<Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} />
+				{/* <Tabs defaultActiveKey="1" items={TabItems} onChange={onTabChange} /> */}
 
-				<Space direction="vertical" size={12} style={{ width: "100%" }}>
+				{/* <div style={{ marginBottom: "12px" }}> */}
+					{/*  검색결과 */}
+					<Flex align="center" className="search-result-area">
+						<strong className="tit-search-result">검색결과 :</strong>
+
+						{tags.map((tag, index) => (
+							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
+								{tag}
+							</Tag>
+						))}
+
+						<Button
+							color="primary"
+							variant="text"
+							size="small"
+							className="all-delete-tag"
+							onClick={handleTagDeleteAll}
+						>
+							모두 삭제
+						</Button>
+					</Flex>
+				{/* </div> */}
+				
+				{/* <Space direction="vertical" size={12} style={{ width: "100%" }}> */}
 					{/* 상단 버튼 */}
-					<div className="contents-top-scroll">
-						<Flex gap="small" align="center" className="btn-big">
+					{/* <div className="contents-top-scroll" style={{ marginBottom: "12px" }}> */}
+						<Flex gap="small" align="center" className="btn-big" style={{
+								position: "sticky",
+								top: "0",
+								zIndex: "10",
+								paddingBottom: "12px",
+								paddingTop: "8px",
+								backgroundColor: "#FFF",
+							}}>
 							<Button
 								variant="outlined"
 								icon={<RedoOutlined />}
@@ -2828,7 +2867,7 @@ const OrderComponent = ({ contentHeight }) => {
 								</Dropdown>
 							</Flex>
 						</Flex>
-					</div>
+					{/* </div> */}
 
 					{/* 갯수, 페이징, 버튼 영역 */}
 					<Flex align="center" justify="space-between">
@@ -2857,6 +2896,7 @@ const OrderComponent = ({ contentHeight }) => {
 								total={totalItems}
 								onChange={onChange}
 								itemRender={itemRender}
+								showSizeChanger={false}
 							/>
 
 							{/* 맨 뒤로 */}
@@ -2885,32 +2925,11 @@ const OrderComponent = ({ contentHeight }) => {
 							</Dropdown>
 						</Flex>
 					</Flex>
-				</Space>
-			</div>
+				{/* </Space> */}
+			{/* </div> */}
 
-			<div style={{ marginTop: contentHeight }} className="contents-scroll">
-				<div style={{ marginBottom: "12px" }}>
-					{/*  검색결과 */}
-					<Flex align="center" className="search-result-area">
-						<strong className="tit-search-result">검색결과 :</strong>
-
-						{tags.map((tag, index) => (
-							<Tag key={index} closeIcon onClose={() => handleTagClose(tag)}>
-								{tag}
-							</Tag>
-						))}
-
-						<Button
-							color="primary"
-							variant="text"
-							size="small"
-							className="all-delete-tag"
-							onClick={handleTagDeleteAll}
-						>
-							모두 삭제
-						</Button>
-					</Flex>
-				</div>
+			{/* <div className="contents-scroll"> */}
+				
 
 				<Dropdown
 					menu={{
@@ -2919,7 +2938,7 @@ const OrderComponent = ({ contentHeight }) => {
 					trigger={["contextMenu"]}
 				>
 					{/* 테이블 */}
-					<div className="tb-container">
+					<div className="tb-container" style={{ paddingTop: "8px", paddingBottom: "40px" }}>
 						<Table
 							columns={columns}
 							dataSource={data}
@@ -2930,7 +2949,7 @@ const OrderComponent = ({ contentHeight }) => {
 							bordered
 							scroll={{
 								x: "max-content",
-								// y: "calc(60vh - 38px)",
+								y: "calc(100vh - 256px)",
 							}}
 							style={{ tableLayout: "fixed" }}
 						/>
