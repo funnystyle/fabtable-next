@@ -13,7 +13,7 @@ const useCsSearchModalStore = create((set) => ({
   total: 0,
   setTotal: (total) => set((state) => ({
     total,
-    totalPage: Math.ceil(total / state.size),
+    totalPages: Math.ceil(total / state.size),
   })),
   totalPages: 0,
 
