@@ -16,9 +16,9 @@ const { Header, Sider, Content } = Layout;
 // 🔹 동적으로 페이지 로딩
 const pageComponents = {
   "/dashboard": lazy(() => import("@/pages/dashboard")),
-  "/publish/year": lazy(() => import("@/pages/publish/year")),
-  "/publish/year3": lazy(() => import("@/pages/publish/year3")),
-  "/publish/month": lazy(() => import("@/pages/publish/month")),
+  "/calendar/year": lazy(() => import("@/pages/calendar/year")),
+  // "/publish/year3": lazy(() => import("@/pages/publish/year3")),
+  "/calendar/month": lazy(() => import("@/pages/calendar/month")),
   "/publish/order": lazy(() => import("@/pages/publish/order")),
   "/publish/orderwrite": lazy(() => import("@/pages/publish/orderwrite")),
   "/order/list": lazy(() => import("@/pages/order/list")),
