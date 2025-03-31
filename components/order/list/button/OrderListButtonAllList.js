@@ -7,7 +7,7 @@ import useRecordModalStore from "@store/useRecordModalStore";
 
 const OrderListButtonAllList = ({ statusList }) => {
 
-	const { setDeleteTagKeyName, setSearchStatusList } = useRecordModalStore();
+	const { setDeleteTagKeyName, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
 	const { tags, setTags } = useRecordDataStore();
 
 	const handleTagDeleteAll = () => {
@@ -21,9 +21,14 @@ const OrderListButtonAllList = ({ statusList }) => {
 		setSearchStatusList([...statusList]);
 	};
 
+	const handleSearchKeywordReset = () => {
+		setSearchKeyword(null);
+	}
+
 	const handleAllList = () => {
 		handleTagDeleteAll();
 		handleStatusSelectAll();
+		handleSearchKeywordReset();
 	}
 
 	return (
