@@ -19,17 +19,17 @@ export const basicItems = [
 			{
 				key: "2-1",
 				label: "연간 종합 일정",
-				url: "/publish/year",
+				url: "/calendar/year",
 			},
+			// {
+			// 	key: "2-2",
+			// 	label: "연간 종합 일정(3개년)",
+			// 	url: "/publish/year3",
+			// },
 			{
 				key: "2-2",
-				label: "연간 종합 일정(3개년)",
-				url: "/publish/year3",
-			},
-			{
-				key: "2-3",
 				label: "월간 종합 일정",
-				url: "/publish/month",
+				url: "/calendar/month",
 			},
 		],
 	},
