@@ -22,7 +22,7 @@ export const useGetRecords = () => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
-    getRecords({ page, size, searchKeyword, searchStatusList, searchData });
+    getRecords({ page, size, searchKeyword, statusList:searchStatusList, searchData });
   };
 
   useEffect(() => {

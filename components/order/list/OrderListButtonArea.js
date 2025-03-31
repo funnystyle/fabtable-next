@@ -22,7 +22,7 @@ const OrderListButtonArea = ({ statusList }) => {
 				// paddingTop: "8px",
 				backgroundColor: "#FFF",
 			}}>
-				<OrderListButtonAllList />
+				<OrderListButtonAllList statusList={statusList} />
 
 				<Flex gap="small" className="btn-spacing-area">
 					<OrderListButtonTotalInfo />
