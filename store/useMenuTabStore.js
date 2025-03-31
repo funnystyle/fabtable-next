@@ -39,7 +39,17 @@ const useMenuTabStore = create((set, get) => ({
     if (!menuItem || !menuItem.url) return;
 
     const prevTabs = get().tabs;
-    set({ tabs: [...prevTabs, { key: menuItem.key, label: menuItem.label, url: menuItem.url }] });
+    const exists = prevTabs.find(tab => tab.key === menuItem.key);
+
+    if (!exists) {
+      const newTabs = [...prevTabs, {
+        key: menuItem.key,
+        label: menuItem.label,
+        url: menuItem.url
+      }];
+      set({ tabs: newTabs });
+    }
+
     set({ activeTab: menuItem.key });
     set({ selectedMenuKeys: [menuItem.key] });
 

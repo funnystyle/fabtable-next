@@ -5,9 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import useMenuTabStore from "@store/useMenuTabStore";
 
 const CsCreateHeader = ({ form }) => {
 
+	const { moveUrl } = useMenuTabStore();
 	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
 
 	useEffect(() => {
@@ -62,6 +64,7 @@ const CsCreateHeader = ({ form }) => {
 
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
+		moveUrl("/cs/list");
 	}
 
 	return (

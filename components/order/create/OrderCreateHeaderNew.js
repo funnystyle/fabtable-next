@@ -4,8 +4,11 @@ import { Button, Flex, message, Tag, } from "antd";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
+import useMenuTabStore from "@store/useMenuTabStore";
 
 const OrderCreateHeaderNew = ({ form }) => {
+
+	const { moveUrl } = useMenuTabStore();
 
 	const { mutate: orderInfoCreate } = useMutation({
 		mutationKey: "orderInfoCreate",
@@ -21,7 +24,7 @@ const OrderCreateHeaderNew = ({ form }) => {
 
 		await orderInfoCreate(values);
 		message.success('수주 등록이 완료되었습니다!');
-		location.href = "/order/list";
+		moveUrl("/order/list");
 	}
 
 	return (
