@@ -23,7 +23,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
 
   const data = serverData != undefined ? serverData.map((item, index) => ({
     ...item,
-    key: index // key 값을 item.id로 설정
+    key: item.id // key 값을 item.id로 설정
   })) : [];
 
 
