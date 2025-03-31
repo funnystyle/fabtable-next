@@ -121,7 +121,7 @@ const HomePage = ({ children }) => {
 
     // 부모 메뉴 openKeys 자동 설정
     const parentKeys = getParentKeys(key, [...basicItems, ...adminItems]);
-    setOpenKeys(parentKeys ? [...parentKeys] : []);
+    // setOpenKeys(parentKeys ? [...parentKeys] : []);
 
     router.push(menuItem.url, undefined, { shallow: true });
   };
