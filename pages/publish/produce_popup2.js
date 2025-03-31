@@ -14,6 +14,7 @@ import {
 	Tag,
 	Form,
 	DatePicker,
+	Tooltip,
 } from "antd";
 import {
 	ClockCircleFilled,
@@ -33,6 +34,13 @@ import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 const { RangePicker } = DatePicker;
+
+// 탭
+import ProduceBasic1 from "./components/ProduceBasic1";
+import ProduceBasic2 from "./components/ProduceBasic2";
+import ProduceBasic3 from "./components/ProduceBasic3";
+import ProduceBasic7 from "./components/ProduceBasic7";
+const { TabPane } = Tabs;
 
 const onChange = (key) => {
 	console.log(key);
@@ -118,413 +126,6 @@ const ProducePop2Component = () => {
 		return originalElement;
 	};
 
-	const items = [
-		{
-			key: "1",
-			label: "기초 정보",
-			children: (
-				<div className="tab-content-in">
-					<Radio.Group
-						defaultValue="basicinfo1"
-						size="small"
-						optionType="button"
-						buttonStyle="solid"
-						className="top-radio-area"
-					>
-						<Radio.Button value="basicinfo1">수주정보</Radio.Button>
-						<Radio.Button value="basicinfo2">조립정보</Radio.Button>
-						<Radio.Button value="basicinfo3">리크정보</Radio.Button>
-						<Radio.Button value="basicinfo4">교정정보</Radio.Button>
-						<Radio.Button value="basicinfo5">비율제어</Radio.Button>
-						<Radio.Button value="basicinfo6">메모</Radio.Button>
-					</Radio.Group>
-
-					<Flex
-						align="center"
-						justify="space-between"
-						className="title-bg-blue"
-					>
-						<p className="titie-info">수주정보</p>
-
-						<p>
-							<Button icon={<SettingOutlined />} size="small" />
-						</p>
-					</Flex>
-
-					<Flex className="order-info-wrap">
-						<div>
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">시리얼번호</p>
-
-								<p className="txt-order-info serial">57024060242</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">제조번호</p>
-
-								<p className="txt-order-info">A2025-000025</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">납품처</p>
-
-								<p className="txt-order-info">아이마켓(SEMES)</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">고객사</p>
-
-								<p className="txt-order-info">아이코어시스템즈코리아</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">출고종류</p>
-
-								<p className="txt-order-info">STOCK(양산)</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">제품군</p>
-
-								<p className="txt-order-info">MARU</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">모델</p>
-
-								<p className="txt-order-info">7000s</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">세부모델</p>
-
-								<p className="txt-order-info">7000</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">채널</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">MGMR</p>
-
-								<p className="txt-order-info">O</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">MGMR BIN#</p>
-
-								<p className="txt-order-info">4</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">MGMR 최대유량</p>
-
-								<p className="txt-order-info">5000</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">MFC 사양</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">유량범위</p>
-
-								<p className="txt-order-info">5sccm~30SLM</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">장착위치</p>
-
-								<p className="txt-order-info">Up Stream</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">밸브타입</p>
-
-								<p className="txt-order-info">Solenoid (N.C)</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">하스텔로이</p>
-
-								<p className="txt-order-info">X</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">Body 타입</p>
-
-								<p className="txt-order-info">Normal</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">Orifice 씰링</p>
-
-								<p className="txt-order-info">Metal</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">피팅종류</p>
-
-								<p className="txt-order-info">IGS</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">싸이즈/씰</p>
-
-								<p className="txt-order-info">1.125&quot;W</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">Valve Seat</p>
-
-								<p className="txt-order-info">Metal</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">후단 사용조건</p>
-
-								<p className="txt-order-info">VACUUM</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">Liquid & Precursor</p>
-
-								<p className="txt-order-info">CPZr</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">Cal Liquid</p>
-
-								<p className="txt-order-info">IPA</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">비고</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">특주번호</p>
-
-								<p className="txt-order-info">S01</p>
-							</Flex>
-						</div>
-
-						<div>
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">제품 Rev</p>
-
-								<p className="txt-order-info">2</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">압력범위 (최저)</p>
-
-								<p className="txt-order-info">35</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">압력범위 (중심)</p>
-
-								<p className="txt-order-info">35</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">압력범위 (최대)</p>
-
-								<p className="txt-order-info">60</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">사용 압력단위</p>
-
-								<p className="txt-order-info">PSI</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">제어 압력단위</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">사용가스</p>
-
-								<p className="txt-order-info">F2(20%)N2</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">교정가스</p>
-
-								<p className="txt-order-info">N2</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">유량</p>
-
-								<p className="txt-order-info">50000</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">C.F</p>
-
-								<p className="txt-order-info">0.983</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">환산유량</p>
-
-								<p className="txt-order-info">50864.7</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">유량단위</p>
-
-								<p className="txt-order-info">SCCM</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">전원 포트형상</p>
-
-								<p className="txt-order-info rial">Dsub MKP [9] PIN</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">포트위치</p>
-
-								<p className="txt-order-info">Side</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">통신방식</p>
-
-								<p className="txt-order-info">E-CAT</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">통신코드</p>
-
-								<p className="txt-order-info">EtherCAT</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">IO Size</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">MAX DATA</p>
-
-								<p className="txt-order-info">-</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">납품계획일</p>
-
-								<p className="txt-order-info">2025-08-22 00:00</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">생산계획일</p>
-
-								<p className="txt-order-info">2025-08-22 00:00</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">검사계획일</p>
-
-								<p className="txt-order-info">2025-08-22 00:00</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">생산부서</p>
-
-								<p className="txt-order-info">제조2팀 (2)</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">등록자</p>
-
-								<p className="txt-order-info">홍길동</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">등록일</p>
-
-								<p className="txt-order-info">2025-07-01 00:00</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">납품자</p>
-
-								<p className="txt-order-info">이몽룡</p>
-							</Flex>
-
-							<Flex align="center" className="order-info-area">
-								<p className="title-order-info">납품일</p>
-
-								<p className="txt-order-info">2025-07-01 00:00</p>
-							</Flex>
-						</div>
-					</Flex>
-				</div>
-			),
-		},
-		{
-			key: "2",
-			label: "작업 표준서",
-			children: (
-				<div>
-					<Flex
-						align="center"
-						justify="space-between"
-						className="pdf-title-area"
-					>
-						<p className="pdf-title">조립 순서-MARU-7000.pdf</p>
-
-						<Flex align="center" className="paging-area">
-							<button
-								onClick={() => onChange(1)}
-								disabled={current === 1}
-								className="btn-page"
-							>
-								<VerticalRightOutlined />
-							</button>
-
-							<Pagination
-								simple
-								current={current}
-								total={totalItems}
-								pageSize={pageSize}
-								onChange={onChange}
-								itemRender={itemRender}
-							/>
-
-							{/* 맨 뒤로 */}
-							<button
-								onClick={() => onChange(totalPages)}
-								disabled={current === totalPages}
-								className="btn-page"
-							>
-								<VerticalLeftOutlined />
-							</button>
-						</Flex>
-					</Flex>
-
-					{/* PDF 문서 영역 */}
-					<div className="pdf-area"></div>
-				</div>
-			),
-		},
-	];
-
 	const columns = [
 		{
 			title: "항목코드",
@@ -557,10 +158,43 @@ const ProducePop2Component = () => {
 	const data = [
 		{
 			key: "1",
-			code: "조립공정0001",
-			level: "필수",
-			name: "보빈 시리얼",
-			data: "1232435436547657658675848712324354365476576586758487",
+			code: (
+				<Tooltip
+					title="조립공정0001"
+					color="#FFFBE6"
+					overlayInnerStyle={{ color: "rgba(0, 0, 0, 0.88)" }}
+				>
+					<span>조립공정0001</span>
+				</Tooltip>
+			),
+			level: (
+				<Tooltip
+					title="필수"
+					color="#FFFBE6"
+					overlayInnerStyle={{ color: "rgba(0, 0, 0, 0.88)" }}
+				>
+					<span>필수</span>
+				</Tooltip>
+			),
+			name: (
+				<Tooltip
+					title="보빈 시리얼"
+					color="#FFFBE6"
+					overlayInnerStyle={{ color: "rgba(0, 0, 0, 0.88)" }}
+				>
+					<span>보빈 시리얼</span>
+				</Tooltip>
+			),
+			data: (
+				<Tooltip
+					title="1232435436547657658675848712324354365476576586758487"
+					color="#FFFBE6"
+					overlayInnerStyle={{ color: "rgba(0, 0, 0, 0.88)" }}
+					placement="left"
+				>
+					<span>1232435436547657658675848712324354365476576586758487</span>
+				</Tooltip>
+			),
 			input: (
 				<div className="data-input-area">
 					<Input placeholder="내용 입력" />
@@ -748,17 +382,122 @@ const ProducePop2Component = () => {
 			<div className="popup-contents pd0">
 				<Splitter>
 					<Splitter.Panel defaultSize="40%" collapsible>
-						<Tabs
-							defaultActiveKey="1"
-							items={items}
-							onChange={onChange}
-							className="tab-round"
-							type="card"
-						/>
+						<Tabs defaultActiveKey="1" type="card" className="tab-round">
+							{/* 메인 탭 1: 기초 정보 */}
+							<TabPane tab="기초 정보" key="1">
+								<Tabs
+									defaultActiveKey="1-1"
+									type="card"
+									className="tab-round-sm"
+								>
+									<TabPane tab="수주정보" key="1-1">
+										<ProduceBasic1 />
+									</TabPane>
+
+									<TabPane tab="조립정보" key="1-2">
+										<ProduceBasic2 />
+									</TabPane>
+
+									<TabPane tab="리크정보" key="1-3">
+										<ProduceBasic3 />
+									</TabPane>
+
+									<TabPane
+										tab={
+											<span
+												onClick={(e) => {
+													e.preventDefault(); // 기본 탭 전환 막기
+													window.open("/"); // 새 창 열기
+												}}
+											>
+												교정정보
+											</span>
+										}
+										key="1-4"
+									></TabPane>
+
+									<TabPane
+										tab={
+											<span
+												onClick={(e) => {
+													e.preventDefault(); // 기본 탭 전환 막기
+													window.open("/"); // 새 창 열기
+												}}
+											>
+												비율제어
+											</span>
+										}
+										key="1-5"
+									></TabPane>
+
+									<TabPane
+										tab={
+											<span
+												onClick={(e) => {
+													e.preventDefault(); // 기본 탭 전환 막기
+													window.open("/"); // 새 창 열기
+												}}
+											>
+												제어계수
+											</span>
+										}
+										key="1-6"
+									></TabPane>
+
+									<TabPane tab="메모" key="1-7">
+										<ProduceBasic7 />
+									</TabPane>
+								</Tabs>
+							</TabPane>
+
+							{/* 메인 탭 2: 작업 표준서 */}
+							<TabPane tab="작업 표준서" key="2">
+								<div>
+									<Flex
+										align="center"
+										justify="space-between"
+										className="pdf-title-area"
+									>
+										<p className="pdf-title">조립 순서-MARU-7000.pdf</p>
+
+										<Flex align="center" className="paging-area">
+											<button
+												onClick={() => onChange(1)}
+												disabled={current === 1}
+												className="btn-page"
+											>
+												<VerticalRightOutlined />
+											</button>
+
+											<Pagination
+												simple
+												current={current}
+												total={totalItems}
+												pageSize={pageSize}
+												onChange={onChange}
+												itemRender={itemRender}
+											/>
+
+											{/* 맨 뒤로 */}
+											<button
+												onClick={() => onChange(totalPages)}
+												disabled={current === totalPages}
+												className="btn-page"
+											>
+												<VerticalLeftOutlined />
+											</button>
+										</Flex>
+									</Flex>
+
+									{/* PDF 문서 영역 */}
+									<div className="pdf-area"></div>
+								</div>
+							</TabPane>
+						</Tabs>
 					</Splitter.Panel>
 					<Splitter.Panel defaultSize="60%" collapsible>
 						<Splitter lazy layout="vertical">
-							<Splitter.Panel>
+							<Splitter.Panel min={40}>
 								<Flex
 									align="center"
 									justify="space-between"
@@ -825,7 +564,7 @@ const ProducePop2Component = () => {
 								</Flex>
 
 								{/* 스크롤이 생길때 scrollable 클래스 추가 */}
-								<div className="input-tb-area scrollable">
+								<div className="input-tb-area">
 									<p className="title-input-tb">테이블 제목이 있는 경우</p>
 
 									<Table
@@ -879,7 +618,7 @@ const ProducePop2Component = () => {
 									</Flex>
 
 									{/* 스크롤이 생길때 scrollable 클래스 추가 */}
-									<div className="input-tb-area check scrollable">
+									<div className="input-tb-area check">
 										<Table
 											columns={columns}
 											dataSource={data}
@@ -914,12 +653,14 @@ const ProducePop2Component = () => {
 										</Form.Item>
 
 										<Form.Item label="조립일시">
+											{/* disabled일때 disabled 넣기 */}
 											<DatePicker
 												format="YYYY-MM-DD HH:mm:ss"
 												showTime={{
 													defaultValue: dayjs("00:00:00", "HH:mm:ss"),
 												}}
 												placeholder="날짜, 시간 자동 입력"
+												disabled
 											/>
 										</Form.Item>
 									</Flex>
