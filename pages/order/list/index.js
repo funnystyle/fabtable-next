@@ -11,17 +11,19 @@ import OrderListSearchTags from "@components/order/list/OrderListSearchTags";
 import OrderListButtonArea from "@components/order/list/OrderListButtonArea";
 import OrderListTable from "@components/order/list/OrderListTable";
 import useDrawerStore from "@store/useDrawerStore";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
+import CsCreate from "@pages/cs/create";
+import SearchModal from "@components/searchModal/SearchModal";
 
 
-const OrderComponent = ({ contentHeight }) => {
+const OrderComponent = ({ isActive }) => {
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
 
 	// --------- 상태 리스트 상수
-	const { setSearchStatusList } = useModalStore();
+	const { setSearchStatusList } = useRecordModalStore();
 	const [statusList, setStatusList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
@@ -55,6 +57,8 @@ const OrderComponent = ({ contentHeight }) => {
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListTable />
 			</div>
+
+			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} />
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>

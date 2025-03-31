@@ -687,12 +687,12 @@ const HomePage = ({ children }) => {
 							</div>
 						</Header>
 						{/* 탭 없이 하려면 아래 코드를 적용 */}
-						<Content className="contents" style={{ overflowY: "auto"}}>
-							{children ? React.cloneElement(children, { contentHeight }) : null}
-						</Content>
+						{/*<Content className="contents" style={{ overflowY: "auto"}}>*/}
+						{/*	{children ? React.cloneElement(children, { contentHeight }) : null}*/}
+						{/*</Content>*/}
 						{/* 탭 적용하려면 아래 코드를 적용 */}
 						{/* Content 영역을 Tabs로 변경 */}
-						{/* <Content className="contents">
+						<Content className="contents">
 							<Tabs
 								hideAdd
 								size="small"
@@ -722,6 +722,10 @@ const HomePage = ({ children }) => {
 											{pageComponents[tab.url] ? (
 												React.createElement(pageComponents[tab.url], {
 													contentHeight,
+													activeTab,
+													//현재 탭이 열려잇는지 여부
+													activeKey: tab.key,
+													isActive: tab.key === activeTab
 												})
 											) : (
 												<div>페이지 없음</div>
@@ -730,7 +734,7 @@ const HomePage = ({ children }) => {
 									</Tabs.TabPane>
 								))}
 							</Tabs>
-						</Content> */}
+						</Content>
 					</Layout>
 				</Layout>
 			</Layout>

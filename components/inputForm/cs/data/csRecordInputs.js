@@ -5,7 +5,7 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 import useRecordDataStore from "@store/useRecordDataStore";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import dayjs from "dayjs";
 
 export const csRecordInputs = ["defectMfcSN"

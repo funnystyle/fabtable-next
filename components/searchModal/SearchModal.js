@@ -5,17 +5,17 @@ import "dayjs/locale/ko";
 import SearchModalContent from "@components/searchModal/SearchModalContent";
 import ModalDraggable from "@components/drag/ModalDraggable";
 import ModalTitle from "@components/modal/ModalTitle";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
-const SearchModal = ({ searchLocation, searchType }) => {
+const SearchModal = ({ searchLocation, searchType, isActive }) => {
 
-	const { openSearchModal, setOpenSearchModal } = useModalStore();
+	const { openSearchModal, setOpenSearchModal } = useRecordModalStore();
 
 	return (
 		<div style={{ display: openSearchModal ? "block" : "none" }}>
 			<Modal
 				title={<ModalTitle title="조건 검색" />}
-				open={openSearchModal}
+				open={openSearchModal && isActive}
 				onCancel={() => setOpenSearchModal(false)}
 				width={900}
 				footer={null}

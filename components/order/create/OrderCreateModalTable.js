@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { useGetRecords } from "@components/api/useGetRecords";
 import { ExclamationCircleFilled } from "@ant-design/icons";
@@ -14,7 +14,7 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
 
 	const { handleReload } = useGetRecords();
 

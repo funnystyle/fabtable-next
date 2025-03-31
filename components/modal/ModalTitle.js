@@ -1,8 +1,8 @@
 import React from "react";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const ModalTitle = ({ title }) => {
-  const { setDisabled } = useModalStore();
+  const { setDisabled } = useRecordModalStore();
 
   return (
     <div

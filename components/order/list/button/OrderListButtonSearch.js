@@ -3,11 +3,11 @@ import React, { useEffect } from "react";
 import { Button, } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import SearchModal from "@components/searchModal/SearchModal";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const OrderListButtonSearch = () => {
 
-	const { setOpenSearchModal, list } = useModalStore();
+	const { setOpenSearchModal, list } = useRecordModalStore();
 
 	useEffect(() => {
 		setOpenSearchModal(false);
@@ -23,8 +23,6 @@ const OrderListButtonSearch = () => {
 			>
 				조건 검색
 			</Button>
-
-			<SearchModal searchLocation={"order"} searchType={"LIST"} />
 		</>
 	);
 };

@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Divider, Dropdown, Space, theme, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const { useToken } = theme;
 
 const OrderListButtonStatusSelect = ({ statusList }) => {
 
-	const { searchStatusList, setSearchStatusList } = useModalStore();
+	const { searchStatusList, setSearchStatusList } = useRecordModalStore();
 
 	const { token } = useToken();
 	const contentStyle = {

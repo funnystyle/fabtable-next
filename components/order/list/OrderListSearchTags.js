@@ -1,11 +1,11 @@
 // pages/order/create/index.js
 import React, { useEffect, useState } from "react";
 import { Button, Flex, Tag, } from "antd";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const OrderListSearchTags = () => {
 
-  const { formData, setDeleteTagKeyName } = useModalStore();
+  const { formData, setDeleteTagKeyName } = useRecordModalStore();
 
   const [tags, setTags] = useState([]);
   // 개별 태그 삭제 핸들러

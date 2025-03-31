@@ -1,13 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import { useEffect } from "react";
 
 export const useGetRecords = () => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
     setData, setList, setTotal,
-  } = useModalStore();
+  } = useRecordModalStore();
 
   const { mutate: getRecords, isPending, isError, error } = useMutation({
     mutationKey: ["getRecords"],

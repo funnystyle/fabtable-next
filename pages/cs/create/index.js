@@ -21,8 +21,7 @@ import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import { useGetCsDetail } from "@components/api/useGetCsDetail";
 import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
 
-const CsCreate = ({ contentHeight }) => {
-
+const CsCreate = ({ isActive }) => {
 	const { data, list } = useGetInputBoxList("csCreate");
 
 	const [form] = Form.useForm();
@@ -153,7 +152,7 @@ const CsCreate = ({ contentHeight }) => {
 
 			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"}/>
 
-			<SearchModal searchLocation={"order"} searchType={"OPEN"}/>
+			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
 		</Layout>
 	);
 };

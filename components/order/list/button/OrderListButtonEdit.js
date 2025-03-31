@@ -2,13 +2,13 @@
 import React, {useState} from "react";
 import {Button, Form,} from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const OrderListButtonEdit = () => {
 
 	const [form] = Form.useForm();
 
-	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useModalStore();
+	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useRecordModalStore();
 
 	const showModal = () => {
 		setOpenModal(true);

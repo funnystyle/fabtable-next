@@ -100,7 +100,7 @@ const printItems = [
 	},
 ];
 
-const OrderComponent = ({ contentHeight }) => {
+const OrderComponent = ({ contentHeight, isActive }) => {
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();

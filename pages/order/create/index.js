@@ -1,12 +1,9 @@
 // pages/order/create/index.js
 import React, { useEffect, useState } from "react";
 import { Flex, Form, Layout, } from "antd";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
-import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import OrderCreateTitle from "@components/order/create/OrderCreateTitle";
 import SearchModal from "@components/searchModal/SearchModal";
 import useRecordDataStore from "@store/useRecordDataStore";
@@ -15,7 +12,7 @@ import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderU
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 
-const OrderInfoCreate = ({ contentHeight }) => {
+const OrderInfoCreate = ({ isActive }) => {
 
 	// 입력 박스 리스트 호출
 	const { data, list } = useGetInputBoxList("recordCreate");
@@ -66,7 +63,7 @@ const OrderInfoCreate = ({ contentHeight }) => {
 			</Flex>
 
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
-			<SearchModal searchLocation={"order"} searchType={"OPEN"}/>
+			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
 		</Layout>
 	);
 };

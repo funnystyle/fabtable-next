@@ -6,13 +6,13 @@ import { handleCopyModal } from "@components/list/handleCopyModal";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const OrderListButtonCopy = () => {
 
 	const [form] = Form.useForm();
 
-	const { openCopyModal:openModal, setOpenCopyModal:setOpenModal } = useModalStore();
+	const { openCopyModal:openModal, setOpenCopyModal:setOpenModal } = useRecordModalStore();
 
 	const showModal = () => {
 		setOpenModal(true);

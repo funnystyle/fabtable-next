@@ -4,7 +4,7 @@ import { Dropdown, Tag, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import { useGetRecords } from "@components/api/useGetRecords";
 
 export const transformTagData = (data) => {

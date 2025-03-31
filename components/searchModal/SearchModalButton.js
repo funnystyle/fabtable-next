@@ -4,11 +4,11 @@ import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 
 const SearchModalButton = ({ form }) => {
 
-	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useModalStore();
+	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useRecordModalStore();
 
 	const handleSubmit = () => {
 		const groupedData = {};

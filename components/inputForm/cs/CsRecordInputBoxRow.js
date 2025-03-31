@@ -5,7 +5,7 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 import useRecordDataStore from "@store/useRecordDataStore";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 
@@ -15,7 +15,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { record } = useRecordDataStore();
-  const { index:recordIndex, openDiv } = useModalStore();
+  const { index:recordIndex, openDiv } = useRecordModalStore();
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;

@@ -2,14 +2,14 @@
 import React from "react";
 import {Flex, Typography,} from "antd";
 import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
-import useModalStore from "@store/useModalStore";
+import useRecordModalStore from "@store/useRecordModalStore";
 import SearchAutoComplete from "@components/autoComplete/SearchAutoComplete";
 
 const { Title } = Typography;
 
 const OrderListTitle = ({ title }) => {
 
-	const { setSearchKeyword } = useModalStore();
+	const { setSearchKeyword } = useRecordModalStore();
 
 	return (
 		<Flex align="center" justify="space-between" className="title-area">

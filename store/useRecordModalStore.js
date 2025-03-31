@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useModalStore = create((set) => ({
+const useRecordModalStore = create((set) => ({
   // drag
   disabled: true,
   setDisabled: (disabled) => set({ disabled }),
@@ -50,4 +50,4 @@ const useModalStore = create((set) => ({
   setDeleteTagKeyName: (deleteTagKeyName) => set({ deleteTagKeyName }),
 }));
 
-export default useModalStore;
+export default useRecordModalStore;
