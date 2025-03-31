@@ -611,6 +611,9 @@ const CSWriteComponent = ({ contentHeight }) => {
 							<Form.Item label="제품군">
 								<Select
 									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="product1"
 									onChange={handleChange}
 									onSearch={onSearch}
@@ -626,6 +629,9 @@ const CSWriteComponent = ({ contentHeight }) => {
 							<Form.Item label="모델">
 								<Select
 									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="model1"
 									onChange={handleChange}
 									onSearch={onSearch}
@@ -641,6 +647,9 @@ const CSWriteComponent = ({ contentHeight }) => {
 							<Form.Item label="세부모델">
 								<Select
 									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="detailModel1"
 									onChange={handleChange}
 									onSearch={onSearch}
@@ -656,6 +665,9 @@ const CSWriteComponent = ({ contentHeight }) => {
 							<Form.Item label="채널">
 								<Select
 									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="channel1"
 									onChange={handleChange}
 									onSearch={onSearch}
@@ -711,6 +723,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="usegas1"
 									onChange={handleChange}
 									options={[
@@ -755,6 +771,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="vendor1"
 									onChange={handleChange}
 									options={[
@@ -809,6 +829,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="oil1"
 									onChange={handleChange}
 									options={[
@@ -868,6 +892,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="oil2"
 									onChange={handleChange}
 									options={[
@@ -937,6 +965,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="date1"
 									onChange={handleChange}
 									options={[
@@ -992,6 +1024,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="date2"
 									onChange={handleChange}
 									options={[
@@ -1099,6 +1135,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="writer1"
 									onChange={handleChange}
 									options={[
@@ -1143,6 +1183,10 @@ const CSWriteComponent = ({ contentHeight }) => {
 								}}
 							>
 								<Select
+									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="fabricate1"
 									onChange={handleChange}
 									options={[
@@ -1478,14 +1522,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 											<Flex gap={4}>
 												<Form.Item label="고객사">
 													<Select
-														defaultValue="clientSelect1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="clientSelect1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "clientSelect1",
@@ -1497,14 +1539,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 												<Form.Item label="장비사">
 													<Select
-														defaultValue="mechanic1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="mechanic1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "mechanic1",
@@ -1522,14 +1562,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 											<Flex gap={4}>
 												<Form.Item label="설비명">
 													<Select
-														defaultValue="fac1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="fac1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "fac1",
@@ -1551,14 +1589,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 											<Flex gap={4}>
 												<Form.Item label="라인정보">
 													<Select
-														defaultValue="lineInfo1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="lineInfo1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "lineInfo1",
@@ -1586,14 +1622,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 											<Flex gap={4}>
 												<Form.Item label="공정">
 													<Select
-														defaultValue="process1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="process1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "process1",
@@ -1605,14 +1639,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 												<Form.Item label="세부공정">
 													<Select
-														defaultValue="detailProcess1"
-														onChange={handleChange}
 														showSearch
 														filterOption={(input, option) =>
-															(option?.label ?? "")
-																.toLowerCase()
-																.includes(input.toLowerCase())
+															(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 														}
+														defaultValue="detailProcess1"
+														onChange={handleChange}
 														options={[
 															{
 																value: "detailProcess1",
@@ -1912,14 +1944,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 										<Form.Item label="불량구분">
 											<Select
-												defaultValue="poorSelect1"
-												onChange={handleChange}
 												showSearch
 												filterOption={(input, option) =>
-													(option?.label ?? "")
-														.toLowerCase()
-														.includes(input.toLowerCase())
+													(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 												}
+												defaultValue="poorSelect1"
+												onChange={handleChange}
 												options={[
 													{
 														value: "poorSelect1",
@@ -1931,14 +1961,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 										<Form.Item label="현상분류">
 											<Select
-												defaultValue="symptomSelect1"
-												onChange={handleChange}
 												showSearch
 												filterOption={(input, option) =>
-													(option?.label ?? "")
-														.toLowerCase()
-														.includes(input.toLowerCase())
+													(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 												}
+												defaultValue="symptomSelect1"
+												onChange={handleChange}
 												options={[
 													{
 														value: "symptomSelect1",
@@ -1960,14 +1988,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 										<Form.Item label="조치구분">
 											<Select
-												defaultValue="actionSelect1"
-												onChange={handleChange}
 												showSearch
 												filterOption={(input, option) =>
-													(option?.label ?? "")
-														.toLowerCase()
-														.includes(input.toLowerCase())
+													(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 												}
+												defaultValue="actionSelect1"
+												onChange={handleChange}
 												options={[
 													{
 														value: "actionSelect1",
@@ -1979,14 +2005,12 @@ const CSWriteComponent = ({ contentHeight }) => {
 
 										<Form.Item label="심각도" className="select-input-area">
 											<Select
-												defaultValue="severitySelect1"
-												onChange={handleChange}
 												showSearch
 												filterOption={(input, option) =>
-													(option?.label ?? "")
-														.toLowerCase()
-														.includes(input.toLowerCase())
+													(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 												}
+												defaultValue="severitySelect1"
+												onChange={handleChange}
 												options={[
 													{
 														value: "severitySelect1",

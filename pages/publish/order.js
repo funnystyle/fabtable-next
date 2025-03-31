@@ -2327,6 +2327,9 @@ const OrderComponent = ({ contentHeight }) => {
 							>
 								<Select
 									showSearch
+									filterOption={(input, option) =>
+										(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+									}
 									defaultValue="oil1"
 									onChange={handleChange}
 									options={[

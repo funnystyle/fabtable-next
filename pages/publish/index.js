@@ -26,6 +26,28 @@ const DashBoard = () => {
     );
   };
 	
+  // 팝업 창을 띄우는 함수
+	const openPopup2 = () => {
+    const popupWidth = 1280;
+    const popupHeight = 1120;
+
+    // 현재 사용 중인 모니터의 전체 화면 크기 가져오기
+    const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+    const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+    const screenWidth = window.screen.availWidth;
+    const screenHeight = window.screen.availHeight;
+
+    // 중앙 정렬 계산 (멀티 모니터 고려)
+    const left = screenLeft + (screenWidth - popupWidth) / 2;
+    const top = screenTop + (screenHeight - popupHeight) / 2;
+
+    window.open(
+      "/publish/produce_popup2",
+      "producePopup",
+      `width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes`
+    );
+  };
+
 	return (
 		<Layout>
 			<div>대시보드</div>
@@ -41,6 +63,9 @@ const DashBoard = () => {
 			<br />
       <Button type="primary" onClick={openPopup}>
         제어계수 팝업 열기
+      </Button>
+      <Button type="primary" onClick={openPopup2}>
+        공정창 팝업 열기
       </Button>
 		</Layout>
 	);

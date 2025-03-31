@@ -37,6 +37,7 @@ const { Header, Sider, Content } = Layout;
 const pageComponents = {
 	"/dashboard": lazy(() => import("@/pages/dashboard")),
 	"/publish/year": lazy(() => import("@/pages/publish/year")),
+	"/publish/year3": lazy(() => import("@/pages/publish/year3")),
 	"/publish/month": lazy(() => import("@/pages/publish/month")),
 	"/publish/order": lazy(() => import("@/pages/publish/order")),
 	"/publish/orderwrite": lazy(() => import("@/pages/publish/orderwrite")),
@@ -86,6 +87,11 @@ const basicItems = [
 			},
 			{
 				key: "2-2",
+				label: "연간 종합 일정(3개년)",
+				url: "/publish/year3",
+			},
+			{
+				key: "2-3",
 				label: "월간 종합 일정",
 				url: "/publish/month",
 			},
@@ -681,12 +687,12 @@ const HomePage = ({ children }) => {
 							</div>
 						</Header>
 						{/* 탭 없이 하려면 아래 코드를 적용 */}
-						{/* <Content className="contents" style={{ overflowY: "auto"}}>
+						<Content className="contents" style={{ overflowY: "auto"}}>
 							{children ? React.cloneElement(children, { contentHeight }) : null}
-						</Content> */}
+						</Content>
 						{/* 탭 적용하려면 아래 코드를 적용 */}
 						{/* Content 영역을 Tabs로 변경 */}
-						<Content className="contents">
+						{/* <Content className="contents">
 							<Tabs
 								hideAdd
 								size="small"
@@ -724,7 +730,7 @@ const HomePage = ({ children }) => {
 									</Tabs.TabPane>
 								))}
 							</Tabs>
-						</Content>
+						</Content> */}
 					</Layout>
 				</Layout>
 			</Layout>
