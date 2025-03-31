@@ -42,12 +42,16 @@ const CsCreate = ({ isActive }) => {
 	const { data:csDetail, handleReload:csDetailLoad } = useGetCsDetail();
 
 	useEffect(() => {
-		loadFormValues( cs, data, form, selectedCodes, setSelectedCodes)
+		if (list && list.length > 0 && cs?.id) {
+			setTimeout(() => {
+				loadFormValues(cs, data, form, selectedCodes, setSelectedCodes)
+			}, 10);
 
-		if (cs?.id) {
-			csDetailLoad(cs.id)
+			if (cs?.id) {
+				csDetailLoad(cs.id)
+			}
 		}
-	}, [cs]);
+	}, [cs, list]);
 
 	const { setRecordKeys } = useCsCreateConstantStore();
 	useEffect(() => {

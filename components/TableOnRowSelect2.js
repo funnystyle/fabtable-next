@@ -6,7 +6,7 @@ import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAnt
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY }) => {
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick }) => {
 
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
@@ -117,7 +117,13 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
               if (onRowClick) onRowClick(fullRecord); // ✅ 상위 컴포넌트에서 전달된 함수 실행
             },
             onMouseDown: (event) => handleMouseDownAntd(event, record, handleAntdTableEventData()),
-            onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData())
+            onMouseEnter: (event) => handleMouseEnterAntd(event, record, handleAntdTableEventData()),
+            onDoubleClick: (event) => {
+              if (onRowDoubleClick) {
+                const fullRecord = data.find(item => item.key === record.key);
+                onRowDoubleClick(fullRecord);
+              }
+            }
           })}
           size="small"
           className="ellipsis-column basic-tb"

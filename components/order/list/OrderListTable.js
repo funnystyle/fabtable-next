@@ -8,6 +8,8 @@ import useRecordModalStore from "@store/useRecordModalStore";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { useGetRecords } from "@components/api/useGetRecords";
 import PagingArea from "@components/list/PagingArea";
+import useMenuTabStore from "@store/useMenuTabStore";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 const OrderListTable = ({ contentHeight }) => {
 
@@ -22,6 +24,14 @@ const OrderListTable = ({ contentHeight }) => {
 			setOpenEditModal(true);
 		}
 	};
+
+	const { moveUrl } = useMenuTabStore();
+	const { setRecord } = useRecordDataStore();
+	const handleDoubleClick = (record) => {
+		record.nowState = record.nowState.props.children
+		setRecord(record);
+		moveUrl("/order/create");
+	}
 
 	const { handleReload } = useGetRecords();
 
@@ -45,7 +55,9 @@ const OrderListTable = ({ contentHeight }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}/>
+					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
+														 onRowDoubleClick={handleDoubleClick}
+					/>
 				</div>
 			</Dropdown>
 		</>

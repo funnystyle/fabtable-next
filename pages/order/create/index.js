@@ -25,8 +25,12 @@ const OrderInfoCreate = ({ isActive }) => {
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
-		loadFormValues( record, data, form, selectedCodes, setSelectedCodes)
-	}, [record]);
+		if (list && list.length > 0 && record) {
+			setTimeout(() => {
+				loadFormValues(record, data, form, selectedCodes, setSelectedCodes)
+			}, 10);
+		}
+	}, [record, list]);
 
 	const [anchorContainer, setAnchorContainer] = useState(null);
 

@@ -9,6 +9,9 @@ import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
 import { csListRightItem } from "./data/csListRightItem";
+import useMenuTabStore from "@store/useMenuTabStore";
+import useRecordDataStore from "@store/useRecordDataStore";
+import useCsDataStore from "@store/useCsDataStore";
 
 const CsListTable = ({ contentHeight }) => {
 
@@ -24,6 +27,14 @@ const CsListTable = ({ contentHeight }) => {
 			setOpenEditModal(true);
 		}
 	};
+
+	const { moveUrl } = useMenuTabStore();
+	const { setCs } = useCsDataStore();
+
+	const handleDoubleClick = (record) => {
+		setCs(record);
+		moveUrl("/cs/create");
+	}
 
 	const { handleReload } = useGetCsList();
 
@@ -47,7 +58,9 @@ const CsListTable = ({ contentHeight }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}/>
+					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
+														 onRowDoubleClick={handleDoubleClick}
+					/>
 				</div>
 			</Dropdown>
 		</>
