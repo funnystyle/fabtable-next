@@ -7,6 +7,7 @@ import YearHeader from "@components/calendar/year/YearHeader";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getAxios, postAxios} from "@api/apiClient";
 import { YearTable } from "@components/calendar/year/YearTable";
+import { YearChart3 } from "@components/calendar/year/YearChart3";
 
 const { Title: PageTitle } = Typography;
 
@@ -47,7 +48,15 @@ const YearComponent = ({ contentHeight }) => {
 							연간 종합 일정
 						</PageTitle>
 
+						{year[0] === year[1] ? (
 						<YearChart list={list}/>
+							) : (
+						<YearChart3 yearList={
+							Array.isArray(year)
+								? year.map((y) => parseInt(y, 10)).filter((y) => !isNaN(y))
+								: []
+						} />
+						)}
 
 						<YearHeader year={year} setYear={setYear} setSearchData={setSearchData} />
 					</div>
