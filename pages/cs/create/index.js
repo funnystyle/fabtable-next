@@ -126,7 +126,7 @@ const CsCreate = ({ isActive }) => {
 			<div className="contents-flex">
 				<CsCreateTitle title="C/S 관리" />
 
-				<CsCreateTab activeKey={2} />
+				{/*<CsCreateTab activeKey={2} />*/}
 
 				{!cs?.id ? <CsCreateHeader form={form} />
 				: <CsCreateHeaderUpdate form={form} /> }

@@ -128,7 +128,7 @@ const OrderComponent = ({ contentHeight, isActive }) => {
 			<div className="contents-flex">
 				<CsListTitle title="C/S 관리" />
 
-				<CsCreateTab activeKey={1} />
+				{/*<CsCreateTab activeKey={1} />*/}
 
 				{/*  검색결과 */}
 				<CsListSearchTags />
