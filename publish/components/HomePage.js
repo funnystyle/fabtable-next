@@ -285,7 +285,7 @@ const HomePage = ({ children }) => {
             setActiveTab(menuItem.key);
             setSelectedMenuKeys([menuItem.key]);
           }
-        }, 200); // 약간의 딜레이를 줘서 정확한 값 적용
+        }, 50); // 약간의 딜레이를 줘서 정확한 값 적용
       });
     });
   }, [router.pathname]);
@@ -366,12 +366,12 @@ const HomePage = ({ children }) => {
 
               <Menu
                 defaultSelectedKeys={["1"]}
-                defaultOpenKeys={["sub1", "sub2"]}
+                defaultOpenKeys={openKeys}
                 mode="inline"
                 items={basicItems}
                 selectedKeys={selectedMenuKeys}
-                openKeys={openKeys}
-                onOpenChange={onOpenChange}
+                // openKeys={openKeys}
+                // onOpenChange={onOpenChange}
                 inlineIndent="10"
                 onClick={handleMenuClick}
               />
