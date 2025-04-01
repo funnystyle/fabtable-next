@@ -9,6 +9,7 @@ const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
 
   const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
+
   const [inputValue, setInputValue] = useState(page);
 
   // 페이지 변경 핸들러
@@ -66,6 +67,16 @@ const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
     return originalElement;
   };
 
+  const handleReset = () => {
+    event.preventDefault();
+    setSelectedRowKeys([]);
+    setAnchorRowKey(null);
+    setCursorRowKey(null);
+    setTimeout(() => {
+      setSelectedRowKeys([]);
+    }, 0);
+  }
+
   return (
     <Flex align="center" justify="space-between">
       <Flex gap="small" align="center">
@@ -112,6 +123,7 @@ const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
           icon={<RedoOutlined />}
           target="_blank"
           className="icon-redo"
+          onClick={handleReset}
         />
 
         <Dropdown menu={{ items: lineItems, onClick: handleLineItemsClick }}>
