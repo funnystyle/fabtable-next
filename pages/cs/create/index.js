@@ -1,6 +1,6 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
 import React, { useEffect, useState } from "react";
-import { Flex, Form, Layout, } from "antd";
+import { Flex, Form, Layout, Spin, } from "antd";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
 import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
 import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
@@ -121,6 +121,8 @@ const CsCreate = ({ isActive=true }) => {
 		}
 	}, []);
 
+	const loading = !list || list.length === 0;
+
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -132,27 +134,34 @@ const CsCreate = ({ isActive=true }) => {
 				: <CsCreateHeaderUpdate form={form} /> }
 			</div>
 
-			<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="cs-anchor-wrapper">
-				<div className="anchor-contents">
-					<div
-						// style={{ paddingTop: contentHeight }}
-						// className="contents-scroll"
-					>
-						{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
+			<Spin
+				spinning={loading}
+				style={{ width: "100%", textAlign: "center", paddingTop: 80 }}
+			>
+				{!loading && (
+					<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="cs-anchor-wrapper">
+						<div className="anchor-contents">
+							<div
+								// style={{ paddingTop: contentHeight }}
+								// className="contents-scroll"
+							>
+								{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
 
-						<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} />
+								<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} />
 
-						{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
-						
-						<CsAsDetailInputBox form={form} />
+								{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
+								
+								<CsAsDetailInputBox form={form} />
 
-						<CsFollowUplInputBox form={form} />
-					</div>
-				</div>
-				{anchorContainer && (
-					<CsCreateAnchor list={list} anchorContainer={anchorContainer}/>
+								<CsFollowUplInputBox form={form} />
+							</div>
+						</div>
+						{anchorContainer && (
+							<CsCreateAnchor list={list} anchorContainer={anchorContainer}/>
+						)}
+					</Flex>
 				)}
-			</Flex>
+			</Spin>
 
 			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"}/>
 

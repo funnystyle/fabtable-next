@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React, { useEffect, useState } from "react";
-import { Flex, Form, Layout, } from "antd";
+import { Flex, Form, Layout, Spin, } from "antd";
 import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
@@ -11,6 +11,7 @@ import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderUpdate";
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
@@ -41,6 +42,8 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		}
 	}, []);
 
+	const loading = !list || list.length === 0;
+
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -52,20 +55,27 @@ const OrderInfoCreate = ({ isActive=true }) => {
 				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 
-			<Flex style={{ height: 'calc(100vh - 228px)', overflowY: 'auto' }} className="order-anchor-wrapper">
-				<div className="anchor-contents">
-					<div
-						// style={{ paddingTop: contentHeight }}
-						// className="contents-scroll"
-					>
-						{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
-					</div>
-				</div>
-				{anchorContainer && (
-					<OrderCreateAnchor list={list} anchorContainer={anchorContainer}/>
+			<Spin
+				spinning={loading}
+				style={{ width: "100%", textAlign: "center", paddingTop: 80 }}
+			>
+				{!loading && (
+					<Flex style={{ height: 'calc(100vh - 228px)', overflowY: 'auto' }} className="order-anchor-wrapper">
+								<div className="anchor-contents">
+									<div
+										// style={{ paddingTop: contentHeight }}
+										// className="contents-scroll"
+									>
+										{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
+									</div>
+								</div>
+						{anchorContainer && (
+							<OrderCreateAnchor list={list} anchorContainer={anchorContainer}/>
+						)}
+					</Flex>
 				)}
-			</Flex>
-
+			</Spin>
+	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
 			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
 		</Layout>

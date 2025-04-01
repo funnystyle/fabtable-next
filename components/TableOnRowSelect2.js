@@ -102,7 +102,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   }, [serverData]);
 
   return (
-    <Spin spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} style={{ textAlign: "center" }}>
+    <Spin spinning={loading} style={{ textAlign: "center" }}>
       <div ref={tableRef} className="tb-container" tabIndex={0} 
         style={{ 
           userSelect: "none", 
