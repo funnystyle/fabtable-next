@@ -44,7 +44,7 @@ export const CsAsTopInputBox = ({ form }) => {
         </Form>
         
       </div>
-      <div class="info-wrap-last"/>
+      <div style={{marginBottom: "16px"}}/>
     </>
   );
 }

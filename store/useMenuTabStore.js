@@ -32,7 +32,7 @@ const useMenuTabStore = create((set, get) => ({
   setActiveTab: (activeTab) => set({ activeTab }),
   selectedMenuKeys: ["1"],
   setSelectedMenuKeys: (selectedMenuKeys) => set({ selectedMenuKeys }),
-  openKeys: ["2", "3", "33", "4", "44", "7", "admin-2"],
+  openKeys: ["2", "3", "4", "7", "admin-2"],
   setOpenKeys: (openKeys) => set({ openKeys }),
   moveUrl: (url) => {
     const menuItem = findMenuItemByUrl([...basicItems, ...adminItems], url);
@@ -54,7 +54,7 @@ const useMenuTabStore = create((set, get) => ({
     set({ selectedMenuKeys: [menuItem.key] });
 
     const parentKeys = getParentKeys(menuItem.key, [...basicItems, ...adminItems]);
-    set({ openKeys: parentKeys ? [...parentKeys] : [] });
+    // set({ openKeys: parentKeys ? [...parentKeys] : [] });
   },
 }));
 

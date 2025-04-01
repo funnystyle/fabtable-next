@@ -85,6 +85,7 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
 
         <CsAsWorkFileInputBox index={index} fileList={fileList} setFileList={setFileList} />
       </div>
+      <div style={{marginBottom: "16px"}}/>
     </React.Fragment>
   );
 }
