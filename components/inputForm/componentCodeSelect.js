@@ -1,4 +1,4 @@
-import { Form, Select } from "antd";
+import { Form, Input, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
@@ -38,6 +38,12 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
         // ✅ codeList가 비어있을 때: 비활성화된 Select
         <Select placeholder="선택할 옵션이 없습니다." disabled={true} />
       ) : (
+        codeList.length === 1 && recordColumn.name === "conversionFactor" ? (
+          <Input placeholder={`${recordColumn.displayName || '값을 입력하세요'}`}
+                 value={codeList[0].codeName}
+          />
+          )
+        : (
         <Select
           showSearch
           filterOption={(input, option) =>
@@ -64,7 +70,7 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
               : []
           }
         />
-      )}
+      ))}
     </Form.Item>
   );
 }
