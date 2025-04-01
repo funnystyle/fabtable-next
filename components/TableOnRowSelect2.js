@@ -104,7 +104,16 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
 
   return (
     <Spin spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} style={{ textAlign: "center" }}>
-      <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none", paddingTop: "8px", paddingBottom: "40px" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
+      <div ref={tableRef} className="tb-container" tabIndex={0} 
+        style={{ 
+          userSelect: "none", 
+          outline: "none", 
+          paddingTop: "8px", 
+          paddingBottom: "40px",
+          visibility: loading ? "hidden" : "visible",
+        }} 
+        onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}
+      >
         <Table
           rowSelection={
             rowSelect

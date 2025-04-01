@@ -4,7 +4,7 @@ import { Table } from "antd";
 
 export const focusTable = (tableRef) => {
   if (tableRef.current) {
-    tableRef.current.focus();
+    tableRef.current.focus({ preventScroll: true });
   }
 }
 
