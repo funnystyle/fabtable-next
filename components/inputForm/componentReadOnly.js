@@ -1,16 +1,35 @@
-import { DatePicker, Form, Input, Radio, Select } from "antd";
-import React, { useEffect } from "react";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
+import { Form, Input } from "antd";
+import React, { useState, useEffect } from "react";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
-export const componentReadOnly = (recordColumn, index = -1) => {
+const ComponentReadOnly = ({ form, recordColumn, index = -1 }) => {
   const name = handleComponentInputName(recordColumn, index);
+
+  const values = Form.useWatch([], form); // 폼 전체 값을 watch
+  useEffect(() => {
+    if (recordColumn.name === "convertedFlowrate") {
+      console.log("recordColumn", recordColumn);
+
+
+      const flowrate = form.getFieldValue("flowrate") || 0;
+      console.log("form flowrate", form.getFieldValue("flowrate"));
+      console.log("flowrate", flowrate);
+      const conversionFactor = form.getFieldValue("conversionFactor") || 1;
+      console.log("form conversionFactor", form.getFieldValue("conversionFactor"));
+      console.log("conversionFactor", conversionFactor);
+      const convertedFlowrate = flowrate / conversionFactor;
+      console.log("convertedFlowrate", convertedFlowrate);
+      form.setFieldsValue({ convertedFlowrate });
+    }
+  }, [values]);
+    // form에서 flowrate, conversionFactor의 값을 가져와서 계산
+    // flowrate / conversionFactor
+
   return (
     <Form.Item key={name} label={`${recordColumn.displayName}`} name={name}>
-      <Input placeholder={`${'자동입력됩니다.'}`} readOnly />
+      <Input placeholder={`${'자동입력됩니다.'}`} readOnly/>
     </Form.Item>
   );
 }
+
+export default ComponentReadOnly;
