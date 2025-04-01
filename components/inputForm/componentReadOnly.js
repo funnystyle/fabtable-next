@@ -10,7 +10,7 @@ const ComponentReadOnly = ({ form, recordColumn, index = -1 }) => {
     if (recordColumn.name === "convertedFlowrate") {
       const flowrate = form.getFieldValue("flowrate") || 0;
       const conversionFactor = form.getFieldValue("conversionFactor") || 1;
-      const convertedFlowrate = flowrate / conversionFactor;
+      const convertedFlowrate = parseFloat((flowrate / conversionFactor).toFixed(2));
       form.setFieldsValue({ convertedFlowrate });
     }
   }, [values]);
