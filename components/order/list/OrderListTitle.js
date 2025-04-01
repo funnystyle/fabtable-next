@@ -9,7 +9,7 @@ const { Title } = Typography;
 
 const OrderListTitle = ({ title }) => {
 
-	const { setSearchKeyword } = useRecordModalStore();
+	const { searchKeyword, setSearchKeyword } = useRecordModalStore();
 
 	return (
 		<Flex align="center" justify="space-between" className="title-area">
@@ -18,7 +18,7 @@ const OrderListTitle = ({ title }) => {
 			</Title>
 
 			<Flex gap="small">
-				<SearchAutoComplete setSearchKeyword={setSearchKeyword} />
+				<SearchAutoComplete searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
 
 				<OrderListButtonSearch />
 			</Flex>

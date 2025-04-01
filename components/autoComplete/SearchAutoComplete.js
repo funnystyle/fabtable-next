@@ -1,36 +1,60 @@
 // pages/order/create/index.js
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {AutoComplete, Button, Flex, Input,} from "antd";
 import {CloseOutlined} from "@ant-design/icons";
 
-const SearchAutoComplete = ({ setSearchKeyword }) => {
+const STORAGE_KEY = "search_history";
 
-	const [searchItems, setSearchItems] = useState([
-		{ title: "검색어1", date: "02.04" },
-		{ title: "검색어2", date: "02.05" },
-		{ title: "키워드3", date: "02.06" },
-	]);
+const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 
-	// 개별 검색어 삭제
-	const handleDelete = (title) => {
-		setSearchItems(searchItems.filter((item) => item.title !== title));
+	const [searchItems, setSearchItems] = useState([]);
+
+	// 🔹 localStorage에서 검색어 목록 불러오기
+	useEffect(() => {
+		const storedItems = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+		setSearchItems(storedItems);
+	}, []);
+
+	// 🔹 검색어를 localStorage에 저장하는 함수
+	const saveToLocalStorage = (items) => {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+		setSearchItems(items);
 	};
 
-	// 전체 검색어 삭제
+	// 🔹 개별 검색어 삭제
+	const handleDelete = (title) => {
+		const updatedItems = searchItems.filter((item) => item.title !== title);
+		saveToLocalStorage(updatedItems);
+	};
+
+	// 🔹 전체 검색어 삭제
 	const handleDeleteAll = () => {
+		localStorage.removeItem(STORAGE_KEY);
 		setSearchItems([]);
 	};
 
-	// 검색어 렌더링
+	// 🔹 검색 실행 시 검색어 추가
+	const handleSearch = (value) => {
+		if (!value.trim()) return; // 빈 값 방지
+
+		// 중복 제거 후 최신 검색어가 가장 위로 가도록 정렬
+		const updatedItems = [
+			{ title: value, date: new Date().toLocaleDateString("ko-KR") },
+			...searchItems.filter((item) => item.title !== value),
+		].slice(0, 10); // 최대 10개까지만 저장
+
+		saveToLocalStorage(updatedItems);
+		setSearchKeyword(value);
+	};
+
+	// 🔹 검색어 렌더링
 	const renderItem = (title, date) => ({
 		value: title,
 		label: (
 			<Flex align="center" justify="space-between">
 				<span>{title}</span>
-
 				<Flex align="center" gap="small">
 					<span>{date}</span>
-
 					<CloseOutlined
 						className="close-x"
 						onClick={(e) => {
@@ -69,6 +93,10 @@ const SearchAutoComplete = ({ setSearchKeyword }) => {
 			]
 			: [];
 
+	useEffect(() => {
+		console.log("searchKeyword", searchKeyword);
+	}, [searchKeyword]);
+// TODO:여기 안바뀌는 이유를 모르겠음
 
 	return (
 		<AutoComplete
@@ -84,7 +112,8 @@ const SearchAutoComplete = ({ setSearchKeyword }) => {
 				placeholder="검색어를 입력하세요"
 				allowClear
 				className="input-search"
-				onSearch={(value) => setSearchKeyword(value)}
+				value={searchKeyword}
+				onSearch={handleSearch}
 			/>
 		</AutoComplete>
 	);

@@ -9,7 +9,7 @@ const { Title } = Typography;
 
 const CsListTitle = ({ title }) => {
 
-	const { setSearchKeyword } = useCsSearchModalStore();
+	const { searchKeyword, setSearchKeyword } = useCsSearchModalStore();
 
 	return (
 		<Flex align="center" justify="space-between" className="title-area">
@@ -18,7 +18,7 @@ const CsListTitle = ({ title }) => {
 			</Title>
 
 			<Flex gap="small">
-				<SearchAutoComplete setSearchKeyword={setSearchKeyword} />
+				<SearchAutoComplete searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
 
 				<CsListButtonSearch />
 			</Flex>
