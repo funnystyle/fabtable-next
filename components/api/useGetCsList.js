@@ -22,6 +22,7 @@ export const useGetCsList = () => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
+    console.log("handleReload", page, size, searchKeyword, searchStatusList, searchData);
     getCsList({ page, size, searchKeyword, searchStatusList, searchData });
   };
 

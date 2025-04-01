@@ -33,6 +33,13 @@ const OrderListTable = () => {
 		moveUrl("/order/create");
 	}
 
+	const handleSettingKeyToData = (data) => {
+		return (transformTagData(data) || []).map((item, index) => {
+			item.key = item.id;
+			return item;
+		});
+	}
+
 	return (
 		<>
 			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
@@ -49,7 +56,7 @@ const OrderListTable = () => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} />
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} />
 				</div>
 			</Dropdown>
 		</>

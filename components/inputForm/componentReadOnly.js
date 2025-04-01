@@ -8,17 +8,9 @@ const ComponentReadOnly = ({ form, recordColumn, index = -1 }) => {
   const values = Form.useWatch([], form); // 폼 전체 값을 watch
   useEffect(() => {
     if (recordColumn.name === "convertedFlowrate") {
-      console.log("recordColumn", recordColumn);
-
-
       const flowrate = form.getFieldValue("flowrate") || 0;
-      console.log("form flowrate", form.getFieldValue("flowrate"));
-      console.log("flowrate", flowrate);
       const conversionFactor = form.getFieldValue("conversionFactor") || 1;
-      console.log("form conversionFactor", form.getFieldValue("conversionFactor"));
-      console.log("conversionFactor", conversionFactor);
       const convertedFlowrate = flowrate / conversionFactor;
-      console.log("convertedFlowrate", convertedFlowrate);
       form.setFieldsValue({ convertedFlowrate });
     }
   }, [values]);

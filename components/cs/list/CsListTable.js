@@ -36,11 +36,21 @@ const CsListTable = ({ contentHeight }) => {
 		moveUrl("/cs/create");
 	}
 
+	const handleSettingKeyToData = (data) => {
+		return (transformTagData(data) || []).map((item, index) => {
+			item.key = index;
+			return item;
+		});
+	}
+
 	const { handleReload } = useGetCsList();
 
 	useEffect(() => {
 		handleReload();
-	}, []);
+	}, [])
+
+
+	console.log("bbbb", handleSettingKeyToData(data));
 
 
 	return (
@@ -58,7 +68,7 @@ const CsListTable = ({ contentHeight }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
 														 onRowDoubleClick={handleDoubleClick}
 					/>
 				</div>
