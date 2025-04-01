@@ -7,16 +7,14 @@ import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import { useGetRecords } from "@components/api/useGetRecords";
 
-const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
+const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => {
 
 	const { mutate: orderInfoCopy } = useMutation({
 		mutationKey: "orderInfoCopy",
 		mutationFn: (values) => postAxios("/user/record/copy", values),
 	});
 
-	const { handleReload } = useGetRecords();
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleSubmit = async (event) => {

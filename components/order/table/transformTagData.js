@@ -1,11 +1,6 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
-import { Dropdown, Tag, } from "antd";
-import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
-import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useRecordModalStore from "@store/useRecordModalStore";
-import { useGetRecords } from "@components/api/useGetRecords";
+import React from "react";
+import { Tag, } from "antd";
 
 export const transformTagData = (data) => {
 	// data == {} 일때 에러 발생

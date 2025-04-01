@@ -5,7 +5,6 @@ import { DownOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { putAxios } from "@api/apiClient";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderListButtonStatusChange = ({ statusList, handleReload }) => {
 

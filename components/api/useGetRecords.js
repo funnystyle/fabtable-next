@@ -22,7 +22,15 @@ export const useGetRecords = () => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
-    getRecords({ page, size, searchKeyword, statusList:searchStatusList, searchData });
+    const savePageSize = localStorage.getItem("tablePageSize");
+    let pageSize;
+    if (savePageSize) {
+      pageSize = Number(savePageSize);
+    }
+    if (searchStatusList.length === 0) {
+      return;
+    }
+    getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
   };
 
   useEffect(() => {

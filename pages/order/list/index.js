@@ -1,22 +1,23 @@
 // pages/order.js
 import React, { useEffect, useState } from "react";
-import { Button, Dropdown, Flex, Layout, Space, } from "antd";
+import { Layout, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import OrderListTitle from "@components/order/list/OrderListTitle";
-import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import OrderListSearchTags from "@components/order/list/OrderListSearchTags";
 import OrderListButtonArea from "@components/order/list/OrderListButtonArea";
 import OrderListTable from "@components/order/list/OrderListTable";
 import useDrawerStore from "@store/useDrawerStore";
 import useRecordModalStore from "@store/useRecordModalStore";
-import CsCreate from "@pages/cs/create";
 import SearchModal from "@components/searchModal/SearchModal";
+import { useGetRecords } from "@components/api/useGetRecords";
 
 
 const OrderComponent = ({ isActive=true }) => {
+
+	const { handleReload } = useGetRecords();
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
@@ -51,11 +52,11 @@ const OrderComponent = ({ isActive=true }) => {
 					<OrderListSearchTags />
 
 					{/* 상단 버튼 */}
-					<OrderListButtonArea statusList={statusList} />
+					<OrderListButtonArea statusList={statusList} handleReload={handleReload} />
 				{/* </Space> */}
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListTable />
+			<OrderListTable handleReload={handleReload} />
 			</div>
 
 			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} />

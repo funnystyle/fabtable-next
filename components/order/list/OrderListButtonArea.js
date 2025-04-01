@@ -11,13 +11,11 @@ import OrderListButtonExcel from "@components/order/list/button/OrderListButtonE
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 import useRecordModalStore from "@store/useRecordModalStore";
 import useRecordDataStore from "@store/useRecordDataStore";
-import { useGetRecords } from "@components/api/useGetRecords";
 
-const OrderListButtonArea = ({ statusList }) => {
+const OrderListButtonArea = ({ statusList, handleReload }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
 	const { tags, setTags } = useRecordDataStore();
-	const { handleReload } = useGetRecords();
 
 	return (
 		// <div className="contents-top-scroll">
@@ -47,9 +45,9 @@ const OrderListButtonArea = ({ statusList }) => {
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonCopy />
+					<OrderListButtonCopy handleReload={handleReload}/>
 
-					<OrderListButtonEdit  />
+					<OrderListButtonEdit handleReload={handleReload}/>
 				</Flex>
 
 				<Flex gap="small">

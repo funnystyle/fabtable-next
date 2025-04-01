@@ -8,7 +8,7 @@ import { getAxios } from "@api/apiClient";
 import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
 import useRecordModalStore from "@store/useRecordModalStore";
 
-const OrderListButtonCopy = () => {
+const OrderListButtonCopy = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
@@ -21,7 +21,7 @@ const OrderListButtonCopy = () => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 복제하기</Button>
-			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
+			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} handleReload={handleReload} />
 		</>
 	);
 };

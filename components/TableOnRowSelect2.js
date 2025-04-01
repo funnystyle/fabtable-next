@@ -1,10 +1,11 @@
 "use client"; // Next.js 클라이언트 컴포넌트
 
 import React, { useEffect, useRef, useState } from "react";
-import { Table } from "antd";
+import { Spin, Table } from "antd";
 import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd } from "@components/AntdTableEvent";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import { LoadingOutlined } from "@ant-design/icons";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick }) => {
 
@@ -21,31 +22,10 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   // ✅ 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
 
-  // const data = serverData != undefined ? serverData.map((item, index) => ({
-  //   ...item,
-  //   key: item.id // key 값을 item.id로 설정
-  // })) : [];
-
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (serverData) {
-      const transformedData = serverData.map((item, index) => ({
-        ...item,
-        key: item.id // key 값을 item.id로 설정
-      }));
-      setData(transformedData);
-
-      
-      
-    }
-  }, [serverData]);
-
-  useEffect(() => {
-    console.log("data", data);
-    setLoading(false);
-  }, [data]);
+  const data = serverData != undefined ? serverData.map((item, index) => ({
+    ...item,
+    key: item.id // key 값을 item.id로 설정
+  })) : [];
 
   useEffect(() => {
     focusTable(tableRef);
@@ -93,13 +73,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
     localStorage.setItem("tablePageSize", key); // ✅ localStorage에 저장
   };
 
-  useEffect(() => {
-    const savedPageSize = localStorage.getItem("tablePageSize");
-    if (savedPageSize) {
-      setSize(Number(savedPageSize)); // 문자열 → 숫자로 변환
-    }
-  }, []);
-
   const handleReset = () => {
     event.preventDefault();
     setSelectedRowKeys([]);
@@ -110,22 +83,29 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
     }, 0);
   }
 
-  
 
-  // useEffect(() => {
-  //   // 3초 후에 로딩 상태를 false로 변경
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 5000);
-  //   return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
-  // }, [serverData]);
+  const [loading, setLoading] = useState(true);
+  // 👉 테이블 렌더링 완료 감지
+  useEffect(() => {
+    if (serverData.length === 0) return;
 
-  // if (loading) return null;
+    requestAnimationFrame(() => {
+      const target = tableRef.current?.querySelector(".ant-table-tbody");
+      const rowCount = target?.childNodes.length ?? 0;
+
+      if (rowCount > 0) {
+        const columnCount = target.childNodes[0].childNodes.length;
+        if (columnCount > 1) {
+          setLoading(false);
+        }
+      }
+    });
+  }, [serverData]);
 
   return (
+    <Spin spinning={loading} indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} style={{ textAlign: "center" }}>
       <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none", paddingTop: "8px", paddingBottom: "40px" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
         <Table
-          loading={loading}
           rowSelection={
             rowSelect
               ? {
@@ -168,6 +148,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
           style={{ tableLayout: "fixed" }}
         />
       </div>
+    </Spin>
   );
 };
 

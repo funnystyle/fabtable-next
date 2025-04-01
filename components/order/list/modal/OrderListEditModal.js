@@ -8,9 +8,8 @@ import { putAxios } from "@api/apiClient";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import { useGetRecords } from "@components/api/useGetRecords";
 
-const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
+const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => {
 
 	const [modal, contextHolder] = Modal.useModal();
 
@@ -19,7 +18,6 @@ const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useGetRecords();
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleEditSubmit = async (e) => {

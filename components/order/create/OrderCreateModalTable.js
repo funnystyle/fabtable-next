@@ -18,10 +18,6 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 
 	const { handleReload } = useGetRecords();
 
-	useEffect(() => {
-		handleReload();
-	}, []);
-
 	const [modal, contextHolder] = Modal.useModal();
 	const { setRecord } = useRecordDataStore();
 	const handleConfirmEdit = (record) => {

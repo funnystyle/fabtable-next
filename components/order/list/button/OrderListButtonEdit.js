@@ -4,7 +4,7 @@ import {Button, Form,} from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
 import useRecordModalStore from "@store/useRecordModalStore";
 
-const OrderListButtonEdit = () => {
+const OrderListButtonEdit = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
@@ -17,7 +17,7 @@ const OrderListButtonEdit = () => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 일괄수정</Button>
-			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
+			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} handleReload={handleReload} />
 		</>
 	);
 };
