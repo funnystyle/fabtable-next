@@ -9,7 +9,7 @@ const CsAsDetailInputBox = ({ form }) => {
 
   return (
     <div>
-      <div id="cs-anchror-cs4" className="info-wrap">
+      <div id="cs-anchor-cs4" className="info-wrap">
         <CsAsDetailTitle title={"출장 내역"} isCommon={isCommon} setIsCommon={setIsCommon} />
 
         {isCommon ? (

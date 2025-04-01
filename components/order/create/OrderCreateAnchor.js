@@ -28,7 +28,7 @@ const OrderCreateAnchor = ({ list, anchorContainer }) => {
 	const [items, setItems] = useState([]);
 
 	useEffect(() => {
-		setItems(list.map((item) => ({ key: item[0][0].name, href: `#${item[0][0].name}`, title: item[0][0].displayName })));
+		setItems(list.map((item) => ({ key: item[0][0].name, href: `#order-anchor-${item[0][0].name}`, title: item[0][0].displayName })));
 	}, [list]);
 
 	return (

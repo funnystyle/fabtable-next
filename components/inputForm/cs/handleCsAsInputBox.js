@@ -7,7 +7,7 @@ export const handleCsAsInputBox = (form, keys, setKeys, asCheckedKeySet, setAsCh
 
   return (
     <div>
-      <div id="cs-anchror-cs3" className="info-wrap">
+      <div id="cs-anchor-cs3" className="info-wrap">
         <CsAsTitle form={form} keys={keys} setKeys={setKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet} />
 
         <CsAsTopInputBox form={form} />

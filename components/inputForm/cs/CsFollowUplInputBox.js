@@ -9,7 +9,7 @@ const CsFollowUplInputBox = ({ form }) => {
 
   return (
     <div>
-      <div id="cs-anchror-cs5" className="info-wrap">
+      <div id="cs-anchor-cs5" className="info-wrap">
         <CsAsDetailTitle title={"후속 조치"} isCommon={isCommon} setIsCommon={setIsCommon} />
 
         {isCommon ?

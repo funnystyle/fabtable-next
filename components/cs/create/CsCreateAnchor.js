@@ -40,27 +40,27 @@ const CsCreateAnchor = ({ list, anchorContainer }) => {
 				items={[
 					{
 						key: "reception",
-						href: "#cs-anchror-reception",
+						href: "#cs-anchor-reception",
 						title: "접수 내용",
 					},
 					{
 						key: "product",
-						href: "#cs-anchror-product",
+						href: "#cs-anchor-product",
 						title: "제품 내역",
 					},
 					{
 						key: "cs3",
-						href: "#cs-anchror-cs3",
+						href: "#cs-anchor-cs3",
 						title: "출장업무 내용",
 					},
 					{
 						key: "cs4",
-						href: "#cs-anchror-cs4",
+						href: "#cs-anchor-cs4",
 						title: "출장 내역",
 					},
 					{
 						key: "cs5",
-						href: "#cs-anchror-cs5",
+						href: "#cs-anchor-cs5",
 						title: "후속 조치",
 					},
 				]}

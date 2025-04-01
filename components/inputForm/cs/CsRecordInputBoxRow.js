@@ -11,7 +11,7 @@ import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 
 const { Title } = Typography;
 
-const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index }) => {
+const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index, type }) => {
 
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { record } = useRecordDataStore();
@@ -133,7 +133,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   // 복사 버튼 클릭 시
   return (
     <div key={`cs-record-input-box-${index}`}>
-      <div id={`cs-anchror-${itemList[0][0].name}`}>
+      <div id={`${type}-anchor-${itemList[0][0].name}`}>
         <Flex
           align="center"
           justify="space-between"

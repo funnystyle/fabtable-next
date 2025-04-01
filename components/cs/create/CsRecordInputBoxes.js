@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import CsRecordInputBoxRow from "@components/inputForm/cs/CsRecordInputBoxRow";
 
-const CsRecordInputBoxes = ({ form, codeRelationSet }) => {
+const CsRecordInputBoxes = ({ form, codeRelationSet, type }) => {
 	const [csRecordInputBoxList, setCsRecordInputBoxList] = useState([]);
 	const [queryKey, setQueryKey] = useState(["cs-record-input-box-list", Math.random()]);
 	const { data:csRecordInputBoxResponse, isSuccess } = useQuery({
@@ -25,7 +25,9 @@ const CsRecordInputBoxes = ({ form, codeRelationSet }) => {
 														 form={form}
 														 codeRelationSet={codeRelationSet}
 														 itemList={item}
-														 copyCountRef={copyCountRef} index={index} />
+														 copyCountRef={copyCountRef} 
+														 index={index}
+														 type={type} />
 			)}
 		</>
 	);

@@ -15,6 +15,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
+	const [loading, setLoading] = useState(true);
+
 	// 입력 박스 리스트 호출
 	const { data, list } = useGetInputBoxList("recordCreate");
 
@@ -31,6 +33,8 @@ const OrderInfoCreate = ({ isActive=true }) => {
 				loadFormValues(record, data, form, selectedCodes, setSelectedCodes)
 			}, 10);
 		}
+
+		setLoading(!list || list.length === 0);
 	}, [record, list]);
 
 	const [anchorContainer, setAnchorContainer] = useState(null);
@@ -40,9 +44,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		if (container) {
 			setAnchorContainer(container);
 		}
-	}, []);
-
-	const loading = !list || list.length === 0;
+	}, [loading]);
 
 	return (
 		<Layout>
@@ -66,7 +68,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 										// style={{ paddingTop: contentHeight }}
 										// className="contents-scroll"
 									>
-										{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
+										{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index, "order"))}
 									</div>
 								</div>
 						{anchorContainer && (

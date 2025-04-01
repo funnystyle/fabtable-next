@@ -5,11 +5,11 @@ import { handleInputBox } from "@components/inputForm/handleInputBox";
 
 const { Title } = Typography;
 
-export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
+export const handleInputBoxRow = (form, codeRelationSet, itemList, index, type) => {
 
   return (
     <React.Fragment key={`input-box-row-${index}`}>
-    <div id={`cs-anchror-${itemList[0][0].name}`} key={`input-box-row-${index}`}>
+    <div id={`${type}-anchor-${itemList[0][0].name}`} key={`input-box-row-${index}`}>
         <div className="info-area">
           <Flex
             align="center"

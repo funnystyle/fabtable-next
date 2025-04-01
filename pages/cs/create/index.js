@@ -29,6 +29,7 @@ const CsCreate = ({ isActive=true }) => {
 
 	const [asKeys, setAsKeys] = useState([0]);
 	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
+	const [loading, setLoading] = useState(true);
 
 	const { setAsKeys:setConstantAsKeys, setIsAsDetailCommon, setIsFollowUpCommon } = useCsCreateConstantStore();
 
@@ -51,6 +52,8 @@ const CsCreate = ({ isActive=true }) => {
 				csDetailLoad(cs.id)
 			}
 		}
+
+		setLoading(!list || list.length === 0);
 	}, [cs, list]);
 
 	const { setRecordKeys } = useCsCreateConstantStore();
@@ -115,13 +118,11 @@ const CsCreate = ({ isActive=true }) => {
 	const [anchorContainer, setAnchorContainer] = useState(null);
 
 	useEffect(() => {
-		const container = document.querySelector(".cs-anchor-wrapper");
+		const container = document.querySelector(".anchor-wrapper");
 		if (container) {
 			setAnchorContainer(container);
 		}
-	}, []);
-
-	const loading = !list || list.length === 0;
+	}, [loading]);
 
 	return (
 		<Layout>
@@ -139,15 +140,15 @@ const CsCreate = ({ isActive=true }) => {
 				style={{ width: "100%", textAlign: "center", paddingTop: 80 }}
 			>
 				{!loading && (
-					<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="cs-anchor-wrapper">
+					<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="anchor-wrapper">
 						<div className="anchor-contents">
 							<div
 								// style={{ paddingTop: contentHeight }}
 								// className="contents-scroll"
 							>
-								{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index))}
+								{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index, "cs"))}
 
-								<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} />
+								<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs" />
 
 								{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
 								
