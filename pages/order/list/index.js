@@ -16,7 +16,7 @@ import CsCreate from "@pages/cs/create";
 import SearchModal from "@components/searchModal/SearchModal";
 
 
-const OrderComponent = ({ isActive }) => {
+const OrderComponent = ({ isActive=true }) => {
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();

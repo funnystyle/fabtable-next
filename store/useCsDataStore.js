@@ -5,6 +5,8 @@ const useCsDataStore = create((set) => ({
   setCs: (cs) => set({ cs }),
   csDetail: {},
   setCsDetail: (csDetail) => set({ csDetail }),
+  tags: [],
+  setTags: (tags) => set({ tags }),
 }));
 
 export default useCsDataStore;

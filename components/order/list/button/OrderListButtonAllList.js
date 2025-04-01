@@ -5,10 +5,7 @@ import { RedoOutlined } from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordModalStore from "@store/useRecordModalStore";
 
-const OrderListButtonAllList = ({ statusList }) => {
-
-	const { setDeleteTagKeyName, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
-	const { tags, setTags } = useRecordDataStore();
+const OrderListButtonAllList = ({ setDeleteTagKeyName, setSearchStatusList, setSearchKeyword, tags, setTags, statusList }) => {
 
 	const handleTagDeleteAll = () => {
 		tags.forEach((tag) => {

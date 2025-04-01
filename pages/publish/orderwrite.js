@@ -1177,7 +1177,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 					{/* //신규 수주 등록시 */}
 
 					{/* 기 등록된 수주 내용 수정시 */}
-					{/* <Flex justify="space-between" className="detail-top-area">
+					<Flex justify="space-between" className="detail-top-area">
 						<Flex gap={12}>
 							<Tag className="CurrentStatus007">Rework</Tag>
 
@@ -1231,7 +1231,7 @@ const OrderWriteComponent = ({ contentHeight }) => {
 								</Button>
 							</Flex>
 						</Flex>
-					</Flex> */}
+					</Flex>
 					{/* //기 등록된 수주 내용 수정시 */}
 				</div>
 			</div>

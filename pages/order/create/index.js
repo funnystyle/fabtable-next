@@ -12,7 +12,7 @@ import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderU
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 
-const OrderInfoCreate = ({ isActive }) => {
+const OrderInfoCreate = ({ isActive=true }) => {
 
 	// 입력 박스 리스트 호출
 	const { data, list } = useGetInputBoxList("recordCreate");

@@ -7,7 +7,7 @@ import { putAxios } from "@api/apiClient";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import { useGetRecords } from "@components/api/useGetRecords";
 
-const OrderListButtonStatusChange = ({ statusList }) => {
+const OrderListButtonStatusChange = ({ statusList, handleReload }) => {
 
 	const stateStatusList = statusList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`}));
 
@@ -16,7 +16,7 @@ const OrderListButtonStatusChange = ({ statusList }) => {
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { handleReload } = useGetRecords();
+
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleStatusChange = async (e) => {

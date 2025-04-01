@@ -7,11 +7,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 import useDrawerStore from "@store/useDrawerStore";
 import CsListTitle from "@components/cs/list/CsListTitle";
-import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsListTable from "@components/cs/list/CsListTable";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
-import OrderListButtonArea from "@/components/order/list/OrderListButtonArea";
 
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
 
@@ -100,7 +98,7 @@ const printItems = [
 	},
 ];
 
-const OrderComponent = ({ contentHeight, isActive }) => {
+const OrderComponent = ({ contentHeight, isActive=true }) => {
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
@@ -112,7 +110,7 @@ const OrderComponent = ({ contentHeight, isActive }) => {
 	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
 	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
 		queryKey,
-		queryFn: () => getAxios("/user/code", {groupName: "현재상태"}),
+		queryFn: () => getAxios("/user/code", {groupName: "CS상태"}),
 	});
 
 	useEffect(() => {
