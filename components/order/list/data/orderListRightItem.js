@@ -12,7 +12,7 @@ export const orderListRightItem = [
 		key: "3",
 	},
 	{
-		label: "메모 수정",
+		label: "부서별 메모",
 		key: "4",
 	},
 	{
