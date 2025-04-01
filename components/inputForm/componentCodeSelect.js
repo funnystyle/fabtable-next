@@ -27,6 +27,28 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
     }
   }, [codeList]);
 
+  let codeCount = 0;
+
+  const productCategory = form.getFieldValue("productCategory");
+  const productModel = form.getFieldValue("productModel");
+  const productChannel = form.getFieldValue("productChannel");
+
+  const isMadee5000s = productCategory === "MADEE" && productModel === "5000s" && recordColumn.displayName === "Unit 구분";
+
+  if (isMadee5000s) {
+    if (productChannel === "2CH") {
+      codeCount = 2;
+    } else if (productChannel === "3CH") {
+      codeCount = 3;
+    } else if (productChannel === "4CH") {
+      codeCount = 4;
+    } else if (productChannel === "5CH") {
+      codeCount = 5;
+    } else if (productChannel === "6CH") {
+      codeCount = 6;
+    }
+  }
+
   return (
     <Form.Item
       key={name}
@@ -60,13 +82,21 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
 
           options={
             codeList
-              ? codeList.map(option => ({
+              ? (isMadee5000s ? codeList.map(option => ({
                 value: option.codeName,
                 label: option.codeName,
                 'data-codegroup-id': recordColumn.codeGroupId,
                 'data-id': option.id,
                 'data-child-relations' : JSON.stringify(option.childRelations),
-              }))
+              })).slice(0, codeCount) : codeList.map(option => ({
+                  value: option.codeName,
+                  label: option.codeName,
+                  'data-codegroup-id': recordColumn.codeGroupId,
+                  'data-id': option.id,
+                  'data-child-relations' : JSON.stringify(option.childRelations),
+                }))
+
+              )
               : []
           }
         />
