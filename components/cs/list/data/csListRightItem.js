@@ -30,7 +30,7 @@ export const csListRightItem = [
 		key: "3",
 	},
 	{
-		label: "C/S 이력",
+		label: "C/S 미리보기",
 		key: "4",
 	},
 	{
@@ -51,7 +51,7 @@ export const csListRightItem = [
 			},
 			{
 				key: "6-2",
-				label: "양식다운로드",
+				label: "양식 다운로드",
 			},
 		],
 	},
