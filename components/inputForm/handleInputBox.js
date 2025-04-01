@@ -66,7 +66,6 @@ export const handleInputBox = (form, codeRelationSet, item, index) => {
 
       return (
         <React.Fragment key={`record-fragment-${index}`}>
-          {index !== 0 && <div className="info-box-row-wrap"/> }
           <div className="info-input-box">
             {box.subDisplayName && (
               <Flex justify="space-between">

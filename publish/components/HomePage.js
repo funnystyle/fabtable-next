@@ -280,10 +280,10 @@ const HomePage = ({ children }) => {
   // 		setSelectedMenuKeys([menuItem.key]);
   // 	}
   // }, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
-  useEffect(() => {
-
-    requestIdleCallback(() => {
-      startTransition(() => {
+  // useEffect(() => {
+  //
+  //   requestIdleCallback(() => {
+  //     startTransition(() => {
         // if (!router.isReady) return;
         //
         // const { pathname } = router;
@@ -302,9 +302,9 @@ const HomePage = ({ children }) => {
         //   setActiveTab(menuItem.key);
         //   setSelectedMenuKeys([menuItem.key]);
         // }
-      });
-    });
-  }, [router.pathname]);
+  //     });
+  //   });
+  // }, [router.pathname]);
 
   return (
     <TabContext.Provider value={{ tabs, activeTab, addTab }}>
@@ -456,54 +456,54 @@ const HomePage = ({ children }) => {
               </div>
             </Header>
             {/* 탭 없이 하려면 아래 코드를 적용 */}
-            {/*<Content className="contents" style={{ overflowY: "auto"}}>*/}
-            {/*	{children ? React.cloneElement(children, { contentHeight }) : null}*/}
-            {/*</Content>*/}
+            <Content className="contents" style={{ overflowY: "auto"}}>
+            	{children ? React.cloneElement(children, { contentHeight }) : null}
+            </Content>
             {/* 탭 적용하려면 아래 코드를 적용 */}
             {/* Content 영역을 Tabs로 변경 */}
-            <Content className="contents">
-              <Tabs
-                hideAdd
-                size="small"
-                type="editable-card"
-                activeKey={activeTab}
-                onChange={onTabChange}
-                onEdit={(targetKey, action) =>
-                  action === "remove" && onTabRemove(targetKey)
-                }
-                className="page-top-nav"
-                // style={{ height: "100%"}}
-              >
-                {tabs.map((tab) => (
-                  <Tabs.TabPane
-                    tab={tab.label}
-                    key={tab.key}
-                    closable={tab.key !== "1"}
-                    style={{ height: "100%" }}
-                  >
-                    <Suspense
-                      fallback={
-                        <div style={{ padding: 24 }}>
-                          <Skeleton active paragraph={{ rows: 10 }} />
-                        </div>
-                      }
-                    >
-                      {pageComponents[tab.url] ? (
-                        React.createElement(pageComponents[tab.url], {
-                          contentHeight,
-                          activeTab,
-                          //현재 탭이 열려잇는지 여부
-                          activeKey: tab.key,
-                          isActive: tab.key === activeTab
-                        })
-                      ) : (
-                        <div>페이지 없음</div>
-                      )}
-                    </Suspense>
-                  </Tabs.TabPane>
-                ))}
-              </Tabs>
-            </Content>
+            {/*<Content className="contents">*/}
+            {/*  <Tabs*/}
+            {/*    hideAdd*/}
+            {/*    size="small"*/}
+            {/*    type="editable-card"*/}
+            {/*    activeKey={activeTab}*/}
+            {/*    onChange={onTabChange}*/}
+            {/*    onEdit={(targetKey, action) =>*/}
+            {/*      action === "remove" && onTabRemove(targetKey)*/}
+            {/*    }*/}
+            {/*    className="page-top-nav"*/}
+            {/*    // style={{ height: "100%"}}*/}
+            {/*  >*/}
+            {/*    {tabs.map((tab) => (*/}
+            {/*      <Tabs.TabPane*/}
+            {/*        tab={tab.label}*/}
+            {/*        key={tab.key}*/}
+            {/*        closable={tab.key !== "1"}*/}
+            {/*        style={{ height: "100%" }}*/}
+            {/*      >*/}
+            {/*        <Suspense*/}
+            {/*          fallback={*/}
+            {/*            <div style={{ padding: 24 }}>*/}
+            {/*              <Skeleton active paragraph={{ rows: 10 }} />*/}
+            {/*            </div>*/}
+            {/*          }*/}
+            {/*        >*/}
+            {/*          {pageComponents[tab.url] ? (*/}
+            {/*            React.createElement(pageComponents[tab.url], {*/}
+            {/*              contentHeight,*/}
+            {/*              activeTab,*/}
+            {/*              //현재 탭이 열려잇는지 여부*/}
+            {/*              activeKey: tab.key,*/}
+            {/*              isActive: tab.key === activeTab*/}
+            {/*            })*/}
+            {/*          ) : (*/}
+            {/*            <div>페이지 없음</div>*/}
+            {/*          )}*/}
+            {/*        </Suspense>*/}
+            {/*      </Tabs.TabPane>*/}
+            {/*    ))}*/}
+            {/*  </Tabs>*/}
+            {/*</Content>*/}
           </Layout>
         </Layout>
       </Layout>

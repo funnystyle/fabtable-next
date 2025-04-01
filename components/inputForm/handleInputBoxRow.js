@@ -8,8 +8,8 @@ const { Title } = Typography;
 export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
 
   return (
-    <div key={`input-box-row-${index}`}>
-      <div id={`cs-anchror-${itemList[0][0].name}`}>
+    <React.Fragment key={`input-box-row-${index}`}>
+    <div id={`cs-anchror-${itemList[0][0].name}`} key={`input-box-row-${index}`}>
         <div className="info-area">
           <Flex
             align="center"
@@ -23,12 +23,12 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
             <Button icon={<SettingOutlined />} size="small" />
           </Flex>
 
-          <Flex gap={20} className="info-input-wrap">
+          <Flex gap={16} className="info-input-col2">
             {itemList.map((item, index) => handleInputBox(form, codeRelationSet, item, index))}
           </Flex>
         </div>
       </div>
       <div className="info-wrap-last" />
-    </div>
+    </React.Fragment>
   );
 }

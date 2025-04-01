@@ -1343,8 +1343,6 @@ const CSWriteComponent = ({ contentHeight }) => {
 					</Button>
 				</Flex>
 
-				<Tabs defaultActiveKey="2" items={TabItems} onChange={onTabChange} />
-
 				<div className="top-btn-area">
 					{/* 신규 수주 등록시 */}
 					<Flex align="center" justify="space-between">
