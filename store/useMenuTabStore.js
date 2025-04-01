@@ -54,7 +54,7 @@ const useMenuTabStore = create((set, get) => ({
     set({ selectedMenuKeys: [menuItem.key] });
 
     const parentKeys = getParentKeys(menuItem.key, [...basicItems, ...adminItems]);
-    set({ openKeys: parentKeys ? [...parentKeys] : [] });
+    // set({ openKeys: parentKeys ? [...parentKeys] : [] });
   },
 }));
 

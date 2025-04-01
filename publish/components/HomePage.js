@@ -1,5 +1,7 @@
+"use client";
+
 // pages/index.js
-import React, { lazy, startTransition, Suspense, useEffect, useState } from "react";
+import React, { lazy, startTransition, Suspense, useEffect, useLayoutEffect, useState } from "react";
 import { Button, Layout, Menu, Skeleton, Tabs, Tag } from "antd";
 import { useRouter } from "next/router";
 // import dynamic from "next/dynamic";
@@ -179,13 +181,21 @@ const HomePage = ({ children }) => {
 
   // 📌 탭 닫기
   const onTabRemove = (targetKey) => {
+    const targetIndex = tabs.findIndex((tab) => tab.key === targetKey);
+    const newTabs = tabs.filter((tab) => tab.key !== targetKey);
+  
     let newActiveKey = activeTab;
     let newActiveUrl = "";
-    const newTabs = tabs.filter((tab) => tab.key !== targetKey);
-
-    if (targetKey === activeTab && newTabs.length) {
-      newActiveKey = newTabs[newTabs.length - 1].key;
-      newActiveUrl = newTabs[newTabs.length - 1].url;
+  
+    if (targetKey === activeTab) {
+      const nextTab = tabs[targetIndex + 1] || tabs[targetIndex - 1];
+      if (nextTab) {
+        newActiveKey = nextTab.key;
+        newActiveUrl = nextTab.url;
+      } else {
+        newActiveKey = "";
+        newActiveUrl = "/";
+      }
     }
 
     setTabs(newTabs);
@@ -206,8 +216,8 @@ const HomePage = ({ children }) => {
 
   const addTab = (menuItem) => {
     if (!tabs.some((tab) => tab.key === menuItem.key)) {
-      setTabs((prev) => [
-        ...prev,
+      setTabs([
+        ...tabs,
         { key: menuItem.key, label: menuItem.label, url: menuItem.url },
       ]);
     }
@@ -252,59 +262,33 @@ const HomePage = ({ children }) => {
     }
   }, [router.events]);
 
-  // 📌 useEffect 내부에 추가
-  // useEffect(() => {
-  // 	if (!router.isReady) return; // 라우터 준비될 때까지 대기
+  useEffect(() => {
+  
+    requestIdleCallback(() => {
+      startTransition(() => {
+        if (!router.isReady) return;
 
-  // 	const { pathname } = router; // 현재 URL 가져오기
-
-  // 	// 📌 해당 URL이 기본 메뉴에서 존재하는지 확인
-  // 	const menuItem = findMenuItemByUrl(
-  // 		[...basicItems, ...adminItems],
-  // 		pathname
-  // 	);
-
-  // 	if (menuItem) {
-  // 		alert(menuItem.key);
-  // 		// 🔹 이미 추가된 탭이 아니라면 추가
-  // 		if (!tabs.some((tab) => tab.key === menuItem.key)) {
-  // 			alert("탭 추가");
-  // 			setTabs((prevTabs) => [
-  // 				...prevTabs,
-  // 				{ key: menuItem.key, label: menuItem.label, url: menuItem.url },
-  // 			]);
-  // 		}
-
-  // 		// 탭 활성화 & GNB 동기화
-  // 		setActiveTab(menuItem.key);
-  // 		setSelectedMenuKeys([menuItem.key]);
-  // 	}
-  // }, [router.isReady, router.pathname]); // pathname이 변경될 때 실행
-  // useEffect(() => {
-  //
-  //   requestIdleCallback(() => {
-  //     startTransition(() => {
-        // if (!router.isReady) return;
-        //
-        // const { pathname } = router;
-        //
-        // const menuItem = findMenuItemByUrl([...basicItems, ...adminItems], pathname);
-        // if (menuItem) {
-        //   if (!tabs.some((tab) => tab.key === menuItem.key)) {
-        //     const newTabs = [...tabs, {
-        //       key: menuItem.key,
-        //       label: menuItem.label,
-        //       url: menuItem.url
-        //     }];
-        //     setTabs(newTabs);
-        //   }
-        //
-        //   setActiveTab(menuItem.key);
-        //   setSelectedMenuKeys([menuItem.key]);
-        // }
-  //     });
-  //   });
-  // }, [router.pathname]);
+        setTimeout(() => {
+          const { pathname } = router;
+          
+          const menuItem = findMenuItemByUrl([...basicItems, ...adminItems], pathname);
+          if (menuItem) {
+            if (!tabs.some((tab) => tab.key === menuItem.key)) {
+              const newTabs = [...tabs, {
+                key: menuItem.key,
+                label: menuItem.label,
+                url: menuItem.url
+              }];
+              setTabs(newTabs);
+            }
+          
+            setActiveTab(menuItem.key);
+            setSelectedMenuKeys([menuItem.key]);
+          }
+        }, 200); // 약간의 딜레이를 줘서 정확한 값 적용
+      });
+    });
+  }, [router.pathname]);
 
   return (
     <TabContext.Provider value={{ tabs, activeTab, addTab }}>
@@ -474,7 +458,7 @@ const HomePage = ({ children }) => {
                 className="page-top-nav"
                 // style={{ height: "100%"}}
               >
-                {tabs.map((tab) => (
+                {console.log("tabs", tabs) || tabs.map((tab) => (
                   <Tabs.TabPane
                     tab={tab.label}
                     key={tab.key}
