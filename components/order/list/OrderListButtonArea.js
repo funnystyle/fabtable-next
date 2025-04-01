@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Flex,} from "antd";
+import { Button, Flex, } from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
 import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
@@ -9,8 +9,15 @@ import OrderListButtonCopy from "@components/order/list/button/OrderListButtonCo
 import OrderListButtonEdit from "@components/order/list/button/OrderListButtonEdit";
 import OrderListButtonExcel from "@components/order/list/button/OrderListButtonExcel";
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
+import useRecordModalStore from "@store/useRecordModalStore";
+import useRecordDataStore from "@store/useRecordDataStore";
+import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderListButtonArea = ({ statusList }) => {
+
+	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
+	const { tags, setTags } = useRecordDataStore();
+	const { handleReload } = useGetRecords();
 
 	return (
 		// <div className="contents-top-scroll">
@@ -22,14 +29,21 @@ const OrderListButtonArea = ({ statusList }) => {
 				// paddingTop: "8px",
 				backgroundColor: "#FFF",
 			}}>
-				<OrderListButtonAllList statusList={statusList} />
+				<OrderListButtonAllList
+					setDeleteTagKeyName={setDeleteTagKeyName}
+					setSearchStatusList={setSearchStatusList}
+					setSearchKeyword={setSearchKeyword}
+					statusList={statusList}
+					tags={tags}
+					setTags={setTags}
+				/>
 
 				<Flex gap="small" className="btn-spacing-area">
 					<OrderListButtonTotalInfo />
 
-					<OrderListButtonStatusSelect statusList={statusList} />
+					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList} />
+					<OrderListButtonStatusChange statusList={statusList} handleReload={handleReload}/>
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">

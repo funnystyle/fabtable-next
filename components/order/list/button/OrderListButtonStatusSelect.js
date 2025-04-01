@@ -6,9 +6,9 @@ import useRecordModalStore from "@store/useRecordModalStore";
 
 const { useToken } = theme;
 
-const OrderListButtonStatusSelect = ({ statusList }) => {
+const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchStatusList }) => {
 
-	const { searchStatusList, setSearchStatusList } = useRecordModalStore();
+
 
 	const { token } = useToken();
 	const contentStyle = {

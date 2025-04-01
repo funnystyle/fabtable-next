@@ -1,5 +1,5 @@
 import { Button, Flex, Typography } from "antd";
-import { SettingOutlined } from "@ant-design/icons";
+import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import React from "react";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
 
@@ -20,7 +20,15 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index) => {
               {itemList[0][0].displayName}
             </Title>
 
-            <Button icon={<SettingOutlined />} size="small" />
+            <Flex gap={10}>
+              <Button
+                icon={<RedoOutlined />}
+                size="small"
+                className="ico-rotate"
+              />
+
+              <Button icon={<SettingOutlined />} size="small" />
+            </Flex>
           </Flex>
 
           <Flex gap={16} className="info-input-col2">
