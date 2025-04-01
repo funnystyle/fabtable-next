@@ -21,11 +21,31 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   // ✅ 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
 
-  const data = serverData != undefined ? serverData.map((item, index) => ({
-    ...item,
-    key: item.id // key 값을 item.id로 설정
-  })) : [];
+  // const data = serverData != undefined ? serverData.map((item, index) => ({
+  //   ...item,
+  //   key: item.id // key 값을 item.id로 설정
+  // })) : [];
 
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (serverData) {
+      const transformedData = serverData.map((item, index) => ({
+        ...item,
+        key: item.id // key 값을 item.id로 설정
+      }));
+      setData(transformedData);
+
+      
+      
+    }
+  }, [serverData]);
+
+  useEffect(() => {
+    console.log("data", data);
+    setLoading(false);
+  }, [data]);
 
   useEffect(() => {
     focusTable(tableRef);
@@ -90,9 +110,22 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
     }, 0);
   }
 
+  
+
+  // useEffect(() => {
+  //   // 3초 후에 로딩 상태를 false로 변경
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 5000);
+  //   return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+  // }, [serverData]);
+
+  // if (loading) return null;
+
   return (
       <div ref={tableRef} className="tb-container" tabIndex={0} style={{ userSelect: "none", outline: "none", paddingTop: "8px", paddingBottom: "40px" }} onMouseUp={() => handleMouseUpAntd(handleAntdTableEventData())}>
         <Table
+          loading={loading}
           rowSelection={
             rowSelect
               ? {
