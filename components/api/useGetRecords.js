@@ -3,7 +3,7 @@ import { postAxios } from "@api/apiClient";
 import useRecordModalStore from "@store/useRecordModalStore";
 import { useEffect } from "react";
 
-export const useGetRecords = () => {
+export const useGetRecords = (statusAll=false) => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
     setData, setList, setTotal,
@@ -27,7 +27,7 @@ export const useGetRecords = () => {
     if (savePageSize) {
       pageSize = Number(savePageSize);
     }
-    if (searchStatusList.length === 0) {
+    if (searchStatusList.length === 0 && !statusAll) {
       return;
     }
     getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });

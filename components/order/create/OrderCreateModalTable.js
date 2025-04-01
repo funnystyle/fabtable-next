@@ -16,7 +16,7 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
 
-	const { handleReload } = useGetRecords();
+	const { handleReload } = useGetRecords(true);
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setRecord } = useRecordDataStore();

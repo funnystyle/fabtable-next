@@ -1,13 +1,13 @@
 import { Button, DatePicker, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import React from "react";
+import React, {useEffect} from "react";
 import Link from "next/link";
 import dayjs from "dayjs";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const {Title} = Typography;
 
-export const CsFollowUpForm = ({ form, index }) => {
+export const CsFollowUpForm = ({ form, index, resetFlag }) => {
 
   const { recordKeys:keys, isFollowUpCommon:isCommon } = useCsCreateConstantStore();
 
@@ -28,6 +28,10 @@ export const CsFollowUpForm = ({ form, index }) => {
       `etc-${index}`
     ]);
   }
+
+  useEffect(() => {
+    handleReset();
+  }, [resetFlag]);
 
 
   return (

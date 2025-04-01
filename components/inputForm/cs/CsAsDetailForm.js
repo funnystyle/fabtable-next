@@ -1,11 +1,11 @@
 import { Button, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import React from "react";
+import React, {useEffect} from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
-const CsAsDetailForm = ({ form, index }) => {
+const CsAsDetailForm = ({ form, index, resetFlag }) => {
 
   const { recordKeys:keys, isAsDetailCommon:isCommon} = useCsCreateConstantStore();
 
@@ -22,6 +22,10 @@ const CsAsDetailForm = ({ form, index }) => {
       `manufactureSpec-${index}`,
     ]);
   }
+
+  useEffect(() => {
+    handleReset();
+  }, [resetFlag]);
 
   return (
     <div className="info-input-box" key={`cs-detail-${index}`}>

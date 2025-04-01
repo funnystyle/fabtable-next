@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import {useMutation, useQuery} from "@tanstack/react-query";
 import {getAxios, postAxios} from "@api/apiClient";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
+import InputBoxRow from "@components/inputForm/InputBoxRow";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
 
 const { Title } = Typography;
@@ -179,7 +179,7 @@ const OrderInfoCreateNewFinal = ({ contentHeight }) => {
 						style={{ paddingTop: contentHeight }}
 						className="contents-scroll"
 					>
-						{inputBoxList.map((item, index) => handleInputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
+						{inputBoxList.map((item, index) => InputBoxRow(form, codeRelationSet, selectedCodes, setSelectedCodes, item, index))}
 					</div>
 				</div>
 				<div className="anchor-area" style={{ top: contentHeight }}>

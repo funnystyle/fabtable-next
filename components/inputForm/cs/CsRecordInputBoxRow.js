@@ -17,6 +17,11 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useRecordModalStore();
 
+  const handleReset = () => {
+    setRecordKeys([]);
+    setCheckedKeySet(new Set());
+  }
+
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
 
@@ -111,7 +116,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
         const today = dayjs().startOf('day');
         const deliverDate = dayjs(record.deliverDatetime).startOf('day');
         const diffInDays = today.diff(deliverDate, 'day');
-        console.log("diffInDays", diffInDays);
         form.setFieldValue(`deliveryDateUsageDays-${recordIndex}`, diffInDays );
       } else if (openDiv === "substitute") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
@@ -129,8 +133,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
     }
   }, [record]);
 
-
-  // 복사 버튼 클릭 시
   return (
     <div key={`cs-record-input-box-${index}`}>
       <div id={`${type}-anchor-${itemList[0][0].name}`}>
@@ -180,9 +182,10 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
               icon={<RedoOutlined />}
               size="small"
               className="ico-rotate"
+              onClick={() => handleReset()}
             />
 
-            <Button icon={<SettingOutlined />} size="small" />
+            {/*<Button icon={<SettingOutlined />} size="small" />*/}
           </Flex>
         </Flex>
 

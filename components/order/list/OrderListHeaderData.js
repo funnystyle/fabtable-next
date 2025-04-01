@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AutoComplete, Button, Flex, Form, Input, Layout, Typography, } from "antd";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
+import InputBoxRow from "@components/inputForm/InputBoxRow";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";

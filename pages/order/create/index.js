@@ -1,7 +1,6 @@
 // pages/order/create/index.js
 import React, { useEffect, useState } from "react";
 import { Flex, Form, Layout, Spin, } from "antd";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTitle from "@components/order/create/OrderCreateTitle";
@@ -12,6 +11,7 @@ import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderU
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import { LoadingOutlined } from "@ant-design/icons";
+import InputBoxRow from "@components/inputForm/InputBoxRow";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
@@ -24,7 +24,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 
-	const { record } = useRecordDataStore();
+	const { record, resetFlag } = useRecordDataStore();
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		}
 
 		setLoading(!list || list.length === 0);
-	}, [record, list]);
+	}, [record, list, resetFlag]);
 
 	const [anchorContainer, setAnchorContainer] = useState(null);
 
@@ -68,7 +68,15 @@ const OrderInfoCreate = ({ isActive=true }) => {
 										// style={{ paddingTop: contentHeight }}
 										// className="contents-scroll"
 									>
-										{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index, "order"))}
+										{list.map((item, index) => <InputBoxRow
+											key={`input-box-row-${index}`}
+											form={form}
+											codeRelationSet={codeRelationSet}
+											itemList={item}
+											index={index}
+											type={"order"}
+											/>
+											)}
 									</div>
 								</div>
 						{anchorContainer && (

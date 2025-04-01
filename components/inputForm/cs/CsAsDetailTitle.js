@@ -5,9 +5,14 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
 
-export const CsAsDetailTitle = ({ title, isCommon, setIsCommon }) => {
+export const CsAsDetailTitle = ({ title, isCommon, setIsCommon, setResetFlag }) => {
 
   const { recordKeys:keys } = useCsCreateConstantStore();
+
+  const handleReset = () => {
+    setIsCommon(true);
+    setResetFlag(prev => !prev);
+  }
 
 
   return (
@@ -32,9 +37,10 @@ export const CsAsDetailTitle = ({ title, isCommon, setIsCommon }) => {
           icon={<RedoOutlined />}
           size="small"
           className="ico-rotate"
+          onClick={() => handleReset()}
         />
 
-        <Button icon={<SettingOutlined />} size="small" />
+        {/*<Button icon={<SettingOutlined />} size="small" />*/}
       </Flex>
     </Flex>
   );

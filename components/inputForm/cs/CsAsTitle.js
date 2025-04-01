@@ -4,7 +4,7 @@ import React from "react";
 
 const { Title } = Typography;
 
-export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet }) => {
+export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet, setResetFlag }) => {
 
   const handleDelete = () => {
     const newKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
@@ -15,6 +15,15 @@ export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKe
 
   const handleAdd = () => {
     setKeys([...keys, keys.length]);
+  }
+
+  const handleReset = () => {
+    setKeys([0]);
+    setAsCheckedKeySet(new Set());
+    let nameList = ["chargePerson", "receiptContent", "visitContent"];
+    form.resetFields(nameList);
+
+    setResetFlag(prev => !prev);
   }
 
   return (
@@ -38,9 +47,9 @@ export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKe
         </Flex>
 
         <Flex gap={10}>
-          <Button icon={<RedoOutlined />} size="small" className="ico-rotate" />
+          <Button icon={<RedoOutlined />} size="small" className="ico-rotate" onClick={() => handleReset()} />
 
-          <Button icon={<SettingOutlined />} size="small" />
+          {/*<Button icon={<SettingOutlined />} size="small" />*/}
         </Flex>
       </Flex>
   );

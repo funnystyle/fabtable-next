@@ -1,8 +1,7 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
 import React, { useEffect, useState } from "react";
 import { Flex, Form, Layout, Spin, } from "antd";
-import { handleInputBoxRow } from "@components/inputForm/handleInputBoxRow";
-import { handleCsAsInputBox } from "@components/inputForm/cs/handleCsAsInputBox";
+import InputBoxRow from "@components/inputForm/InputBoxRow";
 import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
 import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
 import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
@@ -20,6 +19,7 @@ import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import { useGetCsDetail } from "@components/api/useGetCsDetail";
 import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
+import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
 
 const CsCreate = ({ isActive=true }) => {
 	const { data, list } = useGetInputBoxList("csCreate");
@@ -146,12 +146,19 @@ const CsCreate = ({ isActive=true }) => {
 								// style={{ paddingTop: contentHeight }}
 								// className="contents-scroll"
 							>
-								{list.map((item, index) => handleInputBoxRow(form, codeRelationSet, item, index, "cs"))}
+								{list.map((item, index) =>  <InputBoxRow
+									key={`input-box-row-${index}`}
+									form={form}
+									codeRelationSet={codeRelationSet}
+									itemList={item}
+									index={index}
+									type={"cs"}
+								/>)}
 
 								<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs" />
 
-								{handleCsAsInputBox(form, asKeys, setAsKeys, asCheckedKeySet, setAsCheckedKeySet)}
-								
+								<CsAsInputBox form={form} keys={asKeys} setKeys={setAsKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet}/>
+
 								<CsAsDetailInputBox form={form} />
 
 								<CsFollowUplInputBox form={form} />

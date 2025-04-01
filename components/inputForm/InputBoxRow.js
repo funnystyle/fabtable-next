@@ -2,10 +2,39 @@ import { Button, Flex, Typography } from "antd";
 import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import React from "react";
 import { handleInputBox } from "@components/inputForm/handleInputBox";
+import {handleComponentInputName} from "@components/inputForm/handleComponentInputName";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 const { Title } = Typography;
 
-export const handleInputBoxRow = (form, codeRelationSet, itemList, index, type) => {
+const InputBoxRow = ({ form, codeRelationSet, itemList, index, type }) => {
+
+  const { handleReset:reset, record, setRecord } = useRecordDataStore();
+
+  const handleReset = () => {
+    const nameList = [];
+
+    itemList.forEach((item) => {
+      item.forEach((box) => {
+        box.components.forEach((components) => {
+          components.forEach((component) => {
+            const name = handleComponentInputName(component.recordColumn);
+            nameList.push(name);
+          });
+        });
+      });
+    });
+
+    form.resetFields(nameList);
+
+    const newRecord = { ...record };
+    nameList.forEach((name) => {
+      newRecord[name] = null;
+    });
+
+    setRecord(newRecord);
+  }
+
 
   return (
     <React.Fragment key={`input-box-row-${index}`}>
@@ -25,9 +54,10 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index, type) 
                 icon={<RedoOutlined />}
                 size="small"
                 className="ico-rotate"
+                onClick={() => handleReset()}
               />
 
-              <Button icon={<SettingOutlined />} size="small" />
+              {/*<Button icon={<SettingOutlined />} size="small" />*/}
             </Flex>
           </Flex>
 
@@ -40,3 +70,5 @@ export const handleInputBoxRow = (form, codeRelationSet, itemList, index, type) 
     </React.Fragment>
   );
 }
+
+export default InputBoxRow;

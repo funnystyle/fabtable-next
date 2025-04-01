@@ -5,7 +5,7 @@ import {CsAsWorkTitle} from "@components/inputForm/cs/CsAsWorkTitle";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import useCsDataStore from "@store/useCsDataStore";
 
-export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet}) => {
+export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet, resetFlag}) => {
 
   const { files:formFiles, setFiles:setFormFiles } = useCsCreateConstantStore();
 
@@ -14,10 +14,10 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
   const handleReset = () => {
     setFileList([]);
     form.resetFields([
-      `csUsername-${index+1}`,
-      `responseDate-${index+1}`,
-      `actionText1-${index+1}`,
-      `actionText2-${index+1}`
+      `responseDate-${index}`,
+      `responsiblePerson-${index}`,
+      `responseContent-${index}`,
+      `responseResult-${index}`,
     ]);
   }
 
@@ -74,6 +74,10 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
       handleLoadFilesFromServer(workContent.csAsWorkContentFiles);
     }
   }, [csDetail]);
+
+  useEffect(() => {
+    handleReset();
+  }, [resetFlag]);
 
   return (
     <React.Fragment key={`cs-as-work-${index}`}>

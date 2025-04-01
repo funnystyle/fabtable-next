@@ -5,6 +5,8 @@ const useRecordDataStore = create((set) => ({
   setRecord: (record) => set({ record }),
   tags: [],
   setTags: (tags) => set({ tags }),
+  resetFlag: false,
+  handleReset: () => set((state) => ({ resetFlag: !state.resetFlag })),
 }));
 
 export default useRecordDataStore;
