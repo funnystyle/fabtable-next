@@ -41,8 +41,9 @@ const ComponentCodeCheckbox = ({ form, codeRelationSet, recordColumn, component,
                 <Form.Item
                   name={name+"Etc"}
                   key={name+"Etc"}
+                  style={{ marginBottom: 0, flex: "1" }}
                 >
-                <Input placeholder="직접 입력" style={{ flex: "1" }} />
+                <Input placeholder="직접 입력" style={{ width: "100%" }} />
                 </Form.Item>
               </Flex>
             )}
