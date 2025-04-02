@@ -8,7 +8,7 @@ import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew"
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
-import {getCsColumns} from "@components/cs/list/data/getCsColumns";
+import {getCsColumns, getCsLoadColumns} from "@components/cs/list/data/getCsColumns";
 
 const CsListHeaderData = ({ setHeaderList, headerDiv }) => {
 
@@ -58,17 +58,24 @@ const CsListHeaderData = ({ setHeaderList, headerDiv }) => {
 		});
 	}
 
-	const [queryKey, setQueryKey] = useState(["columns", Math.random()]);
-	const { data:headerResponse, isSuccess:isSuccess } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/header", {headerDiv}),
-	});
+	// const [queryKey, setQueryKey] = useState(["columns", Math.random()]);
+	// const { data:headerResponse, isSuccess:isSuccess } = useQuery({
+	// 	queryKey,
+	// 	queryFn: () => getAxios("/user/header", {headerDiv}),
+	// });
 	useEffect(() => {
-		if (isSuccess) {
+		// if (isSuccess) {
 			// setHeaderList(transformColumns(headerResponse.data.list, sortedInfo));
-			setHeaderList(getCsColumns(sortedInfo, dateSorter));
-		}
-	}, [isSuccess]);
+			if ("CS" === headerDiv) {
+				setHeaderList(getCsColumns(sortedInfo, dateSorter));
+			} else if ("CS_LOAD" === headerDiv) {
+				console.log("headerDiv", headerDiv);
+				setHeaderList(getCsLoadColumns(sortedInfo, stringSorter));
+			}
+		// }
+	}, [
+		// isSuccess
+	]);
 
 	return (
 		<></>

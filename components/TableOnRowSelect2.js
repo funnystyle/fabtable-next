@@ -10,6 +10,7 @@ import CustomEmpty from "./common/CustomEmpty";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick }) => {
 
+  console.log("serverData", serverData);
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
   const [isDragging, setIsDragging] = useState(false);

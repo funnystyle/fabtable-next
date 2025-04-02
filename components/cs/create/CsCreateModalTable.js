@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { Modal } from "antd";
+import {CheckOutlined, ExclamationCircleFilled} from "@ant-design/icons";
+import {Button, Flex, Modal} from "antd";
 import { useGetCsList } from "@components/api/useGetCsList";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
@@ -53,10 +53,26 @@ const CsCreateModalTable = ({ contentHeight }) => {
 			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"}/>
+			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"}/>
 			<div style={{ marginTop: contentHeight }} className="contents-scroll">
 				{/* 테이블 */}
-				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
+				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data).map((item) => {
+					item.etc_cs_load=(
+						<>
+							<Flex gap={4}>
+								<Button size="small">C/S정보</Button>
+								<Button size="small">수주정보</Button>
+								<Button size="small" icon={<CheckOutlined />} iconPosition="start">
+									선택
+								</Button>
+							</Flex>
+						</>
+					);
+					return item;
+				})
+
+
+				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
 			</div>
 
 			{contextHolder}

@@ -1,4 +1,69 @@
 
+export const getCsLoadColumns = (sortedInfo, stringSorter) => {
+	return [
+		{
+			title: "No",
+			showSorterTooltip: {title: "No"},
+			dataIndex: "id",
+			key: "id",
+			sorter: (a, b) => a.id - b.id,
+			sortOrder: sortedInfo.columnKey === "id" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 65,
+		},
+		{
+			title: "시리얼 번호",
+			showSorterTooltip: {title: "시리얼 번호"},
+			dataIndex: "serialNumber",
+			key: "serialNumber",
+			sorter: (a, b) => stringSorter(a, b, "serialNumber"),
+			sortOrder: sortedInfo.columnKey === "serialNumber" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 170,
+		},
+		{
+			title: "제조번호",
+			showSorterTooltip: {title: "제조번호"},
+			dataIndex: "oldSerialNumber",
+			key: "oldSerialNumber",
+			sorter: (a, b) => stringSorter(a, b, "oldSerialNumber"),
+			sortOrder:
+				sortedInfo.columnKey === "oldSerialNumber" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 170,
+		},
+		{
+			title: "C/S 번호",
+			showSorterTooltip: {title: "C/S 번호"},
+			dataIndex: "csNumber",
+			key: "csNumber",
+			sorter: (a, b) => stringSorter(a, b, "csNumber"),
+			sortOrder: sortedInfo.columnKey === "csNumber" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 170,
+		},
+		{
+			title: "C/S 상태",
+			showSorterTooltip: {title: "C/S 상태"},
+			dataIndex: "csState",
+			key: "csState",
+			sorter: (a, b) => stringSorter(a, b, "csState"),
+			sortOrder: sortedInfo.columnKey === "csState" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 106,
+			align: "center",
+		},
+		{
+			title: "비고",
+			showSorterTooltip: {title: "비고"},
+			dataIndex: "etc_cs_load",
+			key: "etc_cs_load",
+			ellipsis: true,
+			align: "center",
+		},
+	];
+}
+
 export const getCsColumns = (sortedInfo, dateSorter) => {
 	return [
 		{
