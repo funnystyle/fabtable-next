@@ -210,6 +210,8 @@ export const putAxios = async (url, data) => {
 export const deleteAxios = async (url, data) => {
   const queryString = toQueryString(data);
 
+  console.log('deleteAxios', url + queryString)
+
   try {
       const response = await apiClient.delete(url + queryString);
       return response.data;

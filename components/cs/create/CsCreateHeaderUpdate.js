@@ -5,7 +5,8 @@ import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
 import useCsDataStore from "@store/useCsDataStore";
 import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton";
 import CsCreateStatusChangeButton from "@components/cs/create/button/CsCreateStatusChangeButton";
-import {useGetCodeList} from "@components/api/useGetCodeList";
+import {useDeleteCs} from "@components/api/useDeleteCs";
+import CsCreateDeleteButton from "@components/cs/create/button/CsCreateDeleteButton";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
@@ -42,7 +43,7 @@ const CsCreateHeaderUpdate = ({form}) => {
           <Flex gap={8} className="btn-space-area">
             <Button onClick={handleReset}>신규</Button>
             <CsCreateCopyButton />
-            <Button>삭제</Button>
+            <CsCreateDeleteButton handleReset={handleReset}/>
           </Flex>
 
           <Flex gap={8} className="btn-space-area">

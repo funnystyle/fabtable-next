@@ -88,7 +88,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
         } else {
           setTimeout(() => {
             setLoading(false);
-          }, 5000);
+          }, 2000);
         }
       }
     });
