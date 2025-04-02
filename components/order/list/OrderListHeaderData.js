@@ -30,12 +30,14 @@ const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 	};
 
 	function transformColumns(jsonResult, sortedInfo) {
-		return jsonResult.map(item => {
-			const { recordColumn, displayName, width, fixedDiv, alignDiv } = item;
-			const dataIndex = recordColumn == null ? "id" : recordColumn.name;
+		return jsonResult.map((item, index) => {
+			const { recordColumn, columnName, displayName, width, fixedDiv, alignDiv } = item;
+			const dataIndex = recordColumn == null ? columnName : recordColumn.name;
 
 			let sorterFunction = null;
-			if (recordColumn == null || recordColumn.dataType === "Integer" || recordColumn.dataType === "Double" || recordColumn.dataType === "Long" || recordColumn.dataType === "Float") {
+			if (recordColumn == null) {
+				sorterFunction = (a, b) => stringSorter(a, b, dataIndex);
+			} else if (columnName === "id" || recordColumn.dataType === "Integer" || recordColumn.dataType === "Double" || recordColumn.dataType === "Long" || recordColumn.dataType === "Float") {
 				sorterFunction = (a, b) => a[dataIndex] - b[dataIndex];
 			} else if (recordColumn.dataType === "String") {
 				sorterFunction = (a, b) => stringSorter(a, b, dataIndex);
@@ -51,7 +53,7 @@ const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 				sorter: sorterFunction,
 				sortOrder: sortedInfo.columnKey === dataIndex ? sortedInfo.order : null,
 				ellipsis: true,
-				width: width || 100,
+				width: index === jsonResult.length - 1 ? "auto" : width || 100,
 				align: alignDiv === "LEFT" ? "left" : alignDiv === "RIGHT" ? "right" : "center",
 				fixed: fixedDiv === "LEFT" ? "left" : fixedDiv === "RIGHT" ? "right" : false,
 			};

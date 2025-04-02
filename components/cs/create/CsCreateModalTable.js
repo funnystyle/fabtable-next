@@ -70,8 +70,6 @@ const CsCreateModalTable = ({ contentHeight }) => {
 					);
 					return item;
 				})
-
-
 				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
 			</div>
 

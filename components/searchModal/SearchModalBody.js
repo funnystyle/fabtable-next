@@ -10,7 +10,7 @@ const SearchModalBody = ({form, searchLocation, searchType}) => {
 
   return (
     <>
-      {(searchLocation === "cs" && searchType === "OPEN") && (<OrderOpenModalContent form={form} searchLocation={searchLocation}/>)}
+      {(searchType === "OPEN") && (<OrderOpenModalContent form={form} searchLocation={searchLocation}/>)}
       {!(searchLocation === "cs" && searchType === "OPEN") &&
         <>
           <SearchModalNormal form={form} title={"일반"} order={1} searchLocation={searchLocation} searchDiv={"NORMAL"}/>
