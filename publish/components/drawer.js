@@ -31,7 +31,7 @@ const handleChange = (value) => {
 
 const DrawerComponent = () => {
 
-	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose } = useDrawerStore();
+	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose, selectedPrint : printType } = useDrawerStore();
 
 	const [renderers, setRenderers] = useState([]);
 
@@ -77,6 +77,9 @@ const DrawerComponent = () => {
 						transition: "padding-right 0.2s ease-in-out",
 					}}
 				>
+
+				{ printType === "report" && (	
+					<>
 					{Array.isArray(storedPdfUrlList) && storedPdfUrlList.length > 0 && (storedPdfUrlList.map((pdfUrl, index) => (
 						<div className="preview" key={`preview-${index+1}`}>
 							<Worker workerUrl="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js">
@@ -103,6 +106,13 @@ const DrawerComponent = () => {
 							/>
 						</div>
 					)}))}
+					</>
+				)}
+				{ printType === "label" && (
+					<div className="preview">
+						라벨 미리보기
+					</div>
+				)}
 
 					{/* <div
 						className="zoom-r-btn"
