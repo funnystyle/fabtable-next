@@ -8,6 +8,7 @@ const STORAGE_KEY = "search_history";
 const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 
 	const [searchItems, setSearchItems] = useState([]);
+	const [inputValue, setInputValue] = useState("");
 
 	// 🔹 localStorage에서 검색어 목록 불러오기
 	useEffect(() => {
@@ -46,6 +47,10 @@ const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 		saveToLocalStorage(updatedItems);
 		setSearchKeyword(value);
 	};
+
+	useEffect(() => {
+		setInputValue(searchKeyword);
+	}, [searchKeyword]);
 
 	// 🔹 검색어 렌더링
 	const renderItem = (title, date) => ({
@@ -93,11 +98,6 @@ const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 			]
 			: [];
 
-	useEffect(() => {
-		console.log("searchKeyword", searchKeyword);
-	}, [searchKeyword]);
-// TODO:여기 안바뀌는 이유를 모르겠음
-
 	return (
 		<AutoComplete
 			popupClassName="certain-category-search-dropdown"
@@ -106,14 +106,17 @@ const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 				width: 400,
 			}}
 			options={options}
+			value={inputValue}
+			onChange={setInputValue}
 		>
 			<Input.Search
 				size="large"
 				placeholder="검색어를 입력하세요"
 				allowClear
 				className="input-search"
-				value={searchKeyword}
-				onSearch={handleSearch}
+				value={inputValue}
+				onChange={(e) => setInputValue(e.target.value)}
+				onPressEnter={(e) => handleSearch(e.target.value)}
 			/>
 		</AutoComplete>
 	);
