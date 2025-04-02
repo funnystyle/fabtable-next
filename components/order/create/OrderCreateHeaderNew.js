@@ -1,18 +1,22 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Flex, message, Tag, } from "antd";
-import { useMutation } from "@tanstack/react-query";
-import { postAxios } from "@api/apiClient";
-import { CloseOutlined, EditFilled } from "@ant-design/icons";
-import useMenuTabStore from "@store/useMenuTabStore";
+import {Button, Flex, message, Tag,} from "antd";
+import {useMutation} from "@tanstack/react-query";
+import {postAxios} from "@api/apiClient";
+import {CloseOutlined, EditFilled} from "@ant-design/icons";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 const OrderCreateHeaderNew = ({ form }) => {
 
-	const { moveUrl } = useMenuTabStore();
+	const { setRecord } = useRecordDataStore();
 
 	const { mutate: orderInfoCreate } = useMutation({
 		mutationKey: "orderInfoCreate",
 		mutationFn: (values) => postAxios("/user/record", values),
+		onSuccess: (response, values) => {
+			values.id= response?.data?.id;
+			setRecord(values)
+		}
 	});
 
 	const handleReset = () => {
@@ -24,7 +28,6 @@ const OrderCreateHeaderNew = ({ form }) => {
 
 		await orderInfoCreate(values);
 		message.success('수주 등록이 완료되었습니다!');
-		moveUrl("/order/list");
 	}
 
 	return (

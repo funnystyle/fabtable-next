@@ -1,24 +1,25 @@
 // pages/order/create/index.js
-import React, {useEffect} from "react";
-import { Button, Flex, message, Tag, } from "antd";
-import { useMutation } from "@tanstack/react-query";
-import { postAxios } from "@api/apiClient";
-import { CloseOutlined, EditFilled } from "@ant-design/icons";
+import React from "react";
+import {Button, Flex, message, Tag,} from "antd";
+import {useMutation} from "@tanstack/react-query";
+import {postAxios} from "@api/apiClient";
+import {CloseOutlined, EditFilled} from "@ant-design/icons";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
-import useMenuTabStore from "@store/useMenuTabStore";
+import useCsDataStore from "@store/useCsDataStore";
 
 const CsCreateHeader = ({ form }) => {
 
-	const { moveUrl } = useMenuTabStore();
 	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
+	const { setCs } = useCsDataStore();
 
-	useEffect(() => {
-		console.log("CsCreateHeader files: ", files);
-	},[files]);
 
 	const { mutate: csCreate } = useMutation({
 		mutationKey: "csCreate",
 		mutationFn: (values) => postAxios("/user/cs", values, true),
+		onSuccess: (response, values) => {
+			values.id= response?.data?.id;
+			setCs(values)
+		}
 	});
 
 	const handleReset = () => {
@@ -64,7 +65,6 @@ const CsCreateHeader = ({ form }) => {
 
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
-		moveUrl("/cs/list");
 	}
 
 	return (

@@ -49,10 +49,6 @@ const CsListTable = ({ contentHeight }) => {
 		handleReload();
 	}, [])
 
-
-	console.log("bbbb", handleSettingKeyToData(data));
-
-
 	return (
 		<>
 			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
