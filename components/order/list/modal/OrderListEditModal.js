@@ -59,6 +59,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 			{/* ModalComponent 추가 - "수주 복제하기" 클릭 시 열림 */}
 			<div style={{ display: openModal ? "block" : "none" }}>
 				<Modal
+					centered
 					title={<ModalTitle title="수주 정보 일괄수정" />}
 					open={openModal}
 					onCancel={() => setOpenModal(false)}
