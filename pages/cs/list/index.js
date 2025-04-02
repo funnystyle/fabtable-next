@@ -13,6 +13,7 @@ import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 
 import {DownOutlined, RedoOutlined} from "@ant-design/icons";
 import CsListButtonArea from "@components/cs/list/CsListButtonArea";
+import {useGetCsList} from "@components/api/useGetCsList";
 
 const operationItems = [
 	{
@@ -101,6 +102,8 @@ const printItems = [
 
 const OrderComponent = ({ contentHeight, isActive=true }) => {
 
+	const { handleReload, isPending } = useGetCsList();
+
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
@@ -133,7 +136,7 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 				<CsListSearchTags />
 
 				{/* 상단 버튼 */}
-				<CsListButtonArea statusList={statusList} />
+				<CsListButtonArea statusList={statusList} handleReload={handleReload} />
 				{/* <OrderListButtonArea statusList={statusList} /> */}
 				<Flex gap="small" align="center" className="btn-big" style={{
 								position: "sticky",
@@ -208,7 +211,7 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 						</Flex>
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
-				<CsListTable contentHeight={contentHeight} />
+				<CsListTable contentHeight={contentHeight} isPending={isPending}/>
 
 				{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 				<div style={{ display: openDrawer ? "block" : "none" }}>

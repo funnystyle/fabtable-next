@@ -13,7 +13,7 @@ import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useCsDataStore from "@store/useCsDataStore";
 
-const CsListTable = ({ contentHeight }) => {
+const CsListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
@@ -42,12 +42,6 @@ const CsListTable = ({ contentHeight }) => {
 			return item;
 		});
 	}
-
-	const { handleReload, isPending } = useGetCsList();
-
-	useEffect(() => {
-		handleReload();
-	}, [])
 
 	return (
 		<>

@@ -12,10 +12,11 @@ export const handleKeyDownAntd = (event, data, document, tableRef,
                               currentPage, pageSize,
                               selectedRowKeys, setSelectedRowKeys,
                               anchorRowKey, setAnchorRowKey,
-                              cursorRowKey, setCursorRowKey ) => {
+                              cursorRowKey, setCursorRowKey, datas, setDatas ) => {
       if (!document.activeElement || document.activeElement !== tableRef.current) return;
 
       let newSelectedKeys = [...selectedRowKeys];
+      let newDatas = [...datas];
 
       // ✅ 현재 페이지에서 시작되는 index 계산
       const pageStartIndex = (currentPage - 1) * pageSize;
@@ -46,13 +47,16 @@ export const handleKeyDownAntd = (event, data, document, tableRef,
               const start = Math.min(anchorRowKey, newKey);
               const end = Math.max(anchorRowKey, newKey);
               newSelectedKeys = data.filter((item) => item.key >= start && item.key <= end).map((item) => item.key);
+              newDatas = data.filter((item) => item.key >= start && item.key <= end);
           } else {
               newSelectedKeys = [newKey];
+              newDatas = [data[newIndex]];
               setAnchorRowKey(newKey);
           }
 
           setCursorRowKey(newKey);
           setSelectedRowKeys(newSelectedKeys);
+          setDatas(newDatas);
       } else if (event.key === "Escape") {
           event.preventDefault();
           setSelectedRowKeys([]);
@@ -64,30 +68,40 @@ export const handleKeyDownAntd = (event, data, document, tableRef,
       } else if ((event.ctrlKey || event.metaKey) && event.key === "a") {
           event.preventDefault();
           newSelectedKeys = data.slice(pageStartIndex, pageEndIndex + 1).map((item) => item.key);
+          newDatas = data.slice(pageStartIndex, pageEndIndex + 1);
           setSelectedRowKeys(newSelectedKeys);
+          setDatas(newDatas);
+
+
       }
     };
 
 export const handleRowClickAntd = (event, record, props) => {
-  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data, datas, setDatas} = props;
     const { key } = record;
 
     if (event.shiftKey) {
       const start = Math.min(anchorRowKey, key);
       const end = Math.max(anchorRowKey, key);
       setSelectedRowKeys(data.filter((item) => item.key >= start && item.key <= end).map((item) => item.key));
+      setDatas(data.filter((item) => item.key >= start && item.key <= end));
     } else if (event.ctrlKey || event.metaKey) {
       const isAlreadySelected = selectedRowKeys.includes(key);
       const newSelectedKeys = isAlreadySelected
         ? selectedRowKeys.filter((k) => k !== key)
         : [...selectedRowKeys, key];
+      const newDatas = isAlreadySelected
+        ? datas.filter((item) => item.key !== key)
+        : [...datas, record];
 
       setSelectedRowKeys(newSelectedKeys);
+      setDatas(newDatas);
       if (!isAlreadySelected) {
         setAnchorRowKey(key);
       }
     } else {
       setSelectedRowKeys([key]);
+      setDatas([record]);
       setAnchorRowKey(key);
     }
 
@@ -112,31 +126,37 @@ export const handleMouseDownAntd = (event, record, props) => {
   };
 
 export const handleMouseEnterAntd = (event, record, props) => {
-  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data, datas, setDatas} = props;
     if (!isDragging || dragStartKeyRef.current === null) return;
 
     let newSelectedKeys = [...selectedRowKeys];
+    let newDatas = [...datas];
     const start = Math.min(anchorRowKey, record.key);
     const end = Math.max(anchorRowKey, record.key);
 
     if (shiftDragging) {
         newSelectedKeys = data.filter((item) => item.key >= Math.min(anchorRowKey, record.key) && item.key <= Math.max(anchorRowKey, record.key)).map((item) => item.key);
+        newDatas = data.filter((item) => item.key >= Math.min(anchorRowKey, record.key) && item.key <= Math.max(anchorRowKey, record.key));
     } else {
         newSelectedKeys = data.filter((item) => item.key >= start && item.key <= end).map((item) => item.key);
+        newDatas = data.filter((item) => item.key >= start && item.key <= end);
     }
 
     setSelectedRowKeys([...newSelectedKeys]);
+    setDatas([...newDatas]);
+
     dragEndKeyRef.current = record.key;
   };
 
 export const handleMouseUpAntd = (props) => {
-    const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data} = props;
+    const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, isDragging, setIsDragging, ctrlDragging, setCtrlDragging, shiftDragging, setShiftDragging, dragStartKeyRef, dragEndKeyRef, initialSelectedKeysRef, data, datas, setDatas} = props;
     setIsDragging(false);
     setCtrlDragging(false);
     setShiftDragging(false);
     dragStartKeyRef.current = null;
 
     setSelectedRowKeys([...selectedRowKeys]);
+    setDatas([...datas]);
 
     if (dragEndKeyRef.current !== null) {
         setCursorRowKey(dragEndKeyRef.current);

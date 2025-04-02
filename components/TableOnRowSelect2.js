@@ -8,7 +8,7 @@ import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import CustomEmpty from "./common/CustomEmpty";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true }) => {
-  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = useTableSelectKeysStore();
 
   const [isDragging, setIsDragging] = useState(false);
   const [ctrlDragging, setCtrlDragging] = useState(false);
@@ -33,7 +33,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
         currentPage, size,
         selectedRowKeys, setSelectedRowKeys,
         anchorRowKey, setAnchorRowKey,
-        cursorRowKey, setCursorRowKey )
+        cursorRowKey, setCursorRowKey, datas, setDatas )
     }
 
     document.addEventListener("keydown", handleKeyDown);
@@ -49,7 +49,8 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
       ctrlDragging, setCtrlDragging,
       shiftDragging, setShiftDragging,
       dragStartKeyRef, dragEndKeyRef,
-      initialSelectedKeysRef, data
+      initialSelectedKeysRef, data,
+      datas, setDatas
     }
   }
 
@@ -70,17 +71,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
     setSize(Number(key)); // ✅ 선택한 값 적용
     localStorage.setItem("tablePageSize", key); // ✅ localStorage에 저장
   };
-
-  const handleReset = () => {
-    event.preventDefault();
-    setSelectedRowKeys([]);
-    setAnchorRowKey(null);
-    setCursorRowKey(null);
-    setTimeout(() => {
-      setSelectedRowKeys([]);
-    }, 0);
-  }
-
 
   const [loading, setLoading] = useState(isFirstLoad);
   // 👉 테이블 렌더링 완료 감지

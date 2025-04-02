@@ -1,17 +1,19 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, Flex, Space,} from "antd";
+import {Button, Flex,} from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
-import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
-import {DownOutlined} from "@ant-design/icons";
+import OrderListButtonStatusChange from "@components/order/list/button/OrderListButtonStatusChange";
+import {useSetCsState} from "@components/api/useSetCsState";
 
-const CsListButtonArea = ({ statusList }) => {
+const CsListButtonArea = ({ statusList, handleReload }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsSearchModalStore();
 	const { tags, setTags } = useCsDataStore();
+
+	const { handleReload:nowSatusUpdate } = useSetCsState(handleReload);
 
 	return (
 		<Flex gap="small" align="center" className="btn-big" style={{
@@ -35,6 +37,8 @@ const CsListButtonArea = ({ statusList }) => {
 					<Button variant="outlined">C/S 이력</Button>
 
 					<OrderListButtonStatusSelect statusList={statusList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
+
+					<OrderListButtonStatusChange statusList={statusList.slice(1)} nowSatusUpdate={nowSatusUpdate}/>
 
 					{/*<Dropdown*/}
 					{/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}

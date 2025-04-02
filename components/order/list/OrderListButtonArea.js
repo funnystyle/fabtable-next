@@ -11,11 +11,14 @@ import OrderListButtonExcel from "@components/order/list/button/OrderListButtonE
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 import useRecordModalStore from "@store/useRecordModalStore";
 import useRecordDataStore from "@store/useRecordDataStore";
+import {useSetNowState} from "@components/api/useSetNowState";
 
 const OrderListButtonArea = ({ statusList, handleReload }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
 	const { tags, setTags } = useRecordDataStore();
+
+	const { handleReload:nowSatusUpdate } = useSetNowState(handleReload);
 
 	return (
 		// <div className="contents-top-scroll">
@@ -41,7 +44,7 @@ const OrderListButtonArea = ({ statusList, handleReload }) => {
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList} handleReload={handleReload}/>
+					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowSatusUpdate={nowSatusUpdate}/>
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">

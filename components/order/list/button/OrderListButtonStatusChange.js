@@ -1,30 +1,21 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Space, } from "antd";
+import {Button, Dropdown, message, Space,} from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { useMutation } from "@tanstack/react-query";
 import { putAxios } from "@api/apiClient";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const OrderListButtonStatusChange = ({ statusList, handleReload }) => {
+const OrderListButtonStatusChange = ({ statusList, nowSatusUpdate }) => {
 
-	const stateStatusList = statusList.slice(11, 14).map((item, i) => ({label: item, key: `${i + 11}`}));
+	const stateStatusList = statusList.map((item, i) => ({label: item, key: `${i}`}));
 
-	const { mutate: nowStateChange } = useMutation({
-		mutationKey: "nowStateChange",
-		mutationFn: (values) => putAxios("/user/record", values),
-	});
-
-
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { datas } = useTableSelectKeysStore();
 
 	const handleStatusChange = async (e) => {
-		if (selectedRowKeys.length > 0) {
-			await nowStateChange({ ids: selectedRowKeys, nowState: statusList[e.key] });
-			setTimeout(() => {
-				handleReload();
-			}, 100);
-		}
+		if (datas.length <= 0) return;
+
+		nowSatusUpdate(datas.map((data) => data.id), statusList[e.key]);
 	}
 
 	return (

@@ -7,6 +7,8 @@ const useTableSelectKeysStore = create((set) => ({
   setAnchorRowKey: (anchorRowKey) => set({ anchorRowKey }),
   cursorRowKey: null,
   setCursorRowKey: (cursorRowKey) => set({ cursorRowKey }),
+  datas: [],
+  setDatas: (datas) => set({ datas }),
 }));
 
 export default useTableSelectKeysStore;
