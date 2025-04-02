@@ -33,17 +33,10 @@ export const useGetRecords = (statusAll=false, autoReload=true) => {
     getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
   };
 
-  const isFirstRender = useRef(autoReload);
-
   useEffect(() => {
-    if (!isFirstRender.current) {
-      setTimeout(() => {
-        isFirstRender.current = true;
-      }, 0);
-      return;
+    if (autoReload) {
+      handleReload();
     }
-
-    handleReload();
   }, [page, size, searchKeyword, searchStatusList, searchData]);
 
   return {

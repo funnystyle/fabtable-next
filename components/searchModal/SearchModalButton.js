@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import useRecordModalStore from "@store/useRecordModalStore";
 
-const SearchModalButton = ({ form }) => {
+const SearchModalButton = ({ form, handleReload }) => {
 
 	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useRecordModalStore();
 
@@ -41,6 +41,10 @@ const SearchModalButton = ({ form }) => {
 
 		setFormData(rawData);
 		setSearchData(groupedData);
+
+		setTimeout(() => {
+			handleReload();
+		}, 100);
 	}
 
 	useEffect(() => {

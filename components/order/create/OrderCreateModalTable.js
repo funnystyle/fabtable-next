@@ -10,13 +10,11 @@ import {Button, Flex, Modal} from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
 
-const OrderCreateModalTable = () => {
+const OrderCreateModalTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
-
-	const { handleReload, isPending } = useGetRecords(true, false);
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setRecord } = useRecordDataStore();

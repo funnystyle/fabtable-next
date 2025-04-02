@@ -7,10 +7,13 @@ import SearchModalButton from "@components/searchModal/SearchModalButton";
 import SearchModalBody from "@components/searchModal/SearchModalBody";
 import OrderCreateModalTable from "@components/order/create/OrderCreateModalTable";
 import CsCreateModalTable from "@components/cs/create/CsCreateModalTable";
+import {useGetRecords} from "@components/api/useGetRecords";
 
 const SearchModalContent = ({ searchLocation, searchType }) => {
 
 	const [form] = Form.useForm();
+
+	const { handleReload, isPending } = useGetRecords(true, false);
 
 	return (
 		<>
@@ -19,9 +22,9 @@ const SearchModalContent = ({ searchLocation, searchType }) => {
 			<div className="layer-scroll">
 				<SearchModalBody form={form} searchLocation={searchLocation} searchType={searchType} />
 
-				<SearchModalButton form={form} />
+				<SearchModalButton form={form} handleReload={handleReload} />
 
-				{(searchLocation === "order" && searchType === "OPEN") && (<OrderCreateModalTable />)}
+				{(searchLocation === "order" && searchType === "OPEN") && (<OrderCreateModalTable isPending={isPending} />)}
 			</div>
 		</>
 	);

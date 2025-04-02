@@ -10,13 +10,11 @@ import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
 
-const CsCreateModalTable = ({ contentHeight }) => {
+const CsCreateModalTable = ({ contentHeight, isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useCsSearchModalStore();
-
-	const { handleReload, isPending } = useGetCsList(true, false);
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setCs } = useCsDataStore();

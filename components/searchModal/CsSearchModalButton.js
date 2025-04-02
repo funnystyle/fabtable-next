@@ -4,7 +4,7 @@ import {Button, Flex,} from "antd";
 import "dayjs/locale/ko";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 
-const SearchModalButton = ({ form }) => {
+const SearchModalButton = ({ form, handleReload }) => {
 
 	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useCsSearchModalStore();
 
@@ -39,6 +39,10 @@ const SearchModalButton = ({ form }) => {
 
 		setFormData(rawData);
 		setSearchData(groupedData);
+
+		setTimeout(() => {
+			handleReload();
+		}, 100);
 	}
 
 	useEffect(() => {
