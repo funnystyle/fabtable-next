@@ -22,7 +22,6 @@ const CsCopyButton = () => {
       return;
     }
     setCs({...datas[0], isCopy: true});
-    console.log("aaaa",{...datas[0], isCopy: true});
     moveUrl("/cs/create");
   }
   return (

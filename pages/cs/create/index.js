@@ -37,7 +37,7 @@ const CsCreate = ({isActive = true}) => {
     setConstantAsKeys(asKeys);
   }, [asKeys]);
 
-  const {cs, setCsDetail} = useCsDataStore();
+  const {cs, setCsDetail, isCopy} = useCsDataStore();
   const {selectedCodes, setSelectedCodes} = useRecordSelectCodesStore();
 
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
@@ -105,9 +105,6 @@ const CsCreate = ({isActive = true}) => {
           form.setFieldsValue(result);
         });
 
-
-        console.log("csAsDetails", csDetail.csAsDetails);
-
         if (cs.isCopy) return;
 
         csDetail.csFollowUps.forEach((csFollowUp, index) => {
@@ -139,7 +136,7 @@ const CsCreate = ({isActive = true}) => {
 
         {/*<CsCreateTab activeKey={2} />*/}
 
-        {!cs?.id || cs.isCopy ? <CsCreateHeader form={form}/>
+        {!cs?.id || cs.isCopy || isCopy ? <CsCreateHeader form={form}/>
           : <CsCreateHeaderUpdate form={form}/>}
       </div>
 

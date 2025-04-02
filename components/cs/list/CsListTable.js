@@ -29,10 +29,11 @@ const CsListTable = ({ isPending }) => {
 	};
 
 	const { moveUrl } = useMenuTabStore();
-	const { setCs } = useCsDataStore();
+	const { setCs, setIsCopy } = useCsDataStore();
 
 	const handleDoubleClick = (record) => {
 		setCs(record);
+		setIsCopy(false);
 		moveUrl("/cs/create");
 	}
 

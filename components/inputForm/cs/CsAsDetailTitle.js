@@ -1,6 +1,6 @@
-import {Button, Flex, Form, Input, Radio, Typography} from "antd";
-import {DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined} from "@ant-design/icons";
-import React, {useEffect} from "react";
+import {Button, Flex, Radio, Typography} from "antd";
+import {RedoOutlined} from "@ant-design/icons";
+import React from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const { Title } = Typography;
@@ -13,7 +13,6 @@ export const CsAsDetailTitle = ({ title, isCommon, setIsCommon, setResetFlag }) 
     setIsCommon(true);
     setResetFlag(prev => !prev);
   }
-
 
   return (
     <Flex

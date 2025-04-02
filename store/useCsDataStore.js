@@ -7,6 +7,8 @@ const useCsDataStore = create((set) => ({
   setCsDetail: (csDetail) => set({ csDetail }),
   tags: [],
   setTags: (tags) => set({ tags }),
+  isCopy: false,
+  setIsCopy: (isCopy) => set({ isCopy }),
 }));
 
 export default useCsDataStore;
