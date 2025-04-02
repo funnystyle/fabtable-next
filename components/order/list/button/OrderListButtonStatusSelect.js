@@ -8,8 +8,6 @@ const { useToken } = theme;
 
 const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchStatusList }) => {
 
-
-
 	const { token } = useToken();
 	const contentStyle = {
 		backgroundColor: token.colorBgElevated,
@@ -44,13 +42,18 @@ const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchSt
 		if (checked) {
 			setSearchStatusList([...statusList]);
 		} else {
-			setSearchStatusList([]);
+			setSearchStatusList(["inner peace"]);
 		}
 	};
 
 	const handleItemChange = (index, status) => {
 		if(searchStatusList.includes(status)) {
-			setSearchStatusList(searchStatusList.filter(item => item !== status));
+			const newSearchStatusList = searchStatusList.filter(item => item !== status);
+			if (newSearchStatusList.length === 0) {
+				setSearchStatusList(["inner peace"]);
+			} else {
+				setSearchStatusList(newSearchStatusList);
+			}
 		} else {
 			setSearchStatusList([...searchStatusList, status]);
 		}
