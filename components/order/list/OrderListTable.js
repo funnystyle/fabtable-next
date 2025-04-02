@@ -28,7 +28,7 @@ const OrderListTable = () => {
 	const { moveUrl } = useMenuTabStore();
 	const { setRecord } = useRecordDataStore();
 	const handleDoubleClick = (record) => {
-		record.nowState = record.nowState.props.children
+		// record.nowState = record.nowState.props.children
 		setRecord(record);
 		moveUrl("/order/create");
 	}
