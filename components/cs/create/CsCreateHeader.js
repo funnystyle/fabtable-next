@@ -67,7 +67,7 @@ const CsCreateHeader = ({ form }) => {
 
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
-		moveUrl("/cs/list")
+		// moveUrl("/cs/list")
 	}
 
 	return (

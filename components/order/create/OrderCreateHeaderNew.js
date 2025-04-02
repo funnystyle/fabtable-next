@@ -34,7 +34,7 @@ const OrderCreateHeaderNew = ({ form }) => {
 
 		await orderInfoCreate(values);
 		message.success('수주 등록이 완료되었습니다!');
-		moveUrl(`/order/list`);
+		// moveUrl(`/order/list`);
 	}
 
 	return (
