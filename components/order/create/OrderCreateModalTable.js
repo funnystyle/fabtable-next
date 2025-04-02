@@ -26,7 +26,6 @@ const OrderCreateModalTable = ({ isPending }) => {
 			okText: "확인",
 			cancelText: "취소",
 			onOk() {
-				record.nowState = record.nowState.props.children
 				setRecord(record);
 				setIsCopy(false);
 				setOpenSearchModal(false);
@@ -39,6 +38,8 @@ const OrderCreateModalTable = ({ isPending }) => {
 	};
 
 	const onRowClick = (record) => {
+		console.log("record click", record);
+
 		handleConfirmEdit(record);
 	}
 

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const useCsCreateConstantStore = create((set) => ({
-  recordKeys: [],
+  recordKeys: [null],
   setRecordKeys: (recordKeys) => set({ recordKeys }),
   asKeys: [],
   setAsKeys: (asKeys) => set({ asKeys }),

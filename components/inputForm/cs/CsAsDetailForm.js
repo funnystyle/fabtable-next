@@ -11,7 +11,6 @@ const CsAsDetailForm = ({ form, index, resetFlag }) => {
 
   const handleReset = () => {
     form.resetFields([
-      `defectMfcSN-${index}`,
       `warranty-${index}`,
       `actionSummary-${index}`,
       `responsePeriod-${index}`,

@@ -6,7 +6,7 @@ import useRecordModalStore from "@store/useRecordModalStore";
 
 const { Title } = Typography;
 
-const CsRecordInputBoxInitial = ({ item }) => {
+const CsRecordInputBoxInitial = ({ item, index }) => {
 
   const { setOpenSearchModal, setIndex, setOpenDiv } = useRecordModalStore();
 
@@ -16,11 +16,11 @@ const CsRecordInputBoxInitial = ({ item }) => {
     <div className="info-input-box">
       <Flex align="center" justify="space-between">
         <Flex align="center" gap={12} className="title-area">
-          <Title level={5} style={{ marginBottom: "0", }}>{`제품 1`}</Title>
+          <Title level={5} style={{ marginBottom: "0", }}>{`제품 ${index}`}</Title>
 
           <Flex gap={4} className="tit-side-area">
             <Button type="primary" size="small" onClick={() => {
-              setIndex(1);
+              setIndex(index);
               setOpenDiv("defect");
               setOpenSearchModal(true);
             }}>불량제품 불러오기</Button>

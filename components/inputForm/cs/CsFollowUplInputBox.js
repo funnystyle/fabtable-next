@@ -27,7 +27,7 @@ const CsFollowUplInputBox = ({ form }) => {
         {isCommon ?
           <CsFollowUpForm form={form} index={0} resetFlag={resetFlag} />
           : keys.map((key, index) =>
-            <CsFollowUpForm key={`cs-follow-up-${index}`} form={form} index={index+1} resetFlag={resetFlag} />
+            key !== null && <CsFollowUpForm key={`cs-follow-up-${index}`} form={form} index={index+1} resetFlag={resetFlag} />
           )}
         
         <div className="info-wrap-last" />

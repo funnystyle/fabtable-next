@@ -20,7 +20,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
 
   const handleReset = () => {
-    setRecordKeys([]);
+    setRecordKeys([null]);
     setCheckedKeySet(new Set());
   }
 
@@ -28,6 +28,11 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   useEffect(() => {
     handleReset();
   }, [allResetFlag]);
+
+  const handleAdd = () => {
+    const newRecordKeys = [...recordKeys, null];
+    setRecordKeys(newRecordKeys);
+  }
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
@@ -166,21 +171,34 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
                 type="primary"
                 icon={<PlusOutlined />}
                 iconPosition={"end"}
-                onClick={() => handleCopy()}
+                onClick={() => handleAdd()}
               >
                 제품 추가
               </Button>
 
-              <Button icon={<DeleteOutlined />}
-                      iconPosition={"end"}
-                onClick={() => handleDelete()}
-              >
-                삭제
-              </Button>
+              {checkedKeySet.size > 0 &&
+                <>
+                  <Button
+                    type="primary"
+                    icon={<PlusOutlined/>}
+                    iconPosition={"end"}
+                    onClick={() => handleCopy()}
+                  >
+                    제품 복사
+                  </Button>
 
-              <p className="total-num">
-                총 <strong>2</strong> 개
-              </p>
+                  <Button icon={<DeleteOutlined/>}
+                          iconPosition={"end"}
+                          onClick={() => handleDelete()}
+                  >
+                    삭제
+                  </Button>
+
+                  <p className="total-num">
+                    총 <strong>{checkedKeySet.size}</strong> 개
+                  </p>
+                </>
+              }
             </Flex>
           </Flex>
 
@@ -210,6 +228,20 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
         {/*비어있지않을때는 리스트를 보여준다.*/}
         {recordKeys.map((key, index) => (
+          key === null ?
+            <React.Fragment key={`record-fragment-${key}-${index}`}>
+              {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
+              <Flex gap={20} className="info-input-col2" >
+                {itemList.map((item, i) =>
+                  <CsRecordInputBoxInitial
+                    key={`cs-record-input-box-${index}-${i}`}
+                    item={item}
+                    index={index + 1}
+                  />
+                )}
+              </Flex>
+            </React.Fragment>
+            :
           <React.Fragment key={`record-fragment-${key}-${index}`}>
             {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
             <Flex gap={20} className="info-input-col2" key={`record-${key}`}>
