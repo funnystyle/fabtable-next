@@ -6,12 +6,13 @@ import {postAxios} from "@api/apiClient";
 import {CloseOutlined, EditFilled} from "@ant-design/icons";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import useCsDataStore from "@store/useCsDataStore";
+import useMenuTabStore from "@store/useMenuTabStore";
 
 const CsCreateHeader = ({ form }) => {
 
 	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
 	const { setCs } = useCsDataStore();
-
+	const { moveUrl } = useMenuTabStore();
 
 	const { mutate: csCreate } = useMutation({
 		mutationKey: "csCreate",
@@ -65,6 +66,7 @@ const CsCreateHeader = ({ form }) => {
 
 		await csCreate(formData);
 		message.success('CS 등록이 완료되었습니다!');
+		moveUrl("/cs/list")
 	}
 
 	return (
