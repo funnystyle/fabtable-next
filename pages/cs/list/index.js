@@ -14,6 +14,7 @@ import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 import {DownOutlined, RedoOutlined} from "@ant-design/icons";
 import CsListButtonArea from "@components/cs/list/CsListButtonArea";
 import {useGetCsList} from "@components/api/useGetCsList";
+import {useGetCodeList} from "@components/api/useGetCodeList";
 
 const operationItems = [
 	{
@@ -108,23 +109,6 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
 
-	// --------- 상태 리스트 상수
-	const { setSearchStatusList } = useCsSearchModalStore();
-	const [statusList, setStatusList] = useState([]);
-	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
-	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/code", {groupName: "CS상태"}),
-	});
-
-	useEffect(() => {
-		if (isSuccess) {
-			const stList = statusListResponse.data.list.map((item) => item.codeName);
-			setStatusList(stList);
-			setSearchStatusList(stList);
-		}
-	}, [isSuccess]);
-
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -136,7 +120,7 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 				<CsListSearchTags />
 
 				{/* 상단 버튼 */}
-				<CsListButtonArea statusList={statusList} handleReload={handleReload} />
+				<CsListButtonArea handleReload={handleReload} />
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
 				<CsListTable contentHeight={contentHeight} isPending={isPending}/>

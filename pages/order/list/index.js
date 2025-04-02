@@ -13,6 +13,7 @@ import useDrawerStore from "@store/useDrawerStore";
 import useRecordModalStore from "@store/useRecordModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
 import { useGetRecords } from "@components/api/useGetRecords";
+import {useGetCodeList} from "@components/api/useGetCodeList";
 
 
 const OrderComponent = ({ isActive=true }) => {
@@ -25,21 +26,14 @@ const OrderComponent = ({ isActive=true }) => {
 
 	// --------- 상태 리스트 상수
 	const { setSearchStatusList } = useRecordModalStore();
-	const [statusList, setStatusList] = useState([]);
-	const [queryKey, setQueryKey] = useState(["status-list", Math.random()]);
-	const { data:statusListResponse, isSuccess:isSuccess } = useQuery({
-		queryKey,
-		queryFn: () => getAxios("/user/code", {groupName: "현재상태"}),
-	});
+
+	const { codeNameList, isSuccess } = useGetCodeList("현재상태");
 
 	useEffect(() => {
 		if (isSuccess) {
-			const stList = statusListResponse.data.list.map((item) => item.codeName);
-			setStatusList(stList);
-			setSearchStatusList(stList);
+			setSearchStatusList(codeNameList);
 		}
 	}, [isSuccess]);
-
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -52,7 +46,7 @@ const OrderComponent = ({ isActive=true }) => {
 					<OrderListSearchTags />
 
 					{/* 상단 버튼 */}
-					<OrderListButtonArea statusList={statusList} handleReload={handleReload} />
+					<OrderListButtonArea statusList={codeNameList} handleReload={handleReload} />
 				{/* </Space> */}
 
 			{/* 태그 없음, 헤더 관련 정리 event */}

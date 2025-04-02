@@ -12,7 +12,9 @@ export const useSetCsState = (handleListReload) => {
     onSuccess: () => {
       setTimeout(() => {
         message.success('변경 완료');
-        handleListReload();
+        if (handleListReload) {
+          handleListReload();
+        }
       }, 100);
     },
     onError: (error) => {

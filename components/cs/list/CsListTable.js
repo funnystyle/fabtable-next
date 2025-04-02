@@ -29,7 +29,7 @@ const CsListTable = ({ isPending }) => {
 	};
 
 	const { moveUrl } = useMenuTabStore();
-	const { setCs, setIsCopy } = useCsDataStore();
+	const { setCs, setIsCopy, setTagInfoList } = useCsDataStore();
 
 	const handleDoubleClick = (record) => {
 		setCs(record);
@@ -43,6 +43,10 @@ const CsListTable = ({ isPending }) => {
 			return item;
 		});
 	}
+
+	useEffect(() => {
+		setTagInfoList(data?.tagInfoList || []);
+	}, [data]);
 
 	return (
 		<>

@@ -11,6 +11,10 @@ const useCsDataStore = create((set) => ({
   setIsCopy: (isCopy) => set({ isCopy }),
   isChange: false,
   setIsChange: (isChange) => set({ isChange }),
+  tagInfoList: [],
+  setTagInfoList: (tagInfoList) => set({ tagInfoList }),
+  csState: null,
+  setCsState: (csState) => set({ csState }),
 }));
 
 export default useCsDataStore;

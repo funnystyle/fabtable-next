@@ -1,16 +1,15 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, Flex, message, Space, Tag,} from "antd";
-import {useMutation} from "@tanstack/react-query";
-import {postAxios, putAxios} from "@api/apiClient";
-import {CheckOutlined, CloseOutlined, DownOutlined, EditFilled} from "@ant-design/icons";
-import useRecordDataStore from "@store/useRecordDataStore";
+import {Button, Dropdown, Flex, Space,} from "antd";
+import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
 import useCsDataStore from "@store/useCsDataStore";
 import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton";
+import CsCreateStatusChangeButton from "@components/cs/create/button/CsCreateStatusChangeButton";
+import {useGetCodeList} from "@components/api/useGetCodeList";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
-  const {cs} = useCsDataStore();
+  const {cs, csState} = useCsDataStore();
 
   // const { mutate: updateRecord } = useMutation({
   // 	mutationKey: "updateRecord",
@@ -34,7 +33,7 @@ const CsCreateHeaderUpdate = ({form}) => {
         className="detail-top-area"
       >
         <Flex align="center">
-          {cs.csState}
+          {csState}
 
           <p className="cs-num">
             C/S No. <span className="num">{cs.csNumber}</span>
@@ -42,16 +41,7 @@ const CsCreateHeaderUpdate = ({form}) => {
         </Flex>
         <Flex align="center" gap={8} className="detail-btn-area">
           <Flex gap={8} className="btn-space-area">
-            <Dropdown
-              menu={{items: []}}
-            >
-              <Button>
-                <Space>
-                  상태변경
-                  <DownOutlined/>
-                </Space>
-              </Button>
-            </Dropdown>
+            <CsCreateStatusChangeButton />
 
             <Button>C/S이력</Button>
           </Flex>

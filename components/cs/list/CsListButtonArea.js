@@ -1,5 +1,5 @@
 // pages/order/create/index.js
-import React from "react";
+import React, {useEffect} from "react";
 import {Button, Flex,} from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
@@ -8,13 +8,22 @@ import useCsDataStore from "@store/useCsDataStore";
 import OrderListButtonStatusChange from "@components/order/list/button/OrderListButtonStatusChange";
 import {useSetCsState} from "@components/api/useSetCsState";
 import CsCopyButton from "@components/cs/list/button/CsCopyButton";
+import {useGetCodeList} from "@components/api/useGetCodeList";
 
-const CsListButtonArea = ({ statusList, handleReload }) => {
+const CsListButtonArea = ({ handleReload }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsSearchModalStore();
 	const { tags, setTags } = useCsDataStore();
 
 	const { handleReload:nowSatusUpdate } = useSetCsState(handleReload);
+
+	const { codeNameList, isSuccess } = useGetCodeList("CS상태");
+
+	useEffect(() => {
+		if (isSuccess) {
+			setSearchStatusList(codeNameList);
+		}
+	}, [isSuccess]);
 
 	return (
 		<Flex gap="small" align="center" className="btn-big" style={{
@@ -29,7 +38,7 @@ const CsListButtonArea = ({ statusList, handleReload }) => {
 					setDeleteTagKeyName={setDeleteTagKeyName}
 					setSearchStatusList={setSearchStatusList}
 					setSearchKeyword={setSearchKeyword}
-					statusList={statusList}
+					statusList={codeNameList}
 					tags={tags}
 					setTags={setTags}
 				/>
@@ -37,9 +46,9 @@ const CsListButtonArea = ({ statusList, handleReload }) => {
 				<Flex gap="small" className="btn-spacing-area">
 					<Button variant="outlined">C/S 이력</Button>
 
-					<OrderListButtonStatusSelect statusList={statusList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
+					<OrderListButtonStatusSelect statusList={codeNameList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList.slice(1)} nowSatusUpdate={nowSatusUpdate}/>
+					<OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowSatusUpdate={nowSatusUpdate}/>
 
 					{/*<Dropdown*/}
 					{/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}

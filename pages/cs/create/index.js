@@ -36,7 +36,7 @@ const CsCreate = ({isActive = true}) => {
     setConstantAsKeys(asKeys);
   }, [asKeys]);
 
-  const {cs, setCsDetail, isCopy, setIsChange} = useCsDataStore();
+  const {cs, setCsDetail, isCopy, setIsChange, setCsState} = useCsDataStore();
   const {selectedCodes, setSelectedCodes} = useRecordSelectCodesStore();
 
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
@@ -44,6 +44,8 @@ const CsCreate = ({isActive = true}) => {
   useEffect(() => {
     console.log("cs", cs);
     if (list && list.length > 0 && cs?.id) {
+      setCsState(cs?.csState);
+
       setTimeout(() => {
         loadFormValues(cs, data, form, selectedCodes, setSelectedCodes);
         setIsChange(false);
