@@ -5,8 +5,8 @@ import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useRecordModalStore from "@store/useRecordModalStore";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { useGetRecords } from "@components/api/useGetRecords";
-import { ExclamationCircleFilled } from "@ant-design/icons";
-import { Modal } from "antd";
+import {CheckOutlined, ExclamationCircleFilled} from "@ant-design/icons";
+import {Button, Flex, Modal} from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
 
@@ -49,10 +49,23 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"}/>
+			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES_LOAD"}/>
 			<div className="contents-scroll">
 				{/* 테이블 */}
-				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data)} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
+				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data).map((item) => {
+					item.remark_sales_load=(
+						<>
+							<Flex gap={4}>
+								<Button size="small">수주정보</Button>
+								<Button size="small" icon={<CheckOutlined />} iconPosition="start">
+									선택
+								</Button>
+							</Flex>
+						</>
+					);
+					return item;
+				})
+				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
 			</div>
 
 			{contextHolder}
