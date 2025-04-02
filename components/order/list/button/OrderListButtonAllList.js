@@ -19,7 +19,7 @@ const OrderListButtonAllList = ({ setDeleteTagKeyName, setSearchStatusList, setS
 	};
 
 	const handleSearchKeywordReset = () => {
-		setSearchKeyword(null);
+		setSearchKeyword("");
 	}
 
 	const handleAllList = () => {
