@@ -42,7 +42,6 @@ const CsCreate = ({isActive = true}) => {
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
 
   useEffect(() => {
-    console.log("cs", cs);
     if (list && list.length > 0 && cs?.id) {
       setCsState(cs?.csState);
 

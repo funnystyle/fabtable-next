@@ -5,10 +5,11 @@ import { useMutation } from "@tanstack/react-query";
 import { postAxios, putAxios } from "@api/apiClient";
 import { CheckOutlined, CloseOutlined, DownOutlined, EditFilled } from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
+import OrderCreateStatusChangeButton from "@components/order/create/button/OrderCreateStatusChangeButton";
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
-	const { record } = useRecordDataStore();
+	const { record, nowState } = useRecordDataStore();
 
 	const { mutate: updateRecord } = useMutation({
 		mutationKey: "updateRecord",
@@ -28,7 +29,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 			{/* 기 등록된 수주 내용 수정시 */}
 			<Flex justify="space-between" className="detail-top-area">
 				<Flex gap={12}>
-					{record.nowState}
+					{nowState}
 
 					<ul className="product-info">
 						<li>{record.oldSerialNumber}</li>
@@ -37,6 +38,26 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 				</Flex>
 
 				<Flex align="center" gap={8} className="detail-btn-area">
+					<Flex gap={8} className="btn-space-area">
+						<Button>수주 종합정보</Button>
+
+						<OrderCreateStatusChangeButton />
+					</Flex>
+
+					<Flex gap={8} className="btn-space-area">
+						<Button>복제</Button>
+						<Button>신규</Button>
+						<Button>삭제</Button>
+
+						<Dropdown menu={{ items: [] }}>
+							<Button>
+								<Space>
+									인쇄
+									<DownOutlined />
+								</Space>
+							</Button>
+						</Dropdown>
+					</Flex>
 					<Flex gap={8}>
 						<Button icon={<CloseOutlined />} iconPosition={"end"}>
 							취소

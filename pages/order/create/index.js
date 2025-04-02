@@ -24,11 +24,12 @@ const OrderInfoCreate = ({ isActive=true }) => {
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 
-	const { record, resetFlag } = useRecordDataStore();
+	const { record, resetFlag, setNowState } = useRecordDataStore();
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
 		if (list && list.length > 0 && record) {
+			setNowState(record?.nowState);
 			setTimeout(() => {
 				loadFormValues(record, data, form, selectedCodes, setSelectedCodes)
 			}, 10);

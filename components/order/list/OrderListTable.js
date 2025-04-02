@@ -1,15 +1,14 @@
 // pages/order.js
-import React, { useState } from "react";
-import { Dropdown, Spin, } from "antd";
+import React, {useEffect, useState} from "react";
+import {Dropdown,} from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
+import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
 import useRecordModalStore from "@store/useRecordModalStore";
-import { transformTagData } from "@components/order/table/transformTagData";
+import {transformTagData} from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
 import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
-import { LoadingOutlined } from "@ant-design/icons";
 
 const OrderListTable = ({ isPending }) => {
 
@@ -26,7 +25,7 @@ const OrderListTable = ({ isPending }) => {
 	};
 
 	const { moveUrl } = useMenuTabStore();
-	const { setRecord } = useRecordDataStore();
+	const { setRecord, setTagInfoList } = useRecordDataStore();
 	const handleDoubleClick = (record) => {
 		// record.nowState = record.nowState.props.children
 		setRecord(record);
@@ -39,6 +38,10 @@ const OrderListTable = ({ isPending }) => {
 			return item;
 		});
 	}
+
+	useEffect(() => {
+		setTagInfoList(data?.tagInfoList || []);
+	}, [data]);
 
 	return (
 		<>

@@ -7,6 +7,10 @@ const useRecordDataStore = create((set) => ({
   setTags: (tags) => set({ tags }),
   resetFlag: false,
   handleReset: () => set((state) => ({ resetFlag: !state.resetFlag })),
+  nowState: null,
+  setNowState: (nowState) => set({ nowState }),
+  tagInfoList: [],
+  setTagInfoList: (tagInfoList) => set({ tagInfoList }),
 }));
 
 export default useRecordDataStore;
