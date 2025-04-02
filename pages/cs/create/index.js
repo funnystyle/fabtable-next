@@ -1,6 +1,6 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
-import React, { useEffect, useState } from "react";
-import { Flex, Form, Layout, Spin, } from "antd";
+import React, {useEffect, useState} from "react";
+import {Flex, Form, Layout, Spin,} from "antd";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
 import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
 import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
@@ -14,168 +14,176 @@ import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
 import dayjs from "dayjs";
 import CsCreateAnchor from "@components/cs/create/CsCreateAnchor";
-import { loadFormValues } from "@components/inputForm/loadFormValues";
+import {loadFormValues} from "@components/inputForm/loadFormValues";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
-import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
-import { useGetCsDetail } from "@components/api/useGetCsDetail";
+import {useGetInputBoxList} from "@components/api/useGetInputBoxList";
+import {useGetCsDetail} from "@components/api/useGetCsDetail";
 import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
 import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
 
-const CsCreate = ({ isActive=true }) => {
-	const { data, list } = useGetInputBoxList("csCreate");
+const CsCreate = ({isActive = true}) => {
+  const {data, list} = useGetInputBoxList("csCreate");
 
-	const [form] = Form.useForm();
-	const codeRelationSet = new Set();
+  const [form] = Form.useForm();
+  const codeRelationSet = new Set();
 
-	const [asKeys, setAsKeys] = useState([0]);
-	const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
-	const [loading, setLoading] = useState(true);
+  const [asKeys, setAsKeys] = useState([0]);
+  const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
+  const [loading, setLoading] = useState(true);
 
-	const { setAsKeys:setConstantAsKeys, setIsAsDetailCommon, setIsFollowUpCommon } = useCsCreateConstantStore();
+  const {setAsKeys: setConstantAsKeys, setIsAsDetailCommon, setIsFollowUpCommon} = useCsCreateConstantStore();
 
-	useEffect(() => {
-		setConstantAsKeys(asKeys);
-	}, [asKeys]);
+  useEffect(() => {
+    setConstantAsKeys(asKeys);
+  }, [asKeys]);
 
-	const { cs , setCsDetail} = useCsDataStore();
-	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
+  const {cs, setCsDetail} = useCsDataStore();
+  const {selectedCodes, setSelectedCodes} = useRecordSelectCodesStore();
 
-	const { data:csDetail, handleReload:csDetailLoad } = useGetCsDetail();
+  const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
 
-	useEffect(() => {
-		if (list && list.length > 0 && cs?.id) {
-			setTimeout(() => {
-				loadFormValues(cs, data, form, selectedCodes, setSelectedCodes)
-			}, 10);
+  useEffect(() => {
+    console.log("cs", cs);
+    if (list && list.length > 0 && cs?.id) {
+      setTimeout(() => {
+        loadFormValues(cs, data, form, selectedCodes, setSelectedCodes)
+      }, 10);
 
-			if (cs?.id) {
-				csDetailLoad(cs.id)
-			}
-		}
+      if (cs?.id) {
+        csDetailLoad(cs.id)
+      }
+    }
 
-		setLoading(!list || list.length === 0);
-	}, [cs, list]);
+    setLoading(!list || list.length === 0);
+  }, [cs, list]);
 
-	const { setRecordKeys } = useCsCreateConstantStore();
-	useEffect(() => {
-		setCsDetail(csDetail);
-		if (csDetail) {
-			const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
-			setRecordKeys(ids);
+  const {setRecordKeys} = useCsCreateConstantStore();
+  useEffect(() => {
+    setCsDetail(csDetail);
+    if (csDetail) {
+      const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
+      setRecordKeys(ids);
 
-			setTimeout(() => {
-				csDetail.csRecords.forEach((csRecord, index) => {
-					const result = Object.entries(csRecord).reduce((acc, [key, value]) => {
-						const dateFields = ["defectMfcWithdrawalDate", "actionCompletionDate", "productCertificationDate"];
-						const isDateField = dateFields.includes(key);
-						acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-						return acc;
-					}, {});
-					form.setFieldsValue(result);
-				});
-			}, 10);
+      setTimeout(() => {
+        csDetail.csRecords.forEach((csRecord, index) => {
+          const result = Object.entries(csRecord).reduce((acc, [key, value]) => {
+            const dateFields = ["defectMfcWithdrawalDate", "actionCompletionDate", "productCertificationDate"];
+            const isDateField = dateFields.includes(key);
+            acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
+            return acc;
+          }, {});
+          form.setFieldsValue(result);
+        });
+      }, 10);
 
-			form.setFieldsValue(csDetail.csAsWork);
+      form.setFieldsValue(csDetail.csAsWork);
 
-			const asKeys = csDetail.csAsWorkContents.map((csAsWorkContent, index) => {
-				const result = Object.entries(csAsWorkContent).reduce((acc, [key, value]) => {
-					const dateFields = ["responseDate"];
-					const isDateField = dateFields.includes(key);
-					acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-					return acc;
-				}, {});
-				form.setFieldsValue(result);
+      const asKeys = csDetail.csAsWorkContents.map((csAsWorkContent, index) => {
+        const result = Object.entries(csAsWorkContent).reduce((acc, [key, value]) => {
+          const dateFields = ["responseDate"];
+          const isDateField = dateFields.includes(key);
+          acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
+          return acc;
+        }, {});
+        form.setFieldsValue(result);
 
-				return index;
-			});
-			setAsKeys(asKeys);
+        return index;
+      });
+      setAsKeys(asKeys);
 
-			setIsAsDetailCommon(csDetail.isAsDetailCommon);
-			setIsFollowUpCommon(csDetail.isFollowUpCommon);
+      setIsAsDetailCommon(csDetail.isAsDetailCommon);
+      setIsFollowUpCommon(csDetail.isFollowUpCommon);
 
-			csDetail.csAsDetails.forEach((csAsDetail, index) => {
-				const result = Object.entries(csAsDetail).reduce((acc, [key, value]) => {
-					const dateFields = ["responseDate"];
-					const isDateField = dateFields.includes(key);
-					acc[key + "-" + (csDetail.isAsDetailCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-					return acc;
-				}, {});
-				form.setFieldsValue(result);
-			});
+      setTimeout(() => {
+        csDetail.csAsDetails.forEach((csAsDetail, index) => {
+          const result = Object.entries(csAsDetail).reduce((acc, [key, value]) => {
+            const dateFields = ["responseDate"];
+            const isDateField = dateFields.includes(key);
+            acc[key + "-" + (csDetail.isAsDetailCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
+            return acc;
+          }, {});
+          form.setFieldsValue(result);
+        });
 
-			csDetail.csFollowUps.forEach((csFollowUp, index) => {
-				const result = Object.entries(csFollowUp).reduce((acc, [key, value]) => {
-					const dateFields = ["analysisRequestDate", "analysisDueDate", "analysisCompleteDate"];
-					const isDateField = dateFields.includes(key);
-					acc[key + "-" + (csDetail.isFollowUpCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-					return acc;
-				}, {});
-				form.setFieldsValue(result);
-			});
-		}
-	}, [csDetail]);
 
-	const [anchorContainer, setAnchorContainer] = useState(null);
+        console.log("csAsDetails", csDetail.csAsDetails);
 
-	useEffect(() => {
-		const container = document.querySelector(".anchor-wrapper");
-		if (container) {
-			setAnchorContainer(container);
-		}
-	}, [loading]);
+        if (cs.isCopy) return;
 
-	return (
-		<Layout>
-			<div className="contents-flex">
-				<CsCreateTitle title="C/S 관리" />
+        csDetail.csFollowUps.forEach((csFollowUp, index) => {
+          const result = Object.entries(csFollowUp).reduce((acc, [key, value]) => {
+            const dateFields = ["analysisRequestDate", "analysisDueDate", "analysisCompleteDate"];
+            const isDateField = dateFields.includes(key);
+            acc[key + "-" + (csDetail.isFollowUpCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
+            return acc;
+          }, {});
+          form.setFieldsValue(result);
+        });
+      }, 50);
+    }
+  }, [csDetail]);
 
-				{/*<CsCreateTab activeKey={2} />*/}
+  const [anchorContainer, setAnchorContainer] = useState(null);
 
-				{!cs?.id ? <CsCreateHeader form={form} />
-				: <CsCreateHeaderUpdate form={form} /> }
-			</div>
+  useEffect(() => {
+    const container = document.querySelector(".anchor-wrapper");
+    if (container) {
+      setAnchorContainer(container);
+    }
+  }, [loading]);
 
-			<Spin
-				spinning={loading}
-				style={{ width: "100%", textAlign: "center", paddingTop: 80 }}
-			>
-				{!loading && (
-					<Flex style={{ height: 'calc(100vh - 301px)', overflowY: 'auto' }} className="anchor-wrapper">
-						<div className="anchor-contents">
-							<div
-								// style={{ paddingTop: contentHeight }}
-								// className="contents-scroll"
-							>
-								{list.map((item, index) =>  <InputBoxRow
-									key={`input-box-row-${index}`}
-									form={form}
-									codeRelationSet={codeRelationSet}
-									itemList={item}
-									index={index}
-									type={"cs"}
-								/>)}
+  return (
+    <Layout>
+      <div className="contents-flex">
+        <CsCreateTitle title="C/S 관리"/>
 
-								<CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs" />
+        {/*<CsCreateTab activeKey={2} />*/}
 
-								<CsAsInputBox form={form} keys={asKeys} setKeys={setAsKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet}/>
+        {!cs?.id || cs.isCopy ? <CsCreateHeader form={form}/>
+          : <CsCreateHeaderUpdate form={form}/>}
+      </div>
 
-								<CsAsDetailInputBox form={form} />
+      <Spin
+        spinning={loading}
+        style={{width: "100%", textAlign: "center", paddingTop: 80}}
+      >
+        {!loading && (
+          <Flex style={{height: 'calc(100vh - 301px)', overflowY: 'auto'}} className="anchor-wrapper">
+            <div className="anchor-contents">
+              <div
+                // style={{ paddingTop: contentHeight }}
+                // className="contents-scroll"
+              >
+                {list.map((item, index) => <InputBoxRow
+                  key={`input-box-row-${index}`}
+                  form={form}
+                  codeRelationSet={codeRelationSet}
+                  itemList={item}
+                  index={index}
+                  type={"cs"}
+                />)}
 
-								<CsFollowUplInputBox form={form} />
-							</div>
-						</div>
-						{anchorContainer && (
-							<CsCreateAnchor list={list} anchorContainer={anchorContainer}/>
-						)}
-					</Flex>
-				)}
-			</Spin>
+                <CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs"/>
 
-			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} />
+                <CsAsInputBox form={form} keys={asKeys} setKeys={setAsKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet}/>
 
-			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
-		</Layout>
-	);
+                <CsAsDetailInputBox form={form}/>
+
+                <CsFollowUplInputBox form={form}/>
+              </div>
+            </div>
+            {anchorContainer && (
+              <CsCreateAnchor list={list} anchorContainer={anchorContainer}/>
+            )}
+          </Flex>
+        )}
+      </Spin>
+
+      <CsSearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive}/>
+
+      <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive}/>
+    </Layout>
+  );
 };
 
 export default CsCreate;

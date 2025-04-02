@@ -7,6 +7,7 @@ import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
 import OrderListButtonStatusChange from "@components/order/list/button/OrderListButtonStatusChange";
 import {useSetCsState} from "@components/api/useSetCsState";
+import CsCopyButton from "@components/cs/list/button/CsCopyButton";
 
 const CsListButtonArea = ({ statusList, handleReload }) => {
 
@@ -53,7 +54,7 @@ const CsListButtonArea = ({ statusList, handleReload }) => {
 				</Flex>
 
 			<Flex gap="small" className="btn-spacing-area">
-				<Button>C/S 복제하기</Button>
+				<CsCopyButton />
 
 				<Button>항목편집</Button>
 
