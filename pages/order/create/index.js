@@ -24,7 +24,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 
-	const { record, resetFlag, setNowState } = useRecordDataStore();
+	const { record, resetFlag, setNowState, isCopy, setIsChange } = useRecordDataStore();
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
@@ -33,8 +33,16 @@ const OrderInfoCreate = ({ isActive=true }) => {
 			setTimeout(() => {
 				loadFormValues(record, data, form, selectedCodes, setSelectedCodes)
 			}, 10);
+
+			setTimeout(() => {
+				setIsChange(false);
+			}, 1000);
 		}
 
+
+		setTimeout(() => {
+			setIsChange(false);
+		}, 2000);
 		setLoading(!list || list.length === 0);
 	}, [record, list, resetFlag]);
 
@@ -47,6 +55,12 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		}
 	}, [loading]);
 
+	const values = Form.useWatch([], form); // 폼 전체 값을 watch
+
+	useEffect(() => {
+		setIsChange(true);
+	}, [values]);
+
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -54,7 +68,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 
 				{/* <OrderCreateTab activeKey={2} /> */}
 
-				{ !record?.id ? <OrderCreateHeaderNew form={form} />
+				{ !record?.id || isCopy ? <OrderCreateHeaderNew form={form} />
 				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 

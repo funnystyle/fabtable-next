@@ -17,7 +17,7 @@ const CsCreateModalTable = ({ contentHeight, isPending }) => {
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useCsSearchModalStore();
 
 	const [modal, contextHolder] = Modal.useModal();
-	const { setCs, setTagInfoList } = useCsDataStore();
+	const { setCs, setTagInfoList, setIsCopy } = useCsDataStore();
 	const handleConfirmEdit = (record) => {
 		modal.confirm({
 			title: "CS 정보 불러오기",
@@ -29,6 +29,7 @@ const CsCreateModalTable = ({ contentHeight, isPending }) => {
 			onOk() {
 				// record.nowState = record.nowState.props.children
 				setCs(record);
+				setIsCopy(false);
 				setOpenSearchModal(false);
 			},
 			onCancel() {

@@ -6,6 +6,7 @@ import { postAxios, putAxios } from "@api/apiClient";
 import { CheckOutlined, CloseOutlined, DownOutlined, EditFilled } from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
 import OrderCreateStatusChangeButton from "@components/order/create/button/OrderCreateStatusChangeButton";
+import OrderCreateCopyButton from "@components/order/create/button/OrderCreateCopyButton";
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
@@ -45,7 +46,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 					</Flex>
 
 					<Flex gap={8} className="btn-space-area">
-						<Button>복제</Button>
+						<OrderCreateCopyButton />
 						<Button>신규</Button>
 						<Button>삭제</Button>
 

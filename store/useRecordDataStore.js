@@ -11,6 +11,10 @@ const useRecordDataStore = create((set) => ({
   setNowState: (nowState) => set({ nowState }),
   tagInfoList: [],
   setTagInfoList: (tagInfoList) => set({ tagInfoList }),
+  isCopy: false,
+  setIsCopy: (isCopy) => set({ isCopy }),
+  isChange: false,
+  setIsChange: (isChange) => set({ isChange }),
 }));
 
 export default useRecordDataStore;

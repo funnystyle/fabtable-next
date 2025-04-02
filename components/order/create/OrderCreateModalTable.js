@@ -16,7 +16,7 @@ const OrderCreateModalTable = ({ isPending }) => {
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
 
 	const [modal, contextHolder] = Modal.useModal();
-	const { setRecord, setTagInfoList } = useRecordDataStore();
+	const { setRecord, setTagInfoList, setIsCopy } = useRecordDataStore();
 	const handleConfirmEdit = (record) => {
 		modal.confirm({
 			title: "수주 정보 불러오기",
@@ -28,6 +28,7 @@ const OrderCreateModalTable = ({ isPending }) => {
 			onOk() {
 				record.nowState = record.nowState.props.children
 				setRecord(record);
+				setIsCopy(false);
 				setOpenSearchModal(false);
 			},
 			onCancel() {

@@ -25,10 +25,11 @@ const OrderListTable = ({ isPending }) => {
 	};
 
 	const { moveUrl } = useMenuTabStore();
-	const { setRecord, setTagInfoList } = useRecordDataStore();
+	const { setRecord, setTagInfoList, setIsCopy } = useRecordDataStore();
 	const handleDoubleClick = (record) => {
 		// record.nowState = record.nowState.props.children
 		setRecord(record);
+		setIsCopy(false);
 		moveUrl("/order/create");
 	}
 
