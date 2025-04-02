@@ -32,20 +32,20 @@ const CsListButtonArea = ({ statusList }) => {
 				/>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonTotalInfo />
+					<Button variant="outlined">C/S 이력</Button>
 
-					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
+					<OrderListButtonStatusSelect statusList={statusList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<Dropdown
-						menu={{ items: operationItems, onClick: handleMenuClick }}
-					>
-						<Button>
-							<Space>
-								구분별 보기
-								<DownOutlined />
-							</Space>
-						</Button>
-					</Dropdown>
+					{/*<Dropdown*/}
+					{/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}
+					{/*>*/}
+					{/*	<Button>*/}
+					{/*		<Space>*/}
+					{/*			구분별 보기*/}
+					{/*			<DownOutlined />*/}
+					{/*		</Space>*/}
+					{/*	</Button>*/}
+					{/*</Dropdown>*/}
 				</Flex>
 
 			<Flex gap="small" className="btn-spacing-area">
@@ -53,26 +53,26 @@ const CsListButtonArea = ({ statusList }) => {
 
 				<Button>항목편집</Button>
 
-				<Dropdown
-					menu={{ items: excelItems, onClick: handleMenuClick }}
-					className="excel-menu"
-				>
-					<Button>
-						<Space>
-							엑셀 다운로드
-							<DownOutlined />
-						</Space>
-					</Button>
-				</Dropdown>
+				{/*<Dropdown*/}
+				{/*	menu={{ items: excelItems, onClick: handleMenuClick }}*/}
+				{/*	className="excel-menu"*/}
+				{/*>*/}
+				{/*	<Button>*/}
+				{/*		<Space>*/}
+				{/*			엑셀 다운로드*/}
+				{/*			<DownOutlined />*/}
+				{/*		</Space>*/}
+				{/*	</Button>*/}
+				{/*</Dropdown>*/}
 
-				<Dropdown menu={{ items: printItems }}>
-					<Button>
-						<Space>
-							출력하기
-							<DownOutlined />
-						</Space>
-					</Button>
-				</Dropdown>
+				{/*<Dropdown menu={{ items: printItems }}>*/}
+				{/*	<Button>*/}
+				{/*		<Space>*/}
+				{/*			출력하기*/}
+				{/*			<DownOutlined />*/}
+				{/*		</Space>*/}
+				{/*	</Button>*/}
+				{/*</Dropdown>*/}
 			</Flex>
 				{/*<Flex gap="small" className="btn-spacing-area">*/}
 				{/*	<OrderListButtonCopy />*/}

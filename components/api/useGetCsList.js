@@ -30,7 +30,7 @@ export const useGetCsList = (statusAll=false, autoReload=true) => {
     if (searchStatusList.length === 0 && !statusAll) {
       return;
     }
-    getCsList({ page, size: (savePageSize ? pageSize : size), searchKeyword, searchStatusList, searchData });
+    getCsList({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
   };
 
   const isFirstRender = useRef(autoReload);

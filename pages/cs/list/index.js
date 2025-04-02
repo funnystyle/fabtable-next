@@ -12,6 +12,7 @@ import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 
 import {DownOutlined, RedoOutlined} from "@ant-design/icons";
+import CsListButtonArea from "@components/cs/list/CsListButtonArea";
 
 const operationItems = [
 	{
@@ -132,6 +133,7 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 				<CsListSearchTags />
 
 				{/* 상단 버튼 */}
+				<CsListButtonArea statusList={statusList} />
 				{/* <OrderListButtonArea statusList={statusList} /> */}
 				<Flex gap="small" align="center" className="btn-big" style={{
 								position: "sticky",
