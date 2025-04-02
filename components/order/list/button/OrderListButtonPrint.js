@@ -16,11 +16,10 @@ import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderListButtonPrint = () => {
 
-	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle} = useDrawerStore();
+	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint } = useDrawerStore();
 	const { selectedRowKeys } = useTableSelectKeysStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
-	const [selectedPrint, setSelectedPrint] = useState("label"); // ✅ 선택된 라벨 종류 상태
 	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]); // ✅ PDF URL 목록 상태
 	const [storedDocxUrlList, setStoredDocxUrlList] = useState([]); // ✅ PDF URL 목록 상태
 

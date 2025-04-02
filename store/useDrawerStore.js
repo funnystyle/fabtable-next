@@ -12,6 +12,8 @@ const useDrawerStore = create((set) => ({
   drawerTitle: "",
   setDrawerTitle: (title) => set({ drawerTitle: title }),
   closeDrawer: () => set({ openDrawer: false }),
+  selectedPrint: "label",
+  setSelectedPrint: (selected) => set({ selectedPrint: selected }),
 }));
 
 export default useDrawerStore;
