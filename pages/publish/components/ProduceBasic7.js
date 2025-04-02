@@ -27,6 +27,12 @@ const ProduceBasic7 = () => {
 				<Form.Item label="품질팀 메모">
 					<TextArea rows={5} />
 				</Form.Item>
+
+				<Flex justify="flex-end">
+					<Button type="primary" style={{ width: "84px" }}>
+						메모 저장
+					</Button>
+				</Flex>
 			</div>
 		</div>
 	);
