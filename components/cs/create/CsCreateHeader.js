@@ -75,7 +75,7 @@ const CsCreateHeader = ({ form }) => {
 			{/* 신규 수주 등록시 */}
 			<Flex align="center" justify="space-between">
 				<Flex align="center">
-					<Tag className="tag-new">신규</Tag>
+					<Tag className="tag-receipt">접수</Tag>
 
 					<p className="cs-num">
 						C/S No. <span>--------</span>
