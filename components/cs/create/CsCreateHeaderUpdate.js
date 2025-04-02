@@ -7,14 +7,17 @@ import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton"
 import CsCreateStatusChangeButton from "@components/cs/create/button/CsCreateStatusChangeButton";
 import {useDeleteCs} from "@components/api/useDeleteCs";
 import CsCreateDeleteButton from "@components/cs/create/button/CsCreateDeleteButton";
+import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
-  const {cs, csState, setAllResetFlag, allResetFlag} = useCsDataStore();
+  const {cs, csState, setAllResetFlag, allResetFlag, tagInfoList, setCsState, setCs} = useCsDataStore();
 
   const handleReset = () => {
     form.resetFields();
     setAllResetFlag(!allResetFlag);
+    setCsState(transformTagDataSingle(tagInfoList, "신규"));
+    setCs({});
   };
 
   return (
@@ -41,8 +44,8 @@ const CsCreateHeaderUpdate = ({form}) => {
 
 
           <Flex gap={8} className="btn-space-area">
-            <Button onClick={handleReset}>신규</Button>
             <CsCreateCopyButton />
+            <Button onClick={handleReset}>신규</Button>
             <CsCreateDeleteButton handleReset={handleReset}/>
           </Flex>
 

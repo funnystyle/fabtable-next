@@ -7,10 +7,11 @@ import { CheckOutlined, CloseOutlined, DownOutlined, EditFilled } from "@ant-des
 import useRecordDataStore from "@store/useRecordDataStore";
 import OrderCreateStatusChangeButton from "@components/order/create/button/OrderCreateStatusChangeButton";
 import OrderCreateCopyButton from "@components/order/create/button/OrderCreateCopyButton";
+import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
-	const { record, nowState } = useRecordDataStore();
+	const { record, setRecord, nowState, setNowState, tagInfoList } = useRecordDataStore();
 
 	const { mutate: updateRecord } = useMutation({
 		mutationKey: "updateRecord",
@@ -24,6 +25,12 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 		await updateRecord(values);
 		message.success('수주 수정이 완료되었습니다!');
 	}
+
+	const handleReset = () => {
+		form.resetFields();
+		setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
+		setRecord({});
+	};
 
 	return (
 		<div className="top-btn-area">
@@ -47,7 +54,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 
 					<Flex gap={8} className="btn-space-area">
 						<OrderCreateCopyButton />
-						<Button>신규</Button>
+						<Button onClick={handleReset}>신규</Button>
 						<Button>삭제</Button>
 
 						<Dropdown menu={{ items: [] }}>
