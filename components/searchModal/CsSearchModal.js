@@ -7,7 +7,7 @@ import ModalTitle from "@components/modal/ModalTitle";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsSearchModalContent from "@components/searchModal/CsSearchModalContent";
 
-const CsSearchModal = ({ searchLocation, searchType }) => {
+const CsSearchModal = ({ searchLocation, searchType, isActive }) => {
 
 	const { openSearchModal, setOpenSearchModal } = useCsSearchModalStore();
 
@@ -15,7 +15,7 @@ const CsSearchModal = ({ searchLocation, searchType }) => {
 		<div style={{ display: openSearchModal ? "block" : "none" }}>
 			<Modal
 				title={<ModalTitle title="조건 검색" />}
-				open={openSearchModal}
+				open={openSearchModal && isActive}
 				onCancel={() => setOpenSearchModal(false)}
 				width={900}
 				footer={null}

@@ -5,7 +5,7 @@ import {FilterOutlined} from "@ant-design/icons";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsSearchModal from "@components/searchModal/CsSearchModal";
 
-const CsListButtonSearch = () => {
+const CsListButtonSearch = ({ isActive }) => {
 
 	const { setOpenSearchModal, list } = useCsSearchModalStore();
 
@@ -24,7 +24,7 @@ const CsListButtonSearch = () => {
 				조건 검색
 			</Button>
 
-			<CsSearchModal searchLocation={"cs"} searchType={"LIST"} />
+			<CsSearchModal searchLocation={"cs"} searchType={"LIST"} isActive={isActive}/>
 		</>
 	);
 };

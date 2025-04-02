@@ -171,7 +171,7 @@ const CsCreate = ({ isActive=true }) => {
 				)}
 			</Spin>
 
-			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"}/>
+			<CsSearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} />
 
 			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
 		</Layout>

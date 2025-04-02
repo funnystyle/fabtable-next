@@ -1,17 +1,17 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
-import { Button, Dropdown, Flex, Layout, Space, } from "antd";
+import React, {useEffect, useState} from "react";
+import {Button, Dropdown, Flex, Layout, Space,} from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
+import {useQuery} from "@tanstack/react-query";
+import {getAxios} from "@api/apiClient";
 import useDrawerStore from "@store/useDrawerStore";
 import CsListTitle from "@components/cs/list/CsListTitle";
 import CsListTable from "@components/cs/list/CsListTable";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 
-import { DownOutlined, RedoOutlined } from "@ant-design/icons";
+import {DownOutlined, RedoOutlined} from "@ant-design/icons";
 
 const operationItems = [
 	{
@@ -124,7 +124,7 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 	return (
 		<Layout>
 			<div className="contents-flex">
-				<CsListTitle title="C/S 관리" />
+				<CsListTitle title="C/S 관리" isActive={isActive}/>
 
 				{/*<CsCreateTab activeKey={1} />*/}
 

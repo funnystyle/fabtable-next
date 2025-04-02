@@ -7,7 +7,7 @@ import useCsSearchModalStore from "@store/useCsSearchModalStore";
 
 const { Title } = Typography;
 
-const CsListTitle = ({ title }) => {
+const CsListTitle = ({ title, isActive }) => {
 
 	const { searchKeyword, setSearchKeyword } = useCsSearchModalStore();
 
@@ -20,7 +20,7 @@ const CsListTitle = ({ title }) => {
 			<Flex gap="small">
 				<SearchAutoComplete searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
 
-				<CsListButtonSearch />
+				<CsListButtonSearch isActive={isActive} />
 			</Flex>
 		</Flex>
 	);
