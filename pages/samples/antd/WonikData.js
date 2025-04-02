@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Modal, message } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
+import CustomEmpty from '@/components/common/CustomEmpty';
 
 const ExcelPasteTable = () => {
   // const [dataSource, setDataSource] = useState([
@@ -60,6 +61,7 @@ const ExcelPasteTable = () => {
           pagination={false} 
           bordered 
           size='small'
+          locale={{ emptyText: <CustomEmpty /> }}
         />
       </Modal>
     </div>

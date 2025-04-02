@@ -1,11 +1,12 @@
 "use client"; // Next.js 클라이언트 컴포넌트
 
 import React, { useEffect, useRef, useState } from "react";
-import { Spin, Table } from "antd";
+import { Empty, Spin, Table } from "antd";
 import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd } from "@components/AntdTableEvent";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import { LoadingOutlined } from "@ant-design/icons";
+import CustomEmpty from "./common/CustomEmpty";
 
 const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick }) => {
 
@@ -154,6 +155,7 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
             y: scrollY || "calc(60vh - 38px)",
           }}
           style={{ tableLayout: "fixed" }}
+          locale={{ emptyText: <CustomEmpty /> }}
         />
       </div>
     </Spin>
