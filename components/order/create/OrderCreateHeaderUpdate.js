@@ -1,13 +1,14 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Flex, message, Space, Tag, } from "antd";
-import { useMutation } from "@tanstack/react-query";
-import { postAxios, putAxios } from "@api/apiClient";
-import { CheckOutlined, CloseOutlined, DownOutlined, EditFilled } from "@ant-design/icons";
+import {Button, Dropdown, Flex, message, Space,} from "antd";
+import {useMutation} from "@tanstack/react-query";
+import {putAxios} from "@api/apiClient";
+import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
 import OrderCreateStatusChangeButton from "@components/order/create/button/OrderCreateStatusChangeButton";
 import OrderCreateCopyButton from "@components/order/create/button/OrderCreateCopyButton";
 import {transformTagDataSingle} from "@components/order/table/transformTagData";
+import OrderCreateDeleteButton from "@components/order/create/button/OrderCreateDeleteButton";
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
@@ -55,7 +56,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 					<Flex gap={8} className="btn-space-area">
 						<OrderCreateCopyButton />
 						<Button onClick={handleReset}>신규</Button>
-						<Button>삭제</Button>
+						<OrderCreateDeleteButton handleReset={handleReset}/>
 
 						<Dropdown menu={{ items: [] }}>
 							<Button>
