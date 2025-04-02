@@ -7,6 +7,7 @@ import {CloseOutlined, EditFilled} from "@ant-design/icons";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import useCsDataStore from "@store/useCsDataStore";
 import useMenuTabStore from "@store/useMenuTabStore";
+import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const CsCreateHeader = ({ form }) => {
 
@@ -19,6 +20,9 @@ const CsCreateHeader = ({ form }) => {
 		mutationFn: (values) => postAxios("/user/cs", values, true),
 		onSuccess: (response, values) => {
 			values.id= response?.data?.id;
+			values.csNumber = response?.data?.csNumber;
+			values.csState = transformTagDataSingle(response?.data?.tagInfoList, response?.data?.csState);
+
 			setCs(values)
 		}
 	});
@@ -35,7 +39,6 @@ const CsCreateHeader = ({ form }) => {
 
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
-		console.log("values: ", values);
 		values["isAsDetailCommon"] = isAsDetailCommon;
 		values["isFollowUpCommon"] = isFollowUpCommon;
 		values["asWorkLength"] = asKeys.length;
@@ -46,8 +49,6 @@ const CsCreateHeader = ({ form }) => {
 		if (files) {
 			let fileLength = {};
 			for (const [index, fileArray] of Object.entries(files)) {
-				console.log("index: ", index);
-				console.log("files: ", fileArray);
 				for (const file of fileArray) {
 					const fileName = file.name;
 					const mimeType = file.type;
@@ -74,7 +75,7 @@ const CsCreateHeader = ({ form }) => {
 			{/* 신규 수주 등록시 */}
 			<Flex align="center" justify="space-between">
 				<Flex align="center">
-					<Tag className="tag-new">신규</Tag>
+					<Tag className="tag-receipt">접수</Tag>
 
 					<p className="cs-num">
 						C/S No. <span>--------</span>

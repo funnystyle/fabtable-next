@@ -6,6 +6,7 @@ import {postAxios} from "@api/apiClient";
 import {CloseOutlined, EditFilled} from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useMenuTabStore from "@store/useMenuTabStore";
+import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const OrderCreateHeaderNew = ({ form }) => {
 
@@ -17,6 +18,9 @@ const OrderCreateHeaderNew = ({ form }) => {
 		mutationFn: (values) => postAxios("/user/record", values),
 		onSuccess: (response, values) => {
 			values.id= response?.data?.id;
+			values.serialNumber = response?.data?.serialNumber;
+			values.oldSerialNumber = response?.data?.oldSerialNumber;
+			values.nowState = transformTagDataSingle(response?.data?.tagInfoList, response?.data?.nowState);
 			setRecord(values)
 		}
 	});

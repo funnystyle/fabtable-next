@@ -33,7 +33,7 @@ const CsCreateHeaderUpdate = ({ form }) => {
 				className="detail-top-area"
 			>
 				<Flex align="center">
-					<Tag className="tag-new">신규</Tag>
+					{cs.csState}
 
 					<p className="cs-num">
 						C/S No. <span className="num">{cs.csNumber}</span>
