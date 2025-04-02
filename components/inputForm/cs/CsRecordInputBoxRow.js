@@ -8,6 +8,7 @@ import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordModalStore from "@store/useRecordModalStore";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
+import useCsDataStore from "@store/useCsDataStore";
 
 const { Title } = Typography;
 
@@ -17,10 +18,16 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useRecordModalStore();
 
+
   const handleReset = () => {
     setRecordKeys([]);
     setCheckedKeySet(new Set());
   }
+
+  const { allResetFlag } = useCsDataStore();
+  useEffect(() => {
+    handleReset();
+  }, [allResetFlag]);
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;

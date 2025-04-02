@@ -9,20 +9,12 @@ import {useGetCodeList} from "@components/api/useGetCodeList";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
-  const {cs, csState} = useCsDataStore();
+  const {cs, csState, setAllResetFlag, allResetFlag} = useCsDataStore();
 
-  // const { mutate: updateRecord } = useMutation({
-  // 	mutationKey: "updateRecord",
-  // 	mutationFn: (values) => putAxios("/user/record", values),
-  // });
-  //
-  // const handleSubmit = async (event) => {
-  // 	const values = await form.validateFields();
-  // 	values.ids = [cs.id];
-  //
-  // 	await updateRecord(values);
-  // 	message.success('수주 수정이 완료되었습니다!');
-  // }
+  const handleReset = () => {
+    form.resetFields();
+    setAllResetFlag(!allResetFlag);
+  };
 
   return (
     <div className="top-btn-area">
@@ -48,7 +40,7 @@ const CsCreateHeaderUpdate = ({form}) => {
 
 
           <Flex gap={8} className="btn-space-area">
-            <Button>신규</Button>
+            <Button onClick={handleReset}>신규</Button>
             <CsCreateCopyButton />
             <Button>삭제</Button>
           </Flex>

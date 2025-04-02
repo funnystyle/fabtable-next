@@ -15,6 +15,8 @@ const useCsDataStore = create((set) => ({
   setTagInfoList: (tagInfoList) => set({ tagInfoList }),
   csState: null,
   setCsState: (csState) => set({ csState }),
+  allResetFlag: false,
+  setAllResetFlag: (allResetFlag) => set({ allResetFlag }),
 }));
 
 export default useCsDataStore;

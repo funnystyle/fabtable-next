@@ -1,6 +1,7 @@
 import {Button, Flex, Form, Input, Typography} from "antd";
-import {DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined} from "@ant-design/icons";
-import React from "react";
+import {DeleteOutlined, PlusOutlined, RedoOutlined} from "@ant-design/icons";
+import React, {useEffect} from "react";
+import useCsDataStore from "@store/useCsDataStore";
 
 const { Title } = Typography;
 
@@ -25,6 +26,11 @@ export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKe
 
     setResetFlag(prev => !prev);
   }
+
+  const { allResetFlag } = useCsDataStore();
+  useEffect(() => {
+    handleReset();
+  }, [allResetFlag]);
 
   return (
       <Flex align="center" justify="space-between" className="info-title-area">
