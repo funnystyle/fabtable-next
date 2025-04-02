@@ -10,7 +10,9 @@ const CsListButtonSearch = ({ isActive }) => {
 	const { setOpenSearchModal, list } = useCsSearchModalStore();
 
 	useEffect(() => {
-		setOpenSearchModal(false);
+		if (isActive) {
+			setOpenSearchModal(false);
+		}
 	}, [list]);
 
 	return (

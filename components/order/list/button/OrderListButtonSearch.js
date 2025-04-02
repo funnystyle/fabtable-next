@@ -5,12 +5,14 @@ import { FilterOutlined } from "@ant-design/icons";
 import SearchModal from "@components/searchModal/SearchModal";
 import useRecordModalStore from "@store/useRecordModalStore";
 
-const OrderListButtonSearch = () => {
+const OrderListButtonSearch = ({ isActive }) => {
 
 	const { setOpenSearchModal, list } = useRecordModalStore();
 
 	useEffect(() => {
-		setOpenSearchModal(false);
+		if (isActive) {
+			setOpenSearchModal(false);
+		}
 	}, [list]);
 
 	return (

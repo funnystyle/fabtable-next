@@ -7,7 +7,7 @@ import SearchAutoComplete from "@components/autoComplete/SearchAutoComplete";
 
 const { Title } = Typography;
 
-const OrderListTitle = ({ title }) => {
+const OrderListTitle = ({ title, isActive }) => {
 
 	const { searchKeyword, setSearchKeyword } = useRecordModalStore();
 
@@ -20,7 +20,7 @@ const OrderListTitle = ({ title }) => {
 			<Flex gap="small">
 				<SearchAutoComplete searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
 
-				<OrderListButtonSearch />
+				<OrderListButtonSearch isActive={isActive} />
 			</Flex>
 		</Flex>
 	);

@@ -43,7 +43,7 @@ const OrderComponent = ({ isActive=true }) => {
 	return (
 		<Layout>
 			<div className="contents-flex">
-				<OrderListTitle title="영업 관리" />
+				<OrderListTitle title="영업 관리" isActive={isActive} />
 
 				{/* <OrderCreateTab activeKey={1} /> */}
 
