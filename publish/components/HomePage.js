@@ -390,15 +390,15 @@ const HomePage = ({ children }) => {
 	};
 
 	const addTab = (menuItem) => {
-    if (!tabs.some((tab) => tab.key === menuItem.key)) {
-      setTabs((prev) => [
-        ...prev,
-        { key: menuItem.key, label: menuItem.label, url: menuItem.url },
-      ]);
-    }
-    setActiveTab(menuItem.key);
-    router.push(menuItem.url, undefined, { shallow: true });
-  };
+		if (!tabs.some((tab) => tab.key === menuItem.key)) {
+			setTabs((prev) => [
+				...prev,
+				{ key: menuItem.key, label: menuItem.label, url: menuItem.url },
+			]);
+		}
+		setActiveTab(menuItem.key);
+		router.push(menuItem.url, undefined, { shallow: true });
+	};
 
 	useEffect(() => {
 		if (typeof window !== "undefined") {
@@ -466,7 +466,7 @@ const HomePage = ({ children }) => {
 
 	return (
 		<TabContext.Provider value={{ tabs, activeTab, addTab }}>
-			<Layout style={{ height: '100vh' }}>
+			<Layout style={{ height: "100vh" }}>
 				<Layout>
 					{/* GNB (왼쪽 메뉴) */}
 					<Sider
@@ -614,8 +614,10 @@ const HomePage = ({ children }) => {
 							</div>
 						</Header>
 						{/* 탭 없이 하려면 아래 코드를 적용 */}
-						<Content className="contents" style={{ overflowY: "auto"}}>
-							{children ? React.cloneElement(children, { contentHeight }) : null}
+						<Content className="contents" style={{ overflowY: "auto" }}>
+							{children
+								? React.cloneElement(children, { contentHeight })
+								: null}
 						</Content>
 						{/* 탭 적용하려면 아래 코드를 적용 */}
 						{/* Content 영역을 Tabs로 변경 */}
