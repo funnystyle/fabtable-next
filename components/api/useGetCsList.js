@@ -1,9 +1,9 @@
 import {useMutation} from "@tanstack/react-query";
 import {postAxios} from "@api/apiClient";
-import {useEffect} from "react";
+import {useEffect, useRef} from "react";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 
-export const useGetCsList = () => {
+export const useGetCsList = (statusAll=false, autoReload=true) => {
   const {
     page, size, searchKeyword, searchStatusList, searchData,
     setData, setList, setTotal,
@@ -22,11 +22,27 @@ export const useGetCsList = () => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
-    console.log("handleReload", page, size, searchKeyword, searchStatusList, searchData);
-    getCsList({ page, size, searchKeyword, searchStatusList, searchData });
+    const savePageSize = localStorage.getItem("tablePageSize");
+    let pageSize;
+    if (savePageSize) {
+      pageSize = Number(savePageSize);
+    }
+    if (searchStatusList.length === 0 && !statusAll) {
+      return;
+    }
+    getCsList({ page, size: (savePageSize ? pageSize : size), searchKeyword, searchStatusList, searchData });
   };
 
+  const isFirstRender = useRef(autoReload);
+
   useEffect(() => {
+    if (!isFirstRender.current) {
+      setTimeout(() => {
+        isFirstRender.current = true;
+      }, 0);
+      return;
+    }
+
     handleReload();
   }, [page, size, searchKeyword, searchStatusList, searchData]);
 

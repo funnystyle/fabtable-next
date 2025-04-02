@@ -10,13 +10,13 @@ import {Button, Flex, Modal} from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
 
-const OrderCreateModalTable = ({ contentHeight }) => {
+const OrderCreateModalTable = () => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
 
-	const { handleReload } = useGetRecords(true);
+	const { handleReload, isPending } = useGetRecords(true, false);
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setRecord } = useRecordDataStore();
@@ -65,7 +65,9 @@ const OrderCreateModalTable = ({ contentHeight }) => {
 					);
 					return item;
 				})
-				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
+				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}
+				isPending={isPending} isFirstLoad={false}
+				/>
 			</div>
 
 			{contextHolder}

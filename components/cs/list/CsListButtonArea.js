@@ -1,19 +1,17 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Flex, Space, } from "antd";
+import {Button, Dropdown, Flex, Space,} from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
 import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
 import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
-import { useGetCsList } from "@components/api/useGetCsList";
-import { DownOutlined } from "@ant-design/icons";
+import {DownOutlined} from "@ant-design/icons";
 
 const CsListButtonArea = ({ statusList }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsSearchModalStore();
 	const { tags, setTags } = useCsDataStore();
-	const { handleReload } = useGetCsList();
 
 	return (
 		<Flex gap="small" align="center" className="btn-big" style={{

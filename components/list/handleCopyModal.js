@@ -1,5 +1,5 @@
 import { Button, Col, DatePicker, Flex, Form, Input, InputNumber, Row, Select } from "antd";
-import { handleInputComponent } from "@components/inputForm/handleInputComponent";
+import InputComponent from "@components/inputForm/InputComponent";
 import Link from "next/link";
 import React from "react";
 import {handleCopyModalBoxRow} from "@components/list/handleCopyModalBoxRow";

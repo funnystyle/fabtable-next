@@ -16,11 +16,7 @@ const CsCreateModalTable = ({ contentHeight }) => {
 
 	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useCsSearchModalStore();
 
-	const { handleReload } = useGetCsList();
-
-	useEffect(() => {
-		handleReload();
-	}, []);
+	const { handleReload, isPending } = useGetCsList(true, false);
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setCs } = useCsDataStore();
@@ -70,7 +66,9 @@ const CsCreateModalTable = ({ contentHeight }) => {
 					);
 					return item;
 				})
-				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}/>
+				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}
+				isPending={isPending} isFirstLoad={false}
+				/>
 			</div>
 
 			{contextHolder}

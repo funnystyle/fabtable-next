@@ -43,7 +43,7 @@ const CsListTable = ({ contentHeight }) => {
 		});
 	}
 
-	const { handleReload } = useGetCsList();
+	const { handleReload, isPending } = useGetCsList();
 
 	useEffect(() => {
 		handleReload();
@@ -65,7 +65,7 @@ const CsListTable = ({ contentHeight }) => {
 				<div>
 					{/* 테이블 */}
 					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
-														 onRowDoubleClick={handleDoubleClick}
+														 onRowDoubleClick={handleDoubleClick} isPending={isPending}
 					/>
 				</div>
 			</Dropdown>

@@ -36,7 +36,10 @@ const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 
 	// 🔹 검색 실행 시 검색어 추가
 	const handleSearch = (value) => {
-		if (!value.trim()) return; // 빈 값 방지
+		if (!value.trim()) {
+			setSearchKeyword(value);
+			return;
+		} // 빈 값 방지
 
 		// 중복 제거 후 최신 검색어가 가장 위로 가도록 정렬
 		const updatedItems = [
@@ -117,6 +120,7 @@ const SearchAutoComplete = ({ searchKeyword, setSearchKeyword }) => {
 				value={inputValue}
 				onChange={(e) => setInputValue(e.target.value)}
 				onPressEnter={(e) => handleSearch(e.target.value)}
+				onSearch={() => handleSearch(inputValue)}
 			/>
 		</AutoComplete>
 	);

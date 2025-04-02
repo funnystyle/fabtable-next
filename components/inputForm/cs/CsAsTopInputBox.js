@@ -1,8 +1,8 @@
 import { Button, Checkbox, DatePicker, Flex, Form, Image, Input, Typography, Upload } from "antd";
-import { handleInputComponent } from "@components/inputForm/handleInputComponent";
+import InputComponent from "@components/inputForm/InputComponent";
 import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined, UploadOutlined } from "@ant-design/icons";
 import React from "react";
-import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
+import InputComponentRow from "@components/inputForm/InputComponentRow";
 import { CsRecordInputComponentRow } from "@components/inputForm/cs/CsRecordInputComponentRow";
 import Link from "next/link";
 

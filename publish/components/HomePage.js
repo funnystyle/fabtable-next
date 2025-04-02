@@ -458,7 +458,7 @@ const HomePage = ({ children }) => {
                 className="page-top-nav"
                 // style={{ height: "100%"}}
               >
-                {console.log("tabs", tabs) || tabs.map((tab) => (
+                {tabs.map((tab) => (
                   <Tabs.TabPane
                     tab={tab.label}
                     key={tab.key}

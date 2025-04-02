@@ -17,7 +17,7 @@ import { useGetRecords } from "@components/api/useGetRecords";
 
 const OrderComponent = ({ isActive=true }) => {
 
-	const { handleReload } = useGetRecords();
+	const { handleReload, isPending } = useGetRecords();
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
@@ -56,7 +56,7 @@ const OrderComponent = ({ isActive=true }) => {
 				{/* </Space> */}
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
-			<OrderListTable handleReload={handleReload} />
+			<OrderListTable handleReload={handleReload} isPending={isPending} />
 			</div>
 
 			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} />

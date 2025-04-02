@@ -9,7 +9,7 @@ import { componentStringTextarea } from "@components/inputForm/componentStringTe
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import ComponentReadOnly from "@components/inputForm/componentReadOnly";
 
-export const handleInputComponent = (form, codeRelationSet, component, index) => {
+const InputComponent = ({ form, codeRelationSet, component, index }) => {
 
   const recordColumn = component.recordColumn;
 
@@ -58,7 +58,7 @@ export const handleInputComponent = (form, codeRelationSet, component, index) =>
     );
   }
 
-
-
   return null;
 }
+
+export default InputComponent;

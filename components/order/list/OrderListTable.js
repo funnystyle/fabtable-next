@@ -11,7 +11,7 @@ import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
 import { LoadingOutlined } from "@ant-design/icons";
 
-const OrderListTable = () => {
+const OrderListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
@@ -56,7 +56,9 @@ const OrderListTable = () => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} />
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick}
+					isPending={isPending}
+					/>
 				</div>
 			</Dropdown>
 		</>

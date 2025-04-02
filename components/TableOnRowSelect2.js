@@ -1,16 +1,13 @@
 "use client"; // Next.js 클라이언트 컴포넌트
 
-import React, { useEffect, useRef, useState } from "react";
-import { Empty, Spin, Table } from "antd";
-import { focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd } from "@components/AntdTableEvent";
+import React, {useEffect, useRef, useState} from "react";
+import {Spin, Table} from "antd";
+import {focusTable, handleKeyDownAntd, handleMouseDownAntd, handleMouseEnterAntd, handleMouseUpAntd, handleRowClickAntd} from "@components/AntdTableEvent";
 import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import { LoadingOutlined } from "@ant-design/icons";
 import CustomEmpty from "./common/CustomEmpty";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick }) => {
-
-  console.log("serverData", serverData);
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true }) => {
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey} = useTableSelectKeysStore();
 
   const [isDragging, setIsDragging] = useState(false);
@@ -85,10 +82,10 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
   }
 
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(isFirstLoad);
   // 👉 테이블 렌더링 완료 감지
   useEffect(() => {
-    if (serverData.length === 0) return;
+    if (isPending) {return;}
 
     requestAnimationFrame(() => {
       const target = tableRef.current?.querySelector(".ant-table-tbody");
@@ -98,6 +95,10 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
         const columnCount = target.childNodes[0].childNodes.length;
         if (columnCount > 1) {
           setLoading(false);
+        } else {
+          setTimeout(() => {
+            setLoading(false);
+          }, 5000);
         }
       }
     });

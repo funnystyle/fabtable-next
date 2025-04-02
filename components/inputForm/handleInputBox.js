@@ -1,8 +1,8 @@
 import { Button, Flex, Form, Typography } from "antd";
-import { handleInputComponent } from "@components/inputForm/handleInputComponent";
+import InputComponent from "@components/inputForm/InputComponent";
 import { SettingOutlined } from "@ant-design/icons";
 import React from "react";
-import { handleInputComponentRow } from "@components/inputForm/handleInputComponentRow";
+import InputComponentRow from "@components/inputForm/InputComponentRow";
 import {handleComponentInputName} from "@components/inputForm/handleComponentInputName";
 
 const { Title } = Typography;
@@ -41,7 +41,15 @@ export const handleInputBox = (form, codeRelationSet, item, index) => {
         )}
 
         <Form form={form} layout="vertical" className="info-input-area">
-          {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, components, index))}
+          {componentsList.map((components, index) => 
+            <InputComponentRow
+              key={`input-component-row-${index}`}
+              form={form}
+              codeRelationSet={codeRelationSet}
+              components={components}
+              index={index}
+            />
+            )}
         </Form>
       </div>
     );
@@ -78,7 +86,15 @@ export const handleInputBox = (form, codeRelationSet, item, index) => {
             )}
 
             <Form form={form} layout="vertical" className="info-input-area">
-            {componentsList.map((components, index) => handleInputComponentRow(form, codeRelationSet, components, index))}
+            {componentsList.map((components, index) =>
+              <InputComponentRow
+                key={`input-component-row-${index}`}
+                form={form}
+                codeRelationSet={codeRelationSet}
+                components={components}
+                index={index}
+              />
+            )}
             </Form>
           </div>
         </React.Fragment>
