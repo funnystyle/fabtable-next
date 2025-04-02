@@ -51,6 +51,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 			onCancel() {
 				console.log("수정 취소");
 			},
+			centered: true,
 		});
 	};
 
