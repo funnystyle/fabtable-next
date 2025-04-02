@@ -8,7 +8,6 @@ import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
 import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
-import CsCreateTab from "@components/cs/create/CsCreateTab";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
 import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
@@ -37,7 +36,7 @@ const CsCreate = ({isActive = true}) => {
     setConstantAsKeys(asKeys);
   }, [asKeys]);
 
-  const {cs, setCsDetail, isCopy} = useCsDataStore();
+  const {cs, setCsDetail, isCopy, setIsChange} = useCsDataStore();
   const {selectedCodes, setSelectedCodes} = useRecordSelectCodesStore();
 
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
@@ -46,7 +45,8 @@ const CsCreate = ({isActive = true}) => {
     console.log("cs", cs);
     if (list && list.length > 0 && cs?.id) {
       setTimeout(() => {
-        loadFormValues(cs, data, form, selectedCodes, setSelectedCodes)
+        loadFormValues(cs, data, form, selectedCodes, setSelectedCodes);
+        setIsChange(false);
       }, 10);
 
       if (cs?.id) {
@@ -59,6 +59,7 @@ const CsCreate = ({isActive = true}) => {
 
   const {setRecordKeys} = useCsCreateConstantStore();
   useEffect(() => {
+
     setCsDetail(csDetail);
     if (csDetail) {
       const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
@@ -118,6 +119,10 @@ const CsCreate = ({isActive = true}) => {
         });
       }, 50);
     }
+
+    setTimeout(() => {
+      setIsChange(false);
+    }, 2000);
   }, [csDetail]);
 
   const [anchorContainer, setAnchorContainer] = useState(null);
@@ -128,6 +133,12 @@ const CsCreate = ({isActive = true}) => {
       setAnchorContainer(container);
     }
   }, [loading]);
+
+  const values = Form.useWatch([], form); // 폼 전체 값을 watch
+
+  useEffect(() => {
+    setIsChange(true);
+  }, [values]);
 
   return (
     <Layout>

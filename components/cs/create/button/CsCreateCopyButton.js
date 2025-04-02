@@ -1,19 +1,28 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, Flex, message, Space, Tag,} from "antd";
-import {useMutation} from "@tanstack/react-query";
-import {postAxios, putAxios} from "@api/apiClient";
-import {CheckOutlined, CloseOutlined, DownOutlined, EditFilled} from "@ant-design/icons";
-import useRecordDataStore from "@store/useRecordDataStore";
+import {Button, message, Modal,} from "antd";
 import useCsDataStore from "@store/useCsDataStore";
 
 const CsCreateCopyButton = ({form}) => {
 
-  const {setIsCopy} = useCsDataStore();
+  const {setIsCopy, isChange} = useCsDataStore();
 
   const onClick = () => {
-    setIsCopy(true);
-  }
+    if (isChange) {
+      Modal.confirm({
+        title: "변경된 내용이 있습니다.",
+        content: "저장하지 않고 복제하시겠습니까?",
+        onOk: () => {
+          setIsCopy(true);
+          message.success("복제 완료");
+        },
+      });
+    } else {
+      setIsCopy(true);
+      message.success("복제 완료");
+    }
+  };
+
   return (
     <Button onClick={onClick}>복제</Button>
   );

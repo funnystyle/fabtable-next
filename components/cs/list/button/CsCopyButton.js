@@ -21,6 +21,10 @@ const CsCopyButton = () => {
       message.error("선택된 C/S가 없습니다.");
       return;
     }
+    if (datas.length > 1) {
+      message.error("1개의 행만 선택하세요.");
+      return;
+    }
     setCs({...datas[0], isCopy: true});
     moveUrl("/cs/create");
   }

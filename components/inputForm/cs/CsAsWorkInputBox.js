@@ -20,14 +20,16 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
       `responseResult-${index}`,
     ]);
   }
+  const { csDetail, setIsChange } = useCsDataStore();
 
   useEffect(() => {
     let newFiles = {...formFiles};
     newFiles[index+""] = fileList;
     setFormFiles(newFiles);
+
+    setIsChange(true);
   }, [fileList]);
 
-  const { csDetail } = useCsDataStore();
 
   const handleLoadFilesFromServer = (fileDtos) => {
     if (!fileDtos || !Array.isArray(fileDtos)) return;
