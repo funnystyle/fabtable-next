@@ -4,6 +4,7 @@ import {useQuery} from "@tanstack/react-query";
 import {getAxios} from "@api/apiClient";
 import {Button, Flex, Form, Input, Pagination, Table} from "antd";
 import {CheckOutlined, LeftOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined} from "@ant-design/icons";
+import CustomEmpty from "@/components/common/CustomEmpty";
 
 const columns = [
 ];
@@ -135,6 +136,7 @@ const OrderOpenModalRecordList = () => {
             y: "186px",
           }}
           style={{ tableLayout: "fixed" }}
+          locale={{ emptyText: <CustomEmpty /> }}
         />
       </div>
     </div>

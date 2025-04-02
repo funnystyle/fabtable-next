@@ -474,6 +474,7 @@ import { Bar } from "react-chartjs-2";
 import dayjs from "dayjs";
 import { height, textAlign } from "@mui/system";
 import Draggable from "react-draggable";
+import CustomEmpty from "@/components/common/CustomEmpty";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -702,7 +703,7 @@ const YearComponent = ({ contentHeight }) => {
 	};
 
 	const subTable = () => (
-		<Table columns={columns} dataSource={subData} pagination={false} />
+		<Table columns={columns} dataSource={subData} pagination={false} locale={{ emptyText: <CustomEmpty /> }} />
 	);
 
 	const disabled3Years = (current, { from, type }) => {
