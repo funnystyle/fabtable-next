@@ -83,12 +83,17 @@ const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchSt
 							전체
 						</Checkbox>
 
-						<Button
+						{/* <Button
 							icon={<RedoOutlined />}
 							target="_blank"
 							size="small"
 							className="icon-redo"
-						/>
+							onClick={() => {
+								setAllChecked(true);
+								setCheckedItems(Array(17).fill(true));
+								setSearchStatusList([...statusList]);
+							}}
+						/> */}
 					</Space>
 
 					<Divider />
