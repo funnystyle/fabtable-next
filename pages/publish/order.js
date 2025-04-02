@@ -2081,6 +2081,7 @@ const OrderComponent = ({ contentHeight }) => {
 			onCancel() {
 				console.log("수정 취소");
 			},
+			centered: true,
 		});
 	};
 
