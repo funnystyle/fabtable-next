@@ -5,10 +5,12 @@ import {useMutation} from "@tanstack/react-query";
 import {postAxios} from "@api/apiClient";
 import {CloseOutlined, EditFilled} from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
+import useMenuTabStore from "@store/useMenuTabStore";
 
 const OrderCreateHeaderNew = ({ form }) => {
 
 	const { setRecord } = useRecordDataStore();
+	const { moveUrl } = useMenuTabStore();
 
 	const { mutate: orderInfoCreate } = useMutation({
 		mutationKey: "orderInfoCreate",
@@ -28,6 +30,7 @@ const OrderCreateHeaderNew = ({ form }) => {
 
 		await orderInfoCreate(values);
 		message.success('수주 등록이 완료되었습니다!');
+		moveUrl(`/order/list`);
 	}
 
 	return (
