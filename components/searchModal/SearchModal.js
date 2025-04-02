@@ -14,6 +14,7 @@ const SearchModal = ({ searchLocation, searchType, isActive }) => {
 	return (
 		<div style={{ display: openSearchModal ? "block" : "none" }}>
 			<Modal
+				centered
 				title={<ModalTitle title="조건 검색" />}
 				open={openSearchModal && isActive}
 				onCancel={() => setOpenSearchModal(false)}
