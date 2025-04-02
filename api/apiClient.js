@@ -120,12 +120,7 @@ const toQueryString = (data) => {
 axios.defaults.paramsSerializer = (params) => {
   return qs.stringify(params);
 };
-/**
- * @description axios를 사용하여 API를 호출하는 함수입니다.
- * @param {string} url - API 주소를 입력합니다.
- * @param {object} data - 추가적인 데이터를 입력합니다.
- * @returns {Promise<any>} API 호출 결과를 반환합니다.
- */
+
 export const getAxios = async (url, data) => {
   const queryString = toQueryString(data);
 
@@ -138,12 +133,6 @@ export const getAxios = async (url, data) => {
   }
 };
 
-/**
- * @description axios를 사용하여 POST 요청을 보내는 함수입니다.
- * @param {string} url - API 주소를 입력합니다.
- * @param {object} data - 요청 바디에 포함될 데이터를 입력합니다.
- * @returns {Promise<any>} API 호출 결과를 반환합니다.
- */
 export const postAxios = async (url, data, fileYn) => {
   let config = {
     headers: {} // headers 속성 미리 추가
@@ -160,12 +149,6 @@ export const postAxios = async (url, data, fileYn) => {
   }
 };
 
-/**
- * @description axios를 사용하여 POST 요청을 보내는 함수입니다.
- * @param {string} url - API 주소를 입력합니다.
- * @param {object} data - 요청 바디에 포함될 데이터를 입력합니다.
- * @returns {Promise<any>} API 호출 결과를 반환합니다.
- */
 export const postBlobAxios = async (url, data, fileYn) => {
   let config = {
     headers: {},
@@ -186,15 +169,15 @@ export const postBlobAxios = async (url, data, fileYn) => {
   }
 };
 
-/**
- * @description axios를 사용하여 PUT 요청을 보내는 함수입니다.
- * @param {string} url - API 주소를 입력합니다.
- * @param {object} data - 요청 바디에 포함될 데이터를 입력합니다.
- * @returns {Promise<any>} API 호출 결과를 반환합니다.
- */
-export const putAxios = async (url, data) => {
+export const putAxios = async (url, data, fileYn) => {
+  let config = {
+    headers: {} // headers 속성 미리 추가
+  };
+  if (fileYn) {
+    config.headers["Content-Type"] = "multipart/form-data";
+  }
   try {
-    const response = await apiClient.put(url, data);
+    const response = await apiClient.put(url, data, config);
     return response.data;
   } catch (error) {
     handleApiError(error); // 에러 처리 함수 호출

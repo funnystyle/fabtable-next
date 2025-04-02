@@ -8,7 +8,7 @@ export const useSetCsState = (handleListReload) => {
 
   const { mutate: csStateChange } = useMutation({
     mutationKey: "csStateChange",
-    mutationFn: (values) => putAxios("/user/cs", values),
+    mutationFn: (values) => putAxios("/user/cs/state", values),
     onSuccess: () => {
       setTimeout(() => {
         message.success('변경 완료');
