@@ -160,7 +160,7 @@ const CsCreate = ({isActive = true}) => {
         style={{width: "100%", textAlign: "center", paddingTop: 80}}
       >
         {!loading && (
-          <Flex style={{height: 'calc(100vh - 301px)', overflowY: 'auto'}} className="anchor-wrapper">
+          <Flex style={{height: 'calc(100vh - 228px)', overflowY: 'auto'}} className="anchor-wrapper">
             <div className="anchor-contents">
               <div
                 // style={{ paddingTop: contentHeight }}
