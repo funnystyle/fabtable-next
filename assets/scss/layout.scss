@@ -879,6 +879,21 @@ h2 {
 			margin-top: 26px;
 		}
 	}
+
+	.preview-label {
+		width: toRem(720);
+		height: toRem(664);
+		background-color: #ffdfdf;
+		border: 3px solid #ff5050;
+		font-size: 32px;
+		color: #fc5555;
+		line-height: toRem(720);
+		text-align: center;
+
+		& + .preview {
+			margin-top: 26px;
+		}
+	}
 }
 
 .ant-drawer-right {

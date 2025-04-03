@@ -109,22 +109,25 @@ const DrawerComponent = () => {
 					</>
 				)}
 				{ printType === "label" && (
-					<div className="preview">
-						라벨 미리보기
-					</div>
+					<>
+						<div className="preview-label">
+							라벨 미리보기
+						</div>
+					
+
+						<div
+							className="zoom-r-btn"
+							style={{
+								right: open ? "440px" : "40px",
+								transition: "right 0.2s ease-in-out",
+							}}
+						>
+							<Button size="large" icon={<ZoomInOutlined />} shape="round" />
+
+							<Button size="large" icon={<ZoomOutOutlined />} shape="round" />
+						</div>
+					</>
 				)}
-
-					{/* <div
-						className="zoom-r-btn"
-						style={{
-							right: open ? "440px" : "40px",
-							transition: "right 0.2s ease-in-out",
-						}}
-					>
-						<Button size="large" icon={<ZoomInOutlined />} shape="round" />
-
-						<Button size="large" icon={<ZoomOutOutlined />} shape="round" />
-					</div> */}
 				</div>
 			</div>
 
