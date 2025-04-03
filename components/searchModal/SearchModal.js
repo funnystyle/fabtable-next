@@ -1,15 +1,13 @@
 // pages/year.js
-import React, {useState} from "react";
-import {Modal,} from "antd";
-import "dayjs/locale/ko";
+import React from "react";
+import { Modal, } from "antd";
 import SearchModalContent from "@components/searchModal/SearchModalContent";
 import ModalDraggable from "@components/drag/ModalDraggable";
 import ModalTitle from "@components/modal/ModalTitle";
-import useRecordModalStore from "@store/useRecordModalStore";
 
-const SearchModal = ({ searchLocation, searchType, isActive }) => {
+const SearchModal = ({ searchLocation, searchType, isActive, modalStore }) => {
 
-	const { openSearchModal, setOpenSearchModal } = useRecordModalStore();
+	const { openSearchModal, setOpenSearchModal } = modalStore();
 
 	return (
 		<div style={{ display: openSearchModal ? "block" : "none" }}>
@@ -25,6 +23,7 @@ const SearchModal = ({ searchLocation, searchType, isActive }) => {
 				<SearchModalContent
 					searchLocation={searchLocation}
 					searchType={searchType}
+					modalStore={modalStore}
 				/>
 			</Modal>
 		</div>

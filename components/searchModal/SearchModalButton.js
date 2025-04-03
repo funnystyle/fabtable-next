@@ -2,13 +2,10 @@
 import React, { useEffect } from "react";
 import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
-import { useMutation } from "@tanstack/react-query";
-import { postAxios } from "@api/apiClient";
-import useRecordModalStore from "@store/useRecordModalStore";
 
-const SearchModalButton = ({ form, handleReload }) => {
+const SearchModalButton = ({ form, modalStore }) => {
 
-	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = useRecordModalStore();
+	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = modalStore();
 
 	const handleSubmit = () => {
 		const groupedData = {};
@@ -41,10 +38,6 @@ const SearchModalButton = ({ form, handleReload }) => {
 
 		setFormData(rawData);
 		setSearchData(groupedData);
-
-		setTimeout(() => {
-			handleReload();
-		}, 100);
 	}
 
 	useEffect(() => {

@@ -1,15 +1,15 @@
 // pages/order/create/index.js
 import React from "react";
-import {Flex, Typography,} from "antd";
+import { Flex, Typography, } from "antd";
 import OrderListButtonSearch from "@components/order/list/button/OrderListButtonSearch";
-import useRecordModalStore from "@store/useRecordModalStore";
 import SearchAutoComplete from "@components/autoComplete/SearchAutoComplete";
+import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 
 const { Title } = Typography;
 
 const OrderListTitle = ({ title, isActive }) => {
 
-	const { searchKeyword, setSearchKeyword } = useRecordModalStore();
+	const { searchKeyword, setSearchKeyword } = useOrderListSearchRecordModalStore();
 
 	return (
 		<Flex align="center" justify="space-between" className="title-area">

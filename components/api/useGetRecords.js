@@ -1,13 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
-import useRecordModalStore from "@store/useRecordModalStore";
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 
-export const useGetRecords = (statusAll=false, autoReload=true) => {
-  const {
-    page, size, searchKeyword, searchStatusList, searchData,
-    setData, setList, setTotal,
-  } = useRecordModalStore();
+export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
+  const { page, size, searchKeyword, searchStatusList, searchData, setData, setList, setTotal } = modalStore();
 
   const { mutate: getRecords, isPending, isError, error } = useMutation({
     mutationKey: ["getRecords"],
@@ -33,10 +29,17 @@ export const useGetRecords = (statusAll=false, autoReload=true) => {
     getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
   };
 
+  const isFirstRender = useRef(autoReload);
+
   useEffect(() => {
-    if (autoReload) {
-      handleReload();
+    if (!isFirstRender.current) {
+      setTimeout(() => {
+        isFirstRender.current = true;
+      }, 0);
+      return;
     }
+
+    handleReload();
   }, [page, size, searchKeyword, searchStatusList, searchData]);
 
   return {

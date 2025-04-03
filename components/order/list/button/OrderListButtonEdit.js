@@ -1,14 +1,14 @@
 // pages/order/create/index.js
-import React, {useState} from "react";
-import {Button, Form,} from "antd";
+import React from "react";
+import { Button, Form, } from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useRecordListEditModalStore from "@store/useRecordListEditModalStore";
 
 const OrderListButtonEdit = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
-	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useRecordModalStore();
+	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useRecordListEditModalStore();
 
 	const showModal = () => {
 		setOpenModal(true);

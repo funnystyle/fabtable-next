@@ -1,23 +1,23 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
-import {Dropdown,} from "antd";
+import React, { useEffect, useState } from "react";
+import { Dropdown, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import {orderListRightItem} from "@components/order/list/data/orderListRightItem";
+import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useRecordModalStore from "@store/useRecordModalStore";
-import {transformTagData} from "@components/order/table/transformTagData";
+import { transformTagData } from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
 import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
 import { useRouter } from "next/router";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import ListPopover from "@components/list/Popover";
+import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 
 const OrderListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useRecordModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useOrderListSearchRecordModalStore();
 	const { tooltipList:soList } = useGetCodeList("특주사양");
 	const { tooltipList:cuList } = useGetCodeList("고객사");
 	const { tooltipList:buList } = useGetCodeList("납품처");
@@ -53,6 +53,10 @@ const OrderListTable = ({ isPending }) => {
 		// tooltipList 는 codeName, tooltip으로 이루어진 오브젝트 배열
 		// value와 동일한 codeName을 가진 tooltipList의 index를 찾고 해당 tooltipList의 tooltip을 반환
 		const tooltip = tooltipList.find(item => item.codeName === value);
+
+		if (!tooltip) {
+			return value;
+		}
 
 		return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
 	}

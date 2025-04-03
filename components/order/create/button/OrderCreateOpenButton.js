@@ -1,12 +1,12 @@
 // pages/order/create/index.js
-import React, { useEffect } from "react";
+import React from "react";
 import { Button, } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 
 const OrderCreateOpenButton = ({title}) => {
 
-	const { setOpenSearchModal } = useRecordModalStore();
+	const { setOpenSearchModal } = useOrderCreateLoadRecordModalStore();
 
 	return (
 		<>

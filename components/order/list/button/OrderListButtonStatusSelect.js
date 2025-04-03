@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Divider, Dropdown, Space, theme, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useModalEventStore from "@store/useModalEventStore";
 
 const { useToken } = theme;
 

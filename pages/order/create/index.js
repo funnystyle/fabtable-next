@@ -4,14 +4,13 @@ import { Flex, Form, Layout, Spin, } from "antd";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTitle from "@components/order/create/OrderCreateTitle";
-import SearchModal from "@components/searchModal/SearchModal";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
 import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderUpdate";
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
-import { LoadingOutlined } from "@ant-design/icons";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
+import OrderCreateLoadRecordModal from "@components/searchModal/OrderCreateLoadRecordModal";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
@@ -102,7 +101,8 @@ const OrderInfoCreate = ({ isActive=true }) => {
 			</Spin>
 	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
-			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} />
+			<OrderCreateLoadRecordModal isActive={isActive} />
+
 		</Layout>
 	);
 };

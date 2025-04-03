@@ -1,14 +1,13 @@
 import { Button, Flex, Form, Typography } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import CsRecordInputComponentRowInitial from "@components/inputForm/cs/CsRecordInputComponentRowInitial";
-import { PlusOutlined } from "@ant-design/icons";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
 
 const { Title } = Typography;
 
 const CsRecordInputBoxInitial = ({ item, index }) => {
 
-  const { setOpenSearchModal, setIndex, setOpenDiv } = useRecordModalStore();
+  const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
   const componentsList = item[0].components;
   

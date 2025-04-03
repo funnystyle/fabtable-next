@@ -1,19 +1,20 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
-import useRecordModalStore from "@store/useRecordModalStore";
-import {transformTagData} from "@components/order/table/transformTagData";
-import {CheckOutlined, ExclamationCircleFilled} from "@ant-design/icons";
-import {Button, Flex, Modal} from "antd";
+import { transformTagData } from "@components/order/table/transformTagData";
+import { CheckOutlined, ExclamationCircleFilled } from "@ant-design/icons";
+import { Button, Flex, Modal } from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
+import { useGetRecords } from "@components/api/useGetRecords";
 
-const OrderCreateModalTable = ({ isPending }) => {
+const OrderCreateModalTable = ({ modalStore }) => {
+
+	const { page, size, total, totalPages, data, setPage, setSize, setOpenSearchModal } = modalStore();
+	const { isPending } = useGetRecords(modalStore, true, false);
 
 	const [headerList, setHeaderList] = useState([]);
-
-	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useRecordModalStore();
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setRecord, setTagInfoList, setIsCopy } = useRecordDataStore();

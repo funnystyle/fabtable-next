@@ -1,11 +1,10 @@
 // pages/samples/orderInfo/OrderCreateNewFinal.js
-import React, {useEffect, useState} from "react";
-import {Flex, Form, Layout, Spin,} from "antd";
+import React, { useEffect, useState } from "react";
+import { Flex, Form, Layout, Spin, } from "antd";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
 import CsFollowUplInputBox from "@components/inputForm/cs/CsFollowUplInputBox";
 import CsRecordInputBoxes from "@components/cs/create/CsRecordInputBoxes";
 import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
-import SearchModal from "@components/searchModal/SearchModal";
 import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
@@ -13,12 +12,13 @@ import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
 import dayjs from "dayjs";
 import CsCreateAnchor from "@components/cs/create/CsCreateAnchor";
-import {loadFormValues} from "@components/inputForm/loadFormValues";
+import { loadFormValues } from "@components/inputForm/loadFormValues";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
-import {useGetInputBoxList} from "@components/api/useGetInputBoxList";
-import {useGetCsDetail} from "@components/api/useGetCsDetail";
+import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
+import { useGetCsDetail } from "@components/api/useGetCsDetail";
 import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
 import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
+import CsCreateLoadRecordModal from "@components/searchModal/CsCreateLoadRecordModal";
 
 const CsCreate = ({isActive = true}) => {
   const {data, list} = useGetInputBoxList("csCreate");
@@ -192,7 +192,7 @@ const CsCreate = ({isActive = true}) => {
 
       <CsSearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive}/>
 
-      <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive}/>
+      <CsCreateLoadRecordModal isActive={isActive} />
     </Layout>
   );
 };

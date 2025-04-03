@@ -2,11 +2,11 @@
 import React, {useRef, useState} from "react";
 import "dayjs/locale/ko";
 import Draggable from "react-draggable";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useModalEventStore from "@store/useModalEventStore";
 
 const ModalDraggable = ({ modal }) => {
 
-	const { disabled } = useRecordModalStore();
+	const { disabled } = useModalEventStore();
 
 	const [bounds, setBounds] = useState({
 		left: 0,

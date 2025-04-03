@@ -1,18 +1,14 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
-import {Button, Form,} from "antd";
-import { RedoOutlined } from "@ant-design/icons";
-import { handleCopyModal } from "@components/list/handleCopyModal";
-import { useQuery } from "@tanstack/react-query";
-import { getAxios } from "@api/apiClient";
+import React from "react";
+import { Button, Form, } from "antd";
 import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useRecordListCopyModalStore from "@store/useRecordListCopyModalStore";
 
 const OrderListButtonCopy = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
-	const { openCopyModal:openModal, setOpenCopyModal:setOpenModal } = useRecordModalStore();
+	const { openCopyModal:openModal, setOpenCopyModal:setOpenModal } = useRecordListCopyModalStore();
 
 	const showModal = () => {
 		setOpenModal(true);

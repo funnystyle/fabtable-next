@@ -3,7 +3,7 @@ import React from "react";
 import { Button, } from "antd";
 import { RedoOutlined } from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
-import useRecordModalStore from "@store/useRecordModalStore";
+import useModalEventStore from "@store/useModalEventStore";
 
 const OrderListButtonAllList = ({ setDeleteTagKeyName, setSearchStatusList, setSearchKeyword, tags, setTags, statusList }) => {
 

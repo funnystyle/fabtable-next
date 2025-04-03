@@ -9,14 +9,12 @@ import OrderListButtonCopy from "@components/order/list/button/OrderListButtonCo
 import OrderListButtonEdit from "@components/order/list/button/OrderListButtonEdit";
 import OrderListButtonExcel from "@components/order/list/button/OrderListButtonExcel";
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
-import useRecordModalStore from "@store/useRecordModalStore";
-import useRecordDataStore from "@store/useRecordDataStore";
-import {useSetNowState} from "@components/api/useSetNowState";
+import { useSetNowState } from "@components/api/useSetNowState";
+import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 
 const OrderListButtonArea = ({ statusList, handleReload }) => {
 
-	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useRecordModalStore();
-	const { tags, setTags } = useRecordDataStore();
+	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword, tags, setTags } = useOrderListSearchRecordModalStore();
 
 	const { handleReload:nowSatusUpdate } = useSetNowState(handleReload);
 

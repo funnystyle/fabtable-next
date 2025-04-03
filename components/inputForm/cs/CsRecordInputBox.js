@@ -4,16 +4,16 @@ import React, { useEffect } from "react";
 import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
-import useRecordModalStore from "@store/useRecordModalStore";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
+import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
 
 const { Title } = Typography;
 
 const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
-  const { setOpenSearchModal, setIndex, setOpenDiv } = useRecordModalStore();
+  const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
   const handleDeleteCsRecord = (index) => {
     csRecordInputs.forEach((field) => {
