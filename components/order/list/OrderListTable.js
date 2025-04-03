@@ -9,12 +9,18 @@ import {transformTagData} from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
 import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
+import { useRouter } from "next/router";
+import { useGetCodeList } from "@components/api/useGetCodeList";
+import ListPopover from "@components/list/Popover";
 
 const OrderListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useRecordModalStore();
+	const { tooltipList:soList } = useGetCodeList("특주사양");
+	const { tooltipList:cuList } = useGetCodeList("고객사");
+	const { tooltipList:buList } = useGetCodeList("납품처");
 
 	const handleContextMenuClick = (e) => {
 		if (parseInt(e.key) === 1) {
@@ -26,11 +32,14 @@ const OrderListTable = ({ isPending }) => {
 
 	const { moveUrl } = useMenuTabStore();
 	const { setRecord, setTagInfoList, setIsCopy } = useRecordDataStore();
+	const router = useRouter();
+
 	const handleDoubleClick = (record) => {
 		// record.nowState = record.nowState.props.children
 		setRecord(record);
 		setIsCopy(false);
 		moveUrl("/order/create");
+		router.push("/order/create");
 	}
 
 	const handleSettingKeyToData = (data) => {
@@ -38,6 +47,14 @@ const OrderListTable = ({ isPending }) => {
 			item.key = item.id;
 			return item;
 		});
+	}
+
+	const handleSettingTooltip = (value, tooltipList) => {
+		// tooltipList 는 codeName, tooltip으로 이루어진 오브젝트 배열
+		// value와 동일한 codeName을 가진 tooltipList의 index를 찾고 해당 tooltipList의 tooltip을 반환
+		const tooltip = tooltipList.find(item => item.codeName === value);
+
+		return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
 	}
 
 	useEffect(() => {
@@ -60,7 +77,15 @@ const OrderListTable = ({ isPending }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick}
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data).map((item => {
+						item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
+						item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
+						item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
+
+						return item;
+					}))
+
+					} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick}
 					isPending={isPending}
 					/>
 				</div>

@@ -26,6 +26,7 @@ export const useGetCodeList = (groupName) => {
     data:data?.data,
     list:data?.data?.list || [],
     codeNameList: data?.data?.list?.map((item) => item.codeName) || [],
+    tooltipList: data?.data?.list?.map((item) => { return {codeName:item.codeName, tooltip:item.tooltip}}) || [],
     isLoading,
     isSuccess,
     isError,

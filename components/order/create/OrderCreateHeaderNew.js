@@ -10,7 +10,7 @@ import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const OrderCreateHeaderNew = ({ form }) => {
 
-	const { setRecord } = useRecordDataStore();
+	const { setRecord, setIsCopy, setIsChange } = useRecordDataStore();
 	const { moveUrl } = useMenuTabStore();
 
 	const { mutate: orderInfoCreate } = useMutation({
@@ -21,6 +21,8 @@ const OrderCreateHeaderNew = ({ form }) => {
 			values.serialNumber = response?.data?.serialNumber;
 			values.oldSerialNumber = response?.data?.oldSerialNumber;
 			values.nowState = transformTagDataSingle(response?.data?.tagInfoList, response?.data?.nowState);
+			setIsCopy(false);
+			setIsChange(false);
 			setRecord(values)
 		}
 	});

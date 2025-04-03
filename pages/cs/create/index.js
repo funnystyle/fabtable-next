@@ -63,6 +63,7 @@ const CsCreate = ({isActive = true}) => {
   useEffect(() => {
 
     setCsDetail(csDetail);
+    setTimeout(() => {
     if (csDetail) {
       const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
       setRecordKeys(ids);
@@ -77,7 +78,7 @@ const CsCreate = ({isActive = true}) => {
           }, {});
           form.setFieldsValue(result);
         });
-      }, 10);
+      }, 50);
 
       form.setFieldsValue(csDetail.csAsWork);
 
@@ -124,7 +125,8 @@ const CsCreate = ({isActive = true}) => {
 
     setTimeout(() => {
       setIsChange(false);
-    }, 2000);
+    }, 500);
+    }, 50);
   }, [csDetail]);
 
   const [anchorContainer, setAnchorContainer] = useState(null);
