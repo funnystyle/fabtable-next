@@ -18,6 +18,11 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => 
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleSubmit = async (event) => {
+		if (selectedRowKeys.length === 0) {
+			message.warning("복제할 행을 선택해주세요.");
+			return;
+		}
+
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;
 
@@ -26,7 +31,7 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => 
 
 		setTimeout(() => {
 			handleReload();
-		}, 100);
+		}, 300);
 
 		message.success('복제가 완료되었습니다!');
 	}

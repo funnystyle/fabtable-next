@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import { Modal, } from "antd";
+import { message, Modal, } from "antd";
 import ModalTitle from "@components/modal/ModalTitle";
 import ModalDraggable from "@components/drag/ModalDraggable";
 import { useMutation } from "@tanstack/react-query";
@@ -21,6 +21,11 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const handleEditSubmit = async (e) => {
+		if (selectedRowKeys.length === 0) {
+			message.warning("수정할 행을 선택해주세요.");
+			return;
+		}
+
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;
 
@@ -30,7 +35,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 		if (selectedRowKeys.length > 0) {
 			setTimeout(() => {
 				handleReload();
-			}, 100);
+			}, 300);
 		}
 	}
 

@@ -1,16 +1,22 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Form, } from "antd";
+import { Button, Form, message, } from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
 import useRecordListEditModalStore from "@store/useRecordListEditModalStore";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderListButtonEdit = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
 	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useRecordListEditModalStore();
+	const { selectedRowKeys } = useTableSelectKeysStore();
 
 	const showModal = () => {
+		if (selectedRowKeys.length === 0) {
+			message.warning("수정할 행을 선택해주세요.");
+			return;
+		}
 		setOpenModal(true);
 	};
 
