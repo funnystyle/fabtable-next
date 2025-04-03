@@ -12,18 +12,19 @@ import {transformTagDataSingle} from "@components/order/table/transformTagData";
 const CsCreateHeader = ({ form }) => {
 
 	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
-	const { setCs } = useCsDataStore();
+	const { setCs, setCsState, setIsCopy, setIsChange } = useCsDataStore();
 	const { moveUrl } = useMenuTabStore();
 
 	const { mutate: csCreate } = useMutation({
 		mutationKey: "csCreate",
 		mutationFn: (values) => postAxios("/user/cs", values, true),
 		onSuccess: (response, values) => {
-			values.id= response?.data?.id;
-			values.csNumber = response?.data?.csNumber;
-			values.csState = transformTagDataSingle(response?.data?.tagInfoList, response?.data?.csState);
+			setIsCopy(false);
+			setIsChange(false);
+			// console.log("response.data", response?.data);
+			// console.log("values", values);
 
-			setCs(values)
+			setCs({ id: response?.data?.id, csNumber: response?.data?.csNumber, csState: transformTagDataSingle(response?.data?.tagInfoList, response?.data?.csState) });
 		}
 	});
 
