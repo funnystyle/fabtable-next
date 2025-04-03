@@ -2,6 +2,7 @@ import { Button, Checkbox, DatePicker, Flex, Form, Input, Typography } from "ant
 import { DeleteOutlined } from "@ant-design/icons";
 import React from "react";
 import Link from "next/link";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { csAsWorkInputs } from "@components/inputForm/cs/data/csAsWorkInputs";
 

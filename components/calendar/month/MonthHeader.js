@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Flex, Select, Tabs, Typography, } from "antd";
 import { CheckOutlined, PieChartOutlined, SearchOutlined, } from "@ant-design/icons";
-import "dayjs/locale/ko";
-import dayjs from "dayjs";
 import MonthPicker from "@components/calendar/MonthPicker";
 import CurrentMonthButton from "@components/calendar/CurrentMonthButton";
 

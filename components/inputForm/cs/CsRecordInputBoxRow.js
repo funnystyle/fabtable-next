@@ -6,6 +6,7 @@ import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useRecordModalStore from "@store/useRecordModalStore";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 import useCsDataStore from "@store/useCsDataStore";

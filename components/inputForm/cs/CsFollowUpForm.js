@@ -2,6 +2,7 @@ import { Button, DatePicker, Flex, Form, Input, Radio, Tooltip, Typography } fro
 import { InfoCircleOutlined } from "@ant-design/icons";
 import React, {useEffect} from "react";
 import Link from "next/link";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 

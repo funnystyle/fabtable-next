@@ -11,6 +11,7 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
 import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import CsCreateAnchor from "@components/cs/create/CsCreateAnchor";
 import {loadFormValues} from "@components/inputForm/loadFormValues";

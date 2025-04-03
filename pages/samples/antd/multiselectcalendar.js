@@ -1,4 +1,5 @@
 import { Calendar } from 'antd';
+import "dayjs/locale/ko";
 import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 

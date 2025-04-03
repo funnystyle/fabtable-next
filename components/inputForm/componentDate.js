@@ -1,6 +1,7 @@
 import {DatePicker, Form} from "antd";
 import React from "react";
 import Link from "next/link";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 
 export const componentDate = (form, recordColumn, index = -1) => {

@@ -28,7 +28,7 @@ import {
 } from "@ant-design/icons";
 
 const { Title } = Typography;
-
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
