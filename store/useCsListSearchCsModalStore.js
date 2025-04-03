@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useRecordListEditModalStore = create((set) => ({
+const useCsListSearchCsModalStore = create((set) => ({
   // drag
   disabled: true,
   setDisabled: (disabled) => set({ disabled }),
@@ -13,12 +13,12 @@ const useRecordListEditModalStore = create((set) => ({
   total: 0,
   setTotal: (total) => set((state) => ({
     total,
-    totalPages: Math.ceil(total / state.size),
+    totalPages: console.log(state.size) || console.log(Math.ceil(total / state.size)) || Math.ceil(total / state.size),
   })),
   totalPages: 0,
 
   // request
-  size: 500,
+  size: 10,
   setSize: (size) => set({ size }),
   page: 1,
   setPage: (page) => set({ page }),
@@ -50,4 +50,4 @@ const useRecordListEditModalStore = create((set) => ({
   setDeleteTagKeyName: (deleteTagKeyName) => set({ deleteTagKeyName }),
 }));
 
-export default useRecordListEditModalStore;
+export default useCsListSearchCsModalStore;

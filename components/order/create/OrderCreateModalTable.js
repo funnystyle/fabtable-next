@@ -39,8 +39,6 @@ const OrderCreateModalTable = ({ modalStore }) => {
 	};
 
 	const onRowClick = (record) => {
-		console.log("record click", record);
-
 		handleConfirmEdit(record);
 	}
 

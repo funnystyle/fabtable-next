@@ -8,7 +8,6 @@ import CsAsDetailInputBox from "@components/inputForm/cs/CsAsDetailInputBox";
 import CsCreateHeader from "@components/cs/create/CsCreateHeader";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
-import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
@@ -19,7 +18,9 @@ import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import { useGetCsDetail } from "@components/api/useGetCsDetail";
 import CsCreateHeaderUpdate from "@components/cs/create/CsCreateHeaderUpdate";
 import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
-import CsCreateLoadRecordModal from "@components/searchModal/CsCreateLoadRecordModal";
+import SearchModal from "@components/searchModal/SearchModal";
+import useCsCreateLoadCsModalStore from "@store/useCsCreateLoadCsModalStore";
+import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
 
 const CsCreate = ({isActive = true}) => {
   const {data, list} = useGetInputBoxList("csCreate");
@@ -191,9 +192,9 @@ const CsCreate = ({isActive = true}) => {
         )}
       </Spin>
 
-      <CsSearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive}/>
+      <SearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadCsModalStore} />
 
-      <CsCreateLoadRecordModal isActive={isActive} />
+      <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadRecordModalStore} />
     </Layout>
   );
 };

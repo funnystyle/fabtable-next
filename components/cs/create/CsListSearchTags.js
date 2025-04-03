@@ -1,11 +1,11 @@
 // pages/order/create/index.js
-import React, {useEffect, useState} from "react";
-import {Button, Flex, Tag,} from "antd";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
+import React, { useEffect, useState } from "react";
+import { Button, Flex, Tag, } from "antd";
+import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 
 const CsListSearchTags = () => {
 
-  const { formData, setDeleteTagKeyName } = useCsSearchModalStore();
+  const { formData, setDeleteTagKeyName } = useCsListSearchCsModalStore();
 
   const [tags, setTags] = useState([]);
   // 개별 태그 삭제 핸들러

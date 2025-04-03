@@ -6,8 +6,7 @@ import SearchModalHead from "@components/calendar/year/searchModal/SearchModalHe
 import SearchModalButton from "@components/searchModal/SearchModalButton";
 import SearchModalBody from "@components/searchModal/SearchModalBody";
 import OrderCreateModalTable from "@components/order/create/OrderCreateModalTable";
-import { useGetRecords } from "@components/api/useGetRecords";
-import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
+import CsCreateModalTable from "@components/cs/create/CsCreateModalTable";
 
 const SearchModalContent = ({ searchLocation, searchType, modalStore}) => {
 
@@ -24,6 +23,9 @@ const SearchModalContent = ({ searchLocation, searchType, modalStore}) => {
 
 				{(searchLocation === "order" && searchType === "OPEN") && (
 					<OrderCreateModalTable modalStore={modalStore} />)}
+
+				{(searchLocation === "cs" && searchType === "OPEN") && (
+					<CsCreateModalTable modalStore={modalStore} />)}
 			</div>
 		</>
 	);

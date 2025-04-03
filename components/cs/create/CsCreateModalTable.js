@@ -2,19 +2,19 @@
 import React, { useEffect, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
-import {CheckOutlined, ExclamationCircleFilled} from "@ant-design/icons";
-import {Button, Flex, Modal} from "antd";
+import { CheckOutlined, ExclamationCircleFilled } from "@ant-design/icons";
+import { Button, Flex, Modal } from "antd";
 import { useGetCsList } from "@components/api/useGetCsList";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
 
-const CsCreateModalTable = ({ contentHeight, isPending }) => {
+const CsCreateModalTable = ({ modalStore }) => {
+
+	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = modalStore();
+	const { isPending } = useGetCsList(modalStore, true, false);
 
 	const [headerList, setHeaderList] = useState([]);
-
-	const { page, size, total, totalPages, data, setPage, setSize,setOpenSearchModal } = useCsSearchModalStore();
 
 	const [modal, contextHolder] = Modal.useModal();
 	const { setCs, setTagInfoList, setIsCopy } = useCsDataStore();
@@ -53,7 +53,7 @@ const CsCreateModalTable = ({ contentHeight, isPending }) => {
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"}/>
-			<div style={{ marginTop: contentHeight }} className="contents-scroll">
+			<div className="contents-scroll">
 				{/* 테이블 */}
 				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data).map((item) => {
 					item.etc_cs_load=(

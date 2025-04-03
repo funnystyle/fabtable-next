@@ -1,20 +1,16 @@
 // pages/order.js
-import React, {useEffect, useState} from "react";
-import {Button, Dropdown, Flex, Layout, Space,} from "antd";
+import React from "react";
+import { Layout, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
-import {useQuery} from "@tanstack/react-query";
-import {getAxios} from "@api/apiClient";
 import useDrawerStore from "@store/useDrawerStore";
 import CsListTitle from "@components/cs/list/CsListTitle";
 import CsListTable from "@components/cs/list/CsListTable";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListSearchTags from "@components/cs/create/CsListSearchTags";
-
-import {DownOutlined, RedoOutlined} from "@ant-design/icons";
 import CsListButtonArea from "@components/cs/list/CsListButtonArea";
-import {useGetCsList} from "@components/api/useGetCsList";
-import {useGetCodeList} from "@components/api/useGetCodeList";
+import { useGetCsList } from "@components/api/useGetCsList";
+import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
+import SearchModal from "@components/searchModal/SearchModal";
 
 const operationItems = [
 	{
@@ -101,9 +97,9 @@ const printItems = [
 	},
 ];
 
-const OrderComponent = ({ contentHeight, isActive=true }) => {
+const CsListComponent = ({ contentHeight, isActive=true }) => {
 
-	const { handleReload, isPending } = useGetCsList();
+	const { handleReload, isPending } = useGetCsList(useCsListSearchCsModalStore);
 
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
@@ -125,6 +121,8 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 				{/* 태그 없음, 헤더 관련 정리 event */}
 				<CsListTable contentHeight={contentHeight} isPending={isPending}/>
 
+				<SearchModal searchLocation={"cs"} searchType={"LIST"} isActive={isActive} modalStore={useCsListSearchCsModalStore} />
+
 				{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 				<div style={{ display: openDrawer ? "block" : "none" }}>
 					<DrawerComponent />
@@ -134,4 +132,4 @@ const OrderComponent = ({ contentHeight, isActive=true }) => {
 	);
 };
 
-export default OrderComponent;
+export default CsListComponent;

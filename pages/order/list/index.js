@@ -11,7 +11,7 @@ import useDrawerStore from "@store/useDrawerStore";
 import { useGetRecords } from "@components/api/useGetRecords";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
-import OrderListSearchRecordModal from "@components/searchModal/OrderListSearchRecordModal";
+import SearchModal from "@components/searchModal/SearchModal";
 
 
 const OrderComponent = ({ isActive=true }) => {
@@ -46,7 +46,7 @@ const OrderComponent = ({ isActive=true }) => {
 				<OrderListTable handleReload={handleReload} isPending={isPending} />
 			</div>
 
-			<OrderListSearchRecordModal isActive={isActive} />
+			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} modalStore={useOrderListSearchRecordModalStore} />
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>

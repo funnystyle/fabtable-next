@@ -1,21 +1,21 @@
 // pages/order/create/index.js
-import React, {useEffect} from "react";
-import {Button, Flex,} from "antd";
+import React, { useEffect } from "react";
+import { Button, Flex, } from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import useCsDataStore from "@store/useCsDataStore";
 import OrderListButtonStatusChange from "@components/order/list/button/OrderListButtonStatusChange";
-import {useSetCsState} from "@components/api/useSetCsState";
+import { useSetCsState } from "@components/api/useSetCsState";
 import CsCopyButton from "@components/cs/list/button/CsCopyButton";
-import {useGetCodeList} from "@components/api/useGetCodeList";
+import { useGetCodeList } from "@components/api/useGetCodeList";
+import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 
 const CsListButtonArea = ({ handleReload }) => {
 
-	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsSearchModalStore();
+	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsListSearchCsModalStore();
 	const { tags, setTags } = useCsDataStore();
 
-	const { handleReload:nowSatusUpdate } = useSetCsState(handleReload);
+	const { handleReload:nowStatusUpdate } = useSetCsState(handleReload);
 
 	const { codeNameList, isSuccess } = useGetCodeList("CS상태");
 
@@ -48,7 +48,7 @@ const CsListButtonArea = ({ handleReload }) => {
 
 					<OrderListButtonStatusSelect statusList={codeNameList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowSatusUpdate={nowSatusUpdate}/>
+					<OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowStatusUpdate={nowStatusUpdate}/>
 
 					{/*<Dropdown*/}
 					{/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}

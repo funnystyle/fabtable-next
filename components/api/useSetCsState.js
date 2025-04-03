@@ -1,8 +1,6 @@
-import {useMutation} from "@tanstack/react-query";
-import {postAxios, putAxios} from "@api/apiClient";
-import {useEffect, useRef} from "react";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
-import {message} from "antd";
+import { useMutation } from "@tanstack/react-query";
+import { putAxios } from "@api/apiClient";
+import { message } from "antd";
 
 export const useSetCsState = (handleListReload) => {
 

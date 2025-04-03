@@ -10,7 +10,8 @@ import OrderCreateHeaderUpdate from "@components/order/create/OrderCreateHeaderU
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
-import OrderCreateLoadRecordModal from "@components/searchModal/OrderCreateLoadRecordModal";
+import SearchModal from "@components/searchModal/SearchModal";
+import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
@@ -101,7 +102,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 			</Spin>
 	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
-			<OrderCreateLoadRecordModal isActive={isActive} />
+			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useOrderCreateLoadRecordModalStore} />
 
 		</Layout>
 	);

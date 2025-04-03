@@ -2,23 +2,20 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import { transformTagData } from "@components/order/table/transformTagData";
-import { useGetCsList } from "@components/api/useGetCsList";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
 import { csListRightItem } from "./data/csListRightItem";
 import useMenuTabStore from "@store/useMenuTabStore";
-import useRecordDataStore from "@store/useRecordDataStore";
 import useCsDataStore from "@store/useCsDataStore";
 import { useRouter } from "next/router";
+import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 
 const CsListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useCsSearchModalStore();
+	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useCsListSearchCsModalStore();
 
 	const handleContextMenuClick = (e) => {
 		alert("click", e);

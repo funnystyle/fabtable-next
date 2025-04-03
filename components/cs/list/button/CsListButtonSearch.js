@@ -1,13 +1,12 @@
 // pages/order/create/index.js
-import React, {useEffect} from "react";
-import {Button,} from "antd";
-import {FilterOutlined} from "@ant-design/icons";
-import useCsSearchModalStore from "@store/useCsSearchModalStore";
-import CsSearchModal from "@components/searchModal/CsSearchModal";
+import React, { useEffect } from "react";
+import { Button, } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
+import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 
 const CsListButtonSearch = ({ isActive }) => {
 
-	const { setOpenSearchModal, list } = useCsSearchModalStore();
+	const { setOpenSearchModal, list } = useCsListSearchCsModalStore();
 
 	useEffect(() => {
 		if (isActive) {
@@ -25,8 +24,6 @@ const CsListButtonSearch = ({ isActive }) => {
 			>
 				조건 검색
 			</Button>
-
-			<CsSearchModal searchLocation={"cs"} searchType={"LIST"} isActive={isActive}/>
 		</>
 	);
 };
