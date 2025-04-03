@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";

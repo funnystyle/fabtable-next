@@ -1,9 +1,5 @@
 import { DatePicker, Form, Input, Radio, Select } from "antd";
 import React, { useEffect } from "react";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
-import Link from "next/link";
-import dayjs from "dayjs";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 
 export const componentDisabled = (recordColumn, index = -1) => {

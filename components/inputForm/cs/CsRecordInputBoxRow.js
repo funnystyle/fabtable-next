@@ -1,10 +1,11 @@
 import { Button, Flex, InputNumber, Typography } from "antd";
-import { DeleteOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons";
+import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
 import useRecordDataStore from "@store/useRecordDataStore";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 import useCsDataStore from "@store/useCsDataStore";
@@ -162,7 +163,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
               <InputNumber
                 min={1}
                 max={10}
-                defaultValue={3}
+                defaultValue={1}
                 ref={copyCountRef}
                 // onChange={onChange}
               />

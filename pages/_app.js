@@ -6,8 +6,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next"; // i18next Provider 추가
 import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR"; // 한국어 로케일
-import dayjs from "dayjs";
 import "dayjs/locale/ko"; // dayjs 한국어 설정
+import dayjs from "dayjs";
 import i18next from "../i18n"; // i18next 설정 파일 임포트
 import { appWithTranslation } from 'next-i18next';
 import i18nConfig from '../next-i18next.config';

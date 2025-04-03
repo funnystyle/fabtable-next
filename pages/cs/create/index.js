@@ -10,6 +10,7 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
 import CsSearchModal from "@components/searchModal/CsSearchModal";
 import useCsDataStore from "@store/useCsDataStore";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import CsCreateAnchor from "@components/cs/create/CsCreateAnchor";
 import { loadFormValues } from "@components/inputForm/loadFormValues";
@@ -159,7 +160,7 @@ const CsCreate = ({isActive = true}) => {
         style={{width: "100%", textAlign: "center", paddingTop: 80}}
       >
         {!loading && (
-          <Flex style={{height: 'calc(100vh - 301px)', overflowY: 'auto'}} className="anchor-wrapper">
+          <Flex style={{height: 'calc(100vh - 228px)', overflowY: 'auto'}} className="anchor-wrapper">
             <div className="anchor-contents">
               <div
                 // style={{ paddingTop: contentHeight }}

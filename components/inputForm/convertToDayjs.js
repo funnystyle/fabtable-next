@@ -1,3 +1,4 @@
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 
 export const convertToDayjs = (obj, dateFields) => {

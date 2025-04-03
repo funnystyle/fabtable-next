@@ -53,6 +53,8 @@ const OrderListTable = ({ isPending }) => {
 		// tooltipList 는 codeName, tooltip으로 이루어진 오브젝트 배열
 		// value와 동일한 codeName을 가진 tooltipList의 index를 찾고 해당 tooltipList의 tooltip을 반환
 		const tooltip = tooltipList.find(item => item.codeName === value);
+		
+		if (!tooltip) return value;
 
 		if (!tooltip) {
 			return value;

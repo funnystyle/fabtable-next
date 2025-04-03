@@ -46,6 +46,7 @@ import Draggable from "react-draggable";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);

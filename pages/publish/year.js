@@ -455,8 +455,8 @@ import {
 	BarController,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
-import { height, textAlign } from "@mui/system";
 import Draggable from "react-draggable";
 import CustomEmpty from "@/components/common/CustomEmpty";
 

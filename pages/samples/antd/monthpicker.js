@@ -1,5 +1,6 @@
 import { ConfigProvider, DatePicker, Input } from 'antd';
 import koKR from 'antd/es/locale/ko_KR';
+import "dayjs/locale/ko";
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 

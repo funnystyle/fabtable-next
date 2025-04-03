@@ -1,8 +1,7 @@
 import {Col, DatePicker, Form, Input, InputNumber, Radio, Select} from "antd";
 import React, { useEffect } from "react";
-import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter";
-import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import Link from "next/link";
+import "dayjs/locale/ko";
 import dayjs from "dayjs";
 
 export const handleCopyModalComponent = (form, component, index) => {
