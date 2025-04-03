@@ -1,16 +1,32 @@
 import { Button, Flex, Form, Typography } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import CsRecordInputComponentRowInitial from "@components/inputForm/cs/CsRecordInputComponentRowInitial";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
+import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import dayjs from "dayjs";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const { Title } = Typography;
 
-const CsRecordInputBoxInitial = ({ item, index }) => {
+const CsRecordInputBoxInitial = ({ form, item, index=1 }) => {
 
+  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
   const componentsList = item[0].components;
-  
+
+  const handleDeleteCsRecord = (index) => {
+    csRecordInputs.forEach((field) => {
+      for (let i = index + 1; i <= recordKeys.length; i++) {
+        form.setFieldValue(`${field}-${i - 1}`, form.getFieldValue(`${field}-${i}`));
+      }
+    });
+
+    const newRecordKeys = recordKeys.filter((_, idx) => idx + 1 !== index);
+    setRecordKeys(newRecordKeys);
+  }
+
   return (
     <div className="info-input-box">
       <Flex align="center" justify="space-between">
@@ -24,6 +40,12 @@ const CsRecordInputBoxInitial = ({ item, index }) => {
               setOpenSearchModal(true);
             }}>불량제품 불러오기</Button>
           </Flex>
+
+          {index > 0 && recordKeys.length > 1 &&
+          <Button icon={<DeleteOutlined />} size="small"
+                  onClick={() => handleDeleteCsRecord(index)}
+          />
+          }
         </Flex>
       </Flex>
 

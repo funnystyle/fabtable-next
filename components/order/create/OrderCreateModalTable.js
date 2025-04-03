@@ -27,6 +27,7 @@ const OrderCreateModalTable = ({ modalStore }) => {
 			okText: "확인",
 			cancelText: "취소",
 			onOk() {
+				record.nowStateText = record.nowState.props.children
 				setRecord(record);
 				setIsCopy(false);
 				setOpenSearchModal(false);

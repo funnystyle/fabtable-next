@@ -16,7 +16,7 @@ const CsRecordInputBoxes = ({ form, codeRelationSet, type }) => {
 		}
 	}, [isSuccess]);
 
-	const copyCountRef = useRef(3);
+	const copyCountRef = useRef(1);
 
 	return (
 		<>

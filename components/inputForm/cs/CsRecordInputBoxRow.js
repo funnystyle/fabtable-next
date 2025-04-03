@@ -31,7 +31,11 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   }, [allResetFlag]);
 
   const handleAdd = () => {
-    const newRecordKeys = [...recordKeys, null];
+    const copyCount = copyCountRef.current.value || 1;
+    let newRecordKeys = [...recordKeys];
+    for (let i = 0; i < copyCount; i++) {
+      newRecordKeys.push(null);
+    }
     setRecordKeys(newRecordKeys);
   }
 
@@ -116,9 +120,12 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       if (openDiv === "defect") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;
-          if (key === "oldSerialNumber") {
+          if (key === "serialNumber") {
             newKey = `defectMfcSN-${recordIndex}`;
-          }else {
+          } else if (key === "nowState") {
+          } else if (key === "nowStateText") {
+            newKey = `nowState-${recordIndex}`;
+          } else {
             newKey = `${key}-${recordIndex}`;
           }
           acc[newKey] = record[key];
@@ -133,9 +140,9 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       } else if (openDiv === "substitute") {
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;
-          if (key === "oldSerialNumber") {
+          if (key === "serialNumber") {
             newKey = `substituteMfcSN-${recordIndex}`;
-          } else if (key === "nowState") {
+          } else if (key === "nowStateText") {
             newKey = `substituteNowState-${recordIndex}`;
           }
           acc[newKey] = record[key];
@@ -236,6 +243,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
                 {itemList.map((item, i) =>
                   <CsRecordInputBoxInitial
                     key={`cs-record-input-box-${index}-${i}`}
+                    form={form}
                     item={item}
                     index={index + 1}
                   />

@@ -23,7 +23,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
       }
     });
 
-    const newRecordKeys = recordKeys.filter((_, idx) => idx !== index);
+    const newRecordKeys = recordKeys.filter((_, idx) => idx + 1 !== index);
     setRecordKeys(newRecordKeys);
   }
 
