@@ -192,9 +192,9 @@ const CsCreate = ({isActive = true}) => {
         )}
       </Spin>
 
-      <SearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadCsModalStore} />
+      <SearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadCsModalStore} inBoxType={"csCreateOpenModal"} />
 
-      <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadRecordModalStore} />
+      <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadRecordModalStore} inBoxType={"recordCreateOpenModal"}/>
     </Layout>
   );
 };

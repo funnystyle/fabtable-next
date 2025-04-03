@@ -3,8 +3,8 @@ import ModalBoxRow from "@components/modal/ModalBoxRow";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 
-const OrderOpenModalContent = ({ form, searchLocation }) => {
-  const type = searchLocation === "order" ? "recordCreateOpenModal" : "csCreateOpenModal";
+const OrderOpenModalContent = ({ form, searchLocation, inBoxType }) => {
+  const type = inBoxType;
   const codeRelationSet = new Set();
   const [selectedCodes, setSelectedCodes] = useState([]); // 선택된 코드 상태 저장
   const [list, setList] = useState([]);

@@ -11,6 +11,7 @@ import CsListButtonArea from "@components/cs/list/CsListButtonArea";
 import { useGetCsList } from "@components/api/useGetCsList";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
+import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 
 const operationItems = [
 	{
@@ -122,6 +123,8 @@ const CsListComponent = ({ contentHeight, isActive=true }) => {
 				<CsListTable contentHeight={contentHeight} isPending={isPending}/>
 
 				<SearchModal searchLocation={"cs"} searchType={"LIST"} isActive={isActive} modalStore={useCsListSearchCsModalStore} />
+
+				<SearchModal searchLocation={"cs"} searchType={"HISTORY"} isActive={isActive} modalStore={useCsListHistoryCsModalStore} inBoxType={"csListHistoryModal"} />
 
 				{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 				<div style={{ display: openDrawer ? "block" : "none" }}>

@@ -9,6 +9,8 @@ import { useSetCsState } from "@components/api/useSetCsState";
 import CsCopyButton from "@components/cs/list/button/CsCopyButton";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
+import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
+import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
 
 const CsListButtonArea = ({ handleReload }) => {
 
@@ -24,7 +26,7 @@ const CsListButtonArea = ({ handleReload }) => {
 			setSearchStatusList(codeNameList);
 		}
 	}, [isSuccess]);
-
+	useCsListHistoryCsModalStore
 	return (
 		<Flex gap="small" align="center" className="btn-big" style={{
 			position: "sticky",
@@ -44,7 +46,7 @@ const CsListButtonArea = ({ handleReload }) => {
 				/>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<Button variant="outlined">C/S 이력</Button>
+					<CsHistoryButton />
 
 					<OrderListButtonStatusSelect statusList={codeNameList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 

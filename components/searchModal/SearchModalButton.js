@@ -5,7 +5,7 @@ import "dayjs/locale/ko";
 
 const SearchModalButton = ({ form, modalStore }) => {
 
-	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName } = modalStore();
+	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName, reloadFlag } = modalStore();
 
 	const handleSubmit = () => {
 		const groupedData = {};
@@ -47,6 +47,10 @@ const SearchModalButton = ({ form, modalStore }) => {
 		form.resetFields([`${deleteTagKeyName}-input`, `${deleteTagKeyName}-input2`]);
 		handleSubmit();
 	}, [deleteTagKeyName]);
+
+	useEffect(() => {
+		handleSubmit();
+	}, [reloadFlag]);
 
 	return (
 		<Flex

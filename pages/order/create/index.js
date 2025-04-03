@@ -102,7 +102,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 			</Spin>
 	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
-			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useOrderCreateLoadRecordModalStore} />
+			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useOrderCreateLoadRecordModalStore} inBoxType={"orderCreateOpenModal"} />
 
 		</Layout>
 	);

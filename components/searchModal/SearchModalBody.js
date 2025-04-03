@@ -6,12 +6,12 @@ import SearchModalNumber from "@components/calendar/year/searchModal/number/Sear
 import SearchModalDate from "@components/calendar/year/searchModal/date/SearchModalDate";
 import OrderOpenModalContent from "@components/modal/OrderOpenModalContent";
 
-const SearchModalBody = ({form, searchLocation, searchType}) => {
+const SearchModalBody = ({form, searchLocation, searchType, inBoxType}) => {
 
   return (
     <>
-      {(searchType === "OPEN") && (<OrderOpenModalContent form={form} searchLocation={searchLocation}/>)}
-      {!(searchLocation === "cs" && searchType === "OPEN") &&
+      {inBoxType !== null && (<OrderOpenModalContent form={form} searchLocation={searchLocation} inBoxType={inBoxType}/>)}
+      {!(searchLocation === "cs" && (searchType === "OPEN" || searchType === "HISTORY")) &&
         <>
           <SearchModalNormal form={form} title={"일반"} order={1} searchLocation={searchLocation} searchDiv={"NORMAL"}/>
           <SearchModalNumber form={form} title={"숫자/수치"} order={2} searchLocation={searchLocation} searchDiv={"NUMBER"}/>
