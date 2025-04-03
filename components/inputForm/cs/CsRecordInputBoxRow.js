@@ -163,7 +163,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
               <InputNumber
                 min={1}
                 max={10}
-                defaultValue={3}
+                defaultValue={1}
                 ref={copyCountRef}
                 // onChange={onChange}
               />
