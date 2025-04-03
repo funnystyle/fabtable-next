@@ -9,6 +9,7 @@ import {transformTagData} from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
 import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
+import { useRouter } from "next/router";
 
 const OrderListTable = ({ isPending }) => {
 
@@ -26,11 +27,14 @@ const OrderListTable = ({ isPending }) => {
 
 	const { moveUrl } = useMenuTabStore();
 	const { setRecord, setTagInfoList, setIsCopy } = useRecordDataStore();
+	const router = useRouter();
+
 	const handleDoubleClick = (record) => {
 		// record.nowState = record.nowState.props.children
 		setRecord(record);
 		setIsCopy(false);
 		moveUrl("/order/create");
+		router.push("/order/create");
 	}
 
 	const handleSettingKeyToData = (data) => {

@@ -12,6 +12,7 @@ import { csListRightItem } from "./data/csListRightItem";
 import useMenuTabStore from "@store/useMenuTabStore";
 import useRecordDataStore from "@store/useRecordDataStore";
 import useCsDataStore from "@store/useCsDataStore";
+import { useRouter } from "next/router";
 
 const CsListTable = ({ isPending }) => {
 
@@ -30,11 +31,13 @@ const CsListTable = ({ isPending }) => {
 
 	const { moveUrl } = useMenuTabStore();
 	const { setCs, setIsCopy, setTagInfoList } = useCsDataStore();
+	const router = useRouter();
 
 	const handleDoubleClick = (record) => {
 		setCs(record);
 		setIsCopy(false);
 		moveUrl("/cs/create");
+		router.push("/cs/create");
 	}
 
 	const handleSettingKeyToData = (data) => {

@@ -21,8 +21,6 @@ const CsCreateHeader = ({ form }) => {
 		onSuccess: (response, values) => {
 			setIsCopy(false);
 			setIsChange(false);
-			// console.log("response.data", response?.data);
-			// console.log("values", values);
 
 			setCs({ id: response?.data?.id, csNumber: response?.data?.csNumber, csState: transformTagDataSingle(response?.data?.tagInfoList, response?.data?.csState) });
 		}

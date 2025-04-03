@@ -1,16 +1,16 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, Flex, message, Space,} from "antd";
-import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
+import { Button, Dropdown, Flex, message, Space, } from "antd";
+import { CheckOutlined, CloseOutlined, DownOutlined } from "@ant-design/icons";
 import useCsDataStore from "@store/useCsDataStore";
 import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton";
 import CsCreateStatusChangeButton from "@components/cs/create/button/CsCreateStatusChangeButton";
-import {useDeleteCs} from "@components/api/useDeleteCs";
 import CsCreateDeleteButton from "@components/cs/create/button/CsCreateDeleteButton";
-import {transformTagDataSingle} from "@components/order/table/transformTagData";
+import { transformTagDataSingle } from "@components/order/table/transformTagData";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
-import {useMutation} from "@tanstack/react-query";
-import {postAxios, putAxios} from "@api/apiClient";
+import { useMutation } from "@tanstack/react-query";
+import { putAxios } from "@api/apiClient";
+import { handleCopyUrl } from "@components/event/handleCopyUrl";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
@@ -76,7 +76,6 @@ const CsCreateHeaderUpdate = ({form}) => {
     // moveUrl("/cs/list")
   }
 
-
   return (
     <div className="top-btn-area">
       {/* 수주 수정시 */}
@@ -107,7 +106,7 @@ const CsCreateHeaderUpdate = ({form}) => {
           </Flex>
 
           <Flex gap={8} className="btn-space-area">
-            <Button>URL</Button>
+            <Button onClick={handleCopyUrl}>URL</Button>
 
             <Dropdown menu={{items: []}}>
               <Button>
