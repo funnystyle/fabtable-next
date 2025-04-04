@@ -97,6 +97,16 @@ const excelItems = [
 	{
 		label: "편집 항목만",
 		key: "1",
+		children: [
+			{
+				key: "1-1",
+				label: "선택한 행",
+			},
+			{
+				key: "1-2",
+				label: "전체 행",
+			},
+		],
 	},
 	{
 		label: "전체 항목",
