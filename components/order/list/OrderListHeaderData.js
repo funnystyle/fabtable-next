@@ -53,7 +53,8 @@ const OrderListHeaderData = ({ setHeaderList, headerDiv }) => {
 				sorter: sorterFunction,
 				sortOrder: sortedInfo.columnKey === dataIndex ? sortedInfo.order : null,
 				ellipsis: true,
-				width: index === jsonResult.length - 1 ? "auto" : width || 100,
+				width: index === jsonResult.length - 1 ? width ? width : "auto" : width || 100,
+				// width: width || 100,
 				align: alignDiv === "LEFT" ? "left" : alignDiv === "RIGHT" ? "right" : "center",
 				fixed: fixedDiv === "LEFT" ? "left" : fixedDiv === "RIGHT" ? "right" : false,
 			};
