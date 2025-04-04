@@ -76,7 +76,7 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
             handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)
           }
           data-codegroup-id={recordColumn.codeGroupId}
-          defaultValue={
+          initialvalue={
             codeList.length === 1 ? codeList[0].codeName : undefined
           }
 

@@ -12,6 +12,8 @@ import { useGetRecords } from "@components/api/useGetRecords";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
+import { stompClient } from "@lib/socket";
+
 
 
 const OrderComponent = ({ isActive=true }) => {
@@ -31,6 +33,29 @@ const OrderComponent = ({ isActive=true }) => {
 			setSearchStatusList(codeNameList);
 		}
 	}, [isSuccess]);
+
+	useEffect(() => {
+    stompClient.onConnect = () => {
+      console.log("🔌 STOMP 연결됨");
+
+      // ✅ 구독
+      stompClient.subscribe("/topic/orderInfoCreate", (message) => {
+        const newOrder = JSON.parse(message.body);
+        console.log("📬 새 주문:", newOrder);
+				alert("새 주문이 도착했습니다.");
+
+        // 🔁 목록 다시 불러오기
+        // queryClient.invalidateQueries(["orderList"]);
+      });
+    };
+
+    stompClient.activate(); // 연결 시작
+
+    return () => {
+      stompClient.deactivate(); // 컴포넌트 종료 시 연결 해제
+    };
+  }, []);
+
 	return (
 		<Layout>
 			<div className="contents-flex">
