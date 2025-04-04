@@ -2,13 +2,13 @@
 import React from "react";
 import { Button, message, } from "antd";
 import useCsDataStore from "@store/useCsDataStore";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import useMenuTabStore from "@store/useMenuTabStore";
 import { useRouter } from "next/router";
+import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 
 const CsCopyButton = () => {
 
-  const { datas } = useTableSelectKeysStore();
+  const { datas } = useTableSelectKeysCsListStore();
   const { moveUrl } = useMenuTabStore();
   const { setCs, setIsCopy } = useCsDataStore();
   const router = useRouter();

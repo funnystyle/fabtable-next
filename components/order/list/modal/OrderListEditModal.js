@@ -7,7 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { putAxios } from "@api/apiClient";
 import { ExclamationCircleFilled } from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => {
 
@@ -18,7 +18,7 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 		mutationFn: (values) => putAxios("/user/record", values),
 	});
 
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 
 	const handleEditSubmit = async (e) => {
 		if (selectedRowKeys.length === 0) {

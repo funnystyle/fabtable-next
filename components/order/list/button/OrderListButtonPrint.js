@@ -12,12 +12,12 @@ import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
 import useDrawerStore from "@store/useDrawerStore";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonPrint = () => {
 
 	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint } = useDrawerStore();
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
 	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]); // ✅ PDF URL 목록 상태

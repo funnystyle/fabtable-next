@@ -2,21 +2,18 @@
 import React from "react";
 import { Button, message, } from "antd";
 import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 
-const CsHistoryButton = () => {
+const CsHistoryButton = ({ openLength, modalStore }) => {
 
-	const { setOpenSearchModal } = useCsListHistoryCsModalStore();
-
-	const {selectedRowKeys} = useTableSelectKeysStore();
-
+	const { setOpenSearchModal } = modalStore();
 
   const onClick = () => {
-		if (selectedRowKeys.length === 0) {
+		if (openLength === 0) {
 			message.warning("이력 조회할 행을 선택해주세요.");
 			return;
 		}
-		if (selectedRowKeys.length > 1) {
+		if (openLength > 1) {
 			message.warning("이력 조회는 1개만 가능합니다.");
 			return;
 		}

@@ -11,10 +11,12 @@ import { useGetCodeList } from "@components/api/useGetCodeList";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
+import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 
 const CsListButtonArea = ({ handleReload }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword } = useCsListSearchCsModalStore();
+	const {selectedRowKeys} = useTableSelectKeysCsListStore();
 	const { tags, setTags } = useCsDataStore();
 
 	const { handleReload:nowStatusUpdate } = useSetCsState(handleReload);
@@ -26,7 +28,7 @@ const CsListButtonArea = ({ handleReload }) => {
 			setSearchStatusList(codeNameList);
 		}
 	}, [isSuccess]);
-	useCsListHistoryCsModalStore
+
 	return (
 		<Flex gap="small" align="center" className="btn-big" style={{
 			position: "sticky",
@@ -46,7 +48,7 @@ const CsListButtonArea = ({ handleReload }) => {
 				/>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<CsHistoryButton />
+					<CsHistoryButton openLength={selectedRowKeys.length} modalStore={useCsListHistoryCsModalStore}/>
 
 					<OrderListButtonStatusSelect statusList={codeNameList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 

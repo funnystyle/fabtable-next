@@ -21,6 +21,8 @@ import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
 import useCsCreateLoadCsModalStore from "@store/useCsCreateLoadCsModalStore";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
+import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
+import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 
 const CsCreate = ({isActive = true}) => {
   const {data, list} = useGetInputBoxList("csCreate");
@@ -44,6 +46,7 @@ const CsCreate = ({isActive = true}) => {
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
 
   useEffect(() => {
+    console.log("cs", cs);
     if (list && list.length > 0 && cs?.id) {
       setCsState(cs?.csState);
 
@@ -195,6 +198,9 @@ const CsCreate = ({isActive = true}) => {
       <SearchModal searchLocation={"cs"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadCsModalStore} inBoxType={"csCreateOpenModal"} />
 
       <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadRecordModalStore} inBoxType={"recordCreateOpenModal"}/>
+
+      <SearchModal searchLocation={"cs"} searchType={"HISTORY_DETAIL"} isActive={isActive} modalStore={useCsCreateHistoryCsModalStore} inBoxType={"csListHistoryModal"} />
+
     </Layout>
   );
 };

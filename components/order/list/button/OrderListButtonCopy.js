@@ -3,14 +3,14 @@ import React from "react";
 import { Button, Form, message, } from "antd";
 import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal";
 import useRecordListCopyModalStore from "@store/useRecordListCopyModalStore";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonCopy = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
 	const { openCopyModal:openModal, setOpenCopyModal:setOpenModal } = useRecordListCopyModalStore();
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 
 	const showModal = () => {
 		if (selectedRowKeys.length === 0) {

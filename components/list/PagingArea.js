@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import { Button, Dropdown, Flex, Input, Pagination, Space, } from "antd";
 import { LeftOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
-const PagingArea = ({ page, size, total, totalPages, setPage, setSize }) => {
+const PagingArea = ({ page, size, total, totalPages, setPage, setSize, keysStore }) => {
 
-  const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = useTableSelectKeysStore();
+  const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = keysStore();
 
 
   const [inputValue, setInputValue] = useState(page);

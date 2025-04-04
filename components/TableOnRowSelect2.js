@@ -7,8 +7,8 @@ import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import CustomEmpty from "./common/CustomEmpty";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true }) => {
-  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = useTableSelectKeysStore();
+const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, keysStore }) => {
+  const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = keysStore();
 
   const [isDragging, setIsDragging] = useState(false);
   const [ctrlDragging, setCtrlDragging] = useState(false);

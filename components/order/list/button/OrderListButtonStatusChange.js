@@ -1,16 +1,14 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, message, Space,} from "antd";
+import { Button, Dropdown, Space, } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { useMutation } from "@tanstack/react-query";
-import { putAxios } from "@api/apiClient";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonStatusChange = ({ statusList, nowStatusUpdate }) => {
 
 	const stateStatusList = statusList.map((item, i) => ({label: item, key: `${i}`}));
 
-	const { datas } = useTableSelectKeysStore();
+	const { datas } = useTableSelectKeysOrderListStore();
 
 	const handleStatusChange = async (e) => {
 		if (datas.length <= 0) return;

@@ -6,7 +6,7 @@ import ModalDraggable from "@components/drag/ModalDraggable";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => {
 
@@ -15,7 +15,7 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => 
 		mutationFn: (values) => postAxios("/user/record/copy", values),
 	});
 
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 
 	const handleSubmit = async (event) => {
 		if (selectedRowKeys.length === 0) {

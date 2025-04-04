@@ -11,7 +11,7 @@ const SearchModalBody = ({form, searchLocation, searchType, inBoxType}) => {
   return (
     <>
       {inBoxType !== null && (<OrderOpenModalContent form={form} searchLocation={searchLocation} inBoxType={inBoxType}/>)}
-      {!(searchLocation === "cs" && (searchType === "OPEN" || searchType === "HISTORY")) &&
+      {!(searchLocation === "cs" && (searchType === "OPEN" || searchType === "HISTORY" || searchType === "HISTORY_DETAIL")) &&
         <>
           <SearchModalNormal form={form} title={"일반"} order={1} searchLocation={searchLocation} searchDiv={"NORMAL"}/>
           <SearchModalNumber form={form} title={"숫자/수치"} order={2} searchLocation={searchLocation} searchDiv={"NUMBER"}/>

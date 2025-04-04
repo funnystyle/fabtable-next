@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 
-const CsHistoryModalTable = ({ form, modalStore }) => {
+const CsDetailHistoryModalTable = ({ form, modalStore }) => {
 
   const { page, size, total, totalPages, data, setPage, setSize, openSearchModal, setOpenSearchModal, reload } = modalStore();
   const { handleReload, isPending } = useGetRecordsJoinCS(modalStore, true, false);
@@ -22,7 +22,7 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
 
   const [modal, contextHolder] = Modal.useModal();
   const { moveUrl } = useMenuTabStore();
-  const { setCs, setIsCopy, setTagInfoList } = useCsDataStore();
+  const { cs, setCs, setIsCopy, setTagInfoList } = useCsDataStore();
   const router = useRouter();
   const handleConfirmEdit = (record) => {
     if (!record.id) {
@@ -60,22 +60,23 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
     setTagInfoList(data?.tagInfoList || []);
   }, [data]);
 
-  const { datas } = useTableSelectKeysCsListStore();
-
   useEffect(() => {
-    if (datas.length > 0) {
-      const data = datas[0];
-      const oldSerialNumber = data.oldSerialNumber;
-      const serialNumber = data.serialNumber;
-      const csNumber = data.csNumber;
+    if (cs.id) {
+      const oldSerialNumber = cs.oldSerialNumber;
+      const serialNumber = cs.serialNumber;
+      const csNumber = cs.csNumber;
       form.setFieldsValue({ oldSerialNumber, serialNumber, csNumber });
 
-      // form.getFieldValue는 즉시 반영이 안 될 수 있어 조금 기다린 후 확인
       setTimeout(() => {
         reload();
-      }, 100);
+      }, 200);
     }
-  }, [datas]);
+  }, [cs]);
+  useEffect(() => {
+    setTimeout(() => {
+      reload();
+    }, 200);
+  }, []);
 
   return (
     <>
@@ -109,4 +110,4 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
   );
 };
 
-export default CsHistoryModalTable;
+export default CsDetailHistoryModalTable;

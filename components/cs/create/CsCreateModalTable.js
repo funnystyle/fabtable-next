@@ -8,6 +8,7 @@ import { useGetCsList } from "@components/api/useGetCsList";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const CsCreateModalTable = ({ modalStore }) => {
 
@@ -49,7 +50,7 @@ const CsCreateModalTable = ({ modalStore }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysStore} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"}/>
@@ -70,7 +71,7 @@ const CsCreateModalTable = ({ modalStore }) => {
 					return item;
 				})
 				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}
-				isPending={isPending} isFirstLoad={false}
+				isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore}
 				/>
 			</div>
 

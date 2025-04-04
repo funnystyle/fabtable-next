@@ -8,6 +8,7 @@ import { Button, Flex, Modal } from "antd";
 import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
 import { useGetRecords } from "@components/api/useGetRecords";
+import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderCreateModalTable = ({ modalStore }) => {
 
@@ -49,7 +50,7 @@ const OrderCreateModalTable = ({ modalStore }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysStore} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES_LOAD"}/>
@@ -69,7 +70,7 @@ const OrderCreateModalTable = ({ modalStore }) => {
 					return item;
 				})
 				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}
-				isPending={isPending} isFirstLoad={false}
+				isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore}
 				/>
 			</div>
 

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import ListPopover from "@components/list/Popover";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListTable = ({ isPending }) => {
 
@@ -69,7 +70,7 @@ const OrderListTable = ({ isPending }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysOrderListStore} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"} />
@@ -92,7 +93,7 @@ const OrderListTable = ({ isPending }) => {
 					}))
 
 					} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick}
-					isPending={isPending}
+					isPending={isPending} keysStore={useTableSelectKeysOrderListStore}
 					/>
 				</div>
 			</Dropdown>

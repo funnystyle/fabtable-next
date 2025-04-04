@@ -3,14 +3,14 @@ import React from "react";
 import { Button, Form, message, } from "antd";
 import OrderListEditModal from "@components/order/list/modal/OrderListEditModal";
 import useRecordListEditModalStore from "@store/useRecordListEditModalStore";
-import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonEdit = ({ handleReload }) => {
 
 	const [form] = Form.useForm();
 
 	const { openEditModal:openModal, setOpenEditModal:setOpenModal } = useRecordListEditModalStore();
-	const { selectedRowKeys } = useTableSelectKeysStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 
 	const showModal = () => {
 		if (selectedRowKeys.length === 0) {

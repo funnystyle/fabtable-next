@@ -11,6 +11,8 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import { useMutation } from "@tanstack/react-query";
 import { putAxios } from "@api/apiClient";
 import { handleCopyUrl } from "@components/event/handleCopyUrl";
+import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
+import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
@@ -95,7 +97,7 @@ const CsCreateHeaderUpdate = ({form}) => {
           <Flex gap={8} className="btn-space-area">
             <CsCreateStatusChangeButton />
 
-            <Button>C/S이력</Button>
+            <CsHistoryButton openLength={1} modalStore={useCsCreateHistoryCsModalStore} />
           </Flex>
 
 

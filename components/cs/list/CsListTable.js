@@ -10,6 +10,7 @@ import useMenuTabStore from "@store/useMenuTabStore";
 import useCsDataStore from "@store/useCsDataStore";
 import { useRouter } from "next/router";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
+import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 
 const CsListTable = ({ isPending }) => {
 
@@ -50,7 +51,7 @@ const CsListTable = ({ isPending }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} />
+			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysCsListStore} />
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown
@@ -64,7 +65,7 @@ const CsListTable = ({ isPending }) => {
 				<div>
 					{/* 테이블 */}
 					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
-														 onRowDoubleClick={handleDoubleClick} isPending={isPending}
+														 onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysCsListStore}
 					/>
 				</div>
 			</Dropdown>
