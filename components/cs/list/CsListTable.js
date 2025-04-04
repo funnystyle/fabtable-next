@@ -16,7 +16,7 @@ const CsListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useCsListSearchCsModalStore();
+	const { data, setOpenCopyModal, setOpenEditModal } = useCsListSearchCsModalStore();
 
 	const handleContextMenuClick = (e) => {
 		alert("click", e);
@@ -51,7 +51,7 @@ const CsListTable = ({ isPending }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysCsListStore} />
+			<PagingArea modalStore={useCsListSearchCsModalStore} keysStore={useTableSelectKeysCsListStore} />
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS"} />
 			<Dropdown
@@ -64,8 +64,8 @@ const CsListTable = ({ isPending }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} size={size} setSize={setSize} scrollY={"calc(100vh - 330px)"}
-														 onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysCsListStore}
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} scrollY={"calc(100vh - 330px)"}
+														 onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysCsListStore} modalStore={useCsListSearchCsModalStore}
 					/>
 				</div>
 			</Dropdown>

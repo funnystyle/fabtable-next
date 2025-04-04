@@ -18,7 +18,7 @@ const OrderListTable = ({ isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
-	const { page, size, total, totalPages, data, setPage, setSize, setOpenCopyModal, setOpenEditModal } = useOrderListSearchRecordModalStore();
+	const { data, setOpenCopyModal, setOpenEditModal } = useOrderListSearchRecordModalStore();
 	const { tooltipList:soList } = useGetCodeList("특주사양");
 	const { tooltipList:cuList } = useGetCodeList("고객사");
 	const { tooltipList:buList } = useGetCodeList("납품처");
@@ -70,7 +70,7 @@ const OrderListTable = ({ isPending }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysOrderListStore} />
+			<PagingArea modalStore={useOrderListSearchRecordModalStore} keysStore={useTableSelectKeysOrderListStore} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES"} />
@@ -84,16 +84,14 @@ const OrderListTable = ({ isPending }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data).map((item => {
+					<TableOnRowSelect2 header={headerList} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore}
+														 serverData={handleSettingKeyToData(data).map((item => {
 						item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
 						item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
 						item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
 
 						return item;
-					}))
-
-					} size={size} setSize={setSize} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick}
-					isPending={isPending} keysStore={useTableSelectKeysOrderListStore}
+					}))}
 					/>
 				</div>
 			</Dropdown>
