@@ -12,7 +12,7 @@ import OrderCreateDeleteButton from "@components/order/create/button/OrderCreate
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
-	const { record, setRecord, nowState, setNowState, tagInfoList } = useRecordDataStore();
+	const { record, setRecord, nowState, setNowState, tagInfoList, serialNumber } = useRecordDataStore();
 
 	const { mutate: updateRecord } = useMutation({
 		mutationKey: "updateRecord",
@@ -42,7 +42,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 
 					<ul className="product-info">
 						<li>{record.oldSerialNumber}</li>
-						<li>{record.serialNumber}</li>
+						<li>{serialNumber}</li>
 					</ul>
 				</Flex>
 

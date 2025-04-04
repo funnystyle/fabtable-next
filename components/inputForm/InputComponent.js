@@ -1,6 +1,6 @@
 import React from "react";
-import { componentDisabled } from "@components/inputForm/componentDisabled";
-import { componentStringInput } from "@components/inputForm/componentStringInput";
+import ComponentDisabled from "@components/inputForm/ComponentDisabled";
+import ComponentStringInput from "@components/inputForm/ComponentStringInput";
 import { componentDate } from "@components/inputForm/componentDate";
 import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
 import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
@@ -8,13 +8,14 @@ import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import ComponentReadOnly from "@components/inputForm/componentReadOnly";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 const InputComponent = ({ form, codeRelationSet, component, index }) => {
 
   const recordColumn = component.recordColumn;
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
-    return componentDisabled(recordColumn);
+    return <ComponentDisabled recordColumn={recordColumn} />;
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'READONLY') {
@@ -28,7 +29,7 @@ const InputComponent = ({ form, codeRelationSet, component, index }) => {
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
-    return componentStringInput(recordColumn);
+    return <ComponentStringInput recordColumn={recordColumn} />;
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'TEXT') {

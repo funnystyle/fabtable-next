@@ -1,6 +1,6 @@
 import React from "react";
-import { componentDisabled } from "@components/inputForm/componentDisabled";
-import { componentStringInput } from "@components/inputForm/componentStringInput";
+import ComponentDisabled from "@components/inputForm/ComponentDisabled";
+import ComponentStringInput from "@components/inputForm/ComponentStringInput";
 import { componentDate } from "@components/inputForm/componentDate";
 import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
 import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
@@ -14,7 +14,7 @@ const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => 
   const recordColumn = component.recordColumn;
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
-    return componentDisabled(recordColumn, index);
+    return (<ComponentDisabled recordColumn={recordColumn} index={index} />);
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'READONLY') {
@@ -28,7 +28,7 @@ const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => 
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
-    return componentStringInput(recordColumn, index);
+    return <ComponentStringInput recordColumn={recordColumn} index={index} />
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'TEXT') {

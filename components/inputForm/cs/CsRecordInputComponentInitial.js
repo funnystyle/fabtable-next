@@ -1,10 +1,10 @@
-import { componentDisabled } from "@components/inputForm/componentDisabled";
+import ComponentDisabled from "@components/inputForm/ComponentDisabled";
 
 const CsRecordInputComponentInitial = ({ component, index }) => {
 
   const recordColumn = component.recordColumn;
 
-  return componentDisabled(recordColumn, index);
+  return ComponentDisabled(recordColumn, index);
 }
 
 export default CsRecordInputComponentInitial;
