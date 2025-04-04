@@ -4,8 +4,9 @@ import { Button, Dropdown, Flex, Input, Pagination, Space, } from "antd";
 import { LeftOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
 
-const PagingArea = ({ page, size, total, totalPages, setPage, setSize, keysStore }) => {
+const PagingArea = ({ modalStore, keysStore }) => {
 
+  const { page, size, total, totalPages, setPage, setSize } = modalStore();
   const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = keysStore();
 
 

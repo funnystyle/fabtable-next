@@ -12,7 +12,7 @@ import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 
 const OrderCreateModalTable = ({ modalStore }) => {
 
-	const { page, size, total, totalPages, data, setPage, setSize, setOpenSearchModal } = modalStore();
+	const { data, setOpenSearchModal } = modalStore();
 	const { isPending } = useGetRecords(modalStore, true, false);
 
 	const [headerList, setHeaderList] = useState([]);
@@ -50,13 +50,14 @@ const OrderCreateModalTable = ({ modalStore }) => {
 
 	return (
 		<>
-			<PagingArea page={page} size={size} total={total} totalPages={totalPages} setPage={setPage} setSize={setSize} keysStore={useTableSelectKeysStore} />
+			<PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
 
 			{/* 태그 없음, 헤더 관련 정리 event */}
 			<OrderListHeaderData setHeaderList={setHeaderList} headerDiv={"SALES_LOAD"}/>
 			<div className="contents-scroll">
 				{/* 테이블 */}
-				<TableOnRowSelect2 header={headerList} serverData={transformTagData(data).map((item) => {
+				<TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
+													 serverData={transformTagData(data).map((item) => {
 					item.remark_sales_load=(
 						<>
 							<Flex gap={4}>
@@ -69,8 +70,7 @@ const OrderCreateModalTable = ({ modalStore }) => {
 					);
 					return item;
 				})
-				} size={size} setSize={setSize} onRowClick={onRowClick} rowSelect={false}
-				isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore}
+				}
 				/>
 			</div>
 

@@ -7,7 +7,8 @@ import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import CustomEmpty from "./common/CustomEmpty";
 
-const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, keysStore }) => {
+const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, modalStore, keysStore }) => {
+  const { size, total, page } = modalStore();
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = keysStore();
 
   const [isDragging, setIsDragging] = useState(false);
@@ -23,6 +24,8 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
 
   const data = serverData != undefined ? serverData.map((item, index) => ({
     ...item,
+    // no는 역순 정렬이다.
+    no: total - (page - 1) * size - index,
   })) : [];
 
   useEffect(() => {
@@ -53,24 +56,6 @@ const TableOnRowSelect2 = ({ header, serverData, size, setSize, onRowClick, rowS
       datas, setDatas
     }
   }
-
-  const generateColumns = (columnData) => {
-    return columnData
-      .sort((a, b) => a.displayOrder - b.displayOrder) // displayOrder 기준 정렬
-      .map(col => ({
-        title: col.title, // 컬럼 제목
-        dataIndex: col.data, // 데이터 인덱스
-        key: col.columnName, // 고유 키
-        fixed: col.fixed ? "left" : undefined, // 고정 여부
-        // sorter: col.sortable ? (a, b) => (a[col.data] > b[col.data] ? 1 : -1) : undefined // 정렬 여부
-      }));
-  };
-
-  // ✅ Dropdown에서 선택한 값 저장 및 적용
-  const handleMenuClick = ({ key }) => {
-    setSize(Number(key)); // ✅ 선택한 값 적용
-    localStorage.setItem("tablePageSize", key); // ✅ localStorage에 저장
-  };
 
   const [loading, setLoading] = useState(isFirstLoad);
   // 👉 테이블 렌더링 완료 감지
