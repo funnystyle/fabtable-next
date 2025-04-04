@@ -12,6 +12,7 @@ import { useGetInputBoxList } from "@components/api/useGetInputBoxList";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
 import SearchModal from "@components/searchModal/SearchModal";
 import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
+import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
 
 const OrderInfoCreate = ({ isActive=true }) => {
 
@@ -56,9 +57,23 @@ const OrderInfoCreate = ({ isActive=true }) => {
 	}, [loading]);
 
 	const values = Form.useWatch([], form); // 폼 전체 값을 watch
-
+	const { list:mgmrBinList } = useGetMgmrBinList();
 	useEffect(() => {
 		setIsChange(true);
+
+		const mgmrBin = mgmrBinList.find((item) =>
+			item.modelName.includes(form.getFieldValue("productCategory") + form.getFieldValue("productModel"))
+			&& item.gasName === form.getFieldValue("fluid")
+			&& item.gasMin <= form.getFieldValue("flowrate")
+			&& item.gasMax >= form.getFieldValue("flowrate")
+		);
+
+		if (mgmrBin) {
+			form.setFieldValue("mgmrBin", mgmrBin?.valueNo);
+		} else {
+			form.setFieldValue("mgmrBin", "None");
+		}
+
 	}, [values]);
 
 	return (
