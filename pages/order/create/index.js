@@ -32,12 +32,16 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		if (list && list.length > 0 && record) {
 			setNowState(record?.nowState);
 			setTimeout(() => {
-				loadFormValues(record, data, form, selectedCodes, setSelectedCodes)
-			}, 10);
+				loadFormValues({...record,
+					customer: (typeof(record.customer) === "object" ? record.customer.props.codeName : record.customer),
+					buyer: (typeof(record.buyer) === "object" ? record.buyer.props.codeName : record.buyer),
+					specialOrderNumber: (typeof(record.specialOrderNumber) === "object" ? record.specialOrderNumber.props.codeName : record.specialOrderNumber),
+				}, data, form, selectedCodes, setSelectedCodes)
+			}, 50);
 
 			setTimeout(() => {
 				setIsChange(false);
-			}, 1000);
+			}, 2000);
 		}
 
 
@@ -75,6 +79,10 @@ const OrderInfoCreate = ({ isActive=true }) => {
 		}
 
 	}, [values]);
+
+	useEffect(() => {
+		form.resetFields(["oldSerialNumber", "serialNumber"]);
+	}, [isCopy]);
 
 	return (
 		<Layout>

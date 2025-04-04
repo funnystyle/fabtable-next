@@ -5,7 +5,7 @@ import OrderListEditModal from "@components/order/list/modal/OrderListEditModal"
 import useRecordListEditModalStore from "@store/useRecordListEditModalStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
-const OrderListButtonEdit = ({ handleReload }) => {
+const OrderListButtonEdit = () => {
 
 	const [form] = Form.useForm();
 
@@ -23,7 +23,7 @@ const OrderListButtonEdit = ({ handleReload }) => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 일괄수정</Button>
-			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} handleReload={handleReload} />
+			<OrderListEditModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
 		</>
 	);
 };

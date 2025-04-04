@@ -5,7 +5,7 @@ import useRecordDataStore from "@store/useRecordDataStore";
 
 const OrderCreateCopyButton = () => {
 
-  const {setIsCopy, isChange} = useRecordDataStore();
+  const {setIsCopy, isChange, record} = useRecordDataStore();
 
   const onClick = () => {
     if (isChange) {

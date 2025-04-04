@@ -13,8 +13,9 @@ import { useGetCodeList } from "@components/api/useGetCodeList";
 import ListPopover from "@components/list/Popover";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
+import { useWebsocket } from "@components/ws/useWebsocket";
 
-const OrderListTable = ({ isPending }) => {
+const OrderListTable = ({ handleReload, isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
@@ -67,6 +68,12 @@ const OrderListTable = ({ isPending }) => {
 	useEffect(() => {
 		setTagInfoList(data?.tagInfoList || []);
 	}, [data]);
+
+	useWebsocket("/topic/orderInfoList", (message) => {
+		const newOrder = JSON.parse(message.body);
+		console.log("📬 새 주문:", newOrder);
+		handleReload(true);
+	});
 
 	return (
 		<>

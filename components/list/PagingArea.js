@@ -1,5 +1,5 @@
 // pages/order/create/index.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Flex, Input, Pagination, Space, } from "antd";
 import { LeftOutlined, RedoOutlined, RightOutlined, SettingOutlined, VerticalLeftOutlined, VerticalRightOutlined } from "@ant-design/icons";
 import { lineItems } from "@data/lineItems";
@@ -8,7 +8,6 @@ const PagingArea = ({ modalStore, keysStore }) => {
 
   const { page, size, total, totalPages, setPage, setSize } = modalStore();
   const {selectedRowKeys, setSelectedRowKeys, setAnchorRowKey, setCursorRowKey} = keysStore();
-
 
   const [inputValue, setInputValue] = useState(page);
 

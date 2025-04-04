@@ -10,7 +10,6 @@ export const useSetNowState = (handleListReload) => {
     onSuccess: () => {
       setTimeout(() => {
         message.success('변경 완료');
-        if (handleListReload) handleListReload();
       }, 100);
     },
     onError: (error) => {

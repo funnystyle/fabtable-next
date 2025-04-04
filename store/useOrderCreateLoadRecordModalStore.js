@@ -18,7 +18,7 @@ const useOrderCreateLoadRecordModalStore = create((set) => ({
   totalPages: 0,
 
   // request
-  size: 500,
+  size: 10,
   setSize: (size) => set({ size }),
   page: 1,
   setPage: (page) => set({ page }),

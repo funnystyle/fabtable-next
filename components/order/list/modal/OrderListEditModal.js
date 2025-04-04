@@ -9,7 +9,7 @@ import { ExclamationCircleFilled } from "@ant-design/icons";
 import OrderListEditModalContent from "@components/order/list/modal/OrderListEditModalContent";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
-const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => {
+const OrderListEditModal = ({ form, openModal, setOpenModal }) => {
 
 	const [modal, contextHolder] = Modal.useModal();
 
@@ -31,12 +31,6 @@ const OrderListEditModal = ({ form, openModal, setOpenModal, handleReload }) => 
 
 		await nowStateChange(values);
 		setOpenModal(false);
-
-		if (selectedRowKeys.length > 0) {
-			setTimeout(() => {
-				handleReload();
-			}, 300);
-		}
 	}
 
 	const handleConfirmEdit = () => {

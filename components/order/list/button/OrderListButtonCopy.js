@@ -5,7 +5,7 @@ import OrderListCopyModal from "@components/order/list/modal/OrderListCopyModal"
 import useRecordListCopyModalStore from "@store/useRecordListCopyModalStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
-const OrderListButtonCopy = ({ handleReload }) => {
+const OrderListButtonCopy = () => {
 
 	const [form] = Form.useForm();
 
@@ -24,7 +24,7 @@ const OrderListButtonCopy = ({ handleReload }) => {
 	return (
 		<>
 			<Button onClick={showModal}>수주 복제하기</Button>
-			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} handleReload={handleReload} />
+			<OrderListCopyModal form={form} openModal={openModal} setOpenModal={setOpenModal} />
 		</>
 	);
 };

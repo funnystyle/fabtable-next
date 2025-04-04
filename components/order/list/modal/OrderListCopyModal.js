@@ -8,7 +8,7 @@ import { postAxios } from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
-const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => {
+const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 
 	const { mutate: orderInfoCopy } = useMutation({
 		mutationKey: "orderInfoCopy",
@@ -28,10 +28,6 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal, handleReload }) => 
 
 		await orderInfoCopy(values);
 		setOpenModal(false);
-
-		setTimeout(() => {
-			handleReload();
-		}, 300);
 
 		message.success('복제가 완료되었습니다!');
 	}

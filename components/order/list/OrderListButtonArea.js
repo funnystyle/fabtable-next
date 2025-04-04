@@ -12,11 +12,11 @@ import OrderListButtonPrint from "@components/order/list/button/OrderListButtonP
 import { useSetNowState } from "@components/api/useSetNowState";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 
-const OrderListButtonArea = ({ statusList, handleReload }) => {
+const OrderListButtonArea = ({ statusList }) => {
 
 	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword, tags, setTags } = useOrderListSearchRecordModalStore();
 
-	const { handleReload:nowSatusUpdate } = useSetNowState(handleReload);
+	const { handleReload:nowStatusUpdate } = useSetNowState();
 
 	return (
 		// <div className="contents-top-scroll">
@@ -42,13 +42,13 @@ const OrderListButtonArea = ({ statusList, handleReload }) => {
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowSatusUpdate={nowSatusUpdate}/>
+					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowStatusUpdate={nowStatusUpdate}/>
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonCopy handleReload={handleReload}/>
+					<OrderListButtonCopy />
 
-					<OrderListButtonEdit handleReload={handleReload}/>
+					<OrderListButtonEdit />
 				</Flex>
 
 				<Flex gap="small">
