@@ -1,5 +1,5 @@
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
-import { componentStringInput } from "@components/inputForm/componentStringInput";
+import ComponentStringInput from "@components/inputForm/ComponentStringInput";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentDate } from "@components/inputForm/componentDate";
 import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
@@ -12,8 +12,7 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
   const recordColumn = component.recordColumn;
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
-    return componentStringInput(recordColumn);
-    // return componentDisabled(recordColumn);
+    return <ComponentStringInput recordColumn={recordColumn} />
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'NUMBER') {
@@ -21,7 +20,7 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'STRING') {
-    return componentStringInput(recordColumn);
+    return <ComponentStringInput recordColumn={recordColumn} />
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'TEXT') {

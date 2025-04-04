@@ -25,12 +25,13 @@ const OrderInfoCreate = ({ isActive=true }) => {
 	const [form] = Form.useForm();
 	const codeRelationSet = new Set();
 
-	const { record, resetFlag, setNowState, isCopy, setIsChange } = useRecordDataStore();
+	const { record, resetFlag, setNowState, isCopy, setIsChange, serialNumber, setSerialNumber, isNew, setIsNew } = useRecordDataStore();
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
 	useEffect(() => {
 		if (list && list.length > 0 && record) {
 			setNowState(record?.nowState);
+			setSerialNumber(record?.serialNumber);
 			setTimeout(() => {
 				loadFormValues({...record,
 					customer: (typeof(record.customer) === "object" ? record.customer.props.codeName : record.customer),
@@ -78,11 +79,25 @@ const OrderInfoCreate = ({ isActive=true }) => {
 			form.setFieldValue("mgmrBin", "None");
 		}
 
+		const productionDepartment = form.getFieldValue("productionDepartment");
+		if (serialNumber !== null && serialNumber !== undefined && productionDepartment !== null && productionDepartment !== undefined) {
+			const newSerialNumber = serialNumber.slice(0, 11) + productionDepartment.slice(productionDepartment.length - 2, productionDepartment.length - 1);
+			// form.setFieldValue("serialNumber", newSerialNumber);
+			setSerialNumber(newSerialNumber);
+		}
+		// setSerialNumber();
+
 	}, [values]);
 
 	useEffect(() => {
-		form.resetFields(["oldSerialNumber", "serialNumber"]);
+		if (isCopy) {
+			form.resetFields(["oldSerialNumber", "serialNumber"]);
+		}
 	}, [isCopy]);
+
+	useEffect(() => {
+		setIsNew(!record?.id || isCopy)
+	}, [record, isCopy]);
 
 	return (
 		<Layout>
@@ -91,7 +106,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 
 				{/* <OrderCreateTab activeKey={2} /> */}
 
-				{ !record?.id || isCopy ? <OrderCreateHeaderNew form={form} />
+				{ isNew ? <OrderCreateHeaderNew form={form} />
 				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 

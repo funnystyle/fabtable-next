@@ -15,6 +15,10 @@ const useRecordDataStore = create((set) => ({
   setIsCopy: (isCopy) => set({ isCopy }),
   isChange: false,
   setIsChange: (isChange) => set({ isChange }),
+  serialNumber: null,
+  setSerialNumber: (serialNumber) => set({ serialNumber }),
+  isNew: true,
+  setIsNew: (isNew) => set({ isNew }),
 }));
 
 export default useRecordDataStore;

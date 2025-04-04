@@ -4,6 +4,7 @@ import { handleCodeListFilter } from "@components/inputForm/handleCodeListFilter
 import { handleSelectChange } from "@components/inputForm/handleSelectChange";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, index = -1 }) => {
 
@@ -48,6 +49,16 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
       codeCount = 6;
     }
   }
+  const { isNew, serialNumber, setSerialNumber } = useRecordDataStore();
+
+  const handleSerialNumberSetting = (value) => {
+    if (isNew) return;
+    if (name !== "productionDepartment") return;
+    if (serialNumber.length <= 11) return;
+    const number = value.slice(value.length - 2, value.length - 1);
+    const newSerialNumber = serialNumber.slice(0, 11) + number
+    setSerialNumber(newSerialNumber);
+  }
 
   return (
     <Form.Item
@@ -72,9 +83,11 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
           }
           placeholder="선택하세요"
-          onChange={(value, option) =>
+          onChange={(value, option) => {
+
+            handleSerialNumberSetting(value);
             handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)
-          }
+          }}
           data-codegroup-id={recordColumn.codeGroupId}
           initialvalue={
             codeList.length === 1 ? codeList[0].codeName : undefined
