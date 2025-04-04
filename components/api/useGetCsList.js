@@ -21,6 +21,8 @@ export const useGetCsList = (modalStore, statusAll=false, autoReload=true) => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = (isWebsocket=false) => {
+    const { page, size, searchKeyword, searchStatusList, searchData } = modalStore.getState();
+
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
