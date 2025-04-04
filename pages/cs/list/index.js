@@ -13,92 +13,7 @@ import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
 import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 
-const operationItems = [
-	{
-		label: "접수내용",
-		key: "1",
-	},
-	{
-		label: "진행내역",
-		key: "2",
-	},
-	{
-		label: "출장내역",
-		key: "3",
-	},
-	{
-		label: "후속조치",
-		key: "4",
-	},
-];
-
-const stateItems = [
-	{
-		label: "접수",
-		key: "1",
-	},
-	{
-		label: "진행",
-		key: "2",
-	},
-	{
-		label: "종결",
-		key: "3",
-	},
-	{
-		label: "취소",
-		key: "4",
-	},
-];
-
-const handleMenuClick = (e) => {
-	// message.info("Click on menu item.");
-	console.log("click", e);
-};
-
-const excelItems = [
-	{
-		label: "편집 항목만",
-		key: "1",
-		children: [
-			{
-				key: "1-1",
-				label: "선택한 행",
-			},
-			{
-				key: "1-2",
-				label: "전체 행",
-			},
-		],
-	},
-	{
-		label: "전체 항목",
-		key: "2",
-		children: [
-			{
-				key: "2-1",
-				label: "선택한 행",
-			},
-			{
-				key: "2-2",
-				label: "전체 행",
-			},
-		],
-	},
-];
-
-const printItems = [
-	{
-		label: "프린트",
-		key: "1",
-	},
-	{
-		label: "양식 다운로드",
-		key: "2",
-	},
-];
-
-const CsListComponent = ({ contentHeight, isActive=true }) => {
+const CsListComponent = ({ isActive=true }) => {
 
 	const { handleReload, isPending } = useGetCsList(useCsListSearchCsModalStore);
 
@@ -120,7 +35,7 @@ const CsListComponent = ({ contentHeight, isActive=true }) => {
 				<CsListButtonArea handleReload={handleReload} />
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
-				<CsListTable contentHeight={contentHeight} isPending={isPending}/>
+				<CsListTable handleReload={handleReload} isPending={isPending}/>
 
 				<SearchModal searchLocation={"cs"} searchType={"LIST"} isActive={isActive} modalStore={useCsListSearchCsModalStore} />
 

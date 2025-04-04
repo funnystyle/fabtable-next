@@ -45,7 +45,7 @@ const OrderListTable = ({ handleReload, isPending }) => {
 	}
 
 	const handleSettingKeyToData = (data) => {
-		return (transformTagData(data) || []).map((item, index) => {
+		return data.map((item, index) => {
 			item.key = item.id;
 			return item;
 		});
@@ -65,11 +65,31 @@ const OrderListTable = ({ handleReload, isPending }) => {
 		return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
 	}
 
+	const handleSettingTooltipData = (data) => {
+		return data.map((item => {
+			item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
+			item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
+			item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
+
+			return item;
+		}));
+	}
+
+	const handlePreprocessData = (data) => {
+		const transform = (transformTagData(data) || []);
+
+		const settingKey = handleSettingKeyToData(transform);
+
+		const settingTooltip = handleSettingTooltipData(settingKey);
+
+		return settingTooltip;
+	}
+
 	useEffect(() => {
 		setTagInfoList(data?.tagInfoList || []);
 	}, [data]);
 
-	useWebsocket("/topic/orderInfoList", (message) => {
+	useWebsocket("/topic/orderList", (message) => {
 		const newOrder = JSON.parse(message.body);
 		console.log("📬 새 주문:", newOrder);
 		handleReload(true);
@@ -85,21 +105,13 @@ const OrderListTable = ({ handleReload, isPending }) => {
 				menu={{
 					items: orderListRightItem,
 					onClick: handleContextMenuClick,
-
 				}}
 				trigger={["contextMenu"]}
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore}
-														 serverData={handleSettingKeyToData(data).map((item => {
-						item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
-						item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
-						item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
-
-						return item;
-					}))}
-					/>
+					<TableOnRowSelect2 header={headerList} serverData={handlePreprocessData(data)} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} isPending={isPending}
+														 keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} />
 				</div>
 			</Dropdown>
 		</>

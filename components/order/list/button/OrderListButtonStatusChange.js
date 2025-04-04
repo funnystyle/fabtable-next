@@ -2,13 +2,12 @@
 import React from "react";
 import { Button, Dropdown, Space, } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
-const OrderListButtonStatusChange = ({ statusList, nowStatusUpdate }) => {
+const OrderListButtonStatusChange = ({ statusList, nowStatusUpdate, keysStore }) => {
 
 	const stateStatusList = statusList.map((item, i) => ({label: item, key: `${i}`}));
 
-	const { datas } = useTableSelectKeysOrderListStore();
+	const { datas } = keysStore();
 
 	const handleStatusChange = async (e) => {
 		if (datas.length <= 0) return;

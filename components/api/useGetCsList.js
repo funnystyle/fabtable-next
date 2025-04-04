@@ -20,13 +20,13 @@ export const useGetCsList = (modalStore, statusAll=false, autoReload=true) => {
   });
 
   // 재사용 가능한 handleReload 함수 정의
-  const handleReload = () => {
+  const handleReload = (isWebsocket=false) => {
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
       pageSize = Number(savePageSize);
     }
-    if (searchStatusList.length === 0 && !statusAll) {
+    if (searchStatusList.length === 0 && !statusAll && !isWebsocket) {
       return;
     }
     getCsList({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });

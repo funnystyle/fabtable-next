@@ -13,7 +13,7 @@ const useCsCreateLoadCsModalStore = create((set) => ({
   total: 0,
   setTotal: (total) => set((state) => ({
     total,
-    totalPages: console.log(state.size) || console.log(Math.ceil(total / state.size)) || Math.ceil(total / state.size),
+    totalPages: Math.ceil(total / state.size),
   })),
   totalPages: 0,
 

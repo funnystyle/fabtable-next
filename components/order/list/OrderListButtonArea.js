@@ -11,6 +11,7 @@ import OrderListButtonExcel from "@components/order/list/button/OrderListButtonE
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 import { useSetNowState } from "@components/api/useSetNowState";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonArea = ({ statusList }) => {
 
@@ -42,7 +43,7 @@ const OrderListButtonArea = ({ statusList }) => {
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowStatusUpdate={nowStatusUpdate}/>
+					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysOrderListStore}/>
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">

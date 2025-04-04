@@ -18,20 +18,14 @@ export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = (isWebSocket=false) => {
-    console.log("111111");
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
       pageSize = Number(savePageSize);
     }
-    console.log("222222");
     if (searchStatusList.length === 0 && !statusAll && !isWebSocket) {
-      console.log("333333");
-      console.log("searchStatusList", searchStatusList);
-      console.log("statusAll", statusAll);
       return;
     }
-    console.log("444444");
     getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
   };
 

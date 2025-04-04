@@ -19,7 +19,7 @@ const CsListButtonArea = ({ handleReload }) => {
 	const {selectedRowKeys} = useTableSelectKeysCsListStore();
 	const { tags, setTags } = useCsDataStore();
 
-	const { handleReload:nowStatusUpdate } = useSetCsState(handleReload);
+	const { handleReload:nowStatusUpdate } = useSetCsState();
 
 	const { codeNameList, isSuccess } = useGetCodeList("CS상태");
 
@@ -52,7 +52,7 @@ const CsListButtonArea = ({ handleReload }) => {
 
 					<OrderListButtonStatusSelect statusList={codeNameList.slice(1)} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowStatusUpdate={nowStatusUpdate}/>
+					<OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysCsListStore}/>
 
 					{/*<Dropdown*/}
 					{/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}

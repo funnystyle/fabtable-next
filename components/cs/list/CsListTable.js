@@ -11,15 +11,15 @@ import useCsDataStore from "@store/useCsDataStore";
 import { useRouter } from "next/router";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
+import { useWebsocket } from "@components/ws/useWebsocket";
 
-const CsListTable = ({ isPending }) => {
+const CsListTable = ({ handleReload, isPending }) => {
 
 	const [headerList, setHeaderList] = useState([]);
 
 	const { data, setOpenCopyModal, setOpenEditModal } = useCsListSearchCsModalStore();
 
 	const handleContextMenuClick = (e) => {
-		alert("click", e);
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);
 		} else if (parseInt(e.key) === 2) {
@@ -49,6 +49,12 @@ const CsListTable = ({ isPending }) => {
 		setTagInfoList(data?.tagInfoList || []);
 	}, [data]);
 
+	useWebsocket("/topic/csList", (message) => {
+		const newOrder = JSON.parse(message.body);
+		console.log("📬 새 CS:", newOrder);
+		handleReload(true);
+	});
+
 	return (
 		<>
 			<PagingArea modalStore={useCsListSearchCsModalStore} keysStore={useTableSelectKeysCsListStore} />
@@ -64,8 +70,8 @@ const CsListTable = ({ isPending }) => {
 			>
 				<div>
 					{/* 테이블 */}
-					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} scrollY={"calc(100vh - 330px)"}
-														 onRowDoubleClick={handleDoubleClick} isPending={isPending} keysStore={useTableSelectKeysCsListStore} modalStore={useCsListSearchCsModalStore}
+					<TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} scrollY={"calc(100vh - 330px)"} onRowDoubleClick={handleDoubleClick} isPending={isPending}
+														 keysStore={useTableSelectKeysCsListStore} modalStore={useCsListSearchCsModalStore}
 					/>
 				</div>
 			</Dropdown>
