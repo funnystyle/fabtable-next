@@ -13,7 +13,11 @@ const OrderListPrintLabelRadioSelect = ({ setSelectedLabel }) => {
 	return (
 		<Row gutter={8}>
 			<Col span={24}>
-				<Form.Item label="라벨 종류" name="radio1">
+				<Form.Item 
+					label="라벨 종류" 
+					name="radio1"
+					initialValue="radio1-1"
+				>
 					<Radio.Group
 						onChange={handleLabelChange} // ✅ 라벨 선택 이벤트 핸들러 추가
 						style={{
@@ -21,7 +25,6 @@ const OrderListPrintLabelRadioSelect = ({ setSelectedLabel }) => {
 							flexDirection: "column",
 							gap: 8,
 						}}
-						defaultValue="radio1-1"
 					>
 						<Radio value="radio1-1">라벨 1 --&gt; 2 --&gt; 3</Radio>
 						<Radio value="radio1-2">라벨 1</Radio>

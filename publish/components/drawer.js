@@ -30,7 +30,7 @@ const handleChange = (value) => {
 
 const DrawerComponent = () => {
 
-	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose, selectedPrint : printType } = useDrawerStore();
+	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose, selectedPrint : printType, labelContent } = useDrawerStore();
 
 	const [renderers, setRenderers] = useState([]);
 
@@ -108,8 +108,8 @@ const DrawerComponent = () => {
 				)}
 				{ printType === "label" && (
 					<>
-						<div className="preview-label">
-							라벨 미리보기
+						<div className="preview-label" dangerouslySetInnerHTML={{ __html: labelContent }}>
+							{/* {labelContent} */}
 						</div>
 					
 
