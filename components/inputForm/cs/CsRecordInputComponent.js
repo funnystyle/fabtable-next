@@ -14,7 +14,7 @@ const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => 
   const recordColumn = component.recordColumn;
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DISABLED') {
-    return (<ComponentDisabled recordColumn={recordColumn} index={index} />);
+    return <ComponentDisabled recordColumn={recordColumn} index={index} />;
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'READONLY') {
