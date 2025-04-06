@@ -16,14 +16,18 @@ const OrderListPrintLabelRadio = ({ list, index }) => {
 
 				{list.map((d, i) => (
 					<Col span={24} key={`col-${index + 1}-${i + 1}`}>
-						<Form.Item label={d.name} name={`radio${index + 1}-${i + 1}`}>
+						<Form.Item 
+							label={d.name} 
+							name={`radio${index + 1}-${i + 1}`} 
+							initialValue={`radio${index + 1}-${i + 1}-1`}
+						>
 							<Radio.Group
 								style={{
 									display: "flex",
 									flexDirection: "column",
 									gap: 8,
 								}}
-								defaultValue={`radio${index + 1}-${i + 1}-1`}
+								// defaultValue={`radio${index + 1}-${i + 1}-1`}
 							>
 								{d.list.map((r, j) => (
 									<Radio value={`radio${index + 1}-${i + 1}-${j + 1}`} key={`radio${index + 1}-${i + 1}-${j + 1}`}>{r}</Radio>

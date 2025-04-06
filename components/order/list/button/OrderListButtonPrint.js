@@ -1,5 +1,5 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { Button, Dropdown, Form, Space, } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import OrderListPrintLabel from "@components/order/list/button/print/OrderListPrintLabel";
@@ -16,7 +16,7 @@ import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderList
 
 const OrderListButtonPrint = () => {
 
-	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint } = useDrawerStore();
+	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent } = useDrawerStore();
 	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
@@ -89,7 +89,8 @@ const OrderListButtonPrint = () => {
 					)}
 				</Form>
 			</>
-		)}, [selectedPrint]); // ✅ selectedLabel 변경 시 자동 반영
+		);
+	}, [selectedPrint]); // ✅ selectedLabel 변경 시 자동 반영
 
 	useEffect(() => {
 		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />);
