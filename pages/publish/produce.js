@@ -1062,6 +1062,7 @@ const ProduceComponent = ({ contentHeight }) => {
 					<Tag className="tag-pass">PASS</Tag>
 					<Tag className="tag-fail">FAIL</Tag>
 					<Tag className="tag-none">----</Tag>
+					<Tag className="tag-na">N/A</Tag>
 				</div>
 			),
 			finalTestDate: "2024-12-28",
