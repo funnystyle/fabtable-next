@@ -53,11 +53,21 @@ const ProducePop3Component = () => {
 
 								{/* 부적합 등록 및 상세정보 */}
 								<ProduceUnfitDetail />
+
+								{/* 부적합추가 버튼 클릭시 display:none 처리 */}
+								{/* 주석 풀고 사용
+								<p className="layer-cover"></p> 
+								*/}
 							</Splitter.Panel>
 
 							<Splitter.Panel>
 								{/* 조치사항 등록 및 상세정보 */}
 								<ProduceUnfitAction />
+
+								{/* rework 결정 클릭시 display:none 처리 */}
+								{/* 주석 풀고 사용
+								<p className="layer-cover"></p> 
+								*/}
 							</Splitter.Panel>
 						</Splitter>
 					</Splitter.Panel>

@@ -1927,6 +1927,21 @@
 	padding-top: toRem(40);
 }
 
+.ant-splitter {
+	.ant-splitter-panel {
+		position: relative;
+	}
+}
+
+.layer-cover {
+	background-color: rgba(255, 255, 255, 0.7);
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: toRem(40);
+	bottom: 0;
+}
+
 /* ~ 912px ----------- */
 @media only screen and (max-width: 912px) {
 	.contents {
