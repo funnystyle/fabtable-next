@@ -13,6 +13,7 @@ import { putAxios } from "@api/apiClient";
 import { handleCopyUrl } from "@components/event/handleCopyUrl";
 import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
+import CsCreatePrintButton from "@components/cs/create/button/CsCreatePrintButton";
 
 const CsCreateHeaderUpdate = ({form}) => {
 
@@ -110,14 +111,7 @@ const CsCreateHeaderUpdate = ({form}) => {
           <Flex gap={8} className="btn-space-area">
             <Button onClick={handleCopyUrl}>URL</Button>
 
-            <Dropdown menu={{items: []}}>
-              <Button>
-                <Space>
-                  출력
-                  <DownOutlined/>
-                </Space>
-              </Button>
-            </Dropdown>
+            <CsCreatePrintButton />
           </Flex>
 
           <Flex gap={8}>
