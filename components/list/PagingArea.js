@@ -118,12 +118,12 @@ const PagingArea = ({ modalStore, keysStore }) => {
       </Flex>
 
       <Flex gap="small" align="center">
-        <Button
+        {/* <Button
           icon={<RedoOutlined />}
           target="_blank"
           className="icon-redo"
           onClick={handleReset}
-        />
+        /> */}
 
         <Dropdown menu={{ items: lineItems, onClick: handleLineItemsClick }}>
           <Button>
