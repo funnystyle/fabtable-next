@@ -1151,7 +1151,7 @@ const YearComponent = ({ contentHeight }) => {
 				<div className="contents-left">
 					<div className="contents-top">
 						<PageTitle level={2} className="title-page">
-							연간 종합 일정
+							연간 계획 현황
 						</PageTitle>
 
 						<Chart />

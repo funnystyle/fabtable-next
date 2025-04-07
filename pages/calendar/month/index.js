@@ -28,6 +28,7 @@ const MonthComponent = () => {
 
 				<MonthRightContent visibleItems={visibleItems} setVisibleItems={setVisibleItems} monthTotalList={monthTotalList} year={year} month={month} />
 			</Flex>
+			<div className="info-wrap-last" />
 		</Layout>
 	);
 };

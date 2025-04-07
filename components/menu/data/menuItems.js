@@ -18,17 +18,17 @@ export const basicItems = [
 		children: [
 			{
 				key: "2-1",
-				label: "연간 종합 일정",
+				label: "연간 계획 현황",
 				url: "/calendar/year",
 			},
 			// {
 			// 	key: "2-2",
-			// 	label: "연간 종합 일정(3개년)",
+			// 	label: "연간 계획 현황(3개년)",
 			// 	url: "/publish/year3",
 			// },
 			{
 				key: "2-2",
-				label: "월간 종합 일정",
+				label: "월간 일정 달력",
 				url: "/calendar/month",
 			},
 		],
