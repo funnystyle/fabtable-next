@@ -108,6 +108,16 @@ const excelItems = [
 	{
 		label: "편집 항목만",
 		key: "1",
+		children: [
+			{
+				key: "2-1",
+				label: "선택한 행",
+			},
+			{
+				key: "2-2",
+				label: "전체 행",
+			},
+		],
 	},
 	{
 		label: "전체 항목",
@@ -2445,6 +2455,17 @@ const ProduceComponent = ({ contentHeight }) => {
 								</Space>
 							</Button>
 						</Dropdown>
+					</Flex>
+
+					<Flex gap={4} className="btn-spacing-area">
+						<Button
+							variant="outlined"
+							icon={<RedoOutlined />}
+							className="icon-redo"
+							onClick={showPackingModal}
+						>
+							포장 및 입고완료 공정 열기
+						</Button>
 					</Flex>
 				</Flex>
 
