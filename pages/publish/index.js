@@ -62,6 +62,7 @@ const DashBoard = () => {
 			<br />
 			<Button type="primary" onClick={()=> openPopup({
 				url: '/publish/produce_popup3',
+				width: 1440,
 				name: 'produce_popup3',
 			})} style={{ width: "200px"}}>
 				부적합관리 팝업 열기
