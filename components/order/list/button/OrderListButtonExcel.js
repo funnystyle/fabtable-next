@@ -1,7 +1,8 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, message, Space, } from "antd";
-import { DownOutlined, RedoOutlined } from "@ant-design/icons";
+import {Button, Dropdown, message, Space,} from "antd";
+import {DownOutlined} from "@ant-design/icons";
+import {useDownloadOrderListExcel} from "@components/api/useDownloadOrderListExcel";
 
 const handleMenuClick = (e) => {
 	message.info("Click on menu item.");
@@ -39,11 +40,31 @@ const excelItems = [
 	},
 ];
 
-const OrderListButtonExcel = () => {
+const OrderListButtonExcel = ({ keysStore, modalStore }) => {
+
+	const { searchKeyword, searchStatusList, searchData } = modalStore();
+	const { datas } = keysStore();
+	const { handleDownload, isPending } = useDownloadOrderListExcel();
+
+	const headerDiv = "SALES";
+
+
+	const onClick = (e) => {
+		const ids = datas.map((data) => data.id);
+		if (e.key === "1-1") {
+			handleDownload(false, false, headerDiv, ids, searchKeyword, searchData, searchStatusList);
+		} else if (e.key === "1-2") {
+			handleDownload(false, true, headerDiv, ids, searchKeyword, searchData, searchStatusList);
+		} else if (e.key === "2-1") {
+			handleDownload(true, false, headerDiv, ids, searchKeyword, searchData, searchStatusList);
+		} else if (e.key === "2-2") {
+			handleDownload(true, true, headerDiv, ids, searchKeyword, searchData, searchStatusList);
+		}
+	}
 
 	return (
 		<Dropdown
-			menu={{ items: excelItems, onClick: handleMenuClick }}
+			menu={{ items: excelItems, onClick }}
 			className="excel-menu"
 		>
 			<Button>

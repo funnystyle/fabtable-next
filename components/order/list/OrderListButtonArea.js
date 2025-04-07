@@ -55,7 +55,7 @@ const OrderListButtonArea = ({ statusList }) => {
 				<Flex gap="small">
 					<Button>항목편집</Button>
 
-					<OrderListButtonExcel />
+					<OrderListButtonExcel keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} />
 
 					<OrderListButtonPrint />
 				</Flex>
