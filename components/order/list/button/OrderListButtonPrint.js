@@ -34,7 +34,12 @@ const OrderListButtonPrint = () => {
 		setPdfUrlList([]); // 초기화
 
 		setDocxUrlList([]); // 초기화
-		handleReload(selectedRowKeys);
+
+		setLabelContent(""); // 초기화
+
+		if (selectedPrint === "report") {
+			handleReload(selectedRowKeys);
+		}
 
 		setOpenDrawer(true);
 	};
