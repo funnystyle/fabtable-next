@@ -71,7 +71,7 @@ const handlePopupOpen = () => {
 	window.open(
 		"produce_memo", // 경로
 		"부서별 메모", // 팝업 이름
-		"width=480,height=555,resizable=yes,scrollbars=yes"
+		"width=640,height=600,resizable=yes,scrollbars=yes" // TODO: 화면 중앙으로 띄울 것
 	);
 };
 
