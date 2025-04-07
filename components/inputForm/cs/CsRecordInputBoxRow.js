@@ -238,7 +238,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
         {recordKeys.map((key, index) => (
           key === null ?
             <React.Fragment key={`record-fragment-${key}-${index}`}>
-              {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
+              {index > 0 && (<div className="info-wrap-product-gap" />)}
               <Flex gap={20} className="info-input-col2" >
                 {itemList.map((item, i) =>
                   <CsRecordInputBoxInitial
@@ -252,7 +252,7 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
             </React.Fragment>
             :
           <React.Fragment key={`record-fragment-${key}-${index}`}>
-            {index > 0 && (<div style={{marginTop: '1.75rem'}} />)}
+            {index > 0 && (<div className="info-wrap-product-gap" />)}
             <Flex gap={20} className="info-input-col2" key={`record-${key}`}>
               {itemList.map((item, i) =>
                 <CsRecordInputBox

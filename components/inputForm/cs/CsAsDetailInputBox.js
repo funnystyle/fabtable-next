@@ -18,8 +18,14 @@ const CsAsDetailInputBox = ({ form }) => {
         {isCommon ? (
           <CsAsDetailForm form={form} index={0} resetFlag={resetFlag} />
         ) : keys.map((key, index) =>
-          key !== null && <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} index={index+1} resetFlag={resetFlag} />
-        )}
+          key !== null && (
+          <>
+            <CsAsDetailForm key={`cs-as-detail-${index}`} form={form} index={index+1} resetFlag={resetFlag} />
+            {index < keys.length - 1 && (
+              <div className="info-wrap-product-gap" />
+            )}
+          </>
+        ))}
       </div>
     </div>
   );
