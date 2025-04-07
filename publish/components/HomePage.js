@@ -478,7 +478,8 @@ const HomePage = ({ children }) => {
                           activeTab,
                           //현재 탭이 열려잇는지 여부
                           activeKey: tab.key,
-                          isActive: tab.key === activeTab
+                          isActive: tab.key === activeTab,
+                          tabRemove: () => onTabRemove(tab.key),
                         })
                       ) : (
                         <div>페이지 없음</div>

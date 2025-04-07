@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Flex, message, Tag,} from "antd";
+import {Button, Flex, message, Modal, Tag,} from "antd";
 import {useMutation} from "@tanstack/react-query";
 import {postAxios} from "@api/apiClient";
 import {CloseOutlined, EditFilled} from "@ant-design/icons";
@@ -8,7 +8,7 @@ import useRecordDataStore from "@store/useRecordDataStore";
 import useMenuTabStore from "@store/useMenuTabStore";
 import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
-const OrderCreateHeaderNew = ({ form }) => {
+const OrderCreateHeaderNew = ({ form, tabRemove }) => {
 
 	const { setRecord, setIsCopy, setIsChange } = useRecordDataStore();
 	const { moveUrl } = useMenuTabStore();
@@ -24,19 +24,43 @@ const OrderCreateHeaderNew = ({ form }) => {
 			setIsCopy(false);
 			setIsChange(false);
 			setRecord(values)
+			message.success('수주 등록이 완료되었습니다.');
 		}
 	});
 
 	const handleReset = () => {
-		form.resetFields();
+		Modal.confirm({
+			title: "초기화 안내",
+			content: "입력된 내용이 모두 초기화 됩니다.",
+			onOk: () => {
+				setIsChange(false);
+				setIsCopy(false);
+				setRecord({});
+				form.resetFields();
+			},
+		});
 	};
 
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
 
 		await orderInfoCreate(values);
-		message.success('수주 등록이 완료되었습니다!');
+
 		// moveUrl(`/order/list`);
+	}
+
+	const handleCancel = () => {
+		Modal.confirm({
+			title: "등록 취소",
+			content: "등록을 취소하고 이 화면을 닫습니다.",
+			onOk: () => {
+				setIsChange(false);
+				setIsCopy(false);
+				setRecord({});
+				form.resetFields();
+				tabRemove();
+			},
+		});
 	}
 
 	return (
@@ -53,7 +77,7 @@ const OrderCreateHeaderNew = ({ form }) => {
 					</Flex>
 
 					<Flex gap={8}>
-						<Button icon={<CloseOutlined />} iconPosition={"end"}>
+						<Button icon={<CloseOutlined />} iconPosition={"end"} onClick={handleCancel}>
 							취소
 						</Button>
 						<Button

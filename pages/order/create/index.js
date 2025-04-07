@@ -14,7 +14,7 @@ import SearchModal from "@components/searchModal/SearchModal";
 import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
 
-const OrderInfoCreate = ({ isActive=true }) => {
+const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 	const [loading, setLoading] = useState(true);
 
@@ -106,7 +106,7 @@ const OrderInfoCreate = ({ isActive=true }) => {
 
 				{/* <OrderCreateTab activeKey={2} /> */}
 
-				{ isNew ? <OrderCreateHeaderNew form={form} />
+				{ isNew ? <OrderCreateHeaderNew form={form} tabRemove={tabRemove} />
 				: <OrderCreateHeaderUpdate form={form} /> }
 			</div>
 
