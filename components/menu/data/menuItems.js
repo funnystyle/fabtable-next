@@ -132,11 +132,11 @@ export const basicItems = [
 				label: "사이클 타임",
 				url: "/publish/statistic/cycletime",
 			},
-			{
-				key: "7-3",
-				label: "SPC 현황",
-				url: "/publish/statistic/spc",
-			},
+			// {
+			// 	key: "7-3",
+			// 	label: "SPC 현황",
+			// 	url: "/publish/statistic/spc",
+			// },
 		],
 	},
 ];
