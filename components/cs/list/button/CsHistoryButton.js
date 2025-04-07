@@ -9,10 +9,10 @@ const CsHistoryButton = ({ openLength, modalStore }) => {
 	const { setOpenSearchModal } = modalStore();
 
   const onClick = () => {
-		if (openLength === 0) {
-			message.warning("이력 조회할 행을 선택해주세요.");
-			return;
-		}
+		// if (openLength === 0) {
+		// 	message.warning("이력 조회할 행을 선택해주세요.");
+		// 	return;
+		// }
 		if (openLength > 1) {
 			message.warning("이력 조회는 1개만 가능합니다.");
 			return;
