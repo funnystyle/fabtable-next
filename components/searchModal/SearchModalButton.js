@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
 
-const SearchModalButton = ({ form, modalStore }) => {
+const SearchModalButton = ({ form, modalStore, searchType }) => {
 
 	const { setSearchData, setOpenSearchModal, setFormData, deleteTagKeyName, reloadFlag } = modalStore();
 
@@ -49,6 +49,7 @@ const SearchModalButton = ({ form, modalStore }) => {
 	}, [deleteTagKeyName]);
 
 	useEffect(() => {
+		if (searchType === "LIST") return;
 		handleSubmit();
 	}, [reloadFlag]);
 

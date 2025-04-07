@@ -21,7 +21,7 @@ const SearchModalContent = ({ searchLocation, searchType, modalStore, inBoxType}
 			<div className="layer-scroll">
 				<SearchModalBody form={form} searchLocation={searchLocation} searchType={searchType} inBoxType={inBoxType} />
 
-				<SearchModalButton form={form} modalStore={modalStore} />
+				<SearchModalButton form={form} modalStore={modalStore} searchType={searchType} />
 
 				{(searchLocation === "order" && searchType === "OPEN") && (
 					<OrderCreateModalTable modalStore={modalStore} />)}
