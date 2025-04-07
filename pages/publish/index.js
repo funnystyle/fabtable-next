@@ -4,100 +4,26 @@ import { Button, Layout } from "antd";
 import Link from "next/link";
 
 const DashBoard = () => {
-	// 팝업 창을 띄우는 함수
-	const openPopup = () => {
-		const popupWidth = 1280;
-		const popupHeight = 1120;
 
-		// 현재 사용 중인 모니터의 전체 화면 크기 가져오기
-		const screenLeft =
-			window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-		const screenTop =
-			window.screenTop !== undefined ? window.screenTop : window.screenY;
+	const openPopup = ({
+		url = '/',
+		name = 'popupWindow',
+		width = 1280,
+		height = 1120,
+		resizable = 'yes',
+		scrollbars = 'yes',
+	}) => {
+		const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+		const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
 		const screenWidth = window.screen.availWidth;
 		const screenHeight = window.screen.availHeight;
-
-		// 중앙 정렬 계산 (멀티 모니터 고려)
-		const left = screenLeft + (screenWidth - popupWidth) / 2;
-		const top = screenTop + (screenHeight - popupHeight) / 2;
-
-		window.open(
-			"/publish/produce_popup",
-			"producePopup",
-			`width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes`
-		);
-	};
-
-	// 팝업 창을 띄우는 함수
-	const openPopup2 = () => {
-		const popupWidth = 1280;
-		const popupHeight = 1120;
-
-		// 현재 사용 중인 모니터의 전체 화면 크기 가져오기
-		const screenLeft =
-			window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-		const screenTop =
-			window.screenTop !== undefined ? window.screenTop : window.screenY;
-		const screenWidth = window.screen.availWidth;
-		const screenHeight = window.screen.availHeight;
-
-		// 중앙 정렬 계산 (멀티 모니터 고려)
-		const left = screenLeft + (screenWidth - popupWidth) / 2;
-		const top = screenTop + (screenHeight - popupHeight) / 2;
-
-		window.open(
-			"/publish/produce_popup2",
-			"producePopup",
-			`width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes`
-		);
-	};
-
-	// 팝업 창을 띄우는 함수
-	const openPopup3 = () => {
-		const popupWidth = 1280;
-		const popupHeight = 1120;
-
-		// 현재 사용 중인 모니터의 전체 화면 크기 가져오기
-		const screenLeft =
-			window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-		const screenTop =
-			window.screenTop !== undefined ? window.screenTop : window.screenY;
-		const screenWidth = window.screen.availWidth;
-		const screenHeight = window.screen.availHeight;
-
-		// 중앙 정렬 계산 (멀티 모니터 고려)
-		const left = screenLeft + (screenWidth - popupWidth) / 2;
-		const top = screenTop + (screenHeight - popupHeight) / 2;
-
-		window.open(
-			"/publish/order_popup",
-			"orderPopup",
-			`width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes`
-		);
-	};
-
-	// 팝업 창을 띄우는 함수
-	const openPopup4 = () => {
-		const popupWidth = 1280;
-		const popupHeight = 1120;
-
-		// 현재 사용 중인 모니터의 전체 화면 크기 가져오기
-		const screenLeft =
-			window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-		const screenTop =
-			window.screenTop !== undefined ? window.screenTop : window.screenY;
-		const screenWidth = window.screen.availWidth;
-		const screenHeight = window.screen.availHeight;
-
-		// 중앙 정렬 계산 (멀티 모니터 고려)
-		const left = screenLeft + (screenWidth - popupWidth) / 2;
-		const top = screenTop + (screenHeight - popupHeight) / 2;
-
-		window.open(
-			"/publish/produce_popup3",
-			"producePopup",
-			`width=${popupWidth},height=${popupHeight},top=${top},left=${left},resizable=yes,scrollbars=yes`
-		);
+	
+		const left = screenLeft + (screenWidth - width) / 2;
+		const top = screenTop + (screenHeight - height) / 2;
+	
+		const features = `width=${width},height=${height},top=${top},left=${left},resizable=${resizable},scrollbars=${scrollbars}`;
+	
+		window.open(url, name, features);
 	};
 
 	return (
@@ -113,17 +39,39 @@ const DashBoard = () => {
 			<br />
 			<Link href="publish/login/changenewpw">새 비밀번호 입력</Link>
 			<br />
-			<Button type="primary" onClick={openPopup}>
+			<Button type="primary" onClick={()=> openPopup({
+				url: '/publish/produce_popup',
+				name: 'produce_popup',
+			})} style={{ width: "200px"}}>
 				제어계수 팝업 열기
 			</Button>
-			<Button type="primary" onClick={openPopup2}>
-				공정창 팝업 열기
+			<br />
+			<Button type="primary" onClick={()=> openPopup({
+				url: '/publish/produce_popup2',
+				name: 'produce_popup2',
+			})} style={{ width: "200px"}}>
+				생산공정창 팝업 열기
 			</Button>
-			<Button type="primary" onClick={openPopup3}>
+			<br />
+			<Button type="primary" onClick={()=> openPopup({
+				url: '/publish/order_popup',
+				name: 'order_popup',
+			})} style={{ width: "200px"}}>
 				수주종합정보 팝업 열기
 			</Button>
-			<Button type="primary" onClick={openPopup4}>
-				부적합이력 팝업 열기
+			<br />
+			<Button type="primary" onClick={()=> openPopup({
+				url: '/publish/produce_popup3',
+				name: 'produce_popup3',
+			})} style={{ width: "200px"}}>
+				부적합관리 팝업 열기
+			</Button>
+			<br />
+			<Button type="primary" onClick={()=> openPopup({
+				url: '/publish/produce_ratio_control',
+				name: 'produce_ratio_control',
+			})} style={{ width: "200px"}}>
+				비율제어 팝업 열기
 			</Button>
 		</Layout>
 	);
