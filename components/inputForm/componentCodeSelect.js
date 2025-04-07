@@ -15,24 +15,14 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
 
   const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
-  useEffect(() => {
-    setCodeList(handleCodeListFilter(selectedCodes, recordColumn));
-  }, [selectedCodes]);
 
-  useEffect(() => {
-    if (codeList.length === 0) {
-      form.resetFields([name]);
-    }
-    if (codeList.length === 1) {
-      form.setFieldsValue({ [name]: codeList[0].codeName });
-    }
-  }, [codeList]);
 
   let codeCount = 0;
 
   const productCategory = form.getFieldValue("productCategory");
   const productModel = form.getFieldValue("productModel");
   const productChannel = form.getFieldValue("productChannel");
+  const productFluid = form.getFieldValue("fluid");
 
   const isMadee5000s = productCategory === "MADEE" && productModel === "5000s" && recordColumn.displayName === "Unit 구분";
 
@@ -49,6 +39,12 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
       codeCount = 6;
     }
   }
+
+  const isPs = productCategory === "MARU" && (productModel === "8200s" || productModel === "9000s" || productModel === "9300s")  && recordColumn.name === "conversionFactor";
+  const isThisGas = productFluid === "Ar" || productFluid === "He" || productFluid === "Ne" || productFluid === "H2(4%)N2" || productFluid === "H2(5%)N2";
+
+
+
   const { isNew, serialNumber, setSerialNumber } = useRecordDataStore();
 
   const handleSerialNumberSetting = (value) => {
@@ -60,6 +56,24 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
     setSerialNumber(newSerialNumber);
   }
 
+  useEffect(() => {
+    const newCodeList = handleCodeListFilter(selectedCodes, recordColumn);
+    if (isPs && isThisGas) {
+      setCodeList(newCodeList.filter((code) => code.codeName !== "1"));
+    } else {
+      setCodeList(newCodeList);
+    }
+  }, [selectedCodes]);
+
+  useEffect(() => {
+    if (codeList.length === 0) {
+      form.resetFields([name]);
+    }
+    if (codeList.length === 1) {
+      form.setFieldsValue({ [name]: codeList[0].codeName });
+    }
+  }, [codeList]);
+
   return (
     <Form.Item
       key={name}
@@ -69,8 +83,10 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
     >
       {codeList.length === 0 ? (
         // ✅ codeList가 비어있을 때: 비활성화된 Select
-        <Select placeholder="선택할 옵션이 없습니다." disabled={true} />
-      ) : (
+        (recordColumn.name === "conversionFactor" ?
+            <Input placeholder={`${recordColumn.displayName || '값을 입력하세요'}`}/>
+          : <Select placeholder="선택할 옵션이 없습니다." disabled={true} />
+        )) : (
         codeList.length === 1 && recordColumn.name === "conversionFactor" ? (
           <Input placeholder={`${recordColumn.displayName || '값을 입력하세요'}`}
                  value={codeList[0].codeName}
@@ -101,7 +117,9 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
                 'data-codegroup-id': recordColumn.codeGroupId,
                 'data-id': option.id,
                 'data-child-relations' : JSON.stringify(option.childRelations),
-              })).slice(0, codeCount) : codeList.map(option => ({
+              })).slice(0, codeCount)
+                  :
+                    codeList.map(option => ({
                   value: option.codeName,
                   label: option.codeName,
                   'data-codegroup-id': recordColumn.codeGroupId,
