@@ -18,14 +18,14 @@ const OrderCreateStatusChangeButton = () => {
 
 	const handleStatusChange = async (e) => {
 
-		await nowSatusUpdate([record.id], codeNameList.slice(11, 14)[e.key]);
+		await nowSatusUpdate([record.id], codeNameList.slice(10, 14)[e.key]);
 
-		setNowState(transformTagDataSingle(tagInfoList, codeNameList.slice(11, 14)[e.key]));
+		setNowState(transformTagDataSingle(tagInfoList, codeNameList.slice(10, 14)[e.key]));
 	}
 
 	return (
 		<Dropdown
-			menu={{ items: codeNameList.slice(11, 14).map((item, i) => ({label: item, key: `${i}`})), onClick: handleStatusChange }}
+			menu={{ items: codeNameList.slice(10, 14).map((item, i) => ({label: item, key: `${i}`})), onClick: handleStatusChange }}
 		>
 			<Button>
 				<Space>

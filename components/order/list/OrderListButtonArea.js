@@ -43,7 +43,7 @@ const OrderListButtonArea = ({ statusList }) => {
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonStatusChange statusList={statusList.slice(11, 14)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysOrderListStore}/>
+					<OrderListButtonStatusChange statusList={statusList.slice(10, 14)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysOrderListStore}/>
 				</Flex>
 
 				<Flex gap="small" className="btn-spacing-area">
