@@ -75,6 +75,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 		if (mgmrBin) {
 			form.setFieldValue("mgmrBin", mgmrBin?.valueNo);
+			form.setFieldValue("maxFlowMgmr", mgmrBin?.gasMax);
 		} else {
 			form.setFieldValue("mgmrBin", "None");
 		}
