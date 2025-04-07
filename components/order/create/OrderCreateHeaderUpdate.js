@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import {Button, Dropdown, Flex, message, Space,} from "antd";
+import {Button, Dropdown, Flex, message, Modal, Space,} from "antd";
 import {useMutation} from "@tanstack/react-query";
 import {putAxios} from "@api/apiClient";
 import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
@@ -12,11 +12,19 @@ import OrderCreateDeleteButton from "@components/order/create/button/OrderCreate
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
-	const { record, setRecord, nowState, setNowState, tagInfoList, serialNumber } = useRecordDataStore();
+	const { record, setRecord, nowState, setNowState, tagInfoList, serialNumber, isChange, setIsCopy, setIsChange } = useRecordDataStore();
 
 	const { mutate: updateRecord } = useMutation({
 		mutationKey: "updateRecord",
 		mutationFn: (values) => putAxios("/user/record", values),
+		onSuccess: (response, values) => {
+			setIsChange(false);
+			setIsCopy(false);
+			message.success('저장 완료');
+		},
+		onError: (error) => {
+			message.error('저장 실패. 잠시 후 다시 시도해주세요');
+		}
 	});
 
 	const handleSubmit = async (event) => {
@@ -24,13 +32,28 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 		values.ids = [record.id];
 
 		await updateRecord(values);
-		message.success('수주 수정이 완료되었습니다!');
 	}
 
 	const handleReset = () => {
-		form.resetFields();
-		setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
-		setRecord({});
+		if (isChange) {
+			Modal.confirm({
+				title: "알림",
+				content: "변경된 데이터가 있습니다. 저장하지 않고 진행할까요? ",
+				onOk: () => {
+					setIsCopy(false);
+					setIsChange(false);
+					setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
+					form.resetFields();
+					setRecord({});
+				},
+			});
+		} else {
+			setIsCopy(false);
+			setIsChange(false);
+			setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
+			form.resetFields();
+			setRecord({});
+		}
 	};
 
 	return (
@@ -56,7 +79,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 					<Flex gap={8} className="btn-space-area">
 						<OrderCreateCopyButton />
 						<Button onClick={handleReset}>신규</Button>
-						<OrderCreateDeleteButton handleReset={handleReset}/>
+						<OrderCreateDeleteButton form={form} handleReset={handleReset}/>
 
 						<Dropdown menu={{ items: [] }}>
 							<Button>

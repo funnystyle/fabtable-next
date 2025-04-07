@@ -10,16 +10,22 @@ const OrderCreateCopyButton = () => {
   const onClick = () => {
     if (isChange) {
       Modal.confirm({
-        title: "변경된 내용이 있습니다.",
-        content: "저장하지 않고 복제하시겠습니까?",
+        title: "복제하기",
+        content: "변경된 데이터가 있습니다.  내용을 저장하지 않고 복제할까요? ",
         onOk: () => {
           setIsCopy(true);
           message.success("복제 완료");
         },
       });
     } else {
-      setIsCopy(true);
-      message.success("복제 완료");
+      Modal.confirm({
+        title: "복제하기",
+        content: "동일한 내용으로 복제합니다.",
+        onOk: () => {
+          setIsCopy(true);
+          message.success("복제 완료");
+        },
+      });
     }
   };
 

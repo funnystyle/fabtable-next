@@ -13,6 +13,7 @@ import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
 import useDrawerStore from "@store/useDrawerStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
+import {useGetDocxUrl} from "@components/api/useGetDocxUrl";
 
 const OrderListButtonPrint = () => {
 
@@ -23,31 +24,7 @@ const OrderListButtonPrint = () => {
 	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]); // ✅ PDF URL 목록 상태
 	const [storedDocxUrlList, setStoredDocxUrlList] = useState([]); // ✅ PDF URL 목록 상태
 
-	const { mutate: certificate } = useMutation({
-		mutationKey: "certificate_id",
-		mutationFn: (values) => postBlobAxios("/admin/certificate/1", values),
-		onSuccess: (data) => {
-			// 파일 다운로드 처리
-			const url = window.URL.createObjectURL(data);
-			setPdfUrlList((prev) => [...prev, url]);
-		},
-	});
-
-	const { mutate: certificate2 } = useMutation({
-		mutationKey: "certificate_id",
-		mutationFn: (values) => postAxios("/admin/certificate/docx/1", values),
-		onSuccess: (data) => {
-			let url = data?.url;
-			if (typeof url !== "string") {
-					console.error("서버에서 URL을 반환하지 않았습니다.");
-					return;
-			}
-
-			console.log("서버에서 받은 DOCX URL:", url);
-
-			setDocxUrlList((prev) => [...prev, url]);
-		},
-	});
+	const { handleReload } = useGetDocxUrl(1);
 
 	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
 	// 드로어 열기
@@ -55,10 +32,9 @@ const OrderListButtonPrint = () => {
 		setSelectedPrint(type);
 
 		setPdfUrlList([]); // 초기화
-		// certificate({list: selectedRowKeys});
 
 		setDocxUrlList([]); // 초기화
-		certificate2({list: selectedRowKeys});
+		handleReload(selectedRowKeys);
 
 		setOpenDrawer(true);
 	};
