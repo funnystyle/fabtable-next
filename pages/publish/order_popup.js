@@ -122,22 +122,22 @@ const OrderPopComponent = () => {
 										<OrderLeak />
 									</Splitter.Panel>
 
-									<Splitter.Panel>
+									<Splitter.Panel defaultSize="16%">
 										{/* PID정보 */}
 										<OrderPID />
 									</Splitter.Panel>
 
-									<Splitter.Panel>
+									<Splitter.Panel defaultSize="12%">
 										{/* 케이스 조립정보 */}
 										<OrderCase />
 									</Splitter.Panel>
 
-									<Splitter.Panel>
+									<Splitter.Panel defaultSize="16%">
 										{/* PI정보 */}
 										<OrderPI />
 									</Splitter.Panel>
 
-									<Splitter.Panel>
+									<Splitter.Panel defaultSize="20%">
 										{/* 포장 및 입고정보 */}
 										<OrderPacking />
 									</Splitter.Panel>
