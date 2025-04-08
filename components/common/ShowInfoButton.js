@@ -114,7 +114,6 @@ const ShowInfoButton = ({ keysStore }) => {
 
   const { datas } = keysStore();
 
-
   return (
     // <Button variant="outlined">수주 종합정보</Button>
     <Dropdown menu={{ items: viewInfoItems, onClick: (e) => handleMenuClick(e, datas) }}>

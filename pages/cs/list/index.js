@@ -4,14 +4,14 @@ import { Layout, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
 import useDrawerStore from "@store/useDrawerStore";
-import CsListTitle from "@components/cs/list/CsListTitle";
 import CsListTable from "@components/cs/list/CsListTable";
-import CsListSearchTags from "@components/cs/create/CsListSearchTags";
 import CsListButtonArea from "@components/cs/list/CsListButtonArea";
 import { useGetCsList } from "@components/api/useGetCsList";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
 import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
+import ListSearchTags from "@components/list/ListSearchTags";
+import ListTitle from "@components/list/ListTitle";
 
 const CsListComponent = ({ isActive=true }) => {
 
@@ -24,15 +24,15 @@ const CsListComponent = ({ isActive=true }) => {
 	return (
 		<Layout>
 			<div className="contents-flex">
-				<CsListTitle title="C/S 관리" isActive={isActive}/>
+				<ListTitle title="C/S 관리" isActive={isActive} modalStore={useCsListSearchCsModalStore}/>
 
 				{/*<CsCreateTab activeKey={1} />*/}
 
 				{/*  검색결과 */}
-				<CsListSearchTags />
+				<ListSearchTags modalStore={useCsListSearchCsModalStore} />
 
 				{/* 상단 버튼 */}
-				<CsListButtonArea handleReload={handleReload} />
+				<CsListButtonArea />
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
 				<CsListTable handleReload={handleReload} isPending={isPending}/>

@@ -5,8 +5,6 @@ const useCsDataStore = create((set) => ({
   setCs: (cs) => set({ cs }),
   csDetail: {},
   setCsDetail: (csDetail) => set({ csDetail }),
-  tags: [],
-  setTags: (tags) => set({ tags }),
   isCopy: false,
   setIsCopy: (isCopy) => set({ isCopy }),
   isChange: false,

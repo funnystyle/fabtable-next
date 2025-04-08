@@ -48,6 +48,8 @@ const useCsListSearchCsModalStore = create((set) => ({
   setFormData: (formData) => set({ formData }),
   deleteTagKeyName: "",
   setDeleteTagKeyName: (deleteTagKeyName) => set({ deleteTagKeyName }),
+  tags: [],
+  setTags: (tags) => set({ tags }),
 }));
 
 export default useCsListSearchCsModalStore;

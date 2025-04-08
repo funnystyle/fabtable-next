@@ -29,7 +29,7 @@ const pageComponents = {
   "/publish/cswrite": lazy(() => import("@/pages/publish/cswrite")),
   "/cs/list": lazy(() => import("@/pages/cs/list")),
   "/cs/create": lazy(() => import("@/pages/cs/create")),
-  // "/publish/produce": lazy(() => import("@/pages/publish/produce")),
+  "/produce/list": lazy(() => import("@/pages/produce/list")),
   // "/publish/qc": lazy(() => import("@/pages/publish/qc")),
   "/publish/statistic/noncommerce": lazy(() =>
     import("@/pages/publish/statistic/noncommerce")

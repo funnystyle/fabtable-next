@@ -1,8 +1,7 @@
 // pages/order/create/index.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Flex, } from "antd";
 import OrderListButtonAllList from "@components/order/list/button/OrderListButtonAllList";
-import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
 import OrderListButtonStatusSelect from "@components/order/list/button/OrderListButtonStatusSelect";
 import OrderListButtonStatusChange from "@components/order/list/button/OrderListButtonStatusChange";
 import OrderListButtonCopy from "@components/order/list/button/OrderListButtonCopy";
@@ -10,60 +9,83 @@ import OrderListButtonEdit from "@components/order/list/button/OrderListButtonEd
 import OrderListButtonExcel from "@components/order/list/button/OrderListButtonExcel";
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 import { useSetNowState } from "@components/api/useSetNowState";
-import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
-import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 import ShowInfoButton from "@/components/common/ShowInfoButton";
+import { useGetCodeList } from "@components/api/useGetCodeList";
+import { RedoOutlined } from "@ant-design/icons";
 
-const OrderListButtonArea = ({ statusList }) => {
+const OrderListButtonArea = ({ keysStore, modalStore, type }) => {
 
-	const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword, tags, setTags } = useOrderListSearchRecordModalStore();
+  const { setDeleteTagKeyName, searchStatusList, setSearchStatusList, setSearchKeyword, tags, setTags } = modalStore();
 
-	const { handleReload:nowStatusUpdate } = useSetNowState();
+  const { handleReload: nowStatusUpdate } = useSetNowState();
 
-	return (
-		// <div className="contents-top-scroll">
-			<Flex gap="small" align="center" className="btn-big" style={{
-				position: "sticky",
-				top: "0",
-				zIndex: "10",
-				marginBottom: "12px",
-				// paddingTop: "8px",
-				backgroundColor: "#FFF",
-			}}>
-				<OrderListButtonAllList
-					setDeleteTagKeyName={setDeleteTagKeyName}
-					setSearchStatusList={setSearchStatusList}
-					setSearchKeyword={setSearchKeyword}
-					statusList={statusList}
-					tags={tags}
-					setTags={setTags}
-				/>
+  const { codeNameList, isSuccess } = useGetCodeList("현재상태");
 
-				<Flex gap="small" className="btn-spacing-area">
-					{/* <OrderListButtonTotalInfo /> */}
-					<ShowInfoButton keysStore={useTableSelectKeysOrderListStore} />
+  useEffect(() => {
+    if (isSuccess) {
+      setSearchStatusList(codeNameList);
+    }
+  }, [isSuccess]);
 
-					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
+  return (
+    // <div className="contents-top-scroll">
+    <Flex gap="small" align="center" className="btn-big" style={{
+      position: "sticky",
+      top: "0",
+      zIndex: "10",
+      marginBottom: "12px",
+      // paddingTop: "8px",
+      backgroundColor: "#FFF",
+    }}>
+      <OrderListButtonAllList
+        setDeleteTagKeyName={setDeleteTagKeyName}
+        setSearchStatusList={setSearchStatusList}
+        setSearchKeyword={setSearchKeyword}
+        statusList={codeNameList}
+        tags={tags}
+        setTags={setTags}
+      />
 
-					<OrderListButtonStatusChange statusList={statusList.slice(10, 14)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysOrderListStore}/>
-				</Flex>
+      <Flex gap="small" className="btn-spacing-area">
+        {/* <OrderListButtonTotalInfo /> */}
+        <ShowInfoButton keysStore={keysStore} />
 
-				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonCopy />
+        <OrderListButtonStatusSelect statusList={codeNameList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
-					<OrderListButtonEdit />
-				</Flex>
+        <OrderListButtonStatusChange statusList={codeNameList.slice(10, 14)} nowStatusUpdate={nowStatusUpdate} keysStore={keysStore} />
+      </Flex>
 
-				<Flex gap="small">
-					<Button>항목편집</Button>
+      {type === "order" &&
+        <Flex gap="small" className="btn-spacing-area">
+          <OrderListButtonCopy />
 
-					<OrderListButtonExcel keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} />
+          <OrderListButtonEdit />
+        </Flex>
+      }
 
-					<OrderListButtonPrint />
-				</Flex>
-			</Flex>
-		// </div>
-	);
+      <Flex gap="small">
+        <Button>항목편집</Button>
+
+        <OrderListButtonExcel keysStore={keysStore} modalStore={modalStore} />
+
+        <OrderListButtonPrint />
+      </Flex>
+
+      {type === "produce" &&
+        <Flex gap={4} className="btn-spacing-area">
+          <Button
+            variant="outlined"
+            icon={<RedoOutlined />}
+            className="icon-redo"
+            // onClick={showPackingModal}
+          >
+            포장 및 입고완료 공정 열기
+          </Button>
+        </Flex>
+      }
+    </Flex>
+    // </div>
+  );
 };
 
 export default OrderListButtonArea;

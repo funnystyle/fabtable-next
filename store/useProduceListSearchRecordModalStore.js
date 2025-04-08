@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-const useCsListHistoryCsModalStore = create((set) => ({
+const useProduceListSearchRecordModalStore = create((set) => ({
   // drag
   disabled: true,
   setDisabled: (disabled) => set({ disabled }),
@@ -50,14 +50,6 @@ const useCsListHistoryCsModalStore = create((set) => ({
   setDeleteTagKeyName: (deleteTagKeyName) => set({ deleteTagKeyName }),
   tags: [],
   setTags: (tags) => set({ tags }),
-
-  //reload
-  reloadFlag: false,
-  reload: () => set((state) => ({
-    reloadFlag: !state.reloadFlag,
-  })),
-
-
 }));
 
-export default useCsListHistoryCsModalStore;
+export default useProduceListSearchRecordModalStore;

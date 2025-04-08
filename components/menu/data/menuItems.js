@@ -108,7 +108,7 @@ export const basicItems = [
 	{
 		key: "5",
 		label: "생산 관리",
-		url: "/publish/produce",
+		url: "/produce/list",
 		icon: <ToolFilled />,
 	},
 	{

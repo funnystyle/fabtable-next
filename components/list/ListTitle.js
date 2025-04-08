@@ -7,9 +7,9 @@ import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordM
 
 const { Title } = Typography;
 
-const OrderListTitle = ({ title, isActive }) => {
+const ListTitle = ({ title, isActive, modalStore }) => {
 
-	const { searchKeyword, setSearchKeyword } = useOrderListSearchRecordModalStore();
+	const { searchKeyword, setSearchKeyword } = modalStore();
 
 	return (
 		<Flex align="center" justify="space-between" className="title-area">
@@ -20,10 +20,10 @@ const OrderListTitle = ({ title, isActive }) => {
 			<Flex gap="small">
 				<SearchAutoComplete searchKeyword={searchKeyword} setSearchKeyword={setSearchKeyword} />
 
-				<OrderListButtonSearch isActive={isActive} />
+				<OrderListButtonSearch isActive={isActive} modalStore={modalStore} />
 			</Flex>
 		</Flex>
 	);
 };
 
-export default OrderListTitle;
+export default ListTitle;

@@ -1,17 +1,17 @@
 // pages/order.js
-import React, { useEffect } from "react";
+import React from "react";
 import { Layout, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
-import OrderListTitle from "@components/order/list/OrderListTitle";
-import OrderListSearchTags from "@components/order/list/OrderListSearchTags";
+import ListTitle from "@components/list/ListTitle";
+import ListSearchTags from "@components/list/ListSearchTags";
 import OrderListButtonArea from "@components/order/list/OrderListButtonArea";
 import OrderListTable from "@components/order/list/OrderListTable";
 import useDrawerStore from "@store/useDrawerStore";
 import { useGetRecords } from "@components/api/useGetRecords";
-import { useGetCodeList } from "@components/api/useGetCodeList";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 
 const OrderComponent = ({ isActive=true }) => {
@@ -22,26 +22,17 @@ const OrderComponent = ({ isActive=true }) => {
 	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
 
-	// --------- 상태 리스트 상수
-	const { setSearchStatusList } = useOrderListSearchRecordModalStore();
-	const { codeNameList, isSuccess } = useGetCodeList("현재상태");
-
-	useEffect(() => {
-		if (isSuccess) {
-			setSearchStatusList(codeNameList);
-		}
-	}, [isSuccess]);
 
 	return (
 		<Layout>
 			<div className="contents-flex">
-				<OrderListTitle title="영업 관리" isActive={isActive} />
+				<ListTitle title="영업 관리" isActive={isActive} modalStore={useOrderListSearchRecordModalStore}/>
 
 				{/*  검색결과 */}
-				<OrderListSearchTags />
+				<ListSearchTags modalStore={useOrderListSearchRecordModalStore} />
 
 				{/* 상단 버튼 */}
-				<OrderListButtonArea statusList={codeNameList} />
+				<OrderListButtonArea keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} type={"order"}/>
 
 				{/* 태그 없음, 헤더 관련 정리 event */}
 				<OrderListTable handleReload={handleReload} isPending={isPending} />

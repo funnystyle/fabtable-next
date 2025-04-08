@@ -2,11 +2,10 @@
 import React, { useEffect } from "react";
 import { Button, } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
-import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 
-const OrderListButtonSearch = ({ isActive }) => {
+const OrderListButtonSearch = ({ isActive, modalStore }) => {
 
-	const { setOpenSearchModal, list } = useOrderListSearchRecordModalStore();
+	const { setOpenSearchModal, list } = modalStore();
 
 	useEffect(() => {
 		if (isActive) {

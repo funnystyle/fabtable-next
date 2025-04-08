@@ -1,13 +1,11 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button, Flex, Tag, } from "antd";
-import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 
-const CsListSearchTags = () => {
+const ListSearchTags = ({ modalStore }) => {
 
-  const { formData, setDeleteTagKeyName } = useCsListSearchCsModalStore();
+  const { formData, setDeleteTagKeyName, tags, setTags } = modalStore();
 
-  const [tags, setTags] = useState([]);
   // 개별 태그 삭제 핸들러
   const handleTagClose = (tagToRemove) => {
     // setTags((prevTags) => prevTags.filter((tag) => tag !== tagToRemove));
@@ -15,6 +13,9 @@ const CsListSearchTags = () => {
   };
 
   const handleTagDeleteAll = () => {
+    tags.forEach((tag) => {
+      setDeleteTagKeyName(tag.key);
+    });
     setTags([]);
   };
 
@@ -109,4 +110,4 @@ const CsListSearchTags = () => {
   );
 };
 
-export default CsListSearchTags;
+export default ListSearchTags;

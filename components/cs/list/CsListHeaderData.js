@@ -9,6 +9,7 @@ import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
 import OrderCreateTab from "@components/order/create/OrderCreateTab";
 import { CloseOutlined, FilterOutlined } from "@ant-design/icons";
 import {getCsColumns, getCsLoadColumns} from "@components/cs/list/data/getCsColumns";
+import { getProduceColumns } from "@components/produce/list/data/getProduceColumns";
 
 const CsListHeaderData = ({ setHeaderList, headerDiv }) => {
 
@@ -69,8 +70,9 @@ const CsListHeaderData = ({ setHeaderList, headerDiv }) => {
 			if ("CS" === headerDiv) {
 				setHeaderList(getCsColumns(sortedInfo, dateSorter));
 			} else if ("CS_LOAD" === headerDiv) {
-				console.log("headerDiv", headerDiv);
 				setHeaderList(getCsLoadColumns(sortedInfo, stringSorter));
+			} else if ("PRODUCE" === headerDiv) {
+				setHeaderList(getProduceColumns(sortedInfo, stringSorter,dateSorter));
 			}
 		// }
 	}, [
