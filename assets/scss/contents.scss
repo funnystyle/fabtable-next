@@ -1133,6 +1133,7 @@
 		height: calc(100vh - 53px);
 		padding: 10px 20px;
 		overflow-y: auto;
+		position: relative;
 
 		.title-bullet {
 			line-height: 40px;
@@ -1146,6 +1147,10 @@
 	.box-info-wrap {
 		border-top: 3px solid #d9d9d9;
 		border-bottom: 3px solid #d9d9d9;
+
+		&.bd-b0 {
+			border-bottom: 0;
+		}
 	}
 
 	.box-info-area {
@@ -1340,6 +1345,10 @@
 
 				.tab-content-in {
 					height: calc(100% - toRem(82));
+
+					&.top-h {
+						height: calc(100% - toRem(42));
+					}
 				}
 			}
 		}
@@ -1380,10 +1389,28 @@
 					color: #fff;
 				}
 			}
+
+			&:first-child {
+				border-left: 0;
+			}
 		}
 
 		.ant-tabs-ink-bar {
 			display: none;
+		}
+	}
+
+	&.w100 {
+		> .ant-tabs-nav {
+			.ant-tabs-nav-list {
+				width: 100%;
+
+				.ant-tabs-tab {
+					flex: 1;
+					text-align: center;
+					justify-content: center;
+				}
+			}
 		}
 	}
 }
@@ -1450,7 +1477,7 @@
 	}
 
 	.txt-order-info {
-		width: 41%;
+		min-width: 41%;
 		font-size: toRem(14);
 		font-weight: 500;
 		white-space: nowrap;
@@ -1611,7 +1638,7 @@
 				td {
 					height: toRem(32);
 					border-right: 1px solid #edf2f7;
-					padding: 0 toRem(4);
+					padding: 0 toRem(4) !important;
 					white-space: nowrap;
 					overflow: hidden;
 					text-overflow: ellipsis;
@@ -1622,16 +1649,22 @@
 				}
 			}
 		}
+
+		& + .title-box-area {
+			margin-top: toRem(8);
+			border-top: 3px solid #d9d9d9;
+		}
 	}
 
 	.data-input-area {
-		height: toRem(32);
+		min-height: toRem(32);
 		margin: 0 toRem(-4);
 		line-height: toRem(32);
 		text-align: center;
 
-		input {
-			border-color: #fff;
+		input,
+		.ant-input-number-outlined {
+			border-color: #fff !important;
 			padding-left: toRem(8);
 			padding-right: toRem(8);
 			font-weight: 500;
@@ -1643,6 +1676,25 @@
 
 			&:hover {
 				border-color: #4096ff;
+			}
+
+			.ant-input-number-input {
+				padding-left: 0 !important;
+			}
+		}
+
+		textarea {
+			border-color: #fff;
+		}
+
+		.ant-picker {
+			width: 100%;
+			height: 100%;
+			border: 0;
+
+			input {
+				height: toRem(32) !important;
+				padding-left: 0 !important;
 			}
 		}
 
@@ -1789,6 +1841,19 @@
 	font-weight: 600;
 }
 
+.tag-na {
+	width: toRem(48);
+	height: toRem(22);
+	background-color: rgba(0, 0, 0, 0.15);
+	border: 0;
+	border-radius: toRem(6);
+	font-size: toRem(14);
+	color: rgba(0, 0, 0, 0.45);
+	text-align: center;
+	line-height: toRem(22);
+	font-weight: 600;
+}
+
 .packing-bedge {
 	&.ant-badge-status {
 		.ant-badge-status-dot {
@@ -1852,6 +1917,37 @@
 
 .row-red td {
 	background-color: #fff2f0 !important;
+}
+
+// 수주 종합정보 팝업
+.btn-r-area {
+	position: absolute;
+	right: toRem(16);
+	top: toRem(8);
+	z-index: 2;
+
+	.ant-btn {
+		background-color: transparent;
+	}
+}
+
+.action-area {
+	padding-top: toRem(40);
+}
+
+.ant-splitter {
+	.ant-splitter-panel {
+		position: relative;
+	}
+}
+
+.layer-cover {
+	background-color: rgba(255, 255, 255, 0.7);
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: toRem(40);
+	bottom: 0;
 }
 
 /* ~ 912px ----------- */

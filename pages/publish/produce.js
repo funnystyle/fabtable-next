@@ -71,7 +71,7 @@ const handlePopupOpen = () => {
 	window.open(
 		"produce_memo", // 경로
 		"부서별 메모", // 팝업 이름
-		"width=480,height=555,resizable=yes,scrollbars=yes"
+		"width=520,height=600,resizable=yes,scrollbars=yes" // TODO: 화면 중앙으로 띄울 것
 	);
 };
 
@@ -108,6 +108,16 @@ const excelItems = [
 	{
 		label: "편집 항목만",
 		key: "1",
+		children: [
+			{
+				key: "2-1",
+				label: "선택한 행",
+			},
+			{
+				key: "2-2",
+				label: "전체 행",
+			},
+		],
 	},
 	{
 		label: "전체 항목",
@@ -1062,6 +1072,7 @@ const ProduceComponent = ({ contentHeight }) => {
 					<Tag className="tag-pass">PASS</Tag>
 					<Tag className="tag-fail">FAIL</Tag>
 					<Tag className="tag-none">----</Tag>
+					<Tag className="tag-na">N/A</Tag>
 				</div>
 			),
 			finalTestDate: "2024-12-28",
@@ -2444,6 +2455,17 @@ const ProduceComponent = ({ contentHeight }) => {
 								</Space>
 							</Button>
 						</Dropdown>
+					</Flex>
+
+					<Flex gap={4} className="btn-spacing-area">
+						<Button
+							variant="outlined"
+							icon={<RedoOutlined />}
+							className="icon-redo"
+							onClick={showPackingModal}
+						>
+							포장 및 입고완료 공정 열기
+						</Button>
 					</Flex>
 				</Flex>
 
