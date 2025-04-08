@@ -13,6 +13,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			sortOrder: sortedInfo.columnKey === "no" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 49,
+			fixed: "left",
 		},
 		{
 			title: "시리얼번호",
@@ -23,6 +24,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			sortOrder: sortedInfo.columnKey === "serialNumber" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 115,
+			fixed: "left",
 		},
 		{
 			title: "P/O번호",
@@ -33,6 +35,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			sortOrder: sortedInfo.columnKey === "poNumber" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 110,
+			fixed: "left",
 		},
 		{
 			title: "출고종류",
@@ -43,6 +46,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			sortOrder: sortedInfo.columnKey === "deliveryType" ? sortedInfo.order : null,
 			ellipsis: true,
 			width: 100,
+			fixed: "left",
 		},
 		{
 			title: "프로젝트번호",
