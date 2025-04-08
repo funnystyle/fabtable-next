@@ -146,9 +146,11 @@ const OrderListTable = ({ handleReload, isPending }) => {
   }, [data]);
 
   useWebsocket("/topic/orderList", (message) => {
-    const newOrder = JSON.parse(message.body);
-    console.log("📬 새 주문:", newOrder);
-    handleReload(true);
+    const orderResultInfo = JSON.parse(message.body);
+    console.log("📬 주문 수정 정보:", orderResultInfo);
+    if (orderResultInfo.reload) {
+      handleReload(true);
+    }
   });
 
   return (

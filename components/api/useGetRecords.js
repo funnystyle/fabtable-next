@@ -3,7 +3,7 @@ import { postAxios } from "@api/apiClient";
 import { useEffect, useRef } from "react";
 
 export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
-  const { page, size, searchKeyword, searchStatusList, searchData, setData, setList, setTotal } = modalStore();
+  const { page, size, setSize, searchKeyword, searchStatusList, searchData, setData, setList, setTotal } = modalStore();
 
   const { mutate: getRecords, isPending, isError, error } = useMutation({
     mutationKey: ["getRecords"],
@@ -20,16 +20,26 @@ export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
   const handleReload = (isWebSocket=false) => {
     const { page, size, searchKeyword, searchStatusList, searchData } = modalStore.getState();
 
+    // const savePageSize = localStorage.getItem("tablePageSize");
+    // let pageSize;
+    // if (savePageSize) {
+    //   pageSize = Number(savePageSize);
+    // }
+    if (searchStatusList.length === 0 && !statusAll && !isWebSocket) {
+      return;
+    }
+    console.log("getRecords", { page, size, searchKeyword, statusList:searchStatusList, searchData });
+    getRecords({ page, size, searchKeyword, statusList:searchStatusList, searchData });
+  };
+
+  useEffect(() => {
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
       pageSize = Number(savePageSize);
+      setSize(pageSize);
     }
-    if (searchStatusList.length === 0 && !statusAll && !isWebSocket) {
-      return;
-    }
-    getRecords({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
-  };
+  }, []);
 
   const isFirstRender = useRef(autoReload);
 
