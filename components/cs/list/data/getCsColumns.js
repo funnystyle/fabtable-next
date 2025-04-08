@@ -340,8 +340,8 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 			align: "center",
 			children: [
 				{
-					title: "(1)불량 MFC S/N",
-					showSorterTooltip: {title: "(1)불량 MFC S/N"},
+					title: "(1)불량제품 S/N",
+					showSorterTooltip: {title: "(1)불량제품 S/N"},
 					dataIndex: "defectMfcSN",
 					key: "defectMfcSN",
 					ellipsis: true,
@@ -356,8 +356,8 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					width: 120,
 				},
 				{
-					title: "(2)대체 MFC S/N",
-					showSorterTooltip: {title: "(2)대체 MFC S/N"},
+					title: "(2)대체제품 S/N",
+					showSorterTooltip: {title: "(2)대체제품 S/N"},
 					dataIndex: "substituteMfcSN",
 					key: "substituteMfcSN",
 					ellipsis: true,
@@ -452,8 +452,8 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					width: 66,
 				},
 				{
-					title: "불량 MFC 반출일",
-					showSorterTooltip: {title: "불량 MFC 반출일"},
+					title: "불량제품 반출일",
+					showSorterTooltip: {title: "불량제품 반출일"},
 					dataIndex: "defectMfcWithdrawalDate",
 					key: "defectMfcWithdrawalDate",
 					sorter: (a, b) => dateSorter(a, b, "defectMfcWithdrawalDate"),
