@@ -9,6 +9,7 @@ import OrderCreateStatusChangeButton from "@components/order/create/button/Order
 import OrderCreateCopyButton from "@components/order/create/button/OrderCreateCopyButton";
 import {transformTagDataSingle} from "@components/order/table/transformTagData";
 import OrderCreateDeleteButton from "@components/order/create/button/OrderCreateDeleteButton";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const OrderCreateHeaderUpdate = ({ form }) => {
 
@@ -71,7 +72,7 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 
 				<Flex align="center" gap={8} className="detail-btn-area">
 					<Flex gap={8} className="btn-space-area">
-						<Button>수주 종합정보</Button>
+						<Button onClick={(e) => handleRecordInfoPopup(window, [record])}>수주 종합정보</Button>
 
 						<OrderCreateStatusChangeButton />
 					</Flex>

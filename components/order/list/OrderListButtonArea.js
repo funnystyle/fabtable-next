@@ -41,7 +41,7 @@ const OrderListButtonArea = ({ statusList }) => {
 
 				<Flex gap="small" className="btn-spacing-area">
 					{/* <OrderListButtonTotalInfo /> */}
-					<ShowInfoButton />
+					<ShowInfoButton keysStore={useTableSelectKeysOrderListStore} />
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 

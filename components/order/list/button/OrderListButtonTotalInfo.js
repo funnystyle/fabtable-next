@@ -1,15 +1,12 @@
 // pages/order/create/index.js
 import React from "react";
 import { Button, } from "antd";
-import { handleOpenPopup } from "@components/popup/handleOpenPopup";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
-const OrderListButtonTotalInfo = () => {
+const OrderListButtonTotalInfo = ({ datas }) => {
 
 	return (
-		<Button variant="outlined" onClick={()=> handleOpenPopup(window, {
-			url: '/order/info/1',
-			name: 'order_popup',
-		})} >수주 종합정보</Button>
+		<Button variant="outlined" onClick={()=> handleRecordInfoPopup(window, datas)} >수주 종합정보</Button>
 	);
 };
 

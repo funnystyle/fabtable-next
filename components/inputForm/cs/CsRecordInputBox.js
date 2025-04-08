@@ -8,10 +8,11 @@ import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const { Title } = Typography;
 
-const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
+const CsRecordInputBox = ({ form, codeRelationSet, item, index, recordId, recordSerialNumber }) => {
 
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
@@ -88,7 +89,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
                   setOpenSearchModal(true);
                 }}>대체제품 불러오기</Button>
 
-                <Button color="primary" variant="outlined" size="small">수주 종합정보</Button>
+                <Button color="primary" variant="outlined" size="small" onClick={(e) => handleRecordInfoPopup(window, [{id:recordId, serialNumber:recordSerialNumber}])}>수주 종합정보</Button>
 
                 <Button icon={<DeleteOutlined />} size="small"
                   onClick={() => handleDeleteCsRecord(index)}

@@ -1,7 +1,24 @@
 // pages/index.js
-import React from "react";
-import { Button, Layout } from "antd";
-import Link from "next/link";
+
+import { message } from "antd";
+
+export const handleRecordInfoPopup = (window, datas) => {
+	if (datas.length === 0) {
+		message.error("행을 선택하세요.");
+		return;
+	}
+
+	for (let i = 0; i < datas.length; i++) {
+		const data = datas[i];
+
+		setTimeout(() => {
+			handleOpenPopup(window, {
+				url: `/order/info/${data?.id}`,
+				name: "수주 종합정보 - " + data?.serialNumber,
+			});
+		}, 200 * i);
+	}
+}
 
 export const handleOpenPopup = (window, {
 	url = '/',

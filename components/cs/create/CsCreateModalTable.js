@@ -9,74 +9,84 @@ import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const CsCreateModalTable = ({ modalStore }) => {
 
-	const { data, setOpenSearchModal } = modalStore();
-	const { isPending } = useGetCsList(modalStore, true, false);
+  const { data, setOpenSearchModal } = modalStore();
+  const { isPending } = useGetCsList(modalStore, true, false);
 
-	const [headerList, setHeaderList] = useState([]);
+  const [headerList, setHeaderList] = useState([]);
 
-	const [modal, contextHolder] = Modal.useModal();
-	const { setCs, setTagInfoList, setIsCopy } = useCsDataStore();
-	const handleConfirmEdit = (record) => {
-		modal.confirm({
-			title: "CS 정보 불러오기",
-			icon: <ExclamationCircleFilled style={{ color: "#FAAD14" }} />,
-			content:
-				"해당 정보를 불러오시겠습니까? ",
-			okText: "확인",
-			cancelText: "취소",
-			onOk() {
-				// record.nowState = record.nowState.props.children
-				setCs(record);
-				setIsCopy(false);
-				setOpenSearchModal(false);
-			},
-			onCancel() {
-				console.log("수정 취소");
-			},
-			centered: true,
-		});
-	};
+  const [modal, contextHolder] = Modal.useModal();
+  const { setCs, setTagInfoList, setIsCopy } = useCsDataStore();
+  const handleConfirmEdit = (record) => {
+    modal.confirm({
+      title: "CS 정보 불러오기",
+      icon: <ExclamationCircleFilled style={{ color: "#FAAD14" }} />,
+      content:
+        "해당 정보를 불러오시겠습니까? ",
+      okText: "확인",
+      cancelText: "취소",
+      onOk() {
+        // record.nowState = record.nowState.props.children
+        setCs(record);
+        setIsCopy(false);
+        setOpenSearchModal(false);
+      },
+      onCancel() {
+        console.log("수정 취소");
+      },
+      centered: true,
+    });
+  };
 
-	const onRowClick = (record) => {
-		handleConfirmEdit(record);
-	}
+  const onRowClick = (record) => {
+    handleConfirmEdit(record);
+  }
 
-	useEffect(() => {
-		setTagInfoList(data?.tagInfoList || []);
-	}, [data]);
+  const onRecordInfoClick = (e, cs) => {
+    e.stopPropagation();
+    const data = {
+      id: cs.recordId,
+      serialNumber: cs.serialNumber,
+    }
+    handleRecordInfoPopup(window, [data]);
+  }
 
-	return (
-		<>
-			<PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
+  useEffect(() => {
+    setTagInfoList(data?.tagInfoList || []);
+  }, [data]);
 
-			{/* 태그 없음, 헤더 관련 정리 event */}
-			<CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"}/>
-			<div className="contents-scroll">
-				{/* 테이블 */}
-				<TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
-					 serverData={transformTagData(data).map((item) => {
-							 item.etc_cs_load=(
-								 <>
-									 <Flex gap={4}>
-										 <Button size="small">C/S정보</Button>
-										 <Button size="small">수주정보</Button>
-										 <Button size="small" icon={<CheckOutlined />} iconPosition="start">
-											 선택
-										 </Button>
-									 </Flex>
-								 </>
-							 );
-							 return item;
-						 })}
-				/>
-			</div>
+  return (
+    <>
+      <PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
 
-			{contextHolder}
-		</>
-	);
+      {/* 태그 없음, 헤더 관련 정리 event */}
+      <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"} />
+      <div className="contents-scroll">
+        {/* 테이블 */}
+        <TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
+                           serverData={transformTagData(data).map((item) => {
+                             item.etc_cs_load = (
+                               <>
+                                 <Flex gap={4}>
+                                   <Button size="small">C/S정보</Button>
+                                   <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
+                                   <Button size="small" icon={<CheckOutlined />} iconPosition="start">
+                                     선택
+                                   </Button>
+                                 </Flex>
+                               </>
+                             );
+                             return item;
+                           })}
+        />
+      </div>
+
+      {contextHolder}
+    </>
+  );
 };
 
 export default CsCreateModalTable;

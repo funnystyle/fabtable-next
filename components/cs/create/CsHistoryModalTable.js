@@ -12,6 +12,7 @@ import useMenuTabStore from "@store/useMenuTabStore";
 import { useRouter } from "next/router";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const CsHistoryModalTable = ({ form, modalStore }) => {
 
@@ -56,6 +57,15 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
     handleConfirmEdit(record);
   }
 
+  const onRecordInfoClick = (e, cs) => {
+    e.stopPropagation();
+    const data = {
+      id: cs.recordId,
+      serialNumber: cs.serialNumber,
+    }
+    handleRecordInfoPopup(window, [data]);
+  }
+
   useEffect(() => {
     setTagInfoList(data?.tagInfoList || []);
   }, [data]);
@@ -91,7 +101,7 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
             <>
               <Flex gap={4}>
                 <Button size="small">C/S정보</Button>
-                <Button size="small">수주정보</Button>
+                <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
                 <Button size="small" icon={<CheckOutlined />} iconPosition="start">
                   선택
                 </Button>

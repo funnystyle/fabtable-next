@@ -1,6 +1,6 @@
 import { Button, Flex, InputNumber, Typography } from "antd";
 import { DeleteOutlined, PlusOutlined, RedoOutlined, SettingOutlined } from "@ant-design/icons";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsRecordInputBox from "@components/inputForm/cs/CsRecordInputBox";
 import CsRecordInputBoxInitial from "@components/inputForm/cs/CsRecordInputBoxInitial";
@@ -18,6 +18,9 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useCsCreateLoadRecordModalStore();
+
+  const [recordId, setRecordId] = useState(null);
+  const [recordSerialNumber, setRecordSerialNumber] = useState(null);
 
 
   const handleReset = () => {
@@ -110,6 +113,8 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
   useEffect(() => {
     if (record?.id) {
+      setRecordId(record.id);
+      setRecordSerialNumber(record.serialNumber);
       console.log("record", record);
       if (recordKeys.length === 0) {
         setRecordKeys([...recordKeys, record.id]);
@@ -261,6 +266,8 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
                   codeRelationSet={codeRelationSet} 
                   item={item}
                   index={index + 1}
+                  recordId={recordId}
+                  recordSerialNumber={recordSerialNumber}
                 />
                 )}
             </Flex>

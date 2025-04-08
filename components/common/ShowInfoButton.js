@@ -1,7 +1,9 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Space, } from "antd";
+import { Button, Dropdown, message, Space, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
+import { handleOpenPopup, handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
+import useRecordDataStore from "@store/useRecordDataStore";
 
 
 const openPopup = ({
@@ -67,16 +69,14 @@ const viewInfoItems = [
 	},
 ];
 
-const handleMenuClick = (e) => {
+const handleMenuClick = (e, datas) => {
 	// message.info("Click on menu item.");
 	console.log("click", e);
+
   const key = e.key;
   switch(key) {
-    case "1": 
-      openPopup({
-        url: "/publish/order_popup",
-        name: "수주 종합정보",
-      });
+    case "1":
+      handleRecordInfoPopup(window, datas);
       break;
     case "2":
       openPopup({
@@ -110,11 +110,14 @@ const handleMenuClick = (e) => {
   }
 };
 
-const ShowInfoButton = () => {
-  
+const ShowInfoButton = ({ keysStore }) => {
+
+  const { datas } = keysStore();
+
+
   return (
     // <Button variant="outlined">수주 종합정보</Button>
-    <Dropdown menu={{ items: viewInfoItems, onClick: handleMenuClick }}>
+    <Dropdown menu={{ items: viewInfoItems, onClick: (e) => handleMenuClick(e, datas) }}>
       <Button>
         <Space>
           정보 보기

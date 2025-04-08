@@ -9,6 +9,7 @@ import useRecordDataStore from "@store/useRecordDataStore";
 import PagingArea from "@components/list/PagingArea";
 import { useGetRecords } from "@components/api/useGetRecords";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const OrderCreateModalTable = ({ modalStore }) => {
 
@@ -44,6 +45,11 @@ const OrderCreateModalTable = ({ modalStore }) => {
 		handleConfirmEdit(record);
 	}
 
+	const onRecordInfoClick = (e, data) => {
+		e.stopPropagation();
+		handleRecordInfoPopup(window, [data]);
+	}
+
 	useEffect(() => {
 		setTagInfoList(data?.tagInfoList || []);
 	}, [data]);
@@ -61,7 +67,7 @@ const OrderCreateModalTable = ({ modalStore }) => {
 					item.remark_sales_load=(
 						<>
 							<Flex gap={4}>
-								<Button size="small">수주정보</Button>
+								<Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
 								<Button size="small" icon={<CheckOutlined />} iconPosition="start">
 									선택
 								</Button>

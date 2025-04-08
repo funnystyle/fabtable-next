@@ -1,5 +1,9 @@
 export const orderListRightItem = [
 	{
+		label: "수주 종합정보",
+		key: "0",
+	},
+	{
 		label: "수주 복제하기",
 		key: "1",
 	},
