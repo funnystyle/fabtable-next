@@ -9,6 +9,7 @@ import { componentStringTextarea } from "@components/inputForm/componentStringTe
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import ComponentReadOnly from "@components/inputForm/componentReadOnly";
 import useRecordDataStore from "@store/useRecordDataStore";
+import { componentDatetime } from "./componentDatetime";
 
 const InputComponent = ({ form, codeRelationSet, component, index }) => {
 
@@ -39,6 +40,10 @@ const InputComponent = ({ form, codeRelationSet, component, index }) => {
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATE') {
     return componentDate(form, recordColumn);
   }
+
+    if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATETIME') {
+      return componentDatetime(form, recordColumn, index);
+    }
 
   // 'CODE' 타입 처리
   if (recordColumn.connectionDiv === 'CODE' && recordColumn.formDiv === 'SELECT') {

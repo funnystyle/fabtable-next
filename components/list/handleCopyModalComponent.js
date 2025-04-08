@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
+import { componentDatetime } from "../inputForm/componentDatetime";
 
 export const handleCopyModalComponent = (form, component, index) => {
 
@@ -47,6 +48,10 @@ export const handleCopyModalComponent = (form, component, index) => {
           <DatePicker style={{width: '100%'}} placeholder="날짜 선택"/>
         </Form.Item>
       );
+    }
+
+    if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATETIME') {
+      return componentDatetime(form, recordColumn, index);
     }
 
     // 'CODE' 타입 처리

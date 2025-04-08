@@ -8,6 +8,7 @@ import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import { componentStringTextarea } from "@components/inputForm/componentStringTextarea";
 import { componentNumberInput } from "@components/inputForm/componentNumberInput";
 import ComponentReadOnly from "@components/inputForm/componentReadOnly";
+import { componentDatetime } from "@components/inputForm/componentDatetime";
 
 const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => {
 
@@ -37,6 +38,10 @@ const CsRecordInputComponent = ({ form, codeRelationSet, component, index }) => 
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATE') {
     return componentDate(form, recordColumn, index);
+  }
+
+  if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATETIME') {
+    return componentDatetime(form, recordColumn, index);
   }
 
   // 'CODE' 타입 처리
