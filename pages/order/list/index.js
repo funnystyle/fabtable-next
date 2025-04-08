@@ -12,6 +12,7 @@ import { useGetRecords } from "@components/api/useGetRecords";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
+import { useWebsocket } from "@components/ws/useWebsocket";
 
 
 const OrderComponent = ({ isActive=true }) => {
@@ -21,7 +22,6 @@ const OrderComponent = ({ isActive=true }) => {
 	// --------- 드로어 관련
 	const { openDrawer } = useDrawerStore();
 	// --------- 드로어 관련
-
 
 	return (
 		<Layout>
