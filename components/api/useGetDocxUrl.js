@@ -18,7 +18,7 @@ export const useGetDocxUrl = (certificateId) => {
 
       console.log("서버에서 받은 DOCX URL:", url);
 
-      setDocxUrlList(url);
+      setDocxUrlList([url]);
     }
   });
 

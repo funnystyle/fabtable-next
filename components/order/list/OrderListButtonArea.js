@@ -12,6 +12,7 @@ import OrderListButtonPrint from "@components/order/list/button/OrderListButtonP
 import { useSetNowState } from "@components/api/useSetNowState";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
+import ShowInfoButton from "@/components/common/ShowInfoButton";
 
 const OrderListButtonArea = ({ statusList }) => {
 
@@ -39,7 +40,8 @@ const OrderListButtonArea = ({ statusList }) => {
 				/>
 
 				<Flex gap="small" className="btn-spacing-area">
-					<OrderListButtonTotalInfo />
+					{/* <OrderListButtonTotalInfo /> */}
+					<ShowInfoButton />
 
 					<OrderListButtonStatusSelect statusList={statusList} searchStatusList={searchStatusList} setSearchStatusList={setSearchStatusList} />
 
