@@ -120,7 +120,18 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
               if (onRowDoubleClick) {
                 onRowDoubleClick(record);
               }
-            }
+            },
+            onContextMenu: (event) => {
+              event.preventDefault();
+          
+              const rowKey = record.key;
+              if (!selectedRowKeys.includes(rowKey)) {
+                setSelectedRowKeys([rowKey]); // 커스텀 상태 관리 훅이라면 적절히 변경
+              }
+          
+              // Dropdown이 뜨는 건 위에 설정한 <Dropdown>이 처리
+              // if (onRowRightClick) onRowRightClick(record, event);
+            },
           })}
           size="small"
           className="ellipsis-column basic-tb"
