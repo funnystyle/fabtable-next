@@ -11969,8 +11969,8 @@ const CSComponent = ({ contentHeight }) => {
 			align: "center",
 			children: [
 				{
-					title: "(1)불량 MFC S/N",
-					showSorterTooltip: { title: "(1)불량 MFC S/N" },
+					title: "(1)불량제품 S/N",
+					showSorterTooltip: { title: "(1)불량제품 S/N" },
 					dataIndex: "poorMFC",
 					key: "poorMFC",
 					ellipsis: true,
@@ -11985,8 +11985,8 @@ const CSComponent = ({ contentHeight }) => {
 					width: 120,
 				},
 				{
-					title: "(2)대체 MFC S/N",
-					showSorterTooltip: { title: "(2)대체 MFC S/N" },
+					title: "(2)대체제품 S/N",
+					showSorterTooltip: { title: "(2)대체제품 S/N" },
 					dataIndex: "replacementMFC",
 					key: "replacementMFC",
 					ellipsis: true,
@@ -12081,8 +12081,8 @@ const CSComponent = ({ contentHeight }) => {
 					width: 66,
 				},
 				{
-					title: "불량 MFC 반출일",
-					showSorterTooltip: { title: "불량 MFC 반출일" },
+					title: "불량제품 반출일",
+					showSorterTooltip: { title: "불량제품 반출일" },
 					dataIndex: "poorExportDate",
 					key: "poorExportDate",
 					sorter: (a, b) => dateSorter(a, b, "poorExportDate"),
