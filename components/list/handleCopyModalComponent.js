@@ -11,8 +11,8 @@ export const handleCopyModalComponent = (form, component, index) => {
       return (
         <Form.Item label={`${recordColumn.displayName}`} name={`${recordColumn.name}`} key={`component-${index}`}>
           <InputNumber
-            min={1}
-            max={10}
+            // min={1}
+            // max={10}
             // onChange={onChange}
           />
         </Form.Item>
