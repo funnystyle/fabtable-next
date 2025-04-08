@@ -37,9 +37,9 @@ const OrderListButtonPrint = () => {
 
 		setLabelContent(""); // 초기화
 
-		// if (selectedPrint === "report") {
+		if (type === "report") {
 			handleReload(selectedRowKeys);
-		// }
+		}
 
 		setOpenDrawer(true);
 	};
