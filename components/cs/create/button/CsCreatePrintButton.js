@@ -29,7 +29,7 @@ const printItems = [
 const CsCreatePrintButton = () => {
   const {cs} = useCsDataStore();
 
-  const {handleDownload, isPending} = useDownloadCsDetailExcel(cs?.id);
+  const {handleDownload, isPending} = useDownloadCsDetailExcel();
 
   const onClick = (e) => {
     if (e.key === "1") {
@@ -38,7 +38,7 @@ const CsCreatePrintButton = () => {
     } else if (e.key === "2") {
       // 엑셀 양식 다운로드 기능 구현
       if (cs?.id) {
-        handleDownload();
+        handleDownload(cs?.id);
       } else {
         (message.error("CS 정보가 잘못되었습니다."));
       }

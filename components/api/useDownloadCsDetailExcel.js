@@ -1,10 +1,11 @@
-import {useMutation} from "@tanstack/react-query";
-import {postBlobAxios} from "@api/apiClient";
+import { useMutation } from "@tanstack/react-query";
+import { postBlobAxios } from "@api/apiClient";
 
-export const useDownloadCsDetailExcel = (csId) => {
+export const useDownloadCsDetailExcel = () => {
+
   const { mutate: downloadCsDetailExcel, isPending } = useMutation({
-    mutationKey: ["downloadCsDetailExcel", csId],
-    mutationFn: () => postBlobAxios(`/user/excel/cs-template/${csId}`),
+    mutationKey: ["downloadCsDetailExcel"],
+    mutationFn: (values) => postBlobAxios(`/user/excel/cs-template/${values.id}`),
     onSuccess: (data) => {
       const url = window.URL.createObjectURL(data);
       const link = document.createElement("a");
@@ -25,8 +26,8 @@ export const useDownloadCsDetailExcel = (csId) => {
     },
   });
 
-  const handleDownload = () => {
-    downloadCsDetailExcel();
+  const handleDownload = (csId) => {
+    downloadCsDetailExcel({ id:csId });
   };
 
   return { handleDownload, isPending };
