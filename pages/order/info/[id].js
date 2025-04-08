@@ -25,15 +25,12 @@ const OrderPopComponent = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // if (data) {
-    //   console.log("data", data);
-    // }
 		setLoading(isLoading);
   }, [isLoading, data]);
   return (
     <Spin spinning={loading} style={{ textAlign: "center" }}>
       <div className="system-popup-wrap">
-        <OrderTotalPopupTitle data={data} />
+        <OrderTotalPopupTitle title={"수주 종합정보"} data={data} />
 
         <div className="popup-contents pd0">
           <OrderTotalPopupInfoButton data={data} />

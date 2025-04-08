@@ -1,48 +1,45 @@
 // pages/order/create/index.js
-import React, { use, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Form, Space, } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import OrderListPrintLabel from "@components/order/list/button/print/OrderListPrintLabel";
 import OrderListPrintSelect from "@components/order/list/button/print/OrderListPrintSelect";
 import OrderListPrintTitle from "@components/order/list/button/print/OrderListPrintTitle";
 import OrderListPrintReport from "@components/order/list/button/print/OrderListPrintReport";
-import { useMutation } from "@tanstack/react-query";
-import { postAxios, postBlobAxios } from "@api/apiClient";
 import usePdfUrlStore from "@store/usePdfUrlStore";
 import useDocxUrlStore from "@store/useDocxUrlStore";
 import OrderListPrintDrawerHeader from "@components/order/list/button/print/OrderListPrintDrawerHeader";
 import useDrawerStore from "@store/useDrawerStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
-import {useGetDocxUrl} from "@components/api/useGetDocxUrl";
+import { useGetDocxUrl } from "@components/api/useGetDocxUrl";
+import { showDrawer } from "@components/drawer/showDrawer";
 
 const OrderListButtonPrint = () => {
 
-	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent } = useDrawerStore();
-	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
+	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent, certificateId } = useDrawerStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
+	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 	const [storedPdfUrlList, setStoredPdfUrlList] = useState([]); // ✅ PDF URL 목록 상태
 	const [storedDocxUrlList, setStoredDocxUrlList] = useState([]); // ✅ PDF URL 목록 상태
 
-	const { handleReload } = useGetDocxUrl(1);
+	const { handleReload } = useGetDocxUrl(certificateId);
 
 	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
 	// 드로어 열기
-	const showDrawer = (type) => {
-		setSelectedPrint(type);
 
-		setPdfUrlList([]); // 초기화
-
-		setDocxUrlList([]); // 초기화
-
-		setLabelContent(""); // 초기화
-
-		if (type === "report") {
-			handleReload(selectedRowKeys);
-		}
-
-		setOpenDrawer(true);
-	};
+	const printItems = [
+		{
+			label: "라벨 인쇄",
+			key: "1",
+			onClick: () => showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 라벨 인쇄 Drawer 열기
+		},
+		{
+			label: "성적서 인쇄",
+			key: "2",
+			onClick: () => showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 성적서 인쇄 Drawer 열기
+		},
+	];
 
 	// 드로어 닫기
 	const closeDrawer = () => {
@@ -88,18 +85,6 @@ const OrderListButtonPrint = () => {
 
 
 
-	const printItems = [
-		{
-			label: "라벨 인쇄",
-			key: "1",
-			onClick: () => showDrawer("label"), // 클릭 시 라벨 인쇄 Drawer 열기
-		},
-		{
-			label: "성적서 인쇄",
-			key: "2",
-			onClick: () => showDrawer("report"), // 클릭 시 성적서 인쇄 Drawer 열기
-		},
-	];
 
 	const printPdf = (urlList) => {
 		if (urlList.length === 0) {

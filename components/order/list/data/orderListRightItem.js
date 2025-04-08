@@ -28,7 +28,7 @@ export const orderListRightItem = [
 				label: "반출대기",
 			},
 			{
-				key: "4-2",
+				key: "4-4",
 				label: "반출완료",
 			},
 		],

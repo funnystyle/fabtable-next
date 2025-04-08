@@ -20,6 +20,26 @@ export const handleRecordInfoPopup = (window, datas) => {
 	}
 }
 
+export const handleRecordInfoMemoPopup = (window, datas) => {
+	if (datas.length === 0) {
+		message.error("행을 선택하세요.");
+		return;
+	}
+
+	for (let i = 0; i < datas.length; i++) {
+		const data = datas[i];
+
+		setTimeout(() => {
+			handleOpenPopup(window, {
+				url: `/order/info/memo/${data?.id}`,
+				name: "부서별 메모 - " + data?.serialNumber,
+				width: 520,
+				height: 600,
+			});
+		}, 200 * i);
+	}
+}
+
 export const handleOpenPopup = (window, {
 	url = '/',
 	name = 'popupWindow',

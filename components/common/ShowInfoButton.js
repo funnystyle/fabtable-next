@@ -2,7 +2,7 @@
 import React from "react";
 import { Button, Dropdown, message, Space, } from "antd";
 import { DownOutlined, RedoOutlined } from "@ant-design/icons";
-import { handleOpenPopup, handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
+import { handleOpenPopup, handleRecordInfoMemoPopup, handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 import useRecordDataStore from "@store/useRecordDataStore";
 
 
@@ -98,12 +98,7 @@ const handleMenuClick = (e, datas) => {
       });
       break;
     case "5":
-      openPopup({
-        url: "/publish/produce_memo",
-        name: "부서별 메모",
-        width: 520,
-        height: 600,
-      });
+      handleRecordInfoMemoPopup(window, datas);
       break;
     default:
       console.log("Unknown option clicked");
