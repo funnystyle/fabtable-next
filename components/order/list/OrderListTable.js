@@ -28,11 +28,11 @@ const OrderListTable = ({ handleReload, isPending }) => {
   const {datas} = useTableSelectKeysOrderListStore();
 
   const handleContextMenuClick = (e) => {
-    if (parseInt(e.key) === 0) {
+    if (parseInt(e.key) === 1) {
       handleRecordInfoPopup(window, datas);
-    } else if (parseInt(e.key) === 1) {
-      setOpenCopyModal(true);
     } else if (parseInt(e.key) === 2) {
+      setOpenCopyModal(true);
+    } else if (parseInt(e.key) === 3) {
       setOpenEditModal(true);
     }
   };
