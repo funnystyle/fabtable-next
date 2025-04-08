@@ -18,6 +18,7 @@ const YearComponent = ({ contentHeight }) => {
 	const [year, setYear] = useState([today.getFullYear(), today.getFullYear()]);
 	const [list, setList] = useState([]);
 	const [searchData, setSearchData] = useState({});
+	const [isOneYear, setIsOneYear] = useState(true);
 
 	const { mutate: getYear } = useMutation({
 		mutationKey: "getYear",
@@ -39,6 +40,14 @@ const YearComponent = ({ contentHeight }) => {
 		handleReload();
 	}, [year, searchData]);
 
+	useEffect(() => {
+		if (year[0] === year[1]) {
+			setIsOneYear(true);
+		} else {
+			setIsOneYear(false);
+		}
+	}, [list]);
+
 	return (
 		<Layout>
 			<Flex gap="large" align="start" justify="space-between" className="contents-flex">
@@ -48,7 +57,7 @@ const YearComponent = ({ contentHeight }) => {
 							연간 계획 현황
 						</PageTitle>
 
-						{year[0] === year[1] ? (
+						{isOneYear ? (
 						<YearChart list={list}/>
 							) : (
 						<YearChart3 yearList={
