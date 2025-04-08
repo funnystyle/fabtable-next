@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import useCsListSearchCsModalStore from "@store/useCsListSearchCsModalStore";
 import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 import { useWebsocket } from "@components/ws/useWebsocket";
+import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const CsListTable = ({ handleReload, isPending }) => {
 
@@ -19,11 +20,15 @@ const CsListTable = ({ handleReload, isPending }) => {
 
 	const { data, setOpenCopyModal, setOpenEditModal } = useCsListSearchCsModalStore();
 
+	const {datas} = useTableSelectKeysCsListStore();
+
 	const handleContextMenuClick = (e) => {
 		if (parseInt(e.key) === 1) {
 			setOpenCopyModal(true);
 		} else if (parseInt(e.key) === 2) {
 			setOpenEditModal(true);
+		} else if (parseInt(e.key) === 5) {
+			handleRecordInfoPopup(window, datas.map((item) => { return {id:item.recordId, serialNumber:item.serialNumber}}));
 		}
 	};
 
