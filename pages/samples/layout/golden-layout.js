@@ -1,93 +1,93 @@
-// 'use client'
-import React, { useEffect, useMemo, useRef } from "react";
-// import dynamic from "next/dynamic";
-import GoldenLayout from "golden-layout";
-import 'golden-layout/src/css/goldenlayout-base.css';
-import 'golden-layout/src/css/goldenlayout-light-theme.css';
+// // 'use client'
+// import React, { useEffect, useMemo, useRef } from "react";
+// // import dynamic from "next/dynamic";
+// import GoldenLayout from "golden-layout";
+// import 'golden-layout/src/css/goldenlayout-base.css';
+// import 'golden-layout/src/css/goldenlayout-light-theme.css';
 
 
-export default function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-      <div style={{ 
-        // border: "red solid 1px", 
-        height: "500px", 
-        width: "800px" 
-      }}>
-        <GoldenLayoutStuff />
-      </div>
-      After GoldenLayout
-    </div>
-  );
-}
+// export default function App() {
+//   return (
+//     <div className="App">
+//       <h1>Hello CodeSandbox</h1>
+//       <h2>Start editing to see some magic happen!</h2>
+//       <div style={{ 
+//         // border: "red solid 1px", 
+//         height: "500px", 
+//         width: "800px" 
+//       }}>
+//         <GoldenLayoutStuff />
+//       </div>
+//       After GoldenLayout
+//     </div>
+//   );
+// }
 
-function GoldenLayoutStuff() {
-  const myRef = useRef(null);
+// function GoldenLayoutStuff() {
+//   const myRef = useRef(null);
 
-  var config = useMemo(
-    () => ({
-      content: [
-        {
-          type: "row",
-          content: [
-            {type: "stack", content: [
-            {
-              type: "component",
-              componentName: "example",
-              componentState: { text: "Component 1" },
-              isClosable: false,
-              reorderEnabled: false,
-            },
-            {
-              type: "component",
-              componentName: "example",
-              componentState: { text: "Component 2" },
-              isClosable: false,
-              reorderEnabled: false,
-            },
-          ]},
-            {
-              type: "component",
-              componentName: "example",
-              componentState: { text: "Component 3" },
-              isClosable: false,
-              reorderEnabled: false,
-            }
-          ]
-        }
-      ]
-    }),
-    []
-  );
+//   var config = useMemo(
+//     () => ({
+//       content: [
+//         {
+//           type: "row",
+//           content: [
+//             {type: "stack", content: [
+//             {
+//               type: "component",
+//               componentName: "example",
+//               componentState: { text: "Component 1" },
+//               isClosable: false,
+//               reorderEnabled: false,
+//             },
+//             {
+//               type: "component",
+//               componentName: "example",
+//               componentState: { text: "Component 2" },
+//               isClosable: false,
+//               reorderEnabled: false,
+//             },
+//           ]},
+//             {
+//               type: "component",
+//               componentName: "example",
+//               componentState: { text: "Component 3" },
+//               isClosable: false,
+//               reorderEnabled: false,
+//             }
+//           ]
+//         }
+//       ]
+//     }),
+//     []
+//   );
 
-  useEffect(() => {
-    // const GoldenLayout = dynamic(() => import("golden-layout"), { ssr: false });
+//   useEffect(() => {
+//     // const GoldenLayout = dynamic(() => import("golden-layout"), { ssr: false });
 
-    if (typeof window !== "undefined") {
+//     if (typeof window !== "undefined") {
 
-    console.log("GoldenLayout", GoldenLayout);
-    const myLayout = new GoldenLayout(config, myRef.current);
+//     console.log("GoldenLayout", GoldenLayout);
+//     const myLayout = new GoldenLayout(config, myRef.current);
 
-    myLayout.registerComponent("example", function (container, state) {
-      container.getElement().html("<h2>" + state.text + "</h2>");
+//     myLayout.registerComponent("example", function (container, state) {
+//       container.getElement().html("<h2>" + state.text + "</h2>");
 
-      // console.log("layoutSettings", container.layoutManager.config);
+//       // console.log("layoutSettings", container.layoutManager.config);
 
-      // @see https://github.com/golden-layout/golden-layout/issues/491
-      container.layoutManager.config.settings = {
-        ...container.layoutManager.config.settings,
-        // showMaximiseIcon: false,
-        showPopoutIcon: false,
-        showCloseIcon: false,
-        reorderEnabled: false,
-      }
-    });
+//       // @see https://github.com/golden-layout/golden-layout/issues/491
+//       container.layoutManager.config.settings = {
+//         ...container.layoutManager.config.settings,
+//         // showMaximiseIcon: false,
+//         showPopoutIcon: false,
+//         showCloseIcon: false,
+//         reorderEnabled: false,
+//       }
+//     });
 
-    myLayout.init();
-  }
-  }, [config]);
+//     myLayout.init();
+//   }
+//   }, [config]);
 
-  return <div ref={myRef} style={{ height: "100%", width: "100%" }}></div>;
-}
+//   return <div ref={myRef} style={{ height: "100%", width: "100%" }}></div>;
+// }

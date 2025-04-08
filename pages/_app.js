@@ -2,7 +2,6 @@
 import React from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import queryClient from "../queryClient";
-import { ChakraProvider } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next"; // i18next Provider 추가
 import { ConfigProvider } from "antd";
 import koKR from "antd/locale/ko_KR"; // 한국어 로케일
@@ -25,16 +24,14 @@ function App({ Component, pageProps }) {
 		Component.getLayout || ((page) => <HomePage>{page}</HomePage>);
 
 	return (
-		<ChakraProvider>
-			<QueryClientProvider client={queryClient}>
-				<I18nextProvider i18n={i18next}>
-					<ConfigProvider locale={koKR}>
-						<HeadMeta />
-						{getLayout(<Component {...pageProps} />)}
-					</ConfigProvider>
-				</I18nextProvider>
-			</QueryClientProvider>
-		</ChakraProvider>
+		<QueryClientProvider client={queryClient}>
+			<I18nextProvider i18n={i18next}>
+				<ConfigProvider locale={koKR}>
+					<HeadMeta />
+					{getLayout(<Component {...pageProps} />)}
+				</ConfigProvider>
+			</I18nextProvider>
+		</QueryClientProvider>
 	);
 }
 
