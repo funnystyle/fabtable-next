@@ -440,9 +440,9 @@ const HomePage = ({ children }) => {
               </div>
             </Header>
             {/* 탭 없이 하려면 아래 코드를 적용 */}
-            {/*<Content className="contents" style={{ overflowY: "auto"}}>*/}
-            {/*  {children ? React.cloneElement(children, { contentHeight }) : null}*/}
-            {/*</Content>*/}
+            {/* <Content className="contents" style={{ overflowY: "auto"}}>
+              {children ? React.cloneElement(children, { contentHeight }) : null}
+            </Content> */}
             {/* 탭 적용하려면 아래 코드를 적용 */}
             {/* Content 영역을 Tabs로 변경*/}
             <Content className="contents">

@@ -111,7 +111,7 @@ const ProduceListTable = ({ handleReload, isPending }) => {
       >
         <div>
           {/* 테이블 */}
-          <TableOnRowSelect2 header={headerList} serverData={handlePreprocessData(data)} scrollY={"calc(100vh - 260px)"} onRowDoubleClick={handleDoubleClick} isPending={isPending}
+          <TableOnRowSelect2 header={headerList} serverData={handlePreprocessData(data)} scrollY={"calc(100vh - 260px)"} topOffset={351} onRowDoubleClick={handleDoubleClick} isPending={isPending}
                              keysStore={useTableSelectKeysProduceListStore} modalStore={useProduceListSearchRecordModalStore} />
         </div>
       </Dropdown>

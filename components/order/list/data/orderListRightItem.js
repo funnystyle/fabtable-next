@@ -1,15 +1,11 @@
 export const orderListRightItem = [
 	{
-		label: "수주 종합정보",
-		key: "1",
+		label: "수주 일괄수정",
+		key: "3",
 	},
 	{
 		label: "수주 복제하기",
 		key: "2",
-	},
-	{
-		label: "수주 일괄수정",
-		key: "3",
 	},
 	{
 		label: "수주 상태변경",
@@ -32,6 +28,10 @@ export const orderListRightItem = [
 				label: "반출완료",
 			},
 		],
+	},
+	{
+		label: "수주 종합정보",
+		key: "1",
 	},
 	{
 		label: "부서별 메모",
