@@ -375,4 +375,9 @@ const data = [
   // ...
 ];
 
+// data 를 100배로 늘리기
+for (let i = 0; i < 10; i++) {
+  data.push(...data);
+}
+
 export default data;

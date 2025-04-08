@@ -3,7 +3,6 @@ import $ from "jquery";
 import { ExcelUpload } from "@components/ExcelUpload";
 
 export const createDataTablesOptions = (tableRef, header, columns, data, url, page) => {
-
   // header가 null이면 columns와 동일
   if (!header) {
     header = columns;
@@ -22,6 +21,9 @@ export const createDataTablesOptions = (tableRef, header, columns, data, url, pa
       leftColumns: 2, // 왼쪽에서 고정할 열의 수
       rightColumns: 0, // 오른쪽에서 고정할 열의 수 (필요 시 설정)
     },
+    pageLength: 500,
+    scrollCollapse: true,
+    scrollY: '500px',
     columns: columns,
     scrollX:true,
     // responsive: true, // 반응형 켜기
