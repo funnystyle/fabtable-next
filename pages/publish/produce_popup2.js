@@ -126,6 +126,10 @@ const ProducePop2Component = () => {
 		return originalElement;
 	};
 
+	// 라디오 버튼 상태 관리 : 선택된 값을 다시 선택하면 해제
+	const [radio1, setRadio1] = useState(null);
+	const [radio2, setRadio2] = useState("fail"); // 기본값 설정
+
 	const columns = [
 		{
 			title: "항목코드",
@@ -196,8 +200,8 @@ const ProducePop2Component = () => {
 				</Tooltip>
 			),
 			input: (
-				<div className="data-input-area">
-					<Input placeholder="내용 입력" />
+				<div style={{ margin: "0 -0.25rem" }}>
+					<Input placeholder="내용 입력" status="error"/>
 				</div>
 			),
 		},
@@ -222,9 +226,10 @@ const ProducePop2Component = () => {
 						optionType="button"
 						buttonStyle="solid"
 						className="radio-fail-pass"
+						value={radio1}
 					>
-						<Radio.Button value="fail">FAIL</Radio.Button>
-						<Radio.Button value="pass">PASS</Radio.Button>
+						<Radio.Button value="fail" onClick={() => { setRadio1(radio1 === "fail" ? null : "fail")}}>FAIL</Radio.Button>
+						<Radio.Button value="pass" onClick={() => { setRadio1(radio1 === "pass" ? null : "pass")}}>PASS</Radio.Button>
 					</Radio.Group>
 				</div>
 			),
@@ -238,14 +243,14 @@ const ProducePop2Component = () => {
 			input: (
 				<div className="data-input-area fail-pass">
 					<Radio.Group
-						defaultValue="fail"
 						size="small"
 						optionType="button"
 						buttonStyle="solid"
 						className="radio-fail-pass"
+						value={radio2}
 					>
-						<Radio.Button value="fail">FAIL</Radio.Button>
-						<Radio.Button value="pass">PASS</Radio.Button>
+						<Radio.Button value="fail" onClick={() => { setRadio2(radio2 === "fail" ? null : "fail")}}>FAIL</Radio.Button>
+						<Radio.Button value="pass" onClick={() => { setRadio2(radio2 === "pass" ? null : "pass")}}>PASS</Radio.Button>
 					</Radio.Group>
 				</div>
 			),
@@ -258,12 +263,14 @@ const ProducePop2Component = () => {
 			data: "-1 ~ +1",
 			input: (
 				<div className="data-input-area fail-pass">
+					{/* disabled일때 disabled 넣기 */}
 					<Radio.Group
-						defaultValue="pass"
+						// defaultValue="pass" {/* defaultValue는 disabled일때 사용안함 */}
 						size="small"
 						optionType="button"
 						buttonStyle="solid"
 						className="radio-fail-pass"
+						disabled
 					>
 						<Radio.Button value="fail">FAIL</Radio.Button>
 						<Radio.Button value="pass">PASS</Radio.Button>
@@ -278,8 +285,9 @@ const ProducePop2Component = () => {
 			name: "EtherCAT 통신검사(Product/RevEtherCAT 통신검사(Product/Rev",
 			data: "-1 ~ +1",
 			input: (
-				<div className="data-input-area select">
+				<div style={{ margin: "0 -0.25rem" }}>
 					<Select
+						status="error"
 						showSearch
 						placeholder="목록 선택"
 						options={[
