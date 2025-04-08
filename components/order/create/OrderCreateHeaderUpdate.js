@@ -11,7 +11,7 @@ import {transformTagDataSingle} from "@components/order/table/transformTagData";
 import OrderCreateDeleteButton from "@components/order/create/button/OrderCreateDeleteButton";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
-const OrderCreateHeaderUpdate = ({ form }) => {
+const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 
 	const { record, setRecord, nowState, setNowState, tagInfoList, serialNumber, isChange, setIsCopy, setIsChange } = useRecordDataStore();
 
@@ -57,6 +57,30 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 		}
 	};
 
+	const handleClose = () => {
+		if (isChange) {
+			Modal.confirm({
+				title: "알림",
+				content: "변경된 내용을 저장하지 않고 이동할까요?",
+				onOk: () => {
+					setIsCopy(false);
+					setIsChange(false);
+					setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
+					form.resetFields();
+					setRecord({});
+					tabRemove();
+				},
+			});
+		} else {
+			setIsCopy(false);
+			setIsChange(false);
+			setNowState(transformTagDataSingle(tagInfoList, "발주기입"));
+			form.resetFields();
+			setRecord({});
+			tabRemove();
+		}
+	}
+
 	return (
 		<div className="top-btn-area">
 			{/* 기 등록된 수주 내용 수정시 */}
@@ -92,8 +116,8 @@ const OrderCreateHeaderUpdate = ({ form }) => {
 						</Dropdown>
 					</Flex>
 					<Flex gap={8}>
-						<Button icon={<CloseOutlined />} iconPosition={"end"}>
-							취소
+						<Button icon={<CloseOutlined />} iconPosition={"end"} onClick={handleClose}>
+							닫기
 						</Button>
 						<Button
 							type="primary"

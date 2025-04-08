@@ -108,7 +108,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 				{/* <OrderCreateTab activeKey={2} /> */}
 
 				{ isNew ? <OrderCreateHeaderNew form={form} tabRemove={tabRemove} />
-				: <OrderCreateHeaderUpdate form={form} /> }
+				: <OrderCreateHeaderUpdate form={form} tabRemove={tabRemove} /> }
 			</div>
 
 			<Spin
