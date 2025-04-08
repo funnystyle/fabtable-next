@@ -7,7 +7,7 @@ import '@styles/globals.css';
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import CustomEmpty from "./common/CustomEmpty";
 
-const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, modalStore, keysStore }) => {
+const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, modalStore, keysStore, topOffset=0 }) => {
   const { size, total, page } = modalStore();
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = keysStore();
 
@@ -18,6 +18,14 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
   const dragEndKeyRef = useRef(null);
   const initialSelectedKeysRef = useRef([]);
   const tableRef = useRef(null);
+
+  const [tableHeight, setTableHeight] = useState(300); // 기본값
+
+  const updateTableHeight = () => {
+    // const topOffset = topOffset || 260; // 헤더 등 상단 여백 (px 단위)
+    const newHeight = window.innerHeight - topOffset;
+    setTableHeight(newHeight);
+  };
 
   // ✅ 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
@@ -79,6 +87,12 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
     });
   }, [serverData]);
 
+  useEffect(() => {
+    updateTableHeight();
+    window.addEventListener("resize", updateTableHeight);
+    return () => window.removeEventListener("resize", updateTableHeight);
+  }, []);
+
   return (
     <Spin spinning={loading} style={{ textAlign: "center" }}>
       <div ref={tableRef} className="tb-container" tabIndex={0} 
@@ -137,9 +151,10 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
           size="small"
           className="ellipsis-column basic-tb"
           bordered
+          virtual = { topOffset ? true : false }
           scroll={{
-            x: "max-content",
-            y: scrollY || "calc(60vh - 38px)",
+            x: topOffset ? 2000 : "max-content",
+            y: topOffset ? tableHeight : "calc(60vh - 38px)",
           }}
           style={{ tableLayout: "fixed" }}
           locale={{ emptyText: <CustomEmpty /> }}
