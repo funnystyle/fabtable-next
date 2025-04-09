@@ -12,6 +12,7 @@ env:
   # MUST CHANGE THESE VALUES WITH YOUR OWN
   SERVICE_NAME: fabtable-next
   DEPLOY_PATH: /var/services/homes/fnfworks/docker-app
+  NODE_ENV: ${{ github.ref_name }}
 
 jobs:
   build-and-deploy:
