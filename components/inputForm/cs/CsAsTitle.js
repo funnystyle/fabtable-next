@@ -1,18 +1,41 @@
-import {Button, Flex, Form, Input, Typography} from "antd";
-import {DeleteOutlined, PlusOutlined, RedoOutlined} from "@ant-design/icons";
-import React, {useEffect} from "react";
+import { Button, Flex, Form, Input, Typography } from "antd";
+import { DeleteOutlined, PlusOutlined, RedoOutlined } from "@ant-design/icons";
+import React, { useEffect } from "react";
 import useCsDataStore from "@store/useCsDataStore";
+import { csAsWorkInputs } from "@components/inputForm/cs/data/csAsWorkInputs";
 
 const { Title } = Typography;
 
 export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKeySet, setResetFlag }) => {
 
   const handleDelete = () => {
-    const newKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
-    setKeys(newKeys);
+
+    const keptValues = {}; // 삭제되지 않은 값들을 모아둘 객체
+
+    // 1. 삭제 대상이 아닌 값들만 추출
+    keys.forEach((_, idx) => {
+      if (!asCheckedKeySet.has(idx + 1)) {
+        csAsWorkInputs.forEach((field) => {
+          const key = `${field}-${idx + 1}`;
+          keptValues[field] = keptValues[field] || [];
+          keptValues[field].push(form.getFieldValue(key));
+        });
+      }
+    });
+
+    // 2. form 값들을 위에서부터 다시 세팅
+    csAsWorkInputs.forEach((field) => {
+      keptValues[field].forEach((val, idx) => {
+        form.setFieldValue(`${field}-${idx + 1}`, val);
+      });
+    });
+
+    const newRecordKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
+    setKeys(newRecordKeys);
 
     setAsCheckedKeySet(new Set());
   }
+
 
   const handleAdd = () => {
     setKeys([...keys, keys.length]);
