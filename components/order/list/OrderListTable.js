@@ -1,6 +1,6 @@
 // pages/order.js
 import React, { useEffect, useState } from "react";
-import { Dropdown, } from "antd";
+import { Dropdown, message, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
@@ -21,10 +21,10 @@ import { useSetNowState } from "@components/api/useSetNowState";
 import { useGetDocxUrl } from "@components/api/useGetDocxUrl";
 import { showDrawer } from "@components/drawer/showDrawer";
 import useDrawerStore from "@store/useDrawerStore";
-import usePdfUrlStore from "@store/usePdfUrlStore";
-import useDocxUrlStore from "@store/useDocxUrlStore";
 import { useDownloadOrderListExcel } from "@components/api/useDownloadOrderListExcel";
 import { useDeleteRecord } from "@components/api/useDeleteRecord";
+import MemoPopover from "@components/list/MemoPopover";
+import useOrderListLoadingStore from "@store/useOrderListLoadingStore";
 
 const OrderListTable = ({ handleReload, isPending }) => {
 
@@ -64,9 +64,9 @@ const OrderListTable = ({ handleReload, isPending }) => {
     } else if (parseInt(e.key) === 5) {
       handleRecordInfoMemoPopup(window, datas);
     } else if (e.key === "6-1") {
-      showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore)
+      showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore)
     } else if (e.key === "6-2") {
-      showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore)
+      showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore)
       // 7로 시작할 경우
     } else if (e.key.startsWith("7")) {
       const keyIndex = e.key.substring(2); // 7- 를 제거한 키값
@@ -91,7 +91,7 @@ const OrderListTable = ({ handleReload, isPending }) => {
   const router = useRouter();
 
   const handleDoubleClick = (record) => {
-    // record.nowState = record.nowState.props.children
+    record.salesTeamMemo = record.salesTeamMemo.props.value;
     setRecord(record);
     setIsCopy(false);
     moveUrl("/order/create");
@@ -119,11 +119,29 @@ const OrderListTable = ({ handleReload, isPending }) => {
     return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
   }
 
+
   const handleSettingTooltipData = (data) => {
     return data.map((item => {
       item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
       item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
       item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
+
+      return item;
+    }));
+  }
+
+  const handleSettingMemo = (name, value) => {
+
+    if (!value) return value;
+
+    return <MemoPopover name={name} value={value} />;
+  }
+
+  const handleSettingMemoData = (data) => {
+    return data.map((item => {
+      item.salesTeamMemo = item.salesTeamMemo ? handleSettingMemo("영업팀 메모", item.salesTeamMemo) : "";
+      item.produceTeamMemo = item.produceTeamMemo ? handleSettingMemo("제조팀 메모", item.produceTeamMemo) : "";
+      item.qcTeamMemo = item.qcTeamMemo ? handleSettingMemo("품질팀 메모", item.qcTeamMemo) : "";
 
       return item;
     }));
@@ -136,18 +154,29 @@ const OrderListTable = ({ handleReload, isPending }) => {
 
     const settingTooltip = handleSettingTooltipData(settingKey);
 
-    return settingTooltip;
+    const settingMemo = handleSettingMemoData(settingTooltip);
+
+    return settingMemo;
   }
 
   useEffect(() => {
     setTagInfoList(data?.tagInfoList || []);
   }, [data]);
 
-  useWebsocket("/topic/orderList", (message) => {
-    const orderResultInfo = JSON.parse(message.body);
+  const { setProgress } = useOrderListLoadingStore();
+  useWebsocket("/topic/orderList", (msg) => {
+    const orderResultInfo = JSON.parse(msg.body);
     console.log("📬 주문 수정 정보:", orderResultInfo);
+    if (orderResultInfo.total && orderResultInfo.current) {
+      const percent = Math.floor((orderResultInfo.current / orderResultInfo.total) * 100);
+      setProgress(percent);
+    }
+
     if (orderResultInfo.reload) {
       handleReload(true);
+    }
+    if (orderResultInfo.copyComplete) {
+      message.success('복제가 완료되었습니다!');
     }
   });
 

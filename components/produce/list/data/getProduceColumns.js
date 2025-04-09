@@ -352,7 +352,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 								<br />
 								QRn : 품질팀 재작업 횟수 (Quality Rework)
 								<br />
-								PRn : 생산팀 재작업 횟수 (Production Rework)
+								PRn : 제조팀 재작업 횟수 (Production Rework)
 							</>
 						}
 					>
@@ -382,7 +382,7 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 								<br />
 								QRn : 품질팀 재작업 횟수 (Quality Rework)
 								<br />
-								PRn : 생산팀 재작업 횟수 (Production Rework)
+								PRn : 제조팀 재작업 횟수 (Production Rework)
 							</>
 						}
 					>

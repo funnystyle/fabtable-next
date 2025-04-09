@@ -107,7 +107,7 @@ const MonthHeader = ({visibleItems, setVisibleItems, currentYear, setCurrentYear
 							className={`${visibleItems[1] ? "active" : ""}`}
 							onClick={() => toggleItem(1)}
 						>
-							생산팀
+							제조팀
 						</Button>
 
 						<Button

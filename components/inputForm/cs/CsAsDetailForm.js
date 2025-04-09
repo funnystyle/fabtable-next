@@ -2,6 +2,7 @@ import { Button, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import React, {useEffect} from "react";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import useAutoCalcResponsePeriod from "@components/cs/create/hook/useAutoCalcResponsePeriod";
 
 const { Title } = Typography;
 
@@ -25,6 +26,15 @@ const CsAsDetailForm = ({ form, index, resetFlag }) => {
   useEffect(() => {
     handleReset();
   }, [resetFlag]);
+
+
+  const actionCompletionDateWatch = Form.useWatch(`actionCompletionDate-${index}`, form);
+  const requestDatetimeWatch = Form.useWatch("requestDatetime", form);
+
+  useAutoCalcResponsePeriod(form, index, [
+    actionCompletionDateWatch,
+    requestDatetimeWatch,
+  ]);
 
   return (
     <div className="info-input-box" key={`cs-detail-${index}`}>

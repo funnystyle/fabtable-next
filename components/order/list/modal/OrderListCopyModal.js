@@ -7,6 +7,7 @@ import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
 import OrderListCopyModalContent from "@components/order/list/modal/OrderListCopyModalContent";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
+import useOrderListLoadingStore from "@store/useOrderListLoadingStore";
 
 const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 
@@ -17,19 +18,21 @@ const OrderListCopyModal = ({ form, openModal, setOpenModal }) => {
 
 	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
 
+	const { setLoading, setProgress } = useOrderListLoadingStore();
+
 	const handleSubmit = async (event) => {
 		if (selectedRowKeys.length === 0) {
 			message.warning("복제할 행을 선택해주세요.");
 			return;
 		}
 
+		setLoading(true);
+		setProgress(0);
 		const values = await form.validateFields();
 		values["ids"] = selectedRowKeys;
 
 		await orderInfoCopy(values);
 		setOpenModal(false);
-
-		message.success('복제가 완료되었습니다!');
 	}
 
 	return (

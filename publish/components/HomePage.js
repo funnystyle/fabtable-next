@@ -342,7 +342,7 @@ const HomePage = ({ children }) => {
 
               {/*
 								<Tag className="pink">영업팀</Tag>
-								<Tag className="orange">생산팀</Tag>
+								<Tag className="orange">제조팀</Tag>
 								<Tag className="purple">부서4</Tag>
 								<Tag className="red">부서5</Tag>
 								<Tag className="green">부서6</Tag>

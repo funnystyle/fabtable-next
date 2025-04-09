@@ -3,11 +3,11 @@ export const showDrawer = (type, handleReload, keyStore, drawerStore, pdfUrlStor
   const { setPdfUrlList } = pdfUrlStore.getState();
   const { setDocxUrlList } = docxUrlStore.getState();
   setSelectedPrint(type);
-  setLabelContent(""); // 초기화
-
-  setPdfUrlList([]); // 초기화
-
-  setDocxUrlList([]); // 초기화
+  // setLabelContent(""); // 초기화
+  //
+  // setPdfUrlList([]); // 초기화
+  //
+  // setDocxUrlList([]); // 초기화
 
   const { selectedRowKeys } = keyStore.getState();
   if (type === "report") {

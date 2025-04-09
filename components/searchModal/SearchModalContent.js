@@ -19,7 +19,7 @@ const SearchModalContent = ({ searchLocation, searchType, modalStore, inBoxType}
 			<SearchModalHead form={form} modalStore={modalStore} searchType={searchType}/>
 
 			<div className="layer-scroll">
-				<SearchModalBody form={form} searchLocation={searchLocation} searchType={searchType} inBoxType={inBoxType} />
+				<SearchModalBody form={form} searchLocation={searchLocation} searchType={searchType} inBoxType={inBoxType} modalStore={modalStore} />
 
 				<SearchModalButton form={form} modalStore={modalStore} searchType={searchType} />
 

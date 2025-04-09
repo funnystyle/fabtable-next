@@ -19,7 +19,7 @@ export const getCsLoadColumns = (sortedInfo, stringSorter) => {
 			sorter: (a, b) => stringSorter(a, b, "serialNumber"),
 			sortOrder: sortedInfo.columnKey === "serialNumber" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			width: 120,
 		},
 		{
 			title: "제조번호",
@@ -30,7 +30,7 @@ export const getCsLoadColumns = (sortedInfo, stringSorter) => {
 			sortOrder:
 				sortedInfo.columnKey === "oldSerialNumber" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			width: 120,
 		},
 		{
 			title: "C/S 번호",
@@ -40,7 +40,17 @@ export const getCsLoadColumns = (sortedInfo, stringSorter) => {
 			sorter: (a, b) => stringSorter(a, b, "csNumber"),
 			sortOrder: sortedInfo.columnKey === "csNumber" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 170,
+			width: 105,
+		},
+		{
+			title: "납품일",
+			showSorterTooltip: {title: "납품일"},
+			dataIndex: "deliverDatetime",
+			key: "deliverDatetime",
+			sorter: (a, b) => stringSorter(a, b, "deliverDatetime"),
+			sortOrder: sortedInfo.columnKey === "deliverDatetime" ? sortedInfo.order : null,
+			ellipsis: true,
+			width: 110,
 		},
 		{
 			title: "C/S 상태",
@@ -50,7 +60,7 @@ export const getCsLoadColumns = (sortedInfo, stringSorter) => {
 			sorter: (a, b) => stringSorter(a, b, "csState"),
 			sortOrder: sortedInfo.columnKey === "csState" ? sortedInfo.order : null,
 			ellipsis: true,
-			width: 106,
+			width: 85,
 			align: "center",
 		},
 		{

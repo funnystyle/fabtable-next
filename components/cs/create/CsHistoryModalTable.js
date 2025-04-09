@@ -1,9 +1,9 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { CheckOutlined, ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, Flex, message, Modal } from "antd";
+import { Button, Flex, Form, message, Modal, Spin } from "antd";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
@@ -72,6 +72,8 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
 
   const { datas } = useTableSelectKeysCsListStore();
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (datas.length > 0) {
       const data = datas[0];
@@ -80,38 +82,55 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
       const csNumber = data.csNumber;
       form.setFieldsValue({ oldSerialNumber, serialNumber, csNumber });
 
-      // form.getFieldValue는 즉시 반영이 안 될 수 있어 조금 기다린 후 확인
       setTimeout(() => {
         reload();
-      }, 100);
+        setTimeout(() => {
+          setLoading(false);
+        }, 100);
+      }, 500);
     }
   }, [datas]);
 
+  const csNumberWatch = Form.useWatch("csNumber", form);
+  const oldSerialNumberWatch = Form.useWatch("oldSerialNumber", form);
+  const serialNumberWatch = Form.useWatch("serialNumber", form);
+  const firstChanged = useRef(false);
+
+  useEffect(() => {
+    // csNumber가 변경되었고, 아직 최초 변경을 처리하지 않은 경우
+    if (!firstChanged.current && csNumberWatch !== undefined && oldSerialNumberWatch !== undefined && serialNumberWatch !== undefined) {
+      firstChanged.current = true;
+      reload();
+    }
+  }, [oldSerialNumberWatch, serialNumberWatch, csNumberWatch]);
+
   return (
     <>
-      <PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
+      <Spin spinning={loading} style={{ textAlign: "center" }}>
+        <PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
 
-      {/* 태그 없음, 헤더 관련 정리 event */}
-      <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"} />
-      <div className="contents-scroll">
-        {/* 테이블 */}
-        <TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
-                           serverData={transformTagData(data).map((item) => {
-          item.etc_cs_load = (
-            <>
-              <Flex gap={4}>
-                <Button size="small">C/S정보</Button>
-                <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
-                <Button size="small" icon={<CheckOutlined />} iconPosition="start">
-                  선택
-                </Button>
-              </Flex>
-            </>
-          );
-          return item;
-        })}
-        />
-      </div>
+        {/* 태그 없음, 헤더 관련 정리 event */}
+        <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"} />
+        <div className="contents-scroll">
+          {/* 테이블 */}
+          <TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
+                             serverData={transformTagData(data).map((item) => {
+                               item.etc_cs_load = (
+                                 <>
+                                   <Flex gap={4}>
+                                     {/*<Button size="small">C/S정보</Button>*/}
+                                     <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
+                                     <Button size="small" icon={<CheckOutlined />} iconPosition="start">
+                                       선택
+                                     </Button>
+                                   </Flex>
+                                 </>
+                               );
+                               return item;
+                             })}
+          />
+        </div>
+      </Spin>
 
       {contextHolder}
     </>

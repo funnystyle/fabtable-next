@@ -1,1 +1,1 @@
-export const csAsWorkInputs = ["responsiblePerson", "responseDate", "receiptContent", "responseResult"]
+export const csAsWorkInputs = ["responsiblePerson", "responseDate", "responseContent", "responseResult"]

@@ -1,9 +1,9 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { CheckOutlined, ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, Flex, message, Modal } from "antd";
+import { Button, Flex, Form, message, Modal, Spin } from "antd";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
@@ -11,7 +11,6 @@ import { useGetRecordsJoinCS } from "@components/api/useGetRecordsJoinCS";
 import useMenuTabStore from "@store/useMenuTabStore";
 import { useRouter } from "next/router";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const CsDetailHistoryModalTable = ({ form, modalStore }) => {
@@ -70,49 +69,68 @@ const CsDetailHistoryModalTable = ({ form, modalStore }) => {
     setTagInfoList(data?.tagInfoList || []);
   }, [data]);
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     if (cs.id) {
       const oldSerialNumber = cs.oldSerialNumber;
       const serialNumber = cs.serialNumber;
       const csNumber = cs.csNumber;
-      form.setFieldsValue({ oldSerialNumber, serialNumber, csNumber });
+      form.setFieldsValue({ csNumber });
 
       setTimeout(() => {
         reload();
-      }, 200);
+        setTimeout(() => {
+          setLoading(false);
+        }, 100);
+      }, 500);
     }
   }, [cs]);
-  useEffect(() => {
-    setTimeout(() => {
-      reload();
-    }, 200);
-  }, []);
+
+  // const csNumberWatch = Form.useWatch("csNumber", form);
+  // const firstChanged = useRef(false);
+  //
+  // useEffect(() => {
+  //   // csNumber가 변경되었고, 아직 최초 변경을 처리하지 않은 경우
+  //   if (!firstChanged.current && csNumberWatch !== undefined) {
+  //     firstChanged.current = true;
+  //     reload();
+  //   }
+  // }, [csNumberWatch]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     reload();
+  //   }, 500);
+  // }, []);
 
   return (
     <>
-      <PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
+      <Spin spinning={loading} style={{ textAlign: "center" }}>
+        <PagingArea modalStore={modalStore} keysStore={useTableSelectKeysStore} />
 
-      {/* 태그 없음, 헤더 관련 정리 event */}
-      <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"} />
-      <div className="contents-scroll">
-        {/* 테이블 */}
-        <TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
-                           serverData={transformTagData(data).map((item) => {
-          item.etc_cs_load = (
-            <>
-              <Flex gap={4}>
-                <Button size="small">C/S정보</Button>
-                <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
-                <Button size="small" icon={<CheckOutlined />} iconPosition="start">
-                  선택
-                </Button>
-              </Flex>
-            </>
-          );
-          return item;
-        })}
-        />
-      </div>
+        {/* 태그 없음, 헤더 관련 정리 event */}
+        <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"CS_LOAD"} />
+        <div className="contents-scroll">
+          {/* 테이블 */}
+          <TableOnRowSelect2 header={headerList} onRowClick={onRowClick} rowSelect={false} isPending={isPending} isFirstLoad={false} keysStore={useTableSelectKeysStore} modalStore={modalStore}
+                             serverData={transformTagData(data).map((item) => {
+                               item.etc_cs_load = (
+                                 <>
+                                   <Flex gap={4}>
+                                     {/*<Button size="small">C/S정보</Button>*/}
+                                     <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
+                                     <Button size="small" icon={<CheckOutlined />} iconPosition="start">
+                                       선택
+                                     </Button>
+                                   </Flex>
+                                 </>
+                               );
+                               return item;
+                             })}
+          />
+        </div>
+      </Spin>
 
       {contextHolder}
     </>

@@ -1,5 +1,5 @@
 // pages/order/create/index.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Flex, Form, Layout, Spin, } from "antd";
 import OrderCreateHeaderNew from "@components/order/create/OrderCreateHeaderNew";
 import OrderCreateAnchor from "@components/order/create/OrderCreateAnchor";
@@ -13,9 +13,10 @@ import InputBoxRow from "@components/inputForm/InputBoxRow";
 import SearchModal from "@components/searchModal/SearchModal";
 import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
-import dayjs from "dayjs";
 import DrawerComponent from "@publish/components/drawer";
-import useDrawerStore from "@store/useDrawerStore";
+import useOrderCreateDrawerStore from "@store/useOrderCreateDrawerStore";
+import useAutoSelectMgmrBin from "@components/order/create/hook/useAutoSelectMgmrBin";
+import useSerialNumberPrefix from "@components/order/create/hook/useSerialNumberPrefix";
 
 const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
@@ -65,29 +66,27 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		}
 	}, [loading]);
 
-	const values = Form.useWatch([], form); // 폼 전체 값을 watch
+	const productCategoryWatch = Form.useWatch("productCategory", form);
+	const productModelWatch = Form.useWatch("productModel", form);
+	const fluidWatch = Form.useWatch("fluid", form);
+	const flowrateWatch = Form.useWatch("flowrate", form);
+	const productionDepartmentWatch = Form.useWatch("productionDepartment", form);
+	const scheduledDeliveryDateWatch = Form.useWatch("scheduledDeliveryDate", form);
+	const conversionFactorWatch = Form.useWatch("conversionFactor", form);
+
 	const { list:mgmrBinList } = useGetMgmrBinList();
+	// mgmrBin, 최대유량 자동 선택
+	useAutoSelectMgmrBin(form, mgmrBinList, [
+		productCategoryWatch,
+		productModelWatch,
+		fluidWatch,
+		flowrateWatch,
+	]);
 
 
-	useEffect(() => {
-		setIsChange(true);
+	const unitWatch = Form.useWatch("productUnit", form);
 
-		// mgmrBin
-		const mgmrBin = mgmrBinList.find((item) =>
-			item.modelName.includes(form.getFieldValue("productCategory") + form.getFieldValue("productModel"))
-			&& item.gasName === form.getFieldValue("fluid")
-			&& item.gasMin <= form.getFieldValue("flowrate")
-			&& item.gasMax >= form.getFieldValue("flowrate")
-		);
-
-		if (mgmrBin) {
-			form.setFieldValue("mgmrBin", mgmrBin?.valueNo);
-			form.setFieldValue("maxFlowMgmr", mgmrBin?.gasMax);
-		} else {
-			form.setFieldValue("mgmrBin", "None");
-		}
-
-	}, [values]);
+	useSerialNumberPrefix(form, setSerialNumber, [productCategoryWatch, productModelWatch, unitWatch]);
 
 
 	/// 부서 변경시 시리얼 넘버에 반영 ///
@@ -97,6 +96,8 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		if (productionDepartment !== productionDepartmentFormValue) {
 			setProductionDepartment(productionDepartmentFormValue);
 		}
+	}, [productionDepartmentWatch]);
+	useEffect(() => {
 		const scheduledDeliveryDateFormValue = form.getFieldValue("scheduledDeliveryDate");
 		if (scheduledDeliveryDate !== scheduledDeliveryDateFormValue ) {
 			console.log(scheduledDeliveryDateFormValue);
@@ -112,7 +113,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 			setScheduledDeliveryDate(scheduledDeliveryDateFormValue);
 		}
-	}, [values]);
+	}, [scheduledDeliveryDateWatch]);
 
 	useEffect(() => {
 		if (serialNumber && productionDepartment && serialNumber.length >= 11 && serialNumber.length <= 12 && productionDepartment.length > 1) {
@@ -140,12 +141,16 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	}, [scheduledDeliveryDate]);
 	/// 부서 변경시 시리얼 넘버에 반영 ///
 
+	const lastValueRef = useRef(null);
 	useEffect(() => {
 		const flowrate = form.getFieldValue("flowrate") || 0;
 		const conversionFactor = form.getFieldValue("conversionFactor") || 1;
 		const convertedFlowrate = parseFloat((flowrate / conversionFactor).toFixed(2));
-		form.setFieldsValue({ convertedFlowrate });
-	}, [values]);
+		if (convertedFlowrate !== lastValueRef.current) {
+			form.setFieldsValue({ convertedFlowrate });
+			lastValueRef.current = convertedFlowrate;
+		}
+	}, [flowrateWatch, conversionFactorWatch]);
 
 
 	useEffect(() => {
@@ -158,7 +163,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		setIsNew(!record?.id || isCopy)
 	}, [record, isCopy]);
 
-	const { openDrawer } = useDrawerStore();
+	const { openDrawer } = useOrderCreateDrawerStore();
 
 	return (
 		<Layout>
@@ -205,7 +210,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent />
+				<DrawerComponent drawerStore={useOrderCreateDrawerStore} />
 			</div>
 		</Layout>
 	);

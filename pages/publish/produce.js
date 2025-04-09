@@ -763,7 +763,7 @@ const ProduceComponent = ({ contentHeight }) => {
 								<br />
 								QRn : 품질팀 재작업 횟수 (Quality Rework)
 								<br />
-								PRn : 생산팀 재작업 횟수 (Production Rework)
+								PRn : 제조팀 재작업 횟수 (Production Rework)
 							</>
 						}
 					>
@@ -793,7 +793,7 @@ const ProduceComponent = ({ contentHeight }) => {
 								<br />
 								QRn : 품질팀 재작업 횟수 (Quality Rework)
 								<br />
-								PRn : 생산팀 재작업 횟수 (Production Rework)
+								PRn : 제조팀 재작업 횟수 (Production Rework)
 							</>
 						}
 					>

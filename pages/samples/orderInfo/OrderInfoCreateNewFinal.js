@@ -2,9 +2,8 @@
 import React, { useEffect, useState } from "react";
 import { Anchor, Button, Flex, Form, Layout, message, Tabs, Tag, Typography, } from "antd";
 import { useRouter } from "next/router";
-import {useMutation, useQuery} from "@tanstack/react-query";
-import {getAxios, postAxios} from "@api/apiClient";
-import { handleInputBox } from "@components/inputForm/handleInputBox";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getAxios, postAxios } from "@api/apiClient";
 import InputBoxRow from "@components/inputForm/InputBoxRow";
 import { CloseOutlined, EditFilled } from "@ant-design/icons";
 
