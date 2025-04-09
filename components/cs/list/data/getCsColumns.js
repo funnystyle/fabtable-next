@@ -87,7 +87,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					key: "csState",
 					sorter: true,
 					ellipsis: true,
-					width: 80,
+					width: 90,
 					fixed: "left",
 				},
 			],
@@ -217,7 +217,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "productType",
 					key: "productType",
 					ellipsis: true,
-					width: 78,
+					width: 130,
 				},
 				{
 					title: "요청자 정보",
@@ -395,7 +395,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "productionDepartment",
 					key: "productionDepartment",
 					ellipsis: true,
-					width: 80,
+					width: 120,
 				},
 				{
 					title: "불량구분",
@@ -467,7 +467,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "certificationDateUsageDays",
 					key: "certificationDateUsageDays",
 					ellipsis: true,
-					width: 104,
+					width: 160,
 				},
 				{
 					title: "출고일 기준 사용기간(Day)",
@@ -475,7 +475,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "deliveryDateUsageDays",
 					key: "deliveryDateUsageDays",
 					ellipsis: true,
-					width: 104,
+					width: 160,
 				},
 			],
 		},
@@ -513,7 +513,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "responsePeriod",
 					key: "responsePeriod",
 					ellipsis: true,
-					width: 85,
+					width: 130,
 				},
 				{
 					title: "공정 Step/Recipe",
@@ -567,7 +567,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "causeAnalysisRequest",
 					key: "causeAnalysisRequest",
 					ellipsis: true,
-					width: 72,
+					width: 130,
 				},
 				{
 					title: "긴급",
