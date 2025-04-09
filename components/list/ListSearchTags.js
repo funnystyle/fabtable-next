@@ -56,6 +56,7 @@ const ListSearchTags = ({ modalStore }) => {
       let label = '';
 
       if (Array.isArray(item.input)) {
+        console.log("item.input", item.input);
         // 날짜 범위 (ex. DatePicker)
         const [start, end] = item.input.map(date =>
           date.format('YYYY-MM-DD HH:mm')
@@ -63,7 +64,9 @@ const ListSearchTags = ({ modalStore }) => {
         label = `${start} ~ ${end}`;
       } else if (item.input && item.input2) {
         label = `${item.input} ~ ${item.input2}`;
-      } else if (item.input) {
+      } else if (typeof item.input === 'object' && item.input.$isDayjsObject) {
+        label = item.input.format('YYYY-MM-DD HH:mm');
+      }else if (item.input) {
         label = item.input;
       }
 
