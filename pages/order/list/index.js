@@ -1,6 +1,6 @@
 // pages/order.js
-import React from "react";
-import { Layout, } from "antd";
+import React, { useEffect } from "react";
+import { Layout, Progress, Spin, } from "antd";
 
 import DrawerComponent from "@publish/components/drawer";
 import ListTitle from "@components/list/ListTitle";
@@ -12,40 +12,67 @@ import { useGetRecords } from "@components/api/useGetRecords";
 import useOrderListSearchRecordModalStore from "@store/useOrderListSearchRecordModalStore";
 import SearchModal from "@components/searchModal/SearchModal";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
-import { useWebsocket } from "@components/ws/useWebsocket";
+import useOrderListLoadingStore from "@store/useOrderListLoadingStore";
 
 
-const OrderComponent = ({ isActive=true }) => {
+const OrderComponent = ({ isActive = true }) => {
 
-	const { handleReload, isPending } = useGetRecords(useOrderListSearchRecordModalStore);
+  const { handleReload, isPending } = useGetRecords(useOrderListSearchRecordModalStore);
 
-	// --------- 드로어 관련
-	const { openDrawer } = useDrawerStore();
-	// --------- 드로어 관련
+  // --------- 드로어 관련
+  const { openDrawer } = useDrawerStore();
+  // --------- 드로어 관련
 
-	return (
-		<Layout>
-			<div className="contents-flex">
-				<ListTitle title="영업 관리" isActive={isActive} modalStore={useOrderListSearchRecordModalStore}/>
+  const { loading, setLoading, progress, setProgress } = useOrderListLoadingStore();
+  useEffect(() => {
+    setLoading(isPending);
+    setProgress(0);
+  }, [isPending]);
 
-				{/*  검색결과 */}
-				<ListSearchTags modalStore={useOrderListSearchRecordModalStore} />
+  return (
+    <Layout>
+      <Spin spinning={loading} style={{ textAlign: "center" }}>
 
-				{/* 상단 버튼 */}
-				<OrderListButtonArea keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} type={"order"}/>
+        {loading && progress !== 0 && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(255, 255, 255, 0.6)", // 반투명 배경
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1000, // 다른 컴포넌트 위에 떠있도록
+            }}
+          >
+            <Progress type="circle" percent={progress} />
+          </div>
+        )}
+        <div className="contents-flex">
+          <ListTitle title="영업 관리" isActive={isActive} modalStore={useOrderListSearchRecordModalStore} />
 
-				{/* 태그 없음, 헤더 관련 정리 event */}
-				<OrderListTable handleReload={handleReload} isPending={isPending} />
-			</div>
+          {/*  검색결과 */}
+          <ListSearchTags modalStore={useOrderListSearchRecordModalStore} />
 
-			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} modalStore={useOrderListSearchRecordModalStore} inBoxType={"recordCreateOpenModal"} />
+          {/* 상단 버튼 */}
+          <OrderListButtonArea keysStore={useTableSelectKeysOrderListStore} modalStore={useOrderListSearchRecordModalStore} type={"order"} />
 
-			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
-			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent drawerStore={useDrawerStore} />
-			</div>
-		</Layout>
-	);
+          {/* 태그 없음, 헤더 관련 정리 event */}
+          <OrderListTable handleReload={handleReload} isPending={isPending} />
+        </div>
+
+        <SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} modalStore={useOrderListSearchRecordModalStore} inBoxType={"recordCreateOpenModal"} />
+
+        {/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
+        <div style={{ display: openDrawer ? "block" : "none" }}>
+          <DrawerComponent drawerStore={useDrawerStore} />
+        </div>
+      </Spin>
+    </Layout>
+  );
 };
 
 export default OrderComponent;

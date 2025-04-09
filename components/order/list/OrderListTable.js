@@ -1,6 +1,6 @@
 // pages/order.js
 import React, { useEffect, useState } from "react";
-import { Dropdown, } from "antd";
+import { Dropdown, message, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import OrderListHeaderData from "@components/order/list/OrderListHeaderData";
@@ -24,6 +24,7 @@ import useDrawerStore from "@store/useDrawerStore";
 import { useDownloadOrderListExcel } from "@components/api/useDownloadOrderListExcel";
 import { useDeleteRecord } from "@components/api/useDeleteRecord";
 import MemoPopover from "@components/list/MemoPopover";
+import useOrderListLoadingStore from "@store/useOrderListLoadingStore";
 
 const OrderListTable = ({ handleReload, isPending }) => {
 
@@ -162,11 +163,20 @@ const OrderListTable = ({ handleReload, isPending }) => {
     setTagInfoList(data?.tagInfoList || []);
   }, [data]);
 
-  useWebsocket("/topic/orderList", (message) => {
-    const orderResultInfo = JSON.parse(message.body);
+  const { setProgress } = useOrderListLoadingStore();
+  useWebsocket("/topic/orderList", (msg) => {
+    const orderResultInfo = JSON.parse(msg.body);
     console.log("📬 주문 수정 정보:", orderResultInfo);
+    if (orderResultInfo.total && orderResultInfo.current) {
+      const percent = Math.floor((orderResultInfo.current / orderResultInfo.total) * 100);
+      setProgress(percent);
+    }
+
     if (orderResultInfo.reload) {
       handleReload(true);
+    }
+    if (orderResultInfo.copyComplete) {
+      message.success('복제가 완료되었습니다!');
     }
   });
 
