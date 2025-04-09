@@ -91,7 +91,7 @@ const OrderListTable = ({ handleReload, isPending }) => {
   const router = useRouter();
 
   const handleDoubleClick = (record) => {
-    // record.nowState = record.nowState.props.children
+    record.salesTeamMemo = record.salesTeamMemo.props.value;
     setRecord(record);
     setIsCopy(false);
     moveUrl("/order/create");
