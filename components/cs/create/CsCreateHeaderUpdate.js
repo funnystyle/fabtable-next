@@ -38,7 +38,7 @@ const CsCreateHeaderUpdate = ({form}) => {
     }
   });
 
-  const { isAsDetailCommon, isFollowUpCommon, files, asKeys, recordKeys, subRecordKeys } = useCsCreateConstantStore();
+  const { isAsDetailCommon, isFollowUpCommon, files, asKeys, recordKeys, subRecordKeys , setLoading, loading} = useCsCreateConstantStore();
 
   const convertBlobUrlToFile = async (blobUrl, fileName, mimeType) => {
     const res = await fetch(blobUrl);
@@ -47,6 +47,7 @@ const CsCreateHeaderUpdate = ({form}) => {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     const values = await form.validateFields();
     values["isAsDetailCommon"] = isAsDetailCommon;
     values["isFollowUpCommon"] = isFollowUpCommon;

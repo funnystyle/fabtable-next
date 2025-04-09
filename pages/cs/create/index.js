@@ -23,18 +23,18 @@ import useCsCreateLoadCsModalStore from "@store/useCsCreateLoadCsModalStore";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
 import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
+import { handleSettingDetail } from "@components/cs/create/func/handleSettingDetail";
 
 const CsCreate = ({isActive = true}) => {
-  const {data, list} = useGetInputBoxList("csCreate");
+  const {data, list, isSuccess} = useGetInputBoxList("csCreate");
 
   const [form] = Form.useForm();
   const codeRelationSet = new Set();
 
   const [asKeys, setAsKeys] = useState([0]);
   const [asCheckedKeySet, setAsCheckedKeySet] = useState(new Set());
-  const [loading, setLoading] = useState(true);
 
-  const {setAsKeys: setConstantAsKeys, setIsAsDetailCommon, setIsFollowUpCommon} = useCsCreateConstantStore();
+  const {setAsKeys: setConstantAsKeys, setIsAsDetailCommon, setIsFollowUpCommon, loading, setLoading} = useCsCreateConstantStore();
 
   useEffect(() => {
     setConstantAsKeys(asKeys);
@@ -46,94 +46,28 @@ const CsCreate = ({isActive = true}) => {
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
 
   useEffect(() => {
-    console.log("cs", cs);
-    if (list && list.length > 0 && cs?.id) {
-      setCsState(cs?.csState);
-
-      setTimeout(() => {
-        loadFormValues(cs, data, form, selectedCodes, setSelectedCodes);
-        setIsChange(false);
-      }, 10);
+    if (list && list.length > 0) {
+      setLoading(true);
 
       if (cs?.id) {
+        setCsState(cs?.csState);
+        setTimeout(() => {
+          loadFormValues(cs, data, form, selectedCodes, setSelectedCodes);
+          setIsChange(false);
+        }, 10);
+
         csDetailLoad(cs.id)
+      } else {
+        setLoading(false);
       }
     }
-
-    setLoading(!list || list.length === 0);
-  }, [cs, list]);
+  }, [cs, isSuccess]);
 
   const {setRecordKeys, setSubRecordKeys} = useCsCreateConstantStore();
   useEffect(() => {
-
-    setCsDetail(csDetail);
-    setTimeout(() => {
-    if (csDetail) {
-      const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
-      setRecordKeys(ids);
-      const subIds = csDetail.csRecords.map((csRecord, index) => csRecord.subRecordId);
-      setSubRecordKeys(subIds);
-
-      setTimeout(() => {
-        csDetail.csRecords.forEach((csRecord, index) => {
-          const result = Object.entries(csRecord).reduce((acc, [key, value]) => {
-            const dateFields = ["defectMfcWithdrawalDate", "actionCompletionDate", "productCertificationDate"];
-            const isDateField = dateFields.includes(key);
-            acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-            return acc;
-          }, {});
-          form.setFieldsValue(result);
-        });
-      }, 50);
-
-      form.setFieldsValue(csDetail.csAsWork);
-
-      const asKeys = csDetail.csAsWorkContents.map((csAsWorkContent, index) => {
-        const result = Object.entries(csAsWorkContent).reduce((acc, [key, value]) => {
-          const dateFields = ["responseDate"];
-          const isDateField = dateFields.includes(key);
-          acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-          return acc;
-        }, {});
-        form.setFieldsValue(result);
-
-        return index;
-      });
-      setAsKeys(asKeys);
-
-      setIsAsDetailCommon(csDetail.isAsDetailCommon);
-      setIsFollowUpCommon(csDetail.isFollowUpCommon);
-
-      setTimeout(() => {
-        csDetail.csAsDetails.forEach((csAsDetail, index) => {
-          const result = Object.entries(csAsDetail).reduce((acc, [key, value]) => {
-            const dateFields = ["responseDate"];
-            const isDateField = dateFields.includes(key);
-            acc[key + "-" + (csDetail.isAsDetailCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-            return acc;
-          }, {});
-          form.setFieldsValue(result);
-        });
-
-        if (cs.isCopy) return;
-
-        csDetail.csFollowUps.forEach((csFollowUp, index) => {
-          const result = Object.entries(csFollowUp).reduce((acc, [key, value]) => {
-            const dateFields = ["analysisRequestDate", "analysisDueDate", "analysisCompleteDate"];
-            const isDateField = dateFields.includes(key);
-            acc[key + "-" + (csDetail.isFollowUpCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-            return acc;
-          }, {});
-          form.setFieldsValue(result);
-        });
-      }, 50);
-    }
-
-    setTimeout(() => {
-      setIsChange(false);
-    }, 500);
-    }, 50);
+    handleSettingDetail(form, cs, csDetail, setCsDetail, setRecordKeys, setSubRecordKeys, setAsKeys, setIsAsDetailCommon, setIsFollowUpCommon, setLoading, setIsChange);
   }, [csDetail]);
+
 
   const [anchorContainer, setAnchorContainer] = useState(null);
 
@@ -161,11 +95,8 @@ const CsCreate = ({isActive = true}) => {
           : <CsCreateHeaderUpdate form={form}/>}
       </div>
 
-      <Spin
-        spinning={loading}
-        style={{width: "100%", textAlign: "center", paddingTop: 80}}
-      >
-        {!loading && (
+      <Spin spinning={loading} style={{width: "100%", textAlign: "center", paddingTop: 80}}>
+        {list && list.length > 0 && (
           <Flex style={{height: 'calc(100vh - 228px)', overflowY: 'auto'}} className="anchor-wrapper">
             <div className="anchor-contents">
               <div

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 
@@ -23,6 +23,10 @@ export const useGetCsDetail = () => {
     setId(id);
     setKey(Math.random()); // queryKey 변경 → 자동 재요청
   };
+
+  useEffect(() => {
+    console.log("csDetail", data, isSuccess);
+  }, [isSuccess]);
 
   return {
     data:data?.data,
