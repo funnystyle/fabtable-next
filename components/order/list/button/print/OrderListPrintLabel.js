@@ -8,9 +8,9 @@ import { useWatch } from "antd/es/form/Form";
 import useDrawerStore from "@/store/useDrawerStore";
 import useTableSelectKeysOrderListStore from "@/store/useTableSelectKeysOrderListStore";
 
-const OrderListPrintLabel = ({form}) => {
+const OrderListPrintLabel = ({form, keyStore}) => {
 
-	const { selectedRowKeys, datas } = useTableSelectKeysOrderListStore();
+	const { selectedRowKeys, datas } = keyStore();
 	const { setLabelContent } = useDrawerStore();
 
 	const [selectedLabel, setSelectedLabel] = useState("radio1-1"); // ✅ 선택된 라벨 종류 상태

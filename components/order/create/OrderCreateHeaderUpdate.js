@@ -1,15 +1,17 @@
 // pages/order/create/index.js
-import React from "react";
-import {Button, Dropdown, Flex, message, Modal, Space,} from "antd";
-import {useMutation} from "@tanstack/react-query";
-import {putAxios} from "@api/apiClient";
-import {CheckOutlined, CloseOutlined, DownOutlined} from "@ant-design/icons";
+import React, { useEffect } from "react";
+import { Button, Flex, message, Modal, } from "antd";
+import { useMutation } from "@tanstack/react-query";
+import { putAxios } from "@api/apiClient";
+import { CheckOutlined, CloseOutlined } from "@ant-design/icons";
 import useRecordDataStore from "@store/useRecordDataStore";
 import OrderCreateStatusChangeButton from "@components/order/create/button/OrderCreateStatusChangeButton";
 import OrderCreateCopyButton from "@components/order/create/button/OrderCreateCopyButton";
-import {transformTagDataSingle} from "@components/order/table/transformTagData";
+import { transformTagDataSingle } from "@components/order/table/transformTagData";
 import OrderCreateDeleteButton from "@components/order/create/button/OrderCreateDeleteButton";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
+import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
+import useTableSelectKeysOrderCreateStore from "@store/useTableSelectKeysOrderCreateStore";
 
 const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 
@@ -85,6 +87,12 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 		}
 	}
 
+	const { setSelectedRowKeys, setDatas } = useTableSelectKeysOrderCreateStore();
+	useEffect(() => {
+		setSelectedRowKeys([record.id]);
+		setDatas([record]);
+	}, [record]);
+
 	return (
 		<div className="top-btn-area">
 			{/* 기 등록된 수주 내용 수정시 */}
@@ -112,14 +120,7 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 						<Button onClick={handleReset}>신규</Button>
 						<OrderCreateDeleteButton form={form} handleReset={handleReset}/>
 
-						<Dropdown menu={{ items: [] }}>
-							<Button>
-								<Space>
-									인쇄
-									<DownOutlined />
-								</Space>
-							</Button>
-						</Dropdown>
+						<OrderListButtonPrint keyStore={useTableSelectKeysOrderCreateStore} />
 					</Flex>
 					<Flex gap={8}>
 						<Button icon={<CloseOutlined />} iconPosition={"end"} onClick={handleClose}>

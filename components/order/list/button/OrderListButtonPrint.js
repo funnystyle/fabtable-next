@@ -14,7 +14,7 @@ import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderList
 import { useGetDocxUrl } from "@components/api/useGetDocxUrl";
 import { showDrawer } from "@components/drawer/showDrawer";
 
-const OrderListButtonPrint = () => {
+const OrderListButtonPrint = ({ keyStore }) => {
 
 	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent, certificateId } = useDrawerStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
@@ -32,12 +32,12 @@ const OrderListButtonPrint = () => {
 		{
 			label: "라벨 인쇄",
 			key: "1",
-			onClick: () => showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 라벨 인쇄 Drawer 열기
+			onClick: () => showDrawer("label", handleReload, keyStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 라벨 인쇄 Drawer 열기
 		},
 		{
 			label: "성적서 인쇄",
 			key: "2",
-			onClick: () => showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 성적서 인쇄 Drawer 열기
+			onClick: () => showDrawer("report", handleReload, keyStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore), // 클릭 시 성적서 인쇄 Drawer 열기
 		},
 	];
 
@@ -59,7 +59,7 @@ const OrderListButtonPrint = () => {
 					<OrderListPrintSelect selectedPrint={selectedPrint} setSelectedPrint={setSelectedPrint} />
 
 					{selectedPrint === "label" && (
-						<OrderListPrintLabel form={form} />
+						<OrderListPrintLabel form={form} keyStore={keyStore} />
 					)}
 
 					{selectedPrint === "report" && (

@@ -14,6 +14,8 @@ import SearchModal from "@components/searchModal/SearchModal";
 import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
 import dayjs from "dayjs";
+import DrawerComponent from "@publish/components/drawer";
+import useDrawerStore from "@store/useDrawerStore";
 
 const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
@@ -156,6 +158,8 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		setIsNew(!record?.id || isCopy)
 	}, [record, isCopy]);
 
+	const { openDrawer } = useDrawerStore();
+
 	return (
 		<Layout>
 			<div className="contents-flex">
@@ -198,6 +202,11 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
 			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useOrderCreateLoadRecordModalStore} inBoxType={"recordCreateOpenModal"} />
+
+			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
+			<div style={{ display: openDrawer ? "block" : "none" }}>
+				<DrawerComponent />
+			</div>
 		</Layout>
 	);
 };

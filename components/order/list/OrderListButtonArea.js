@@ -12,6 +12,7 @@ import { useSetNowState } from "@components/api/useSetNowState";
 import ShowInfoButton from "@/components/common/ShowInfoButton";
 import { useGetCodeList } from "@components/api/useGetCodeList";
 import { RedoOutlined } from "@ant-design/icons";
+import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 
 const OrderListButtonArea = ({ keysStore, modalStore, type }) => {
 
@@ -68,7 +69,7 @@ const OrderListButtonArea = ({ keysStore, modalStore, type }) => {
 
         <OrderListButtonExcel keysStore={keysStore} modalStore={modalStore} />
 
-        <OrderListButtonPrint />
+        <OrderListButtonPrint keyStore={useTableSelectKeysOrderListStore}/>
       </Flex>
 
       {type === "produce" &&
