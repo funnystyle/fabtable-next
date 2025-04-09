@@ -45,7 +45,7 @@ const CsListTable = ({ handleReload, isPending }) => {
       handleCsCopy(useTableSelectKeysCsListStore, moveUrl, useCsDataStore, router)
     } else if (parseInt(e.key) === 3) {
       handleOpenCsHistory(datas.length, useCsListHistoryCsModalStore);
-    } else if (parseInt(e.key) === 4) {
+    } else if (parseInt(e.key) === 5) {
       handleRecordInfoPopup(window, datas.map((item) => {
         return { id: item.recordId, serialNumber: item.serialNumber }
       }));
