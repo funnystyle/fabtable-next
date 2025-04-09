@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 export const useGetRecordsJoinCS = (modalStore, statusAll=false, autoReload=true) => {
   const {
-    page, size, searchKeyword, searchStatusList, searchData,
+    page, size, setSize, searchKeyword, searchStatusList, searchData,
     setData, setList, setTotal, reloadFlag
   } = modalStore();
 
@@ -21,16 +21,20 @@ export const useGetRecordsJoinCS = (modalStore, statusAll=false, autoReload=true
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = () => {
+    if (searchStatusList.length === 0 && !statusAll) {
+      return;
+    }
+    getRecordsJoinCs({ page, size, searchKeyword, statusList:searchStatusList, searchData });
+  };
+
+  useEffect(() => {
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
       pageSize = Number(savePageSize);
+      setSize(pageSize);
     }
-    if (searchStatusList.length === 0 && !statusAll) {
-      return;
-    }
-    getRecordsJoinCs({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
-  };
+  }, []);
 
   const isFirstRender = useRef(autoReload);
 

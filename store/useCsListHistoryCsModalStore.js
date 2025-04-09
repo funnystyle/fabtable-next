@@ -28,6 +28,8 @@ const useCsListHistoryCsModalStore = create((set) => ({
   setSearchStatusList: (searchStatusList) => set({ searchStatusList }),
   searchData: {},
   setSearchData: (searchData) => set({ searchData }),
+  sortInfo: {order:null, field:null},
+  setSortInfo: (sortInfo) => set({ sortInfo }),
 
   // modal open
   openSearchModal: false,

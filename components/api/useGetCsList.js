@@ -3,10 +3,7 @@ import { postAxios } from "@api/apiClient";
 import { useEffect, useRef } from "react";
 
 export const useGetCsList = (modalStore, statusAll=false, autoReload=true) => {
-  const {
-    page, size, searchKeyword, searchStatusList, searchData,
-    setData, setList, setTotal,
-  } = modalStore();
+  const { page, size, sortInfo, setSize, searchKeyword, searchStatusList, searchData, setData, setList, setTotal, } = modalStore();
 
   const { mutate: getCsList, isPending, isError, error } = useMutation({
     mutationKey: ["getCsList"],
@@ -21,18 +18,22 @@ export const useGetCsList = (modalStore, statusAll=false, autoReload=true) => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = (isWebsocket=false) => {
-    const { page, size, searchKeyword, searchStatusList, searchData } = modalStore.getState();
+    const { page, size, sortInfo, searchKeyword, searchStatusList, searchData } = modalStore.getState();
 
+    if (searchStatusList.length === 0 && !statusAll && !isWebsocket) {
+      return;
+    }
+    getCsList({ page, size, searchKeyword, statusList:searchStatusList, searchData, orderBy:sortInfo.columnKey, searchOrder:(sortInfo.order === "ascend" ? "ASC" : "DESC")  });
+  };
+
+  useEffect(() => {
     const savePageSize = localStorage.getItem("tablePageSize");
     let pageSize;
     if (savePageSize) {
       pageSize = Number(savePageSize);
+      setSize(pageSize);
     }
-    if (searchStatusList.length === 0 && !statusAll && !isWebsocket) {
-      return;
-    }
-    getCsList({ page, size: (savePageSize ? pageSize : size), searchKeyword, statusList:searchStatusList, searchData });
-  };
+  }, []);
 
   const isFirstRender = useRef(autoReload);
 
@@ -45,7 +46,7 @@ export const useGetCsList = (modalStore, statusAll=false, autoReload=true) => {
     }
 
     handleReload();
-  }, [page, size, searchKeyword, searchStatusList, searchData]);
+  }, [page, size, searchKeyword, searchStatusList, searchData, sortInfo]);
 
   return {
     getCsList,

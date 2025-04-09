@@ -75,8 +75,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "csNumber",
 					key: "csNumber",
 					align: "center",
-					sorter: (a, b) => dateSorter(a, b, "csNumber"),
-					sortOrder: sortedInfo.columnKey === "csNumber" ? sortedInfo.order : null,
+					sorter: true,
 					ellipsis: true,
 					width: 105,
 					fixed: "left",
@@ -86,24 +85,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					showSorterTooltip: {title: "C/S 상태"},
 					dataIndex: "csState",
 					key: "csState",
-					sorter: (a, b) => {
-						const getText = (value) => {
-							// JSX인 경우 children 속성에서 텍스트 추출
-							if (React.isValidElement(value)) {
-								return value.props.children;
-							}
-							// 문자열인 경우 그대로 반환
-							return value;
-						};
-
-						const nameA = getText(a.csState);
-						const nameB = getText(b.csState);
-
-						// 문자 기준 사전순 정렬
-						return nameA.localeCompare(nameB, "ko-KR");
-					},
-					sortOrder:
-						sortedInfo.columnKey === "csState" ? sortedInfo.order : null,
+					sorter: true,
 					ellipsis: true,
 					width: 80,
 					fixed: "left",
@@ -129,9 +111,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "csDate",
 					key: "csDate",
 					align: "center",
-					sorter: (a, b) => dateSorter(a, b, "csDate"),
-					sortOrder:
-						sortedInfo.columnKey === "csDate" ? sortedInfo.order : null,
+					sorter: true,
 					width: 106,
 				},
 				{
@@ -140,9 +120,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "requestDatetime",
 					key: "requestDatetime",
 					align: "center",
-					sorter: (a, b) => dateSorter(a, b, "requestDatetime"),
-					sortOrder:
-						sortedInfo.columnKey === "requestDatetime" ? sortedInfo.order : null,
+					sorter: true,
 					width: 146,
 				},
 				{
@@ -456,9 +434,6 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					showSorterTooltip: {title: "불량제품 반출일"},
 					dataIndex: "defectMfcWithdrawalDate",
 					key: "defectMfcWithdrawalDate",
-					sorter: (a, b) => dateSorter(a, b, "defectMfcWithdrawalDate"),
-					sortOrder:
-						sortedInfo.columnKey === "defectMfcWithdrawalDate" ? sortedInfo.order : null,
 					ellipsis: true,
 					width: 106,
 				},
@@ -467,9 +442,6 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					showSorterTooltip: {title: "조치완료일"},
 					dataIndex: "actionCompletionDate",
 					key: "actionCompletionDate",
-					sorter: (a, b) => dateSorter(a, b, "actionCompletionDate"),
-					sortOrder:
-						sortedInfo.columnKey === "actionCompletionDate" ? sortedInfo.order : null,
 					ellipsis: true,
 					width: 106,
 				},
@@ -478,11 +450,6 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					showSorterTooltip: {title: "제품인증일"},
 					dataIndex: "productCertificationDate",
 					key: "productCertificationDate",
-					sorter: (a, b) => dateSorter(a, b, "productCertificationDate"),
-					sortOrder:
-						sortedInfo.columnKey === "productCertificationDate"
-							? sortedInfo.order
-							: null,
 					ellipsis: true,
 					width: 106,
 				},
@@ -491,9 +458,6 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					showSorterTooltip: {title: "제품인증일"},
 					dataIndex: "deliverDatetime",
 					key: "deliverDatetime",
-					sorter: (a, b) => dateSorter(a, b, "deliverDatetime"),
-					sortOrder:
-						sortedInfo.columnKey === "deliverDatetime" ? sortedInfo.order : null,
 					ellipsis: true,
 					width: 106,
 				},
