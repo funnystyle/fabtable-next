@@ -427,7 +427,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					dataIndex: "severity",
 					key: "severity",
 					ellipsis: true,
-					width: 66,
+					width: 240,
 				},
 				{
 					title: "불량제품 반출일",

@@ -349,7 +349,7 @@ const HomePage = ({ children }) => {
 								*/}
 
               <span className="name">
-								<Link href={"/publish/"}>홍길동 님</Link>
+								<Link href={"/login"}>홍길동 님</Link>
 							</span>
             </div>
 

@@ -400,6 +400,31 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			width: 72,
 		},
 		{
+			title: "조립 공정",
+			showSorterTooltip: { title: "조립 공정" },
+			dataIndex: "조립 공정",
+			width: 95,
+		},
+		{
+			title: "조립 완료일",
+			showSorterTooltip: { title: "조립 완료일" },
+			dataIndex: "조립 완료일",
+			width: 95,
+		},
+		{
+			title: "조립 작업자",
+			showSorterTooltip: { title: "조립 작업자" },
+			dataIndex: "조립 작업자",
+			width: 95,
+		},
+		{
+			title: "조립 횟수",
+			showSorterTooltip: { title: "조립 횟수" },
+			dataIndex: "조립 횟수",
+			width: 85,
+			align: "center",
+		},
+		{
 			title: "포장 공정",
 			showSorterTooltip: { title: "포장 공정" },
 			dataIndex: "packingProcess",
@@ -417,6 +442,16 @@ export const getProduceColumns = (sortedInfo, stringSorter, dateSorter) => {
 			sorter: (a, b) => stringSorter(a, b, "packingComplete"),
 			sortOrder:
 				sortedInfo.columnKey === "packingComplete" ? sortedInfo.order : null,
+			width: 95,
+		},
+		{
+			title: "포장 작업자",
+			showSorterTooltip: { title: "포장 작업자" },
+			dataIndex: "packingWorker",
+			key: "packingWorker",
+			// sorter: (a, b) => stringSorter(a, b, "packingComplete"),
+			// sortOrder:
+			// 	sortedInfo.columnKey === "packingComplete" ? sortedInfo.order : null,
 			width: 95,
 		},
 		{
