@@ -21,6 +21,7 @@ import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 import { useDownloadCsDetailExcel } from "@components/api/useDownloadCsDetailExcel";
 import { useDeleteCs } from "@components/api/useDeleteCs";
 import useCsListConstantStore from "@store/useCsListConstantStore";
+import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 
 const CsListTable = ({ handleReload, isPending }) => {
 
@@ -68,10 +69,12 @@ const CsListTable = ({ handleReload, isPending }) => {
   const { moveUrl } = useMenuTabStore();
   const { setCs, setIsCopy, setTagInfoList } = useCsDataStore();
   const router = useRouter();
+  const {setLoading} = useCsCreateConstantStore();
 
   const handleDoubleClick = (record) => {
     setCs(record);
     setIsCopy(false);
+    setLoading(true);
     moveUrl("/cs/create");
     router.push("/cs/create");
   }

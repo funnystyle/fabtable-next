@@ -108,7 +108,7 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 					</Flex>
 
 					<Flex gap={8} className="btn-space-area">
-						<OrderCreateCopyButton />
+						<OrderCreateCopyButton form={form}/>
 						<Button onClick={handleReset}>신규</Button>
 						<OrderCreateDeleteButton form={form} handleReset={handleReset}/>
 

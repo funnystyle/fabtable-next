@@ -15,6 +15,8 @@ const useCsCreateConstantStore = create((set) => ({
   files: {},
   setFiles: (files) => set({ files }),
   setIsFollowUpCommon: (isFollowUpCommon) => set({ isFollowUpCommon }),
+  loading: true,
+  setLoading: (loading) => set({ loading }),
 }));
 
 export default useCsCreateConstantStore;

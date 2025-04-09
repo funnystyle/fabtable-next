@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Flex, message, Space, } from "antd";
+import { Button, Dropdown, Flex, message, Modal, Space, } from "antd";
 import { CheckOutlined, CloseOutlined, DownOutlined } from "@ant-design/icons";
 import useCsDataStore from "@store/useCsDataStore";
 import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton";
@@ -15,9 +15,9 @@ import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 import CsCreatePrintButton from "@components/cs/create/button/CsCreatePrintButton";
 
-const CsCreateHeaderUpdate = ({form}) => {
+const CsCreateHeaderUpdate = ({ form, tabRemove }) => {
 
-  const {cs, csState, setAllResetFlag, allResetFlag, tagInfoList, setCsState, setCs} = useCsDataStore();
+  const {cs, csState, setAllResetFlag, allResetFlag, tagInfoList, setCsState, setCs, isChange, setIsCopy, setIsChange } = useCsDataStore();
 
   const handleReset = () => {
     form.resetFields();
@@ -38,7 +38,7 @@ const CsCreateHeaderUpdate = ({form}) => {
     }
   });
 
-  const { isAsDetailCommon, isFollowUpCommon, files, asKeys, recordKeys, subRecordKeys } = useCsCreateConstantStore();
+  const { isAsDetailCommon, isFollowUpCommon, files, asKeys, recordKeys, subRecordKeys , setLoading, loading} = useCsCreateConstantStore();
 
   const convertBlobUrlToFile = async (blobUrl, fileName, mimeType) => {
     const res = await fetch(blobUrl);
@@ -47,6 +47,7 @@ const CsCreateHeaderUpdate = ({form}) => {
   };
 
   const handleSubmit = async (event) => {
+    setLoading(true);
     const values = await form.validateFields();
     values["isAsDetailCommon"] = isAsDetailCommon;
     values["isFollowUpCommon"] = isFollowUpCommon;
@@ -79,6 +80,30 @@ const CsCreateHeaderUpdate = ({form}) => {
     await csUpdate(formData);
     message.success('CS 등록이 완료되었습니다!');
     // moveUrl("/cs/list")
+  }
+
+  const handleClose = () => {
+    if (isChange) {
+      Modal.confirm({
+        title: "알림",
+        content: "변경된 내용을 저장하지 않고 이동할까요?",
+        onOk: () => {
+          setIsCopy(false);
+          setIsChange(false);
+          setCsState(transformTagDataSingle(tagInfoList, "신규"));
+          form.resetFields();
+          setCs({});
+          tabRemove();
+        },
+      });
+    } else {
+      setIsCopy(false);
+      setIsChange(false);
+      setCsState(transformTagDataSingle(tagInfoList, "신규"));
+      form.resetFields();
+      setCs({});
+      tabRemove();
+    }
   }
 
   return (
@@ -117,8 +142,8 @@ const CsCreateHeaderUpdate = ({form}) => {
           </Flex>
 
           <Flex gap={8}>
-            <Button icon={<CloseOutlined/>} iconPosition={"end"}>
-              취소
+            <Button icon={<CloseOutlined/>} iconPosition={"end"} onClick={handleClose}>
+              닫기
             </Button>
             <Button
               type="primary"
