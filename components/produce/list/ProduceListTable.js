@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Dropdown, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
-import { orderListRightItem } from "@components/order/list/data/orderListRightItem";
 import { transformTagData } from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
 import useMenuTabStore from "@store/useMenuTabStore";
@@ -12,6 +11,7 @@ import useProduceListSearchRecordModalStore from "@store/useProduceListSearchRec
 import useTableSelectKeysProduceListStore from "@store/useTableSelectKeysProduceListStore";
 import { useWebsocket } from "@components/ws/useWebsocket";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
+import { produceListRightItem } from "./data/produceListRightItem";
 
 const ProduceListTable = ({ handleReload, isPending }) => {
 
@@ -25,13 +25,13 @@ const ProduceListTable = ({ handleReload, isPending }) => {
   const {datas} = useTableSelectKeysProduceListStore();
 
   const handleContextMenuClick = (e) => {
-    if (parseInt(e.key) === 1) {
+    // if (parseInt(e.key) === 1) {
 
-    } else if (parseInt(e.key) === 2) {
-      setOpenCopyModal(true);
-    } else if (parseInt(e.key) === 3) {
-      setOpenEditModal(true);
-    }
+    // } else if (parseInt(e.key) === 2) {
+    //   setOpenCopyModal(true);
+    // } else if (parseInt(e.key) === 3) {
+    //   setOpenEditModal(true);
+    // }
   };
 
   const { moveUrl } = useMenuTabStore();
@@ -104,7 +104,7 @@ const ProduceListTable = ({ handleReload, isPending }) => {
       <CsListHeaderData setHeaderList={setHeaderList} headerDiv={"PRODUCE"} />
       <Dropdown
         menu={{
-          items: orderListRightItem,
+          items: produceListRightItem,
           onClick: handleContextMenuClick,
         }}
         trigger={["contextMenu"]}

@@ -6,6 +6,7 @@ import ComponentCodeSelect from "@components/inputForm/componentCodeSelect";
 import ComponentCodeRadio from "@components/inputForm/componentCodeRadio";
 import ComponentCodeCheckbox from "@components/inputForm/componentCodeCheckbox";
 import React from "react";
+import { componentDatetime } from "../inputForm/componentDatetime";
 
 const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes, component}) => {
 
@@ -29,6 +30,10 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATE') {
     return componentDate(form, recordColumn);
+  }
+
+  if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATETIME') {
+    return componentDatetime(form, recordColumn, index);
   }
 
   // 'CODE' 타입 처리

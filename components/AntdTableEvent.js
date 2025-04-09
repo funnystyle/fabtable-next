@@ -65,7 +65,7 @@ export const handleKeyDownAntd = (event, data, document, tableRef,
           setTimeout(() => {
               setSelectedRowKeys([]);
           }, 0);
-      } else if ((event.ctrlKey || event.metaKey) && event.key === "a") {
+      } else if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'a') {
           event.preventDefault();
           newSelectedKeys = data.slice(pageStartIndex, pageEndIndex + 1).map((item) => item.key);
           newDatas = data.slice(pageStartIndex, pageEndIndex + 1);
