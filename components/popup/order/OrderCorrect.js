@@ -264,7 +264,7 @@ const OrderCorrect = () => {
 				<p className="titie-info">교정정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 
@@ -339,7 +339,7 @@ const OrderCorrect = () => {
 							>
 								<p className="title-box">유량교정</p>
 
-								<Button icon={<SettingOutlined />} size="small" />
+								{/* <Button icon={<SettingOutlined />} size="small" /> */}
 							</Flex>
 
 							<div>
@@ -433,7 +433,7 @@ const OrderCorrect = () => {
 							>
 								<p className="title-box">압력교정</p>
 
-								<Button icon={<SettingOutlined />} size="small" />
+								{/* <Button icon={<SettingOutlined />} size="small" /> */}
 							</Flex>
 
 							<div>

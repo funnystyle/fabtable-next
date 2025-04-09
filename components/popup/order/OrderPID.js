@@ -9,7 +9,7 @@ const OrderPID = () => {
 				<p className="titie-info">PID정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 

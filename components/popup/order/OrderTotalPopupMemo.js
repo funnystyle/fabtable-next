@@ -32,7 +32,7 @@ const OrderTotalPopupMemo = ({ data }) => {
 				<p className="titie-info">부서별 메모</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 

@@ -9,7 +9,7 @@ const OrderCase = () => {
 				<p className="titie-info">케이스 조립정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 
