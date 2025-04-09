@@ -32,6 +32,11 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 		const values = await form.validateFields();
 
 		await updateRecord(values);
+
+		let newRecord = { ...values }
+		newRecord.nowState = nowState;
+		newRecord.id = record.id;
+		setRecord(newRecord);
 	}
 
 	const handleReset = () => {
@@ -88,8 +93,10 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 					{nowState}
 
 					<ul className="product-info">
-						<li>{record.oldSerialNumber}</li>
 						<li>{serialNumber}</li>
+						<li>{record.oldSerialNumber}</li>
+						<li>{record.productCategory}</li>
+						<li>{record.subModelName}</li>
 					</ul>
 				</Flex>
 
