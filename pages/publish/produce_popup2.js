@@ -54,6 +54,27 @@ const range = (start, end) => {
 	return result;
 };
 
+const openPopup = ({
+	url = '/',
+	name = 'popupWindow',
+	width = 1280,
+	height = 1120,
+	resizable = 'yes',
+	scrollbars = 'yes',
+}) => {
+	const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+	const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+	const screenWidth = window.screen.availWidth;
+	const screenHeight = window.screen.availHeight;
+
+	const left = screenLeft + (screenWidth - width) / 2;
+	const top = screenTop + (screenHeight - height) / 2;
+
+	const features = `width=${width},height=${height},top=${top},left=${left},resizable=${resizable},scrollbars=${scrollbars}`;
+
+	window.open(url, name, features);
+};
+
 const ProducePop2Component = () => {
 	const [current, setCurrent] = useState(2);
 	const [inputValue, setInputValue] = useState("2");
@@ -374,7 +395,12 @@ const ProducePop2Component = () => {
 						<Button disabled>공정완료</Button>
 						<Button>수정</Button>
 						<Button>재작업 시작</Button>
-						<Button>부적합 관리</Button>
+						<Button
+							onClick={() => openPopup({
+								url: "/publish/produce_popup3",
+								name: "produce_popup3",
+							})}
+						>부적합 관리</Button>
 					</Flex>
 				</Flex>
 			</Flex>
@@ -419,10 +445,14 @@ const ProducePop2Component = () => {
 									<TabPane
 										tab={
 											<span
-												onClick={(e) => {
-													e.preventDefault(); // 기본 탭 전환 막기
-													window.open("/"); // 새 창 열기
-												}}
+												// onClick={(e) => {
+												// 	e.preventDefault(); // 기본 탭 전환 막기
+												// 	window.open("/"); // 새 창 열기
+												// }}
+												onClick={() => openPopup({
+													url: "/publish/produce_ratio_control",
+													name: "produce_ratio_control",
+												})}
 											>
 												비율제어
 											</span>
@@ -433,10 +463,14 @@ const ProducePop2Component = () => {
 									<TabPane
 										tab={
 											<span
-												onClick={(e) => {
-													e.preventDefault(); // 기본 탭 전환 막기
-													window.open("/"); // 새 창 열기
-												}}
+												// onClick={(e) => {
+												// 	e.preventDefault(); // 기본 탭 전환 막기
+												// 	window.open("/"); // 새 창 열기
+												// }}
+												onClick={() => openPopup({
+													url: "/publish/produce_popup",
+													name: "produce_popup",
+												})}
 											>
 												제어계수
 											</span>
