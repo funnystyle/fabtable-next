@@ -21,19 +21,6 @@ const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchSt
 
 	const [allChecked, setAllChecked] = useState(true);
 	const [checkedItems, setCheckedItems] = useState(Array(16).fill(true));
-	const items = statusList.map((status, i) => ({
-		key: `${i + 1}`,
-		label: (
-			<div onClick={(e) => e.stopPropagation()}>
-				<Checkbox
-					checked={checkedItems[i]}
-					onChange={() => handleItemChange(i, status)}
-				>
-					{status}
-				</Checkbox>
-			</div>
-		),
-	}));
 
 	const handleAllChange = (e) => {
 		const checked = e.target.checked;
@@ -65,49 +52,42 @@ const OrderListButtonStatusSelect = ({ statusList, searchStatusList, setSearchSt
 		setAllChecked(updated.every(Boolean));
 	};
 
-	return (
-		<Dropdown
-			menu={{
-				items,
-			}}
-			dropdownRender={(menu) => (
-				<div style={contentStyle}>
-					<Space
-						style={{
-							padding: 12,
-						}}
-						className="check-all"
+	const items = [
+		{
+			key: `0`,
+			label: (
+				<div onClick={(e) => e.stopPropagation()}>
+					<Checkbox
+						defaultChecked
+						checked={allChecked}
+						onChange={handleAllChange}
 					>
-						<Checkbox
-							defaultChecked
-							checked={allChecked}
-							onChange={handleAllChange}
-						>
-							전체
-						</Checkbox>
-
-						{/* <Button
-							icon={<RedoOutlined />}
-							target="_blank"
-							size="small"
-							className="icon-redo"
-							onClick={() => {
-								setAllChecked(true);
-								setCheckedItems(Array(17).fill(true));
-								setSearchStatusList([...statusList]);
-							}}
-						/> */}
-					</Space>
-
-					<Divider />
-
-					{React.cloneElement(menu, {
-						style: menuStyle,
-					})}
-
+						전체
+					</Checkbox>
 				</div>
-			)}
-		>
+			),
+		},
+		{ 
+			type: "divider"
+		},
+		...statusList.map((status, i) => ({
+			key: `${i + 1}`,
+			label: (
+				<div onClick={(e) => e.stopPropagation()}>
+					<Checkbox
+						checked={checkedItems[i]}
+						onChange={() => handleItemChange(i, status)}
+					>
+						{status}
+					</Checkbox>
+				</div>
+			),
+		})),
+	];
+
+
+	return (
+		<Dropdown menu={{ items }} >
 			<Button>
 				<Space>
 					상태별 보기

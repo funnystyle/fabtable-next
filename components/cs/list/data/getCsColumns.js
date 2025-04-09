@@ -121,7 +121,7 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					key: "requestDatetime",
 					align: "center",
 					sorter: true,
-					width: 146,
+					width: 160,
 				},
 				{
 					title: "고객사",
@@ -618,6 +618,9 @@ export const getCsColumns = (sortedInfo, dateSorter) => {
 					width: 130,
 				},
 			],
+		},
+		{
+			width: 0,
 		},
 	];
 }
