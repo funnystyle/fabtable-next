@@ -161,7 +161,7 @@ const ProduceListTable = ({ handleReload, isPending }) => {
     ]
     return (
       <div>
-        <span onClick={openPopup({
+        <span onClick={() => openPopup({
           url: "/publish/produce_popup2",
           name: "produce_popup2",
         })} style={{ cursor: "pointer" }}>
