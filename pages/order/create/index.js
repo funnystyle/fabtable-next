@@ -113,7 +113,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	}, [values]);
 
 	useEffect(() => {
-		if (serialNumber && productionDepartment && serialNumber.length > 11 && productionDepartment.length > 1) {
+		if (serialNumber && productionDepartment && serialNumber.length >= 11 && serialNumber.length <= 12 && productionDepartment.length > 1) {
 			const newSerialNumber = serialNumber.slice(0, 11) + productionDepartment.slice(productionDepartment.length - 2, productionDepartment.length - 1);
 			setSerialNumber(newSerialNumber);
 			form.setFieldValue("serialNumber", newSerialNumber);
@@ -122,7 +122,6 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 	useEffect(() => {
 		if (scheduledDeliveryDate) {
-			console.log(scheduledDeliveryDate);
 			// scheduledDeliveryDate는 dayjs 객체일수도 있고, YYYY-MM-DD 형식의 문자열일수도 있음
 			// 만약 문자열이라면 중지
 			if (typeof scheduledDeliveryDate === "string") {
