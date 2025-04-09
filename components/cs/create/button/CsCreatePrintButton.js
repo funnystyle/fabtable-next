@@ -17,11 +17,11 @@ import {useDownloadCsDetailExcel} from "@components/api/useDownloadCsDetailExcel
 
 const printItems = [
   // {
-  //   label: "프린트",
+  //   label: "업무일지 인쇄하기",
   //   key: "1",
   // },
   {
-    label: "엑셀 양식 다운로드",
+    label: "업무일지 다운로드",
     key: "2",
   },
 ];

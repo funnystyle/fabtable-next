@@ -25,7 +25,7 @@ import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 import { handleSettingDetail } from "@components/cs/create/func/handleSettingDetail";
 
-const CsCreate = ({isActive = true}) => {
+const CsCreate = ({ isActive = true, tabRemove }) => {
   const {data, list, isSuccess} = useGetInputBoxList("csCreate");
 
   const [form] = Form.useForm();
@@ -92,7 +92,7 @@ const CsCreate = ({isActive = true}) => {
         {/*<CsCreateTab activeKey={2} />*/}
 
         {!cs?.id || cs.isCopy || isCopy ? <CsCreateHeader form={form}/>
-          : <CsCreateHeaderUpdate form={form}/>}
+          : <CsCreateHeaderUpdate form={form} tabRemove={tabRemove}/>}
       </div>
 
       <Spin spinning={loading} style={{width: "100%", textAlign: "center", paddingTop: 80}}>

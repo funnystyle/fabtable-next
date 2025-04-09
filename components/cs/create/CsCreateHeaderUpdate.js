@@ -1,6 +1,6 @@
 // pages/order/create/index.js
 import React from "react";
-import { Button, Dropdown, Flex, message, Space, } from "antd";
+import { Button, Dropdown, Flex, message, Modal, Space, } from "antd";
 import { CheckOutlined, CloseOutlined, DownOutlined } from "@ant-design/icons";
 import useCsDataStore from "@store/useCsDataStore";
 import CsCreateCopyButton from "@components/cs/create/button/CsCreateCopyButton";
@@ -15,9 +15,9 @@ import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 import CsCreatePrintButton from "@components/cs/create/button/CsCreatePrintButton";
 
-const CsCreateHeaderUpdate = ({form}) => {
+const CsCreateHeaderUpdate = ({ form, tabRemove }) => {
 
-  const {cs, csState, setAllResetFlag, allResetFlag, tagInfoList, setCsState, setCs} = useCsDataStore();
+  const {cs, csState, setAllResetFlag, allResetFlag, tagInfoList, setCsState, setCs, isChange, setIsCopy, setIsChange } = useCsDataStore();
 
   const handleReset = () => {
     form.resetFields();
@@ -82,6 +82,30 @@ const CsCreateHeaderUpdate = ({form}) => {
     // moveUrl("/cs/list")
   }
 
+  const handleClose = () => {
+    if (isChange) {
+      Modal.confirm({
+        title: "알림",
+        content: "변경된 내용을 저장하지 않고 이동할까요?",
+        onOk: () => {
+          setIsCopy(false);
+          setIsChange(false);
+          setCsState(transformTagDataSingle(tagInfoList, "신규"));
+          form.resetFields();
+          setCs({});
+          tabRemove();
+        },
+      });
+    } else {
+      setIsCopy(false);
+      setIsChange(false);
+      setCsState(transformTagDataSingle(tagInfoList, "신규"));
+      form.resetFields();
+      setCs({});
+      tabRemove();
+    }
+  }
+
   return (
     <div className="top-btn-area">
       {/* 수주 수정시 */}
@@ -118,8 +142,8 @@ const CsCreateHeaderUpdate = ({form}) => {
           </Flex>
 
           <Flex gap={8}>
-            <Button icon={<CloseOutlined/>} iconPosition={"end"}>
-              취소
+            <Button icon={<CloseOutlined/>} iconPosition={"end"} onClick={handleClose}>
+              닫기
             </Button>
             <Button
               type="primary"
