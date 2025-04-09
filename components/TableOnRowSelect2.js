@@ -140,6 +140,7 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
                 type: "checkbox",
                 fixed: true,
                 columnWidth: 0,
+              hidden: true,
                 renderCell: () => null,
               }
               : undefined

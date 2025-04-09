@@ -13,6 +13,7 @@ import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import CsHistoryButton from "@components/cs/list/button/CsHistoryButton";
 import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 import OrderListButtonTotalInfo from "@components/order/list/button/OrderListButtonTotalInfo";
+import CsHeaderDivButton from "@components/cs/list/button/CsHeaderDivButton";
 
 const CsListButtonArea = () => {
 
@@ -58,16 +59,7 @@ const CsListButtonArea = () => {
 
         <OrderListButtonStatusChange statusList={codeNameList.slice(1)} nowStatusUpdate={nowStatusUpdate} keysStore={useTableSelectKeysCsListStore} />
 
-        {/*<Dropdown*/}
-        {/*	menu={{ items: operationItems, onClick: handleMenuClick }}*/}
-        {/*>*/}
-        {/*	<Button>*/}
-        {/*		<Space>*/}
-        {/*			구분별 보기*/}
-        {/*			<DownOutlined />*/}
-        {/*		</Space>*/}
-        {/*	</Button>*/}
-        {/*</Dropdown>*/}
+        <CsHeaderDivButton />
       </Flex>
 
       <Flex gap="small" className="btn-spacing-area">

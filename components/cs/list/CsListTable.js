@@ -20,6 +20,7 @@ import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 import { useDownloadCsDetailExcel } from "@components/api/useDownloadCsDetailExcel";
 import { useDeleteCs } from "@components/api/useDeleteCs";
+import useCsListConstantStore from "@store/useCsListConstantStore";
 
 const CsListTable = ({ handleReload, isPending }) => {
 
@@ -92,6 +93,8 @@ const CsListTable = ({ handleReload, isPending }) => {
     handleReload(true);
   });
 
+  const { showList } = useCsListConstantStore();
+
   return (
     <>
       <PagingArea modalStore={useCsListSearchCsModalStore} keysStore={useTableSelectKeysCsListStore} />
@@ -107,7 +110,9 @@ const CsListTable = ({ handleReload, isPending }) => {
       >
         <div>
           {/* 테이블 */}
-          <TableOnRowSelect2 header={headerList} serverData={handleSettingKeyToData(data)} scrollY={"calc(100vh - 330px)"} topOffset={433} onRowDoubleClick={handleDoubleClick} isPending={isPending}
+          <TableOnRowSelect2 header={headerList.map((header, index) =>{
+            return {...header, hidden: !showList[index]}
+          })} serverData={handleSettingKeyToData(data)} scrollY={"calc(100vh - 330px)"} topOffset={433} onRowDoubleClick={handleDoubleClick} isPending={isPending}
                              keysStore={useTableSelectKeysCsListStore} modalStore={useCsListSearchCsModalStore}
           />
         </div>
