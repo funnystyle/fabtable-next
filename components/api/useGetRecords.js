@@ -3,7 +3,7 @@ import { postAxios } from "@api/apiClient";
 import { useEffect, useRef } from "react";
 
 export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
-  const { page, size, setSize, searchKeyword, searchStatusList, searchData, setData, setList, setTotal } = modalStore();
+  const { page, size, sortInfo, setSize, searchKeyword, searchStatusList, searchData, setData, setList, setTotal } = modalStore();
 
   const { mutate: getRecords, isPending, isError, error } = useMutation({
     mutationKey: ["getRecords"],
@@ -18,18 +18,12 @@ export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
 
   // 재사용 가능한 handleReload 함수 정의
   const handleReload = (isWebSocket=false) => {
-    const { page, size, searchKeyword, searchStatusList, searchData } = modalStore.getState();
+    const { page, size, sortInfo, searchKeyword, searchStatusList, searchData } = modalStore.getState();
 
-    // const savePageSize = localStorage.getItem("tablePageSize");
-    // let pageSize;
-    // if (savePageSize) {
-    //   pageSize = Number(savePageSize);
-    // }
     if (searchStatusList.length === 0 && !statusAll && !isWebSocket) {
       return;
     }
-    console.log("getRecords", { page, size, searchKeyword, statusList:searchStatusList, searchData });
-    getRecords({ page, size, searchKeyword, statusList:searchStatusList, searchData });
+    getRecords({ page, size, searchKeyword, statusList:searchStatusList, searchData, orderBy:sortInfo.columnKey, searchOrder:(sortInfo.order === "ascend" ? "ASC" : "DESC") });
   };
 
   useEffect(() => {
@@ -51,8 +45,9 @@ export const useGetRecords = (modalStore, statusAll=false, autoReload=true) => {
       return;
     }
 
+    console.log(sortInfo);
     handleReload();
-  }, [page, size, searchKeyword, searchStatusList, searchData]);
+  }, [page, size, searchKeyword, searchStatusList, searchData, sortInfo]);
 
   return {
     getRecords,

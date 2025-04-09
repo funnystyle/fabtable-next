@@ -8,7 +8,7 @@ import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
 import CustomEmpty from "./common/CustomEmpty";
 
 const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scrollY, onRowDoubleClick, isPending, isFirstLoad=true, modalStore, keysStore, topOffset=0 }) => {
-  const { size, total, page } = modalStore();
+  const { size, total, page, setSortInfo } = modalStore();
   const {selectedRowKeys, setSelectedRowKeys, anchorRowKey, setAnchorRowKey, cursorRowKey, setCursorRowKey, datas, setDatas} = keysStore();
 
   const [isDragging, setIsDragging] = useState(false);
@@ -117,6 +117,7 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
               }
               : undefined
         }
+          onChange={(pagination, filters, sorter, extra) => {setSortInfo({ columnKey: sorter.columnKey, order: sorter.order });}}
           // columns={generateColumns(header)}
           columns={data.length > 0 ? header : []}
           rowKey={(record) => record.key}
