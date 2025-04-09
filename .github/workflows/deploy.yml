@@ -115,41 +115,41 @@ jobs:
             echo "${{ secrets.SSH_PASSWORD }}" | sudo -S chmod +x ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy/common/script.sh
             echo "${{ secrets.SSH_PASSWORD }}" | sudo -S ${{ env.DEPLOY_PATH }}/${{ env.SERVICE_NAME }}-${{ github.ref_name }}-docker/deploy/common/script.sh ${{ env.SERVICE_NAME }} ${{ github.ref_name }}
 
-      - name: Notify Slack
-        if: always() # 항상 실행되지만, 실패/성공 상태를 구분하여 메시지 전송
-        id: slack-notify
-        uses: slackapi/slack-github-action@v1.26.0
-        with:
-          channel-id: "C077B4DB7BL"
-          payload: |
-            {
-              "attachments": [
-                {
-                  "title": "${{ github.repository }}",
-                  "title_link": "https://github.com/${{ github.repository }}",
-                  "text": "Fabtable-next.js ${{ github.ref_name }} 배포 ${{ job.status == 'success' && '성공' || '실패' }}",
-                  "color": "${{ job.status == 'success' && '#D6ED17' || '#FF0000' }}",
-                  "fields": [
-                    {
-                      "title": "Repository",
-                      "value": "${{ github.repository }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Author",
-                      "value": "${{ github.actor }}",
-                      "short": true
-                    },
-                    {
-                      "title": "Message",
-                      "value": ${{ toJSON(github.event.head_commit.message) }},
-                      "short": false
-                    }
-                  ]      
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+      # - name: Notify Slack
+      #   if: always() # 항상 실행되지만, 실패/성공 상태를 구분하여 메시지 전송
+      #   id: slack-notify
+      #   uses: slackapi/slack-github-action@v1.26.0
+      #   with:
+      #     channel-id: "C077B4DB7BL"
+      #     payload: |
+      #       {
+      #         "attachments": [
+      #           {
+      #             "title": "${{ github.repository }}",
+      #             "title_link": "https://github.com/${{ github.repository }}",
+      #             "text": "Fabtable-next.js ${{ github.ref_name }} 배포 ${{ job.status == 'success' && '성공' || '실패' }}",
+      #             "color": "${{ job.status == 'success' && '#D6ED17' || '#FF0000' }}",
+      #             "fields": [
+      #               {
+      #                 "title": "Repository",
+      #                 "value": "${{ github.repository }}",
+      #                 "short": true
+      #               },
+      #               {
+      #                 "title": "Author",
+      #                 "value": "${{ github.actor }}",
+      #                 "short": true
+      #               },
+      #               {
+      #                 "title": "Message",
+      #                 "value": ${{ toJSON(github.event.head_commit.message) }},
+      #                 "short": false
+      #               }
+      #             ]      
+      #           }
+      #         ]
+      #       }
+      #   env:
+      #     SLACK_WEBHOOK_URL: "https://hooks.slack.com/services/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"
+      #     SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
