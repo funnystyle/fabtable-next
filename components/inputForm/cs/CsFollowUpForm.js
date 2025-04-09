@@ -1,10 +1,11 @@
 import { Button, DatePicker, Flex, Form, Input, Radio, Tooltip, Typography } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import "dayjs/locale/ko";
 import dayjs from "dayjs";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
+import useAutoCalcTat from "@components/cs/create/hook/useAutoCalcTat";
 
 const {Title} = Typography;
 
@@ -34,6 +35,10 @@ export const CsFollowUpForm = ({ form, index, resetFlag }) => {
     handleReset();
   }, [resetFlag]);
 
+  const analysisCompleteDateWatch = Form.useWatch(`analysisCompleteDate-${index}`, form);
+  const analysisRequestDateWatch = Form.useWatch(`analysisRequestDate-${index}`, form);
+
+  useAutoCalcTat(form, index, [analysisRequestDateWatch, analysisCompleteDateWatch]);
 
   return (
 
@@ -130,7 +135,7 @@ export const CsFollowUpForm = ({ form, index, resetFlag }) => {
 													</span>
               }
             >
-              <Input placeholder="-"/>
+              <Input placeholder="-" readOnly/>
             </Form.Item>
 
             <Form.Item label="기타" name={`etc-${index}`}>

@@ -1,15 +1,15 @@
 import { Button, Flex, Typography } from "antd";
 import { RedoOutlined, SettingOutlined } from "@ant-design/icons";
 import React from "react";
-import { handleInputBox } from "@components/inputForm/handleInputBox";
-import {handleComponentInputName} from "@components/inputForm/handleComponentInputName";
+import InputBox from "@components/inputForm/InputBox";
+import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useRecordDataStore from "@store/useRecordDataStore";
 
 const { Title } = Typography;
 
 const InputBoxRow = ({ form, codeRelationSet, itemList, index, type }) => {
 
-  const { handleReset:reset, record, setRecord } = useRecordDataStore();
+  const { handleReset: reset, record, setRecord } = useRecordDataStore();
 
   const handleReset = () => {
     const nameList = [];
@@ -38,7 +38,7 @@ const InputBoxRow = ({ form, codeRelationSet, itemList, index, type }) => {
 
   return (
     <React.Fragment key={`input-box-row-${index}`}>
-    <div id={`${type}-anchor-${itemList[0][0].name}`} key={`input-box-row-${index}`}>
+      <div id={`${type}-anchor-${itemList[0][0].name}`} key={`input-box-row-${index}`}>
         <div className="info-area">
           <Flex
             align="center"
@@ -62,7 +62,16 @@ const InputBoxRow = ({ form, codeRelationSet, itemList, index, type }) => {
           </Flex>
 
           <Flex gap={16} className="info-input-col2">
-            {itemList.map((item, index) => handleInputBox(form, codeRelationSet, item, index))}
+            {itemList.map((item, index) =>
+              //<InputBox(form, codeRelationSet, item, index, dataStore))}
+              <InputBox
+                key={`input-box-${index}`}
+                form={form}
+                codeRelationSet={codeRelationSet}
+                item={item}
+                index={index}
+              />
+            )}
           </Flex>
         </div>
       </div>

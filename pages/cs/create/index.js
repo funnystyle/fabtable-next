@@ -10,7 +10,6 @@ import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import CsCreateTitle from "@components/cs/create/CsCreateTitle";
 import useCsDataStore from "@store/useCsDataStore";
 import "dayjs/locale/ko";
-import dayjs from "dayjs";
 import CsCreateAnchor from "@components/cs/create/CsCreateAnchor";
 import { loadFormValues } from "@components/inputForm/loadFormValues";
 import useRecordSelectCodesStore from "@store/useRecordSelectCodesStore";
@@ -21,7 +20,6 @@ import CsAsInputBox from "@components/inputForm/cs/CsAsInputBox";
 import SearchModal from "@components/searchModal/SearchModal";
 import useCsCreateLoadCsModalStore from "@store/useCsCreateLoadCsModalStore";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
-import useCsListHistoryCsModalStore from "@store/useCsListHistoryCsModalStore";
 import useCsCreateHistoryCsModalStore from "@store/useCsCreateHistoryCsModalStore";
 import { handleSettingDetail } from "@components/cs/create/func/handleSettingDetail";
 
@@ -40,7 +38,7 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
     setConstantAsKeys(asKeys);
   }, [asKeys]);
 
-  const {cs, setCsDetail, isCopy, setIsChange, setCsState} = useCsDataStore();
+  const {cs, setCsDetail, isCopy, isChange, setIsChange, setCsState} = useCsDataStore();
   const {selectedCodes, setSelectedCodes} = useRecordSelectCodesStore();
 
   const {data: csDetail, handleReload: csDetailLoad} = useGetCsDetail();
@@ -84,6 +82,18 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
     setIsChange(true);
   }, [values]);
 
+
+  useEffect(() => {
+    console.log("csCreate", "isChange", isChange);
+  }, [isChange]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("csCreate", "isChange to false");
+      setIsChange(false);
+    }, 300);
+  }, []);
+
   return (
     <Layout>
       <div className="contents-flex">
@@ -110,7 +120,7 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
                   itemList={item}
                   index={index}
                   type={"cs"}
-                />)}
+                    />)}
 
                 <CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs"/>
 

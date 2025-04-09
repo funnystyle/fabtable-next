@@ -7,7 +7,7 @@ import {handleComponentInputName} from "@components/inputForm/handleComponentInp
 
 const { Title } = Typography;
 
-export const handleInputBox = (form, codeRelationSet, item, index) => {
+const InputBox = ({ form, codeRelationSet, item, index }) => {
 
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {
@@ -54,7 +54,7 @@ export const handleInputBox = (form, codeRelationSet, item, index) => {
       </div>
     );
   } else {
-    const handleInputBox = (box, index) => {
+    const InputBox = (box, index) => {
       const componentsList = box.components;
 
       const handleReset = () => {
@@ -103,8 +103,10 @@ export const handleInputBox = (form, codeRelationSet, item, index) => {
 
     return (
       <div className="row-2" key={`input-box-${index}`}>
-        {item.map((box, index) => handleInputBox(box, index))}
+        {item.map((box, index) => InputBox(box, index))}
       </div>
     );
   }
 }
+
+export default InputBox;

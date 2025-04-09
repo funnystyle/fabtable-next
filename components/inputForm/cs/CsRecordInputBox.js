@@ -1,14 +1,14 @@
 import { Button, Checkbox, Flex, Form, Typography } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-import React, { useEffect } from "react";
+import React from "react";
 import CsRecordInputComponentRow from "@components/inputForm/cs/CsRecordInputComponentRow";
 import { handleComponentInputName } from "@components/inputForm/handleComponentInputName";
 import useCsCreateConstantStore from "@store/useCsCreateConstantStore";
 import "dayjs/locale/ko";
-import dayjs from "dayjs";
 import { csRecordInputs } from "@components/inputForm/cs/data/csRecordInputs";
 import useCsCreateLoadRecordModalStore from "@store/useCsCreateLoadRecordModalStore";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
+import useAutoCalcCertificationUsageDays from "@components/cs/create/hook/useAutoCalcCertificationUsageDays";
 
 const { Title } = Typography;
 
@@ -44,16 +44,8 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
   };
 
   // 폼 변경시 이벤트(날짜 설정)
-  const values = Form.useWatch([], form); // 폼 전체 값을 watch
-  useEffect(() => {
-    const certificateDate = form.getFieldValue(`productCertificationDate-${index}`);
-    if (!certificateDate) return;
-    const today = dayjs().startOf('day');
-    const certificate = dayjs(certificateDate).startOf('day');
-    const diffInDays = today.diff(certificate, 'day');
-    form.setFieldValue(`certificationDateUsageDays-${index}`, diffInDays);
-
-  }, [values]);
+  const productCertificationDateWatch = Form.useWatch(`productCertificationDate-${index}`, form); // 폼 전체 값을 watch
+  useAutoCalcCertificationUsageDays(form, index, [productCertificationDateWatch]);
 
   // item.subDisplayName이 있을 경우 타이틀 표시
   if (item.length === 1) {
@@ -113,7 +105,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
       </div>
     );
   } else {
-    const handleInputBox = (box, index) => {
+    const InputBox = (box, index) => {
       const componentsList = box.components;
 
       return (
@@ -140,7 +132,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
     return (
       <div className="row-2">
-        {item.map((box, index) => handleInputBox(box, index))}
+        {item.map((box, index) => InputBox(box, index))}
       </div>
     );
   }
