@@ -9,7 +9,7 @@ const OrderPacking = () => {
 				<p className="titie-info">포장 및 입고정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 

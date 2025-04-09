@@ -9,7 +9,7 @@ const OrderAssembly = () => {
 				<p className="titie-info">조립정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 

@@ -32,7 +32,7 @@ export const CsAsDetailTitle = ({ isCommon, setIsCommon }) => {
           className="ico-rotate"
         />
 
-        <Button icon={<SettingOutlined />} size="small" />
+        {/* <Button icon={<SettingOutlined />} size="small" /> */}
       </Flex>
     </Flex>
   );

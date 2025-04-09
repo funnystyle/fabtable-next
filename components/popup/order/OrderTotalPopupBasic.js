@@ -42,7 +42,7 @@ const OrderTotalPopupBasic = ({ title, data, list }) => {
         <p className="titie-info">{title}</p>
 
         <p>
-          <Button icon={<SettingOutlined />} size="small" />
+          {/* <Button icon={<SettingOutlined />} size="small" /> */}
         </p>
       </Flex>
 

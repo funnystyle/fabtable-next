@@ -9,7 +9,7 @@ const OrderLeak = () => {
 				<p className="titie-info">리크정보</p>
 
 				<p>
-					<Button icon={<SettingOutlined />} size="small" />
+					{/* <Button icon={<SettingOutlined />} size="small" /> */}
 				</p>
 			</Flex>
 
