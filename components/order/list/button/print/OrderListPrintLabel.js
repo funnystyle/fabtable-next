@@ -29,7 +29,8 @@ const OrderListPrintLabel = ({form, keyStore, drawerStore}) => {
 		
 		console.log("datas", datas);
 
-		const html = datas.map((item) => {
+		let html = `<div class="printThis">`;
+		html += datas.map((item) => {
 			var labelHtml = "";
 			// radio1-1 또는 radio1-2인 경우 : 라벨 1 출력
 			if (selectedLabel === "radio1-1" || selectedLabel === "radio1-2") {
@@ -118,9 +119,11 @@ const OrderListPrintLabel = ({form, keyStore, drawerStore}) => {
 				labelHtml += `<div>Range : ${item.flowrate || ""} ${item.flowrateUnit || ""}</div>`;
 				labelHtml += `<div>S/N : ${item.serialNumber || ""}</div>`;
 				labelHtml += `</div>`;
+
 			}
 			return labelHtml;
 		});
+		html += `</div>`;
 
     setLabelContent(html);
 		console.log("html", html);

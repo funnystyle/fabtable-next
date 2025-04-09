@@ -13,6 +13,7 @@ import useDrawerStore from "@store/useDrawerStore";
 import useTableSelectKeysOrderListStore from "@store/useTableSelectKeysOrderListStore";
 import { useGetDocxUrl } from "@components/api/useGetDocxUrl";
 import { showDrawer } from "@components/drawer/showDrawer";
+import OrderListPrintLabelDrawerHeader from "@components/order/list/button/print/OrderListPrintLabelDrawerHeader";
 
 const OrderListButtonPrint = ({ keyStore, drawerStore }) => {
 
@@ -27,6 +28,8 @@ const OrderListButtonPrint = ({ keyStore, drawerStore }) => {
 
 	const [form] = Form.useForm(); // ✅ Form 인스턴스 생성
 	// 드로어 열기
+
+
 
 	const printItems = [
 		{
@@ -46,10 +49,67 @@ const OrderListButtonPrint = ({ keyStore, drawerStore }) => {
 		setOpenDrawer(false);
 	};
 
+	const handlePrint = () => {
+		const printElement = document.querySelector(".printThis");
+		if (!printElement) return;
+
+		// iframe 생성
+		const iframe = document.createElement("iframe");
+		iframe.style.position = "fixed";
+		iframe.style.right = "0";
+		iframe.style.bottom = "0";
+		iframe.style.width = "0";
+		iframe.style.height = "0";
+		iframe.style.border = "0";
+		document.body.appendChild(iframe);
+
+		// iframe 문서에 HTML 복사
+		const doc = iframe.contentWindow.document;
+		doc.open();
+		doc.write(`
+    <html>
+      <head>
+        <title>Print</title>
+        <style>
+          body {
+            font-family: sans-serif;
+            padding: 10mm;
+          }
+        </style>
+      </head>
+      <body>
+        ${printElement.innerHTML}
+      </body>
+    </html>
+  `);
+		doc.close();
+
+		// iframe 로드 후 인쇄
+		iframe.onload = () => {
+			iframe.contentWindow.focus();
+			iframe.contentWindow.print();
+
+			// 인쇄 후 iframe 제거
+			setTimeout(() => {
+				document.body.removeChild(iframe);
+			}, 100);
+		};
+	};
+
 	// 📌 폼 값 변경 감지 및 상태 업데이트
 	useEffect(() => {
 		setDrawerTitle("인쇄 설정");
-		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />);
+		setDrawerHeader(
+			<>
+				{selectedPrint === "label" && (
+					<OrderListPrintLabelDrawerHeader closeDrawer={closeDrawer} handlePrint={handlePrint} />
+				)}
+
+				{selectedPrint === "report" && (
+					<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />
+				)}
+			</>
+		);
 
 		setDrawerContent(
 			<>
@@ -71,8 +131,17 @@ const OrderListButtonPrint = ({ keyStore, drawerStore }) => {
 	}, [selectedPrint]); // ✅ selectedLabel 변경 시 자동 반영
 
 	useEffect(() => {
-		setDrawerHeader(<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />);
+		setDrawerHeader(
+			<>
+				{selectedPrint === "label" && (
+					<OrderListPrintLabelDrawerHeader closeDrawer={closeDrawer} handlePrint={handlePrint} />
+				)}
 
+				{selectedPrint === "report" && (
+					<OrderListPrintDrawerHeader closeDrawer={closeDrawer} printPdf={printPdf} urlList={storedPdfUrlList} />
+				)}
+			</>
+		);
 	}, [storedPdfUrlList]);
 
 	useEffect(() => {
