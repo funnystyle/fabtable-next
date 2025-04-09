@@ -1,6 +1,6 @@
 // pages/order.js
 import React, { useEffect, useState } from "react";
-import { Dropdown, } from "antd";
+import { Badge, Dropdown, } from "antd";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
 import PagingArea from "@components/list/PagingArea";
@@ -13,6 +13,7 @@ import { useWebsocket } from "@components/ws/useWebsocket";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import { produceListRightItem } from "./data/produceListRightItem";
 import MemoPopover from "@components/list/MemoPopover";
+import { CheckOutlined } from "@ant-design/icons";
 
 const ProduceListTable = ({ handleReload, isPending }) => {
 
@@ -94,6 +95,82 @@ const ProduceListTable = ({ handleReload, isPending }) => {
     }));
   }
 
+  const openPopup = ({
+		url = '/',
+		name = 'popupWindow',
+		width = 1280,
+		height = 1120,
+		resizable = 'yes',
+		scrollbars = 'yes',
+	}) => {
+		const screenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+		const screenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+		const screenWidth = window.screen.availWidth;
+		const screenHeight = window.screen.availHeight;
+	
+		const left = screenLeft + (screenWidth - width) / 2;
+		const top = screenTop + (screenHeight - height) / 2;
+	
+		const features = `width=${width},height=${height},top=${top},left=${left},resizable=${resizable},scrollbars=${scrollbars}`;
+	
+		window.open(url, name, features);
+	};
+
+  const randomTag = (index) => {
+    const randomNumber = Math.floor(Math.random() * 6);
+
+    const tags = [
+      <Badge color="#FFC069" text="작업대기" className="packing-bedge" />,
+      <Badge
+            color="rgba(0,0,0,0.15)"
+            text="작업대기"
+            className="packing-bedge disabled"
+            style={{
+              color: "rgba(0, 0, 0, 0.25)",
+            }}
+          />,
+          <Badge
+            color="#1677FF"
+            text="작업진행"
+            className="packing-bedge"
+            style={{
+              color: "#0958D9",
+            }}
+          />,
+          <Badge
+            text="작업중단"
+            status="error"
+            className="packing-bedge"
+            style={{
+              color: "#FF4D4F",
+            }}
+          />,
+          <Badge
+            color="#389E0D"
+            text="작업수정"
+            className="packing-bedge"
+            style={{
+              color: "#389E0D",
+            }}
+          />,
+          <Badge
+            count={<CheckOutlined />}
+            text="작업완료"
+            className="packing-bedge complete"
+          />,
+    ]
+    return (
+      <div>
+        <span onClick={() => openPopup({
+          url: "/publish/produce_popup2",
+          name: "produce_popup2",
+        })} style={{ cursor: "pointer" }}>
+            {tags[index % tags.length]}
+        </span>
+      </div>
+    );
+  }
+
   const handlePreprocessData = (data) => {
     const transform = (transformTagData(data) || []);
 
@@ -101,7 +178,22 @@ const ProduceListTable = ({ handleReload, isPending }) => {
 
     const settingTooltip = handleSettingTooltipData(settingKey);
 
-    const settingMemo = handleSettingMemoData(settingTooltip);
+    const settingMemo = handleSettingMemoData(settingTooltip)
+      .map((item, index) => {
+        return {...item,
+          assembleStatus: randomTag(index),
+          internalLeakageStatus: randomTag(index+2),
+          externalLeakageStatus: randomTag(index+4),
+          pidStatus: randomTag(index+6),
+          caseStatus: randomTag(index+8),
+          pressureStatus: randomTag(index+10),
+          calibrateStatus: randomTag(index+12),
+          ratioStatus: randomTag(index+14),
+          piStatus: randomTag(index+16),
+          packingStatus: randomTag(index+18),
+          warehouseStatus: randomTag(index+20),
+        }
+      });
 
     return settingMemo;
   }
