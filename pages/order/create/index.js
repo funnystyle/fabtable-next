@@ -28,10 +28,16 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	const { record, resetFlag, setNowState, isCopy, setIsChange, serialNumber, setSerialNumber, isNew, setIsNew } = useRecordDataStore();
 	const { selectedCodes, setSelectedCodes } = useRecordSelectCodesStore();
 
+	const [productionDepartment , setProductionDepartment] = useState(null);
+	const [scheduledDeliveryDate, setScheduledDeliveryDate] = useState(null);
+
+	// 불러오기, 혹은 상세 조회 시 실행됨
 	useEffect(() => {
 		if (list && list.length > 0 && record) {
 			setNowState(record?.nowState);
 			setSerialNumber(record?.serialNumber);
+			setProductionDepartment(record?.productionDepartment);
+			setScheduledDeliveryDate(record?.scheduledDeliveryDate);
 			setTimeout(() => {
 				loadFormValues({...record,
 					customer: (typeof(record.customer) === "object" ? record.customer.props.codeName : record.customer),
@@ -39,16 +45,11 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 					specialOrderNumber: (typeof(record.specialOrderNumber) === "object" ? record.specialOrderNumber.props.codeName : record.specialOrderNumber),
 				}, data, form, selectedCodes, setSelectedCodes)
 			}, 50);
-
-			setTimeout(() => {
-				setIsChange(false);
-			}, 2000);
 		}
-
-
 		setTimeout(() => {
 			setIsChange(false);
 		}, 2000);
+
 		setLoading(!list || list.length === 0);
 	}, [record, list, resetFlag]);
 
@@ -63,6 +64,8 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 	const values = Form.useWatch([], form); // 폼 전체 값을 watch
 	const { list:mgmrBinList } = useGetMgmrBinList();
+
+
 	useEffect(() => {
 		setIsChange(true);
 
@@ -81,16 +84,52 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 			form.setFieldValue("mgmrBin", "None");
 		}
 
-		// 부서
-		const productionDepartment = form.getFieldValue("productionDepartment");
-		if (serialNumber !== null && serialNumber !== undefined && productionDepartment !== null && productionDepartment !== undefined) {
+	}, [values]);
+
+
+	/// 부서 변경시 시리얼 넘버에 반영 ///
+	/// 납품 계획일 변경 시 생산계획일, 검사계획일에 반영 ///
+	useEffect(() => {
+		const productionDepartmentFormValue = form.getFieldValue("productionDepartment");
+		if (productionDepartment !== productionDepartmentFormValue) {
+			setProductionDepartment(productionDepartmentFormValue);
+		}
+		const scheduledDeliveryDateFormValue = form.getFieldValue("scheduledDeliveryDate");
+		if (scheduledDeliveryDate !== scheduledDeliveryDateFormValue) {
+			setScheduledDeliveryDate(scheduledDeliveryDateFormValue);
+		}
+	}, [values]);
+
+	useEffect(() => {
+		if (serialNumber && productionDepartment && serialNumber.length > 11 && productionDepartment.length > 1) {
 			const newSerialNumber = serialNumber.slice(0, 11) + productionDepartment.slice(productionDepartment.length - 2, productionDepartment.length - 1);
-			// form.setFieldValue("serialNumber", newSerialNumber);
 			setSerialNumber(newSerialNumber);
 			form.setFieldValue("serialNumber", newSerialNumber);
 		}
+	}, [productionDepartment]);
 
+	useEffect(() => {
+		if (scheduledDeliveryDate) {
+			console.log(scheduledDeliveryDate);
+			// scheduledDeliveryDate는 dayjs 객체임
+			// 여기서 -3일
+			const productionPlanDate = scheduledDeliveryDate.subtract(5, "day");
+			const inspectionPlanDate = scheduledDeliveryDate.subtract(3, "day");
+			form.setFieldsValue({
+				productionPlanDate: productionPlanDate,
+				inspectionPlanDate: inspectionPlanDate,
+			});
+		}
+	}, [scheduledDeliveryDate]);
+	/// 부서 변경시 시리얼 넘버에 반영 ///
+
+	useEffect(() => {
+		const flowrate = form.getFieldValue("flowrate") || 0;
+		const conversionFactor = form.getFieldValue("conversionFactor") || 1;
+		const convertedFlowrate = parseFloat((flowrate / conversionFactor).toFixed(2));
+		form.setFieldsValue({ convertedFlowrate });
 	}, [values]);
+
 
 	useEffect(() => {
 		if (isCopy) {
@@ -144,7 +183,6 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	
 			{/* 검색 모달(버튼이 있는 곳으로 옮기면 깨져서 원복) */}
 			<SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useOrderCreateLoadRecordModalStore} inBoxType={"recordCreateOpenModal"} />
-
 		</Layout>
 	);
 };
