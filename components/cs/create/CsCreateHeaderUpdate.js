@@ -78,7 +78,7 @@ const CsCreateHeaderUpdate = ({ form, tabRemove }) => {
     }
 
     await csUpdate(formData);
-    message.success('CS 등록이 완료되었습니다!');
+    message.success('CS 수정이 완료되었습니다!');
     // moveUrl("/cs/list")
   }
 
