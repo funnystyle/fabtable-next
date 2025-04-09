@@ -17,7 +17,7 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 
 	const { mutate: updateRecord } = useMutation({
 		mutationKey: "updateRecord",
-		mutationFn: (values) => putAxios("/user/record", values),
+		mutationFn: (values) => putAxios(`/user/record/${record.id}`, values),
 		onSuccess: (response, values) => {
 			setIsChange(false);
 			setIsCopy(false);
@@ -30,7 +30,6 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 
 	const handleSubmit = async (event) => {
 		const values = await form.validateFields();
-		values.ids = [record.id];
 
 		await updateRecord(values);
 	}

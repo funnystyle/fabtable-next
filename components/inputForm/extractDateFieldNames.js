@@ -1,4 +1,4 @@
-export const extractDateFieldNames = (data, type) => {
+export const extractDateFieldNames = (data, type, type2) => {
     const result = [];
 
     data?.list?.forEach(outerList => {
@@ -7,7 +7,7 @@ export const extractDateFieldNames = (data, type) => {
           inputBox?.components?.forEach(componentRow => {
             componentRow.forEach(component => {
               const column = component?.recordColumn;
-              if (column?.dataType === type) {
+              if (column?.dataType === type || column?.dataType === type2) {
                 result.push(column.name);
               }
             });

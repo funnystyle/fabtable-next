@@ -13,6 +13,7 @@ import InputBoxRow from "@components/inputForm/InputBoxRow";
 import SearchModal from "@components/searchModal/SearchModal";
 import useOrderCreateLoadRecordModalStore from "@store/useOrderCreateLoadRecordModalStore";
 import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
+import dayjs from "dayjs";
 
 const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
@@ -95,7 +96,18 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 			setProductionDepartment(productionDepartmentFormValue);
 		}
 		const scheduledDeliveryDateFormValue = form.getFieldValue("scheduledDeliveryDate");
-		if (scheduledDeliveryDate !== scheduledDeliveryDateFormValue) {
+		if (scheduledDeliveryDate !== scheduledDeliveryDateFormValue ) {
+			console.log(scheduledDeliveryDateFormValue);
+			if (scheduledDeliveryDateFormValue === null || scheduledDeliveryDateFormValue === undefined) {
+				return;
+			}
+
+			if (typeof scheduledDeliveryDate === "string") {
+				if (scheduledDeliveryDate === scheduledDeliveryDateFormValue.format("YYYY-MM-DD")) {
+					return;
+				}
+			}
+
 			setScheduledDeliveryDate(scheduledDeliveryDateFormValue);
 		}
 	}, [values]);
@@ -111,7 +123,11 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	useEffect(() => {
 		if (scheduledDeliveryDate) {
 			console.log(scheduledDeliveryDate);
-			// scheduledDeliveryDate는 dayjs 객체임
+			// scheduledDeliveryDate는 dayjs 객체일수도 있고, YYYY-MM-DD 형식의 문자열일수도 있음
+			// 만약 문자열이라면 중지
+			if (typeof scheduledDeliveryDate === "string") {
+				return;
+			}
 			// 여기서 -3일
 			const productionPlanDate = scheduledDeliveryDate.subtract(5, "day");
 			const inspectionPlanDate = scheduledDeliveryDate.subtract(3, "day");

@@ -33,7 +33,7 @@ const ModalComponent = ({form, codeRelationSet, selectedCodes, setSelectedCodes,
   }
 
   if (recordColumn.connectionDiv === 'NONE' && recordColumn.formDiv === 'DATETIME') {
-    return componentDatetime(form, recordColumn, index);
+    return componentDatetime(form, recordColumn);
   }
 
   // 'CODE' 타입 처리
