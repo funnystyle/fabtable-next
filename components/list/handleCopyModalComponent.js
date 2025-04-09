@@ -59,6 +59,13 @@ export const handleCopyModalComponent = (form, component, index) => {
 
       const codeList = recordColumn.codeList;
 
+      const handleCodeData = (option) => {
+        return {
+          value: option.codeName,
+          label: option.codeName,
+        };
+      }
+
       return (
         <Form.Item
           label={recordColumn.displayName}
@@ -80,12 +87,10 @@ export const handleCopyModalComponent = (form, component, index) => {
                 codeList.length === 1 ? codeList[0].codeName : undefined
               }
               options={
-                codeList
-                  ? codeList.map(option => ({
-                    value: option.codeName,
-                    label: option.codeName,
-                  }))
-                  : []
+                !codeList ? [] :
+                  (recordColumn.name === "nowState" ? codeList.slice(10, 14).map(handleCodeData) :
+                  codeList.map(handleCodeData)
+                  )
               }
             />
           )}

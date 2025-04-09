@@ -61,6 +61,16 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
     }
   }, [codeList]);
 
+  const handleCodeData = (option) => {
+    return {
+      value: option.codeName,
+      label: option.codeName,
+      'data-codegroup-id': recordColumn.codeGroupId,
+      'data-id': option.id,
+      'data-child-relations' : JSON.stringify(option.childRelations),
+    };
+  }
+
   return (
     <Form.Item
       key={name}
@@ -100,25 +110,10 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
           }
 
           options={
-            codeList
-              ? (isMadee5000s ? codeList.map(option => ({
-                value: option.codeName,
-                label: option.codeName,
-                'data-codegroup-id': recordColumn.codeGroupId,
-                'data-id': option.id,
-                'data-child-relations' : JSON.stringify(option.childRelations),
-              })).slice(0, codeCount)
-                  :
-                    codeList.map(option => ({
-                  value: option.codeName,
-                  label: option.codeName,
-                  'data-codegroup-id': recordColumn.codeGroupId,
-                  'data-id': option.id,
-                  'data-child-relations' : JSON.stringify(option.childRelations),
-                }))
-
+            !codeList ? [] :
+              (isMadee5000s ? codeList.map(handleCodeData).slice(0, codeCount) :
+                  codeList.map(handleCodeData)
               )
-              : []
           }
         />
       ))}
