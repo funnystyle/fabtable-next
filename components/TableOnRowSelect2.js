@@ -89,8 +89,6 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
   const generateColumns = (header, data) => {
     const columns = data.length > 0 ? header : []
 
-    console.log("columns", columns);
-
     return applyDefaultRenderRecursive(columns)
   };
 

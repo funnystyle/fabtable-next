@@ -66,6 +66,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 	useEffect(() => {
 		setIsChange(true);
 
+		// mgmrBin
 		const mgmrBin = mgmrBinList.find((item) =>
 			item.modelName.includes(form.getFieldValue("productCategory") + form.getFieldValue("productModel"))
 			&& item.gasName === form.getFieldValue("fluid")
@@ -80,13 +81,14 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 			form.setFieldValue("mgmrBin", "None");
 		}
 
+		// 부서
 		const productionDepartment = form.getFieldValue("productionDepartment");
 		if (serialNumber !== null && serialNumber !== undefined && productionDepartment !== null && productionDepartment !== undefined) {
 			const newSerialNumber = serialNumber.slice(0, 11) + productionDepartment.slice(productionDepartment.length - 2, productionDepartment.length - 1);
 			// form.setFieldValue("serialNumber", newSerialNumber);
 			setSerialNumber(newSerialNumber);
+			form.setFieldValue("serialNumber", newSerialNumber);
 		}
-		// setSerialNumber();
 
 	}, [values]);
 

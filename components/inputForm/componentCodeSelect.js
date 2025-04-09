@@ -43,19 +43,6 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
   const isPs = productCategory === "MARU" && (productModel === "8200s" || productModel === "9000s" || productModel === "9300s")  && recordColumn.name === "conversionFactor";
   const isThisGas = productFluid === "Ar" || productFluid === "He" || productFluid === "Ne" || productFluid === "H2(4%)N2" || productFluid === "H2(5%)N2";
 
-
-
-  const { isNew, serialNumber, setSerialNumber } = useRecordDataStore();
-
-  // const handleSerialNumberSetting = (value) => {
-  //   if (isNew) return;
-  //   if (name !== "productionDepartment") return;
-  //   if (serialNumber.length <= 11) return;
-  //   const number = value.slice(value.length - 2, value.length - 1);
-  //   const newSerialNumber = serialNumber.slice(0, 11) + number
-  //   setSerialNumber(newSerialNumber);
-  // }
-
   useEffect(() => {
     const newCodeList = handleCodeListFilter(selectedCodes, recordColumn);
     if (isPs && isThisGas) {
@@ -102,9 +89,9 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
           placeholder="선택하세요"
           onChange={(value, option) => {
 
-            // console.log("option", option);
-
-            // handleSerialNumberSetting(value);
+            if (option === undefined || option === null) {
+              return;
+            }
             handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)
           }}
           data-codegroup-id={recordColumn.codeGroupId}
