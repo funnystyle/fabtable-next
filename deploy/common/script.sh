@@ -64,10 +64,7 @@ create_config_file "$COMPOSE_TEMPLATE" "$COMPOSE_FILE" \
     -e "s|\${BLUE_CONTAINER}|${BLUE_CONTAINER}|g" \
     -e "s|\${GREEN_CONTAINER}|${GREEN_CONTAINER}|g" \
     -e "s|\${BLUE_PORT}|${BLUE_PORT}|g" \
-    -e "s|\${GREEN_PORT}|${GREEN_PORT}|g" \
-    -e "s|\${API_SERVER_PROTOCOL}|${API_SERVER_PROTOCOL}|g" \
-    -e "s|\${API_SERVER_DOMAIN}|${API_SERVER_DOMAIN}|g" \
-    -e "s|\${NODE_ENV}|${NODE_ENV}|g"
+    -e "s|\${GREEN_PORT}|${GREEN_PORT}|g"
 
 create_config_file "$NGINX_TEMPLATE" "$NGINX_CONF" \
     -e "s|\${SERVER_DOMAIN}|${SERVER_DOMAIN}|g" \

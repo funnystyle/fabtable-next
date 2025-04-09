@@ -12,7 +12,6 @@ env:
   # MUST CHANGE THESE VALUES WITH YOUR OWN
   SERVICE_NAME: fabtable-next
   DEPLOY_PATH: /var/services/homes/fnfworks/docker-app
-  NODE_ENV: ${{ github.ref_name }}
 
 jobs:
   build-and-deploy:
@@ -39,6 +38,19 @@ jobs:
       # Install dependencies
       - name: Install dependencies
         run: npm ci
+        shell: bash
+
+      # ⬇️ 브랜치에 맞는 .env 파일을 .env.production 으로 복사
+      - name: Copy deploy/${{ github.ref_name }}.conf to .env.production
+        run: |
+          ENV_FILE="./deploy/${{ github.ref_name }}.conf"
+          if [ -f "$ENV_FILE" ]; then
+            echo "📄 Using $ENV_FILE for .env.production"
+            cp "$ENV_FILE" .env.production
+          else
+            echo "❌ $ENV_FILE not found!"
+            exit 1
+          fi
         shell: bash
 
       # Build
