@@ -46,7 +46,7 @@ const OrderListTable = ({ handleReload, isPending }) => {
   const { handleReload:docxReload } = useGetDocxUrl(certificateId);
   const { handleDownload } = useDownloadOrderListExcel();
 
-  const {mutate: deleteRecord} = useDeleteRecord();
+  const {multipleDeleteRecord} = useDeleteRecord(null, true);
   const handleContextMenuClick = (e) => {
     console.log("e.key", e.key);
     if (parseInt(e.key) === 1) {
@@ -82,9 +82,7 @@ const OrderListTable = ({ handleReload, isPending }) => {
         handleDownload(true, true, headerDiv, ids, searchKeyword, searchData, searchStatusList);
       }
     } else if (parseInt(e.key) === 8) {
-      datas.forEach((data => {
-        deleteRecord({id:data.id});
-      }));
+      multipleDeleteRecord(datas.map((data) => data.id));
     }
   };
 
