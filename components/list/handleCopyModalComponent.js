@@ -71,6 +71,7 @@ export const handleCopyModalComponent = (form, component, index) => {
           ) : (
             <Select
               showSearch
+              allowClear
               filterOption={(input, option) =>
                 (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
               }

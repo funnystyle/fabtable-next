@@ -15,6 +15,7 @@ const OrderListPrintSelect = ({ selectedPrint, setSelectedPrint }) => {
 		<Form.Item>
 			<Select
 				showSearch
+				allowClear
 				filterOption={(input, option) =>
 					(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 				}

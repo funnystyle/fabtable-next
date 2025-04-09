@@ -47,14 +47,14 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
 
   const { isNew, serialNumber, setSerialNumber } = useRecordDataStore();
 
-  const handleSerialNumberSetting = (value) => {
-    if (isNew) return;
-    if (name !== "productionDepartment") return;
-    if (serialNumber.length <= 11) return;
-    const number = value.slice(value.length - 2, value.length - 1);
-    const newSerialNumber = serialNumber.slice(0, 11) + number
-    setSerialNumber(newSerialNumber);
-  }
+  // const handleSerialNumberSetting = (value) => {
+  //   if (isNew) return;
+  //   if (name !== "productionDepartment") return;
+  //   if (serialNumber.length <= 11) return;
+  //   const number = value.slice(value.length - 2, value.length - 1);
+  //   const newSerialNumber = serialNumber.slice(0, 11) + number
+  //   setSerialNumber(newSerialNumber);
+  // }
 
   useEffect(() => {
     const newCodeList = handleCodeListFilter(selectedCodes, recordColumn);
@@ -95,13 +95,16 @@ const ComponentCodeSelect = ({ form, codeRelationSet, recordColumn, component, i
         : (
         <Select
           showSearch
+          allowClear
           filterOption={(input, option) =>
             (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
           }
           placeholder="선택하세요"
           onChange={(value, option) => {
 
-            handleSerialNumberSetting(value);
+            // console.log("option", option);
+
+            // handleSerialNumberSetting(value);
             handleSelectChange(form, codeRelationSet, selectedCodes, setSelectedCodes, option)
           }}
           data-codegroup-id={recordColumn.codeGroupId}
