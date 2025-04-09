@@ -14,10 +14,12 @@ const { Title } = Typography;
 
 const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
-  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, recordSerialNumbers } = useCsCreateConstantStore();
+  const { recordKeys, setRecordKeys, subRecordKeys, setSubRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
+  // 삭제
   const handleDeleteCsRecord = (index) => {
+    // 하나씩 땡김
     csRecordInputs.forEach((field) => {
       for (let i = index + 1; i <= recordKeys.length; i++) {
         form.setFieldValue(`${field}-${i - 1}`, form.getFieldValue(`${field}-${i}`));
@@ -26,8 +28,11 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
     const newRecordKeys = recordKeys.filter((_, idx) => idx + 1 !== index);
     setRecordKeys(newRecordKeys);
+    const newSubRecordKeys = subRecordKeys.filter((_, idx) => idx + 1 !== index);
+    setSubRecordKeys(newSubRecordKeys);
   }
 
+  // 체크 박스 체크
   const handleCheckboxChange = (e, currentIndex) => {
     const newSet = new Set(checkedKeySet); // 기존 Set을 복사하여 새로운 Set 생성
     if (e.target.checked) {
@@ -38,6 +43,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
     setCheckedKeySet(newSet);
   };
 
+  // 폼 변경시 이벤트(날짜 설정)
   const values = Form.useWatch([], form); // 폼 전체 값을 watch
   useEffect(() => {
     const certificateDate = form.getFieldValue(`productCertificationDate-${index}`);
@@ -89,7 +95,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
                   setOpenSearchModal(true);
                 }}>대체제품 불러오기</Button>
 
-                <Button color="primary" variant="outlined" size="small" onClick={(e) => handleRecordInfoPopup(window, [{id:recordKeys[index - 1], serialNumber:recordSerialNumbers[index-1]}])}>수주 종합정보</Button>
+                <Button color="primary" variant="outlined" size="small" onClick={(e) => handleRecordInfoPopup(window, [{id:recordKeys[index - 1]}])}>수주 종합정보</Button>
 
                 <Button icon={<DeleteOutlined />} size="small"
                   onClick={() => handleDeleteCsRecord(index)}

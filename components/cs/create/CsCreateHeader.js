@@ -11,7 +11,7 @@ import {transformTagDataSingle} from "@components/order/table/transformTagData";
 
 const CsCreateHeader = ({ form }) => {
 
-	const { isAsDetailCommon, isFollowUpCommon, files, asKeys } = useCsCreateConstantStore();
+	const { isAsDetailCommon, isFollowUpCommon, files, asKeys, recordKeys, subRecordKeys } = useCsCreateConstantStore();
 	const { setCs, setCsState, setIsCopy, setIsChange } = useCsDataStore();
 	const { moveUrl } = useMenuTabStore();
 
@@ -41,6 +41,8 @@ const CsCreateHeader = ({ form }) => {
 		values["isAsDetailCommon"] = isAsDetailCommon;
 		values["isFollowUpCommon"] = isFollowUpCommon;
 		values["asWorkLength"] = asKeys.length;
+		values["recordKeys"] = recordKeys;
+		values["subRecordKeys"] = subRecordKeys;
 
 		const formData = new FormData();
 		formData.append("data", new Blob([JSON.stringify(values)], { type: "application/json" }));

@@ -15,12 +15,13 @@ const { Title } = Typography;
 
 const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, index, type }) => {
 
-  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
+  const { recordKeys, setRecordKeys, subRecordKeys, setSubRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useCsCreateLoadRecordModalStore();
 
   const handleReset = () => {
     setRecordKeys([null]);
+    setSubRecordKeys([null]);
     setCheckedKeySet(new Set());
   }
 
@@ -32,34 +33,51 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const handleAdd = () => {
     const copyCount = copyCountRef.current.value || 1;
     let newRecordKeys = [...recordKeys];
+    let newSubRecordKeys = [...subRecordKeys];
     for (let i = 0; i < copyCount; i++) {
       newRecordKeys.push(null);
+      newSubRecordKeys.push(null);
     }
     setRecordKeys(newRecordKeys);
+    setSubRecordKeys(newSubRecordKeys);
   }
 
   const handleCopy = () => {
     const copyCount = copyCountRef.current.value || 1;
 
     const recordKeysLength = recordKeys.length;
-    const newRecordKeys = [];
-    const checkedKeys = Array.from(checkedKeySet);
-    const copyRecordKeys = Array.from(checkedKeySet).map((key) => recordKeys[key-1]);
-    for (let i = 0; i < copyCount; i++) {
 
+    // 추가할 레코드 키 정의
+    const newRecordKeys = [];
+    const newSubRecordKeys = [];
+
+    // 체크된 키 리스트
+    const checkedKeys = Array.from(checkedKeySet);
+
+    // 체크된 index를 바탕으로 기존 레코드 키와 서브 레코드 키를 가져옴(복사되는 키들)
+    const copyRecordKeys = Array.from(checkedKeySet).map((key) => recordKeys[key-1]);
+    const copySubRecordKeys = Array.from(checkedKeySet).map((key) => subRecordKeys[key-1]);
+
+    // copyCount 만큼 반복하여 새로운 레코드 키와 서브 레코드 키를 생성
+    for (let i = 0; i < copyCount; i++) {
       copyRecordKeys.forEach((recordKey) => {
         newRecordKeys.push(recordKey);
       });
+
+      copySubRecordKeys.forEach((subRecordKey) => {
+        newSubRecordKeys.push(subRecordKey);
+      });
     }
 
+    // 기존 레코드 키와 서브 레코드 키를 업데이트
     setRecordKeys([...recordKeys, ...newRecordKeys]);
+    setSubRecordKeys([...subRecordKeys, ...newSubRecordKeys]);
 
+    // 복사된 레코드 키에 대해 폼 필드 값을 설정
     setTimeout(() => {
-
       let count = 0;
       for (let i = 0; i < copyCount; i++) {
         checkedKeys.forEach((key) => {
-
           const prev = key;
           const next = count + recordKeysLength + 1;
 
@@ -103,19 +121,23 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
     const newRecordKeys = recordKeys.filter((_, idx) => !checkedKeySet.has(idx));
     setRecordKeys(newRecordKeys);
+    const newSubRecordKeys = subRecordKeys.filter((_, idx) => !checkedKeySet.has(idx));
+    setSubRecordKeys(newSubRecordKeys);
 
     setCheckedKeySet(new Set());
   }
 
   useEffect(() => {
     if (record?.id) {
-      if (recordKeys.length === 0) {
-        setRecordKeys([...recordKeys, record.id]);
-      } else {
-        recordKeys[recordIndex - 1] = record.id;
-        setRecordKeys([...recordKeys]);
-      }
       if (openDiv === "defect") {
+        if (recordKeys.length === 0) {
+          setRecordKeys([record.id]);
+        } else {
+          recordKeys[recordIndex - 1] = record.id;
+          setRecordKeys([...recordKeys]);
+        }
+
+
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;
           if (key === "serialNumber") {
@@ -136,6 +158,8 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
         const diffInDays = today.diff(deliverDate, 'day');
         form.setFieldValue(`deliveryDateUsageDays-${recordIndex}`, diffInDays );
       } else if (openDiv === "substitute") {
+        subRecordKeys[recordIndex - 1] = record.id;
+
         const recordObject = Object.keys(record).reduce((acc, key) => {
           let newKey;
           if (key === "serialNumber") {
@@ -150,6 +174,10 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       }
     }
   }, [record]);
+
+  useEffect(() => {
+    console.log("r, sr", recordKeys, subRecordKeys);
+  }, [recordKeys, subRecordKeys]);
 
   return (
     <div key={`cs-record-input-box-${index}`}>

@@ -11,7 +11,7 @@ const { Title } = Typography;
 
 const CsRecordInputBoxInitial = ({ form, item, index=1 }) => {
 
-  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
+  const { recordKeys, setRecordKeys, subRecordKeys, setSubRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
   const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
   const componentsList = item[0].components;
@@ -25,6 +25,8 @@ const CsRecordInputBoxInitial = ({ form, item, index=1 }) => {
 
     const newRecordKeys = recordKeys.filter((_, idx) => idx + 1 !== index);
     setRecordKeys(newRecordKeys);
+    const newSubRecordKeys = subRecordKeys.filter((_, idx) => idx + 1 !== index);
+    setSubRecordKeys(newSubRecordKeys);
   }
 
   return (
