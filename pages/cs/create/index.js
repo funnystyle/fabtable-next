@@ -27,6 +27,8 @@ import dayjs from "dayjs";
 const CsCreate = ({ isActive = true, tabRemove }) => {
   const {data, list, isSuccess} = useGetInputBoxList("csCreate");
 
+  const {data:csRecordData, list:csRecordList, isSuccess:csRecordSuccess} = useGetInputBoxList("csCreateRecord");
+
   const [form] = Form.useForm();
   const codeRelationSet = new Set();
 
@@ -64,76 +66,12 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
 
   const {setRecordKeys, setSubRecordKeys} = useCsCreateConstantStore();
   useEffect(() => {
-
-    setCsDetail(csDetail);
-    setTimeout(() => {
-      if (csDetail) {
-        const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
-        setRecordKeys(ids);
-        const subIds = csDetail.csRecords.map((csRecord, index) => csRecord.subRecordId);
-        setSubRecordKeys(subIds);
-
-        setTimeout(() => {
-          csDetail.csRecords.forEach((csRecord, index) => {
-            const result = Object.entries(csRecord).reduce((acc, [key, value]) => {
-              const dateFields = ["defectMfcWithdrawalDate", "actionCompletionDate", "productCertificationDate"];
-              const isDateField = dateFields.includes(key);
-              acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-              return acc;
-            }, {});
-            form.setFieldsValue(result);
-          });
-        }, 50);
-
-        form.setFieldsValue(csDetail.csAsWork);
-
-        const asKeys = csDetail.csAsWorkContents.map((csAsWorkContent, index) => {
-          const result = Object.entries(csAsWorkContent).reduce((acc, [key, value]) => {
-            const dateFields = ["responseDate"];
-            const isDateField = dateFields.includes(key);
-            acc[key + "-" + (index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-            return acc;
-          }, {});
-          form.setFieldsValue(result);
-
-          return index;
-        });
-        setAsKeys(asKeys);
-
-        setIsAsDetailCommon(csDetail.isAsDetailCommon);
-        setIsFollowUpCommon(csDetail.isFollowUpCommon);
-
-        setTimeout(() => {
-          csDetail.csAsDetails.forEach((csAsDetail, index) => {
-            const result = Object.entries(csAsDetail).reduce((acc, [key, value]) => {
-              const dateFields = ["responseDate"];
-              const isDateField = dateFields.includes(key);
-              acc[key + "-" + (csDetail.isAsDetailCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-              return acc;
-            }, {});
-            form.setFieldsValue(result);
-          });
-
-          if (cs.isCopy) return;
-
-          csDetail.csFollowUps.forEach((csFollowUp, index) => {
-            const result = Object.entries(csFollowUp).reduce((acc, [key, value]) => {
-              const dateFields = ["analysisRequestDate", "analysisDueDate", "analysisCompleteDate"];
-              const isDateField = dateFields.includes(key);
-              acc[key + "-" + (csDetail.isFollowUpCommon ? 0 : index + 1)] = isDateField ? (value == null ? null : dayjs(value)) : value;
-              return acc;
-            }, {});
-            form.setFieldsValue(result);
-          });
-        }, 50);
-      }
-
+    if (csRecordSuccess) {
       setTimeout(() => {
-        setLoading(false);
-        setIsChange(false);
-      }, 2500);
-    }, 50);
-  }, [csDetail]);
+        handleSettingDetail(form, cs, csDetail, setCsDetail, setRecordKeys, setSubRecordKeys, setAsKeys, setIsAsDetailCommon, setIsFollowUpCommon, setLoading, setIsChange);
+      }, 100);
+    }
+  }, [csDetail, csRecordSuccess]);
 
 
   const [anchorContainer, setAnchorContainer] = useState(null);
@@ -190,7 +128,7 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
                   type={"cs"}
                     />)}
 
-                <CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs"/>
+                <CsRecordInputBoxes form={form} codeRelationSet={codeRelationSet} type="cs" list={csRecordList}/>
 
                 <CsAsInputBox form={form} keys={asKeys} setKeys={setAsKeys} asCheckedKeySet={asCheckedKeySet} setAsCheckedKeySet={setAsCheckedKeySet}/>
 
