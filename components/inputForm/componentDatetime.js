@@ -26,6 +26,7 @@ export const componentDatetime = (form, recordColumn, index = -1) => {
         showTime={{
           defaultValue: dayjs("00:00", "HH:mm"),
           format: "HH:mm",
+          showSecond: false, // 초 숨김 설정
         }}
       />
     </Form.Item>
