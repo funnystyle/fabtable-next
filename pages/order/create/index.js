@@ -16,6 +16,7 @@ import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
 import dayjs from "dayjs";
 import DrawerComponent from "@publish/components/drawer";
 import useDrawerStore from "@store/useDrawerStore";
+import useOrderCreateDrawerStore from "@store/useOrderCreateDrawerStore";
 
 const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
@@ -158,7 +159,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		setIsNew(!record?.id || isCopy)
 	}, [record, isCopy]);
 
-	const { openDrawer } = useDrawerStore();
+	const { openDrawer } = useOrderCreateDrawerStore();
 
 	return (
 		<Layout>
@@ -205,7 +206,7 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent />
+				<DrawerComponent drawerStore={useOrderCreateDrawerStore} />
 			</div>
 		</Layout>
 	);

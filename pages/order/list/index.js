@@ -42,7 +42,7 @@ const OrderComponent = ({ isActive=true }) => {
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
-				<DrawerComponent />
+				<DrawerComponent drawerStore={useDrawerStore} />
 			</div>
 		</Layout>
 	);

@@ -1,14 +1,5 @@
-import { create } from "zustand";
+import createTableSelectKeysStore from "@store/object/tableSelectKeysBody";
 
-const useTableSelectKeysOrderCreateStore = create((set) => ({
-  selectedRowKeys: [],
-  setSelectedRowKeys: (selectedRowKeys) => set({ selectedRowKeys }),
-  anchorRowKey: null,
-  setAnchorRowKey: (anchorRowKey) => set({ anchorRowKey }),
-  cursorRowKey: null,
-  setCursorRowKey: (cursorRowKey) => set({ cursorRowKey }),
-  datas: [],
-  setDatas: (datas) => set({ datas }),
-}));
+const useTableSelectKeysOrderCreateStore = createTableSelectKeysStore();
 
 export default useTableSelectKeysOrderCreateStore;

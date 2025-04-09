@@ -12,6 +12,7 @@ import OrderCreateDeleteButton from "@components/order/create/button/OrderCreate
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 import OrderListButtonPrint from "@components/order/list/button/OrderListButtonPrint";
 import useTableSelectKeysOrderCreateStore from "@store/useTableSelectKeysOrderCreateStore";
+import useOrderCreateDrawerStore from "@store/useOrderCreateDrawerStore";
 
 const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 
@@ -120,7 +121,7 @@ const OrderCreateHeaderUpdate = ({ form, tabRemove }) => {
 						<Button onClick={handleReset}>신규</Button>
 						<OrderCreateDeleteButton form={form} handleReset={handleReset}/>
 
-						<OrderListButtonPrint keyStore={useTableSelectKeysOrderCreateStore} />
+						<OrderListButtonPrint keyStore={useTableSelectKeysOrderCreateStore} drawerStore={useOrderCreateDrawerStore}/>
 					</Flex>
 					<Flex gap={8}>
 						<Button icon={<CloseOutlined />} iconPosition={"end"} onClick={handleClose}>

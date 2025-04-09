@@ -28,9 +28,9 @@ const handleChange = (value) => {
 	console.log(`selected ${value}`);
 };
 
-const DrawerComponent = () => {
+const DrawerComponent = ({ drawerStore }) => {
 
-	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose, selectedPrint : printType, labelContent } = useDrawerStore();
+	const { openDrawer: open, drawerHeader: headerContent, drawerContent: content, drawerFooter: footer, drawerTitle: title, closeDrawer: onClose, selectedPrint : printType, labelContent } = drawerStore();
 
 	const [renderers, setRenderers] = useState([]);
 
