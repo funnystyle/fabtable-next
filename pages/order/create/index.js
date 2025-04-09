@@ -16,6 +16,7 @@ import { useGetMgmrBinList } from "@components/api/useGetMgmrBinList";
 import DrawerComponent from "@publish/components/drawer";
 import useOrderCreateDrawerStore from "@store/useOrderCreateDrawerStore";
 import useAutoSelectMgmrBin from "@components/order/create/hook/useAutoSelectMgmrBin";
+import useSerialNumberPrefix from "@components/order/create/hook/useSerialNumberPrefix";
 
 const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 
@@ -81,6 +82,11 @@ const OrderInfoCreate = ({ isActive=true, tabRemove }) => {
 		fluidWatch,
 		flowrateWatch,
 	]);
+
+
+	const unitWatch = Form.useWatch("productUnit", form);
+
+	useSerialNumberPrefix(form, setSerialNumber, [productCategoryWatch, productModelWatch, unitWatch]);
 
 
 	/// 부서 변경시 시리얼 넘버에 반영 ///
