@@ -124,7 +124,7 @@ const OrderListPrintLabel = ({form, keyStore}) => {
 
     setLabelContent(html);
 		console.log("html", html);
-  }, [allValues]);
+  }, [allValues, datas]);
 
 	return (
 		<>

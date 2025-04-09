@@ -64,9 +64,9 @@ const OrderListTable = ({ handleReload, isPending }) => {
     } else if (parseInt(e.key) === 5) {
       handleRecordInfoMemoPopup(window, datas);
     } else if (e.key === "6-1") {
-      showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore)
+      showDrawer("label", handleReload, useTableSelectKeysOrderListStore, useDrawerStore)
     } else if (e.key === "6-2") {
-      showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore, usePdfUrlStore, useDocxUrlStore)
+      showDrawer("report", handleReload, useTableSelectKeysOrderListStore, useDrawerStore)
       // 7로 시작할 경우
     } else if (e.key.startsWith("7")) {
       const keyIndex = e.key.substring(2); // 7- 를 제거한 키값

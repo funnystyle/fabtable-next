@@ -16,7 +16,7 @@ import { showDrawer } from "@components/drawer/showDrawer";
 
 const OrderListButtonPrint = ({ keyStore }) => {
 
-	const { setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent, certificateId } = useDrawerStore();
+	const { openDrawer, setOpenDrawer, setDrawerHeader, setDrawerContent, setDrawerFooter, setDrawerTitle, setSelectedPrint, selectedPrint, setLabelContent, certificateId } = useDrawerStore();
 	const { pdfUrlList, setPdfUrlList } = usePdfUrlStore();
 	const { docxUrlList, setDocxUrlList } = useDocxUrlStore();
 	const { selectedRowKeys } = useTableSelectKeysOrderListStore();
