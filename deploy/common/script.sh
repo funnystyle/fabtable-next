@@ -11,6 +11,7 @@ SERVICE_NAME="$1-$2"
 SERVICE_IMAGE="${SERVICE_NAME}-docker"
 BLUE_CONTAINER="${SERVICE_NAME}-blue"
 GREEN_CONTAINER="${SERVICE_NAME}-green"
+NODE_ENV="$2"
 
 # 공통 설정 파일 불러오기
 COMMON_CONFIG_FILE="$(dirname $0)/conf/common.conf"
@@ -65,7 +66,8 @@ create_config_file "$COMPOSE_TEMPLATE" "$COMPOSE_FILE" \
     -e "s|\${BLUE_PORT}|${BLUE_PORT}|g" \
     -e "s|\${GREEN_PORT}|${GREEN_PORT}|g" \
     -e "s|\${API_SERVER_PROTOCOL}|${API_SERVER_PROTOCOL}|g" \
-    -e "s|\${API_SERVER_DOMAIN}|${API_SERVER_DOMAIN}|g"
+    -e "s|\${API_SERVER_DOMAIN}|${API_SERVER_DOMAIN}|g" \
+    -e "s|\${NODE_ENV}|${NODE_ENV}|g"
 
 create_config_file "$NGINX_TEMPLATE" "$NGINX_CONF" \
     -e "s|\${SERVER_DOMAIN}|${SERVER_DOMAIN}|g" \
