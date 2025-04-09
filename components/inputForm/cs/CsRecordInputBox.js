@@ -12,9 +12,9 @@ import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const { Title } = Typography;
 
-const CsRecordInputBox = ({ form, codeRelationSet, item, index, recordId, recordSerialNumber }) => {
+const CsRecordInputBox = ({ form, codeRelationSet, item, index }) => {
 
-  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet } = useCsCreateConstantStore();
+  const { recordKeys, setRecordKeys, checkedKeySet, setCheckedKeySet, recordSerialNumbers } = useCsCreateConstantStore();
   const { setOpenSearchModal, setIndex, setOpenDiv } = useCsCreateLoadRecordModalStore();
 
   const handleDeleteCsRecord = (index) => {
@@ -89,7 +89,7 @@ const CsRecordInputBox = ({ form, codeRelationSet, item, index, recordId, record
                   setOpenSearchModal(true);
                 }}>대체제품 불러오기</Button>
 
-                <Button color="primary" variant="outlined" size="small" onClick={(e) => handleRecordInfoPopup(window, [{id:recordId, serialNumber:recordSerialNumber}])}>수주 종합정보</Button>
+                <Button color="primary" variant="outlined" size="small" onClick={(e) => handleRecordInfoPopup(window, [{id:recordKeys[index - 1], serialNumber:recordSerialNumbers[index-1]}])}>수주 종합정보</Button>
 
                 <Button icon={<DeleteOutlined />} size="small"
                   onClick={() => handleDeleteCsRecord(index)}

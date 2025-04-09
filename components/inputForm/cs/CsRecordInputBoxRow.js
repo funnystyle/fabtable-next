@@ -19,10 +19,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
   const { record } = useRecordDataStore();
   const { index:recordIndex, openDiv } = useCsCreateLoadRecordModalStore();
 
-  const [recordId, setRecordId] = useState(null);
-  const [recordSerialNumber, setRecordSerialNumber] = useState(null);
-
-
   const handleReset = () => {
     setRecordKeys([null]);
     setCheckedKeySet(new Set());
@@ -113,9 +109,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
 
   useEffect(() => {
     if (record?.id) {
-      setRecordId(record.id);
-      setRecordSerialNumber(record.serialNumber);
-      console.log("record", record);
       if (recordKeys.length === 0) {
         setRecordKeys([...recordKeys, record.id]);
       } else {
@@ -266,8 +259,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
                   codeRelationSet={codeRelationSet} 
                   item={item}
                   index={index + 1}
-                  recordId={recordId}
-                  recordSerialNumber={recordSerialNumber}
                 />
                 )}
             </Flex>

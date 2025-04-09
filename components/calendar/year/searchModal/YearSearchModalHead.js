@@ -3,7 +3,7 @@ import React from "react";
 import { Button, Flex, } from "antd";
 import "dayjs/locale/ko";
 
-const SearchModalHead = ({ form }) => {
+const YearSearchModalHead = ({ form }) => {
 
 	const handleReset = () => {
 		form.resetFields();
@@ -25,4 +25,4 @@ const SearchModalHead = ({ form }) => {
 };
 
 
-export default SearchModalHead;
+export default YearSearchModalHead;

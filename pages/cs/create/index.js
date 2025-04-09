@@ -63,7 +63,7 @@ const CsCreate = ({isActive = true}) => {
     setLoading(!list || list.length === 0);
   }, [cs, list]);
 
-  const {setRecordKeys} = useCsCreateConstantStore();
+  const {setRecordKeys, setRecordSerialNumbers} = useCsCreateConstantStore();
   useEffect(() => {
 
     setCsDetail(csDetail);
@@ -71,6 +71,8 @@ const CsCreate = ({isActive = true}) => {
     if (csDetail) {
       const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
       setRecordKeys(ids);
+      const serialNumbers = csDetail.csRecords.map((csRecord, index) => csRecord.defectMfcSN);
+      setRecordSerialNumbers(serialNumbers);
 
       setTimeout(() => {
         csDetail.csRecords.forEach((csRecord, index) => {

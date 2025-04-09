@@ -1,11 +1,11 @@
 // pages/year.js
 import React from "react";
-import {Button, Flex, Form,} from "antd";
+import { Button, Flex, Form, } from "antd";
 import "dayjs/locale/ko";
-import SearchModalHead from "@components/calendar/year/searchModal/SearchModalHead";
 import SearchModalNormal from "@components/calendar/year/searchModal/normal/SearchModalNormal";
 import SearchModalNumber from "@components/calendar/year/searchModal/number/SearchModalNumber";
 import SearchModalYear from "@components/calendar/year/searchModal/year/SearchModalYear";
+import YearSearchModalHead from "@components/calendar/year/searchModal/YearSearchModalHead";
 
 const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, setSearchData }) => {
 
@@ -55,7 +55,7 @@ const YearSearchModalContent = ({ year, setYear, closeModal, searchLocation, set
 
 	return (
 		<>
-			<SearchModalHead form={form} />
+			<YearSearchModalHead form={form} />
 
 			<div className="layer-scroll">
 				<SearchModalNormal form={form} title={"일반"} order={1} searchLocation={searchLocation} searchDiv={"NORMAL"} />

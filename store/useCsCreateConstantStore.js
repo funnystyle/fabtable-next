@@ -3,6 +3,8 @@ import { create } from "zustand";
 const useCsCreateConstantStore = create((set) => ({
   recordKeys: [null],
   setRecordKeys: (recordKeys) => set({ recordKeys }),
+  recordSerialNumbers: [null],
+  setRecordSerialNumbers: (recordSerialNumbers) => set({ recordSerialNumbers }),
   asKeys: [],
   setAsKeys: (asKeys) => set({ asKeys }),
   checkedKeySet: new Set(),

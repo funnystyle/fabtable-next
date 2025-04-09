@@ -14,7 +14,7 @@ export const handleRecordInfoPopup = (window, datas) => {
 		setTimeout(() => {
 			handleOpenPopup(window, {
 				url: `/order/info/${data?.id}`,
-				name: "수주 종합정보 - " + data?.serialNumber,
+				name: "수주 종합정보 - "+ (i+1),
 			});
 		}, 200 * i);
 	}
