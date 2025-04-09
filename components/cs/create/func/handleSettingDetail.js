@@ -7,10 +7,15 @@ export const handleSettingDetail = async (form, cs, csDetail, setCsDetail, setRe
 }
 
 const setIds = async (csDetail, setRecordKeys, setSubRecordKeys) => {
-  const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
-  setRecordKeys(ids);
-  const subIds = csDetail.csRecords.map((csRecord, index) => csRecord.subRecordId);
-  setSubRecordKeys(subIds);
+  if (csDetail.csRecords.length > 0) {
+    const ids = csDetail.csRecords.map((csRecord, index) => csRecord.recordId);
+    setRecordKeys(ids);
+    const subIds = csDetail.csRecords.map((csRecord, index) => csRecord.subRecordId);
+    setSubRecordKeys(subIds);
+  } else {
+    setRecordKeys([null]);
+    setSubRecordKeys([null]);
+  }
 }
 
 const settingAsWork = async (form, csAsWork) => {
