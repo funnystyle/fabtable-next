@@ -12,6 +12,7 @@ import useTableSelectKeysProduceListStore from "@store/useTableSelectKeysProduce
 import { useWebsocket } from "@components/ws/useWebsocket";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import { produceListRightItem } from "./data/produceListRightItem";
+import MemoPopover from "@components/list/MemoPopover";
 
 const ProduceListTable = ({ handleReload, isPending }) => {
 
@@ -66,6 +67,23 @@ const ProduceListTable = ({ handleReload, isPending }) => {
     return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
   }
 
+  const handleSettingMemo = (name, value) => {
+
+    if (!value) return value;
+
+    return <MemoPopover name={name} value={value} />;
+  }
+
+  const handleSettingMemoData = (data) => {
+    return data.map((item => {
+      item.salesTeamMemo = item.salesTeamMemo ? handleSettingMemo("영업팀 메모", item.salesTeamMemo) : "";
+      item.produceTeamMemo = item.produceTeamMemo ? handleSettingMemo("제조팀 메모", item.produceTeamMemo) : "";
+      item.qcTeamMemo = item.qcTeamMemo ? handleSettingMemo("품질팀 메모", item.qcTeamMemo) : "";
+
+      return item;
+    }));
+  }
+
   const handleSettingTooltipData = (data) => {
     return data.map((item => {
       item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
@@ -83,7 +101,9 @@ const ProduceListTable = ({ handleReload, isPending }) => {
 
     const settingTooltip = handleSettingTooltipData(settingKey);
 
-    return settingTooltip;
+    const settingMemo = handleSettingMemoData(settingTooltip);
+
+    return settingMemo;
   }
 
   useEffect(() => {

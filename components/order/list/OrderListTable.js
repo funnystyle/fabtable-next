@@ -21,10 +21,9 @@ import { useSetNowState } from "@components/api/useSetNowState";
 import { useGetDocxUrl } from "@components/api/useGetDocxUrl";
 import { showDrawer } from "@components/drawer/showDrawer";
 import useDrawerStore from "@store/useDrawerStore";
-import usePdfUrlStore from "@store/usePdfUrlStore";
-import useDocxUrlStore from "@store/useDocxUrlStore";
 import { useDownloadOrderListExcel } from "@components/api/useDownloadOrderListExcel";
 import { useDeleteRecord } from "@components/api/useDeleteRecord";
+import MemoPopover from "@components/list/MemoPopover";
 
 const OrderListTable = ({ handleReload, isPending }) => {
 
@@ -119,11 +118,29 @@ const OrderListTable = ({ handleReload, isPending }) => {
     return <ListPopover codeName={tooltip.codeName} tooltip={tooltip.tooltip} />;
   }
 
+
   const handleSettingTooltipData = (data) => {
     return data.map((item => {
       item.specialOrderNumber = item.specialOrderNumber ? handleSettingTooltip(item.specialOrderNumber, soList) : "";
       item.customer = item.customer ? handleSettingTooltip(item.customer, cuList) : "";
       item.buyer = item.buyer ? handleSettingTooltip(item.buyer, buList) : "";
+
+      return item;
+    }));
+  }
+
+  const handleSettingMemo = (name, value) => {
+
+    if (!value) return value;
+
+    return <MemoPopover name={name} value={value} />;
+  }
+
+  const handleSettingMemoData = (data) => {
+    return data.map((item => {
+      item.salesTeamMemo = item.salesTeamMemo ? handleSettingMemo("영업팀 메모", item.salesTeamMemo) : "";
+      item.produceTeamMemo = item.produceTeamMemo ? handleSettingMemo("제조팀 메모", item.produceTeamMemo) : "";
+      item.qcTeamMemo = item.qcTeamMemo ? handleSettingMemo("품질팀 메모", item.qcTeamMemo) : "";
 
       return item;
     }));
@@ -136,7 +153,9 @@ const OrderListTable = ({ handleReload, isPending }) => {
 
     const settingTooltip = handleSettingTooltipData(settingKey);
 
-    return settingTooltip;
+    const settingMemo = handleSettingMemoData(settingTooltip);
+
+    return settingMemo;
   }
 
   useEffect(() => {

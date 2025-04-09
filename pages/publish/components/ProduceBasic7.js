@@ -20,7 +20,7 @@ const ProduceBasic7 = () => {
 					<TextArea rows={5} />
 				</Form.Item>
 
-				<Form.Item label="생산팀 메모">
+				<Form.Item label="제조팀 메모">
 					<TextArea rows={5} />
 				</Form.Item>
 

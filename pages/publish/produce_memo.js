@@ -45,7 +45,7 @@ const ProduceMemoComponent = () => {
 						<TextArea rows={5} style={{ resize: "none" }} />
 					</Form.Item>
 
-					<Form.Item label="생산팀 메모">
+					<Form.Item label="제조팀 메모">
 						<TextArea rows={5} style={{ resize: "none" }} />
 					</Form.Item>
 
