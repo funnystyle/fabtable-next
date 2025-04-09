@@ -17,10 +17,13 @@ export const LoginForm = () => {
 	});
 
 	useEffect(() => {
-		if (loginResponse) {
+		if (loginResponse && loginResponse.code === 200) {
 			const token = loginResponse?.data.grantType + " " + loginResponse?.data.accessToken;
 			console.log("token : ", token);
 			setAccessToken(token);
+
+			// Redirect to the main page
+			window.location.href = "/";
 		}
 	}, [loginResponse]);
 

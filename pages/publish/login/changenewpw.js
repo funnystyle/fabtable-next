@@ -12,7 +12,7 @@ const onFinishFailed = (errorInfo) => {
 const changeNewPwComponent = () => {
 	return (
 		<Flex className="login-wrap">
-			<Flex className="login-img">이미지 영역</Flex>
+			{/* <Flex className="login-img">이미지 영역</Flex> */}
 
 			<Flex className="login-box-area">
 				<div className="login-box">
