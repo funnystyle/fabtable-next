@@ -83,10 +83,11 @@ const CsCreateHeaderUpdate = ({ form, tabRemove }) => {
   }
 
   const handleClose = () => {
+    console.log("csCreate", "isChange", isChange);
     if (isChange) {
       Modal.confirm({
         title: "알림",
-        content: "변경된 내용을 저장하지 않고 이동할까요?",
+        content: "변경된 내용을 저장하지 않고 화면을 닫을까요?",
         onOk: () => {
           setIsCopy(false);
           setIsChange(false);

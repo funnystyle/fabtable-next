@@ -4,6 +4,10 @@ import dayjs from "dayjs";
 
 export const handleSettingDetail = async (form, cs, csDetail, setCsDetail, setRecordKeys, setSubRecordKeys, setAsKeys, setIsAsDetailCommon, setIsFollowUpCommon, setLoading, setIsChange) => {
   await handleSettingDetail2(form, cs, csDetail, setCsDetail, setRecordKeys, setSubRecordKeys, setAsKeys, setIsAsDetailCommon, setIsFollowUpCommon, setLoading, setIsChange);
+  setTimeout(() => {
+    console.log("setting false")
+    setIsChange(false);
+  }, 300);
 }
 
 const setIds = async (csDetail, setRecordKeys, setSubRecordKeys) => {

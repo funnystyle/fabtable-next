@@ -1,9 +1,9 @@
 // pages/order.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TableOnRowSelect2 from "@components/TableOnRowSelect2";
 import { transformTagData } from "@components/order/table/transformTagData";
 import { CheckOutlined, ExclamationCircleFilled } from "@ant-design/icons";
-import { Button, Flex, message, Modal } from "antd";
+import { Button, Flex, Form, message, Modal } from "antd";
 import useCsDataStore from "@store/useCsDataStore";
 import CsListHeaderData from "@components/cs/list/CsListHeaderData";
 import PagingArea from "@components/list/PagingArea";
@@ -11,7 +11,6 @@ import { useGetRecordsJoinCS } from "@components/api/useGetRecordsJoinCS";
 import useMenuTabStore from "@store/useMenuTabStore";
 import { useRouter } from "next/router";
 import useTableSelectKeysStore from "@store/useTableSelectKeysStore";
-import useTableSelectKeysCsListStore from "@store/useTableSelectKeysCsListStore";
 import { handleRecordInfoPopup } from "@components/popup/handleOpenPopup";
 
 const CsDetailHistoryModalTable = ({ form, modalStore }) => {
@@ -75,18 +74,30 @@ const CsDetailHistoryModalTable = ({ form, modalStore }) => {
       const oldSerialNumber = cs.oldSerialNumber;
       const serialNumber = cs.serialNumber;
       const csNumber = cs.csNumber;
-      form.setFieldsValue({ oldSerialNumber, serialNumber, csNumber });
+      form.setFieldsValue({ csNumber });
 
-      setTimeout(() => {
-        reload();
-      }, 200);
+      // setTimeout(() => {
+      //   reload();
+      // }, 500);
     }
   }, [cs]);
+
+  const csNumberWatch = Form.useWatch("csNumber", form);
+  const firstChanged = useRef(false);
+
   useEffect(() => {
-    setTimeout(() => {
+    // csNumber가 변경되었고, 아직 최초 변경을 처리하지 않은 경우
+    if (!firstChanged.current && csNumberWatch !== undefined) {
+      firstChanged.current = true;
       reload();
-    }, 200);
-  }, []);
+    }
+  }, [csNumberWatch]);
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     reload();
+  //   }, 500);
+  // }, []);
 
   return (
     <>
@@ -101,7 +112,7 @@ const CsDetailHistoryModalTable = ({ form, modalStore }) => {
           item.etc_cs_load = (
             <>
               <Flex gap={4}>
-                <Button size="small">C/S정보</Button>
+                {/*<Button size="small">C/S정보</Button>*/}
                 <Button size="small" onClick={(e) => onRecordInfoClick(e, item)}>수주정보</Button>
                 <Button size="small" icon={<CheckOutlined />} iconPosition="start">
                   선택

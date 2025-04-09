@@ -5,7 +5,7 @@ import SearchModalContent from "@components/searchModal/SearchModalContent";
 import ModalDraggable from "@components/drag/ModalDraggable";
 import ModalTitle from "@components/modal/ModalTitle";
 
-const SearchModal = ({ searchLocation, searchType, isActive, modalStore, inBoxType }) => {
+const SearchModal = ({ searchLocation, searchType, isActive, modalStore, inBoxType, width=900 }) => {
 
 	const { openSearchModal, setOpenSearchModal } = modalStore();
 
@@ -16,7 +16,7 @@ const SearchModal = ({ searchLocation, searchType, isActive, modalStore, inBoxTy
 				title={<ModalTitle title="조건 검색" />}
 				open={openSearchModal && isActive}
 				onCancel={() => setOpenSearchModal(false)}
-				width={900}
+				width={width}
 				footer={null}
 				modalRender={(modal) => (<ModalDraggable modal={modal} />)}
 			>

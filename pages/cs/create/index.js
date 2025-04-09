@@ -82,7 +82,6 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
     setIsChange(true);
   }, [values]);
 
-
   useEffect(() => {
     console.log("csCreate", "isChange", isChange);
   }, [isChange]);
@@ -92,7 +91,7 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
       console.log("csCreate", "isChange to false");
       setIsChange(false);
     }, 300);
-  }, []);
+  }, [csDetail]);
 
   return (
     <Layout>
@@ -142,7 +141,7 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
 
       <SearchModal searchLocation={"order"} searchType={"OPEN"} isActive={isActive} modalStore={useCsCreateLoadRecordModalStore} inBoxType={"recordCreateOpenModal"}/>
 
-      <SearchModal searchLocation={"cs"} searchType={"HISTORY_DETAIL"} isActive={isActive} modalStore={useCsCreateHistoryCsModalStore} inBoxType={"csListHistoryModal"} />
+      <SearchModal searchLocation={"cs"} searchType={"HISTORY_DETAIL"} isActive={isActive} modalStore={useCsCreateHistoryCsModalStore} inBoxType={"csListHistoryModal"} width={1024} />
 
     </Layout>
   );

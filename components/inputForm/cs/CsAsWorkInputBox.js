@@ -28,6 +28,7 @@ export const CsAsWorkInputBox = ({form, index, keys, setKeys, asCheckedKeySet, s
     setFormFiles(newFiles);
 
     setIsChange(true);
+    console.log("csCreate", "isChange to true2");
   }, [fileList]);
 
 
