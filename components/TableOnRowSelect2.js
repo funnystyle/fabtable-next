@@ -65,6 +65,34 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
     }
   }
 
+  const applyDefaultRenderRecursive = (columns) =>
+    columns.map((col) => {
+      if (col.children) {
+        // 하위 컬럼에도 재귀 적용
+        return {
+          ...col,
+          children: applyDefaultRenderRecursive(col.children),
+        };
+      }
+  
+      // render가 이미 있으면 그대로, 없으면 기본 렌더 주입
+      if (col.render) return col;
+  
+      return {
+        ...col,
+        render: (value) =>
+          value === null || value === undefined || value === '' ? '-' : value,
+      };
+    });
+
+  const generateColumns = (header, data) => {
+    const columns = data.length > 0 ? header : []
+
+    console.log("columns", columns);
+
+    return applyDefaultRenderRecursive(columns)
+  };
+
   const [loading, setLoading] = useState(isFirstLoad);
   // 👉 테이블 렌더링 완료 감지
   useEffect(() => {
@@ -86,6 +114,8 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
       }
     });
   }, [serverData]);
+
+
 
   useEffect(() => {
     updateTableHeight();
@@ -117,8 +147,8 @@ const TableOnRowSelect2 = ({ header, serverData, onRowClick, rowSelect=true, scr
               }
               : undefined
         }
-          // columns={generateColumns(header)}
-          columns={data.length > 0 ? header : []}
+          columns={generateColumns(header, data)}
+          // columns={data.length > 0 ? header : []}
           rowKey={(record) => record.key}
           dataSource={data}
           pagination={false}
