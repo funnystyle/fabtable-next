@@ -30,6 +30,10 @@ const operationItems = [
     label: "후속조치",
     key: "4",
   },
+  {
+    label: "출장/조치",
+    key: "5",
+  },
 ];
 
 const CsHeaderDivButton = () => {
@@ -59,6 +63,8 @@ const CsHeaderDivButton = () => {
       setShowList([true, false, false, true, false, true]);
     } else if (selectedKey === "4") {
       setShowList([true, false, false, false, true, true]);
+    } else if (selectedKey === "5") {
+      setShowList([true, false, false, true, true, true]);
     }
   }
 
