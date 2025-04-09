@@ -10,7 +10,7 @@ const SearchModalFormRadio = ({ index, name, valueList, value, setValue, wide=fa
 	}
 
 	return (
-	<Form.Item className={`select-radio-area${wide ? " select-radio-area2" : ''}`} name={name} initialValue={valueList[0]?.value}>
+	<Form.Item className={`select-radio-area${wide ? " select-radio-area2" : ''}`} name={name} initialValue={value}>
 		<Radio.Group defaultValue={valueList[0]?.value}
 			onChange={handleChange}>
 			{valueList.map((item, i) => (

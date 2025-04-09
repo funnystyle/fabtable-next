@@ -5,9 +5,9 @@ import SearchModalDateForm from "@components/calendar/year/searchModal/date/Sear
 import { Form } from "antd";
 import SearchModalFormHead from "@components/calendar/year/searchModal/SearchModalFormHead";
 
-const SearchModalDate = ({ form, title, order, searchLocation, searchDiv }) => {
+const SearchModalDate = ({ form, title, order, searchLocation, searchType, searchDiv }) => {
 
-	const [searchCount, setSearchCount] = useState(1);
+	const [searchCount, setSearchCount] = useState(searchLocation === "order" && searchType === "LIST" ? 2 : 1);
 
 	return (
 		<>
@@ -15,9 +15,10 @@ const SearchModalDate = ({ form, title, order, searchLocation, searchDiv }) => {
 
 			<Form form={form} layout="vertical" className="modal-input-area">
 				{Array.from({ length: searchCount }, (_, i) => (
-					<SearchModalDateForm key={i} form={form} order={order} searchLocation={searchLocation} searchDiv={searchDiv} index={i + 1} searchCount={searchCount} setSearchCount={setSearchCount} />
+					<SearchModalDateForm key={i} form={form} order={order} searchLocation={searchLocation} searchType={searchType} searchDiv={searchDiv} index={i + 1} searchCount={searchCount} setSearchCount={setSearchCount} />
 				))}
 			</Form>
+
 		</>
 	);
 };

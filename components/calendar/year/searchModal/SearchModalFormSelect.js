@@ -5,11 +5,13 @@ import "dayjs/locale/ko";
 import { useQuery } from "@tanstack/react-query";
 import { getAxios } from "@api/apiClient";
 
-const SearchModalFormSelect = ({ form, name, searchLocation, searchDiv }) => {
+const SearchModalFormSelect = ({ form, name, searchLocation, searchDiv, defaultVal="" }) => {
+
+	const defaultValExist = defaultVal !== "";
 
 	const [list, setList] = useState([]);
-	const [defaultValue, setDefaultValue] = useState(null);
-	const [value, setValue] = useState(null);
+	const [defaultValue, setDefaultValue] = useState(defaultVal);
+	const [value, setValue] = useState(defaultVal);
 	const [queryKey, setQueryKey] = useState(["recordColumnSearchListResponse", searchLocation, searchDiv, Math.random()]);
 	const { data:recordColumnSearchListResponse, isSuccess} = useQuery({
 		queryKey,
@@ -23,9 +25,11 @@ const SearchModalFormSelect = ({ form, name, searchLocation, searchDiv }) => {
 				label: item.displayName
 			}));
 			setList(transformedList);
-			const defaultValue = recordColumnSearchListResponse.data.defaultColumnName;
-			setDefaultValue(defaultValue);
-			setValue(defaultValue);
+			if (!defaultValExist) {
+				const defaultValue = recordColumnSearchListResponse.data.defaultColumnName;
+				setDefaultValue(defaultValue);
+				setValue(defaultValue);
+			}
 
 			setTimeout(() => {
 				form.resetFields([name]);

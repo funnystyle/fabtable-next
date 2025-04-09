@@ -7,13 +7,13 @@ import SearchModalFormSelect from "@components/calendar/year/searchModal/SearchM
 import SearchModalFormRadio from "@components/calendar/year/searchModal/SearchModalFormRadio";
 import SearchModalFormButtonArea from "@components/calendar/year/searchModal/SearchModalFormButtonArea";
 
-const SearchModalDateForm = ({form, order, index, searchLocation, searchDiv, searchCount, setSearchCount}) => {
+const SearchModalDateForm = ({form, order, index, searchLocation, searchType, searchDiv, searchCount, setSearchCount}) => {
 
 	const [selectName, setSelectName] = useState(`search-${order}-${index}-select`);
 	const [radioName, setRadioName] = useState(`search-${order}-${index}-radio`);
 	const [inputName, setInputName] = useState(`search-${order}-${index}-input`);
 
-	const [value, setValue] = useState("rangeDate");
+	const [value, setValue] = useState("equalDate");
 	const [range, setRange] = useState(true);
 	const handleReset = () => {
 		form.resetFields([selectName, radioName, inputName]);
@@ -29,7 +29,7 @@ const SearchModalDateForm = ({form, order, index, searchLocation, searchDiv, sea
 
 	return (
 		<Flex gap={8} align="center">
-			<SearchModalFormSelect form={form} name={selectName} searchLocation={searchLocation} searchDiv={searchDiv} />
+			<SearchModalFormSelect form={form} name={selectName} searchLocation={searchLocation} searchDiv={searchDiv} defaultVal={searchLocation === "order" && searchType === "LIST" && index === 2 ? "scheduledDeliveryDate" : ""} />
 
 			<SearchModalFormRadio index={index} name={radioName} valueList={[
 				{label:"기간", value:"rangeDate"}

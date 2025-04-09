@@ -38,7 +38,7 @@ const OrderComponent = ({ isActive=true }) => {
 				<OrderListTable handleReload={handleReload} isPending={isPending} />
 			</div>
 
-			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} modalStore={useOrderListSearchRecordModalStore} />
+			<SearchModal searchLocation={"order"} searchType={"LIST"} isActive={isActive} modalStore={useOrderListSearchRecordModalStore} inBoxType={"recordCreateOpenModal"} />
 
 			{/* DrawerComponent 추가 - 상태와 닫기 핸들러 전달 */}
 			<div style={{ display: openDrawer ? "block" : "none" }}>
