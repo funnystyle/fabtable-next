@@ -91,18 +91,18 @@ const CsHistoryModalTable = ({ form, modalStore }) => {
     }
   }, [datas]);
 
-  const csNumberWatch = Form.useWatch("csNumber", form);
-  const oldSerialNumberWatch = Form.useWatch("oldSerialNumber", form);
-  const serialNumberWatch = Form.useWatch("serialNumber", form);
-  const firstChanged = useRef(false);
-
-  useEffect(() => {
-    // csNumber가 변경되었고, 아직 최초 변경을 처리하지 않은 경우
-    if (!firstChanged.current && csNumberWatch !== undefined && oldSerialNumberWatch !== undefined && serialNumberWatch !== undefined) {
-      firstChanged.current = true;
-      reload();
-    }
-  }, [oldSerialNumberWatch, serialNumberWatch, csNumberWatch]);
+  // const csNumberWatch = Form.useWatch("csNumber", form);
+  // const oldSerialNumberWatch = Form.useWatch("oldSerialNumber", form);
+  // const serialNumberWatch = Form.useWatch("serialNumber", form);
+  // const firstChanged = useRef(false);
+  //
+  // useEffect(() => {
+  //   // csNumber가 변경되었고, 아직 최초 변경을 처리하지 않은 경우
+  //   if (!firstChanged.current && csNumberWatch !== undefined && oldSerialNumberWatch !== undefined && serialNumberWatch !== undefined) {
+  //     firstChanged.current = true;
+  //     reload();
+  //   }
+  // }, [oldSerialNumberWatch, serialNumberWatch, csNumberWatch]);
 
   return (
     <>

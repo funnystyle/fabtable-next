@@ -44,11 +44,11 @@ const MonthRightContent = ({ visibleItems, setVisibleItems, monthTotalList, year
 							<Card title="영업일정">
 								<Flex justify="space-between">
 									<p className="txt-date">납품계획</p>
-									<strong className="txt-num">{monthTotalList[0]}</strong>
+									<strong className="txt-num">{monthTotalList[1]}</strong>
 								</Flex>
 								<Flex justify="space-between">
 									<p className="txt-date">납품완료</p>
-									<strong className="txt-num">{monthTotalList[1]}</strong>
+									<strong className="txt-num">{monthTotalList[0]}</strong>
 								</Flex>
 							</Card>
 						)}
@@ -57,11 +57,11 @@ const MonthRightContent = ({ visibleItems, setVisibleItems, monthTotalList, year
 							<Card title="생산일정">
 								<Flex justify="space-between">
 									<p className="txt-date">생산계획</p>
-									<strong className="txt-num">{monthTotalList[2]}</strong>
+									<strong className="txt-num">{monthTotalList[3]}</strong>
 								</Flex>
 								<Flex justify="space-between">
 									<p className="txt-date">생산완료</p>
-									<strong className="txt-num">{monthTotalList[3]}</strong>
+									<strong className="txt-num">{monthTotalList[2]}</strong>
 								</Flex>
 							</Card>
 						)}
@@ -70,11 +70,11 @@ const MonthRightContent = ({ visibleItems, setVisibleItems, monthTotalList, year
 							<Card title="검사일정">
 								<Flex justify="space-between">
 									<p className="txt-date">검사계획</p>
-									<strong className="txt-num">{monthTotalList[4]}</strong>
+									<strong className="txt-num">{monthTotalList[5]}</strong>
 								</Flex>
 								<Flex justify="space-between">
 									<p className="txt-date">검사완료</p>
-									<strong className="txt-num">{monthTotalList[5]}</strong>
+									<strong className="txt-num">{monthTotalList[4]}</strong>
 								</Flex>
 							</Card>
 						)}
