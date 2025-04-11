@@ -30,7 +30,7 @@ export const CsAsTitle = ({ form, keys, setKeys, asCheckedKeySet, setAsCheckedKe
       });
     });
 
-    const newRecordKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx));
+    const newRecordKeys = keys.filter((_, idx) => !asCheckedKeySet.has(idx + 1));
     setKeys(newRecordKeys);
 
     setAsCheckedKeySet(new Set());

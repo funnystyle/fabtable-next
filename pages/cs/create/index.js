@@ -83,11 +83,11 @@ const CsCreate = ({ isActive = true, tabRemove }) => {
     }
   }, [loading]);
 
-  const values = Form.useWatch([], form); // 폼 전체 값을 watch
-
-  useEffect(() => {
-    setIsChange(true);
-  }, [values]);
+  // const values = Form.useWatch([], form); // 폼 전체 값을 watch
+  //
+  // useEffect(() => {
+  //   setIsChange(true);
+  // }, [values]);
 
   useEffect(() => {
     console.log("csCreate", "isChange", isChange);
