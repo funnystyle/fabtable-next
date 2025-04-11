@@ -6,6 +6,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, 
 import { Bar } from "react-chartjs-2";
 import { useMutation } from "@tanstack/react-query";
 import { postAxios } from "@api/apiClient";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -18,7 +19,8 @@ ChartJS.register(
 	PointElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	ChartDataLabels
 );
 
 const labels = ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"];
@@ -146,9 +148,9 @@ export const YearChart3 = ({ yearList }) => {
 				anchor: "end", // 끝에 표시
 				align: "end",  // 위쪽에 정렬
 				formatter: (value, ctx) => {
-					if (ctx.dataset.type === "line") {
-						return `${value.toFixed(1)}%`;
-					}
+					// if (ctx.dataset.type === "line") {
+					// 	return `${value.toFixed(1)}%`;
+					// }
 					return value.toLocaleString();
 				},
 				font: {
@@ -156,7 +158,7 @@ export const YearChart3 = ({ yearList }) => {
 					size: 14,
 				},
 				color: (ctx) => {
-					if (ctx.dataset.type === "line") return "#EC6D85";
+					// if (ctx.dataset.type === "line") return "#EC6D85";
 					return "#222";
 				},
 			},

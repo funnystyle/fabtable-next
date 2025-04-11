@@ -4,6 +4,7 @@ import { Card, } from "antd";
 import "dayjs/locale/ko";
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, LineElement, PointElement, Title, Tooltip, Legend, LineController, BarController } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 // Chart.js 플러그인 등록
 ChartJS.register(
@@ -16,7 +17,8 @@ ChartJS.register(
 	PointElement,
 	Title,
 	Tooltip,
-	Legend
+	Legend,
+	ChartDataLabels
 );
 
 // ✅ 차트 컴포넌트 (막대그래프 + 꺾은선 그래프)
@@ -94,9 +96,9 @@ export const YearChart = ({ list }) => {
 				anchor: "end", // 끝에 표시
 				align: "end",  // 위쪽에 정렬
 				formatter: (value, ctx) => {
-					if (ctx.dataset.type === "line") {
-						return `${value.toFixed(1)}%`;
-					}
+					// if (ctx.dataset.type === "line") {
+					// 	return `${value.toFixed(1)}%`;
+					// }
 					return value.toLocaleString();
 				},
 				font: {
