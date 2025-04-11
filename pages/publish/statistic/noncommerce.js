@@ -15,6 +15,7 @@ import {
 } from "chart.js";
 import { Button, Card, ConfigProvider, DatePicker, Flex, Layout, Tag, Typography } from "antd";
 import { LeftOutlined, RightOutlined, SearchOutlined } from "@ant-design/icons";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 ChartJS.register(
     CategoryScale,
@@ -26,7 +27,8 @@ ChartJS.register(
     Tooltip,
     Legend,
     LineController,
-    BarController
+    BarController,
+    ChartDataLabels
 );
 import koKR from "antd/es/locale/ko_KR";
 import "dayjs/locale/ko";
@@ -118,9 +120,27 @@ const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
-      legend: {
-          position: "bottom",
+    legend: {
+        position: "bottom",
+    },
+    datalabels: {
+      anchor: "end", // 끝에 표시
+      align: "end",  // 위쪽에 정렬
+      formatter: (value, ctx) => {
+        if (ctx.dataset.type === "line") {
+          return `${value.toFixed(1)}%`;
+        }
+        return value.toLocaleString();
       },
+      font: {
+        weight: "bold",
+        size: 14,
+      },
+      color: (ctx) => {
+        if (ctx.dataset.type === "line") return "#EC6D85";
+        return "#222";
+      },
+    },
   },
   scales: {
       y: {

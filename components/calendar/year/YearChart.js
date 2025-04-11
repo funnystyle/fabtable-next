@@ -90,6 +90,24 @@ export const YearChart = ({ list }) => {
 			legend: {
 				position: "top",
 			},
+			datalabels: {
+				anchor: "end", // 끝에 표시
+				align: "end",  // 위쪽에 정렬
+				formatter: (value, ctx) => {
+					if (ctx.dataset.type === "line") {
+						return `${value.toFixed(1)}%`;
+					}
+					return value.toLocaleString();
+				},
+				font: {
+					weight: "bold",
+					size: 14,
+				},
+				color: (ctx) => {
+					if (ctx.dataset.type === "line") return "#EC6D85";
+					return "#222";
+				},
+			},
 		},
 		scales: {
 			y: {
