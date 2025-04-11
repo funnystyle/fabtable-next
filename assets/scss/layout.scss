@@ -473,6 +473,21 @@ h2 {
 .ant-table-tbody-virtual-holder-inner .ant-table-cell > button {
 	height: 100%;
 }
+
+.ant-table-tbody-virtual-scrollbar-horizontal {
+	height: 12px!important;
+	bottom: -12px!important;
+}
+
+.ant-table-tbody-virtual-scrollbar-vertical {
+	width: 12px!important;
+	right: -12px!important;
+}
+
+.ant-table-tbody-virtual-scrollbar-thumb {
+	background: rgba(0, 0, 0, 0.15)!important;
+}
+
 /* Tooltip */
 // .ant-tooltip {
 // 	.ant-tooltip-inner {
@@ -481,6 +496,36 @@ h2 {
 // 		}
 // 	}
 // }
+
+// .react-resizable {
+//   position: relative;
+//   background-clip: padding-box;
+// }
+
+// .react-resizable-handle {
+//   position: absolute;
+//   inset-inline-end: -5px;
+//   bottom: 0;
+//   z-index: 1;
+//   width: 10px;
+//   height: 100%;
+//   cursor: col-resize;
+// }
+
+
+.react-resizable {
+  position: relative;
+}
+
+.react-resizable-handle {
+  position: absolute;
+  right: -5px;
+  bottom: 0;
+  width: 10px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 1;
+}
 
 /* Tag */
 .CurrentStatus001 {
