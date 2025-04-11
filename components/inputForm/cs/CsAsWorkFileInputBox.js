@@ -33,15 +33,15 @@ export const CsAsWorkFileInputBox = ({index, fileList, setFileList}) => {
         ...newFileList.filter(
           (f) => !fileList.some((item) => item.uid === f.uid)
         ),
-      ]);
+      ], index);
 
     } else {
-      setFileList(newFileList); // 삭제된 경우 리스트 갱신
+      setFileList(newFileList, index); // 삭제된 경우 리스트 갱신
     }
   };
 
   const handleFileChange = ({ fileList }) => {
-    setFileList(fileList);
+    setFileList(fileList, index);
   };
 
   const handleManualUpload = (event) => {
@@ -50,7 +50,6 @@ export const CsAsWorkFileInputBox = ({index, fileList, setFileList}) => {
     if (files.length <= 0) return;
 
     for (let i = 0; i < files.length; i++) {
-      console.log("files[i]: ", files[i])
       const newFile = {
         uid: `${Date.now()}-${i+1}`, // 고유 ID 생성
         name: files[i].name,
@@ -59,7 +58,7 @@ export const CsAsWorkFileInputBox = ({index, fileList, setFileList}) => {
         url: URL.createObjectURL(files[i]), // 로컬 미리보기 URL 생성
       };
 
-      setFileList(prevFileList => [...prevFileList, newFile]);
+      setFileList([...fileList, newFile], index);
     }
 
     event.target.value = ""; // ✅ 파일 선택창 초기화

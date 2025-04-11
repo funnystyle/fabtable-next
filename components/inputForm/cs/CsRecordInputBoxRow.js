@@ -119,9 +119,9 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
     });
 
 
-    const newRecordKeys = recordKeys.filter((_, idx) => !checkedKeySet.has(idx));
+    const newRecordKeys = recordKeys.filter((_, idx) => !checkedKeySet.has(idx + 1));
     setRecordKeys(newRecordKeys);
-    const newSubRecordKeys = subRecordKeys.filter((_, idx) => !checkedKeySet.has(idx));
+    const newSubRecordKeys = subRecordKeys.filter((_, idx) => !checkedKeySet.has(idx + 1));
     setSubRecordKeys(newSubRecordKeys);
 
     setCheckedKeySet(new Set());
@@ -174,10 +174,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
       }
     }
   }, [record]);
-
-  useEffect(() => {
-    console.log("r, sr", recordKeys, subRecordKeys);
-  }, [recordKeys, subRecordKeys]);
 
   return (
     <div key={`cs-record-input-box-${index}`}>
