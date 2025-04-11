@@ -175,10 +175,6 @@ const CsRecordInputBoxRow = ({ form, codeRelationSet, itemList, copyCountRef, in
     }
   }, [record]);
 
-  useEffect(() => {
-    console.log("r, sr", recordKeys, subRecordKeys);
-  }, [recordKeys, subRecordKeys]);
-
   return (
     <div key={`cs-record-input-box-${index}`}>
       <div id={`${type}-anchor-${itemList[0][0].name}`}>
