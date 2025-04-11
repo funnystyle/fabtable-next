@@ -120,44 +120,44 @@ const ProduceListTable = ({ handleReload, isPending }) => {
     const randomNumber = Math.floor(Math.random() * 6);
 
     const tags = [
-      <Badge color="#FFC069" text="작업대기" className="packing-bedge" />,
-      <Badge
-            color="rgba(0,0,0,0.15)"
-            text="작업대기"
-            className="packing-bedge disabled"
-            style={{
-              color: "rgba(0, 0, 0, 0.25)",
-            }}
-          />,
-          <Badge
-            color="#1677FF"
-            text="작업진행"
-            className="packing-bedge"
-            style={{
-              color: "#0958D9",
-            }}
-          />,
-          <Badge
-            text="작업중단"
-            status="error"
-            className="packing-bedge"
-            style={{
-              color: "#FF4D4F",
-            }}
-          />,
-          <Badge
-            color="#389E0D"
-            text="작업수정"
-            className="packing-bedge"
-            style={{
-              color: "#389E0D",
-            }}
-          />,
-          <Badge
-            count={<CheckOutlined />}
-            text="작업완료"
-            className="packing-bedge complete"
-          />,
+      <Badge key="1" color="#FFC069" text="작업대기" className="packing-bedge" />,
+      <Badge key="2"
+        color="rgba(0,0,0,0.15)"
+        text="작업대기"
+        className="packing-bedge disabled"
+        style={{
+          color: "rgba(0, 0, 0, 0.25)",
+        }}
+      />,
+      <Badge key="3"
+        color="#1677FF"
+        text="작업진행"
+        className="packing-bedge"
+        style={{
+          color: "#0958D9",
+        }}
+      />,
+      <Badge key="4"
+        text="작업중단"
+        status="error"
+        className="packing-bedge"
+        style={{
+          color: "#FF4D4F",
+        }}
+      />,
+      <Badge key="5"
+        color="#389E0D"
+        text="작업수정"
+        className="packing-bedge"
+        style={{
+          color: "#389E0D",
+        }}
+      />,
+      <Badge key="6"
+        count={<CheckOutlined />}
+        text="작업완료"
+        className="packing-bedge complete"
+      />,
     ]
     return (
       <div>

@@ -48,7 +48,6 @@ const SearchModalFormSelect = ({ form, name, searchLocation, searchDiv, defaultV
 		>
 			<Select
 				showSearch
-				allowClear
 				filterOption={(input, option) =>
 					(option?.label ?? '').toLowerCase().includes(input.toLowerCase())
 				}
